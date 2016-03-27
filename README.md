@@ -5,8 +5,9 @@ java file server based on spring mvc and spring-boot with no limitation for uplo
 
 
 ```sh
+git clone ... cd ...
 gradle clean build bootRun
-open htto://localhost:8080 # enjoy :)
+open http://localhost:8080 # enjoy :)
 ```
 
 stack:
