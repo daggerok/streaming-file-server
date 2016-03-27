@@ -1,0 +1,8 @@
+.DS_Store
+.gradle/
+.idea/
+build/
+gradle/*
+!gradle/.gitkeep
+files/*
+!files/.gitkeep

@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <h3 class="panel panel-heading">download</h3>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <td>id</td>
+        <td>size</td>
+        <td>absolute path</td>
+      </tr>
+      </thead>
+      {{#files}}
+        <tr class="item table-row">
+          <td>
+            {{#isFile}}
+              <a href="{{ctx}}/{{downloadUrl}}/{{id}}">
+                <span class="glyphicon glyphicon-download"/>
+              </a>
+            {{/isFile}}
+          </td>
+          <td>
+            <span class="text-muted">{{prettySize}}</span>
+          </td>
+          <td>
+            <span class="text-muted">{{path}}</span>
+          </td>
+        </tr>
+      {{/files}}
+    </table>
+  </div>
+</div>
