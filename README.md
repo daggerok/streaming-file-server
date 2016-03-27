@@ -31,4 +31,4 @@ todo:
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - security, spring-social
-- JGiven + mvc testing
+- JGiven, sprin mvc testing
