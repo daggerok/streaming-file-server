@@ -19,7 +19,7 @@ stack:
 - spring-devtools
 - lombok
 - mustache template engine
-- boostrap-css, bootstrap-filelinput
+- bootstrap-css, bootstrap-filelinput
 - gradle
 - travis CI
 
