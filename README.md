@@ -13,7 +13,7 @@ stack:
 - spring-mvc
 - spring-boot
 - h2 db, console
-- spring-data rest and jsp
+- spring-data rest and jpa
 - spring-utils, apache fileUpload
 - custom spring annotations ```@AliasFor```
 - spring-devtools
