@@ -26,6 +26,6 @@ public class IndexPage {
         List<FileItem> files = fileItemRepository.findAll();
 
         model.addAttribute("files", files);
-        return "index";
+        return INDEX;
     }
 }
