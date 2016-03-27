@@ -1,7 +1,7 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 ==============================================================================================================================================================
 
-java file server based on spring-boot with no limitation for upload and download files ..almost :)
+java file server based on spring mvc and spring-boot with no limitation for upload and download files ..almost :)
 
 
 ```sh
