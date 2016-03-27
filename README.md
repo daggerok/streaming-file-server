@@ -26,8 +26,9 @@ stack:
 todo:
 
 - common error handling
+- support files detetion (rly..? as mininum from db)
 - improve files-db sync (replace FileSystem with GridFS or ...?)
-- security, spring-social
-- JGiven + mvc testing
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
+- security, spring-social
+- JGiven + mvc testing
