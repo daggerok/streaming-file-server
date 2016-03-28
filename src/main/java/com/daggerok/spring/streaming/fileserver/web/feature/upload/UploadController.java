@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import static com.daggerok.spring.streaming.fileserver.web.IndexPage.REDIRECT_INDEX;
 
 @Controller
@@ -19,11 +20,8 @@ public class UploadController {
 
     @Post
     public String post(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        final String filename = file.getOriginalFilename();
+        uploadService.upload(file, redirectAttributes);
 
-        if (null != filename && !"".equals(filename)) {
-            uploadService.upload(file, redirectAttributes);
-        }
         return REDIRECT_INDEX;
     }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public interface FileItemRepository extends JpaRepository<FileItem, Long> {
     Optional<FileItem> findById(@Param("id") long id);
 
-    Stream<FileItem> findByPathLikeIgnoreCase(@Param("path") String path);
+    Stream<FileItem> findByFilenameLikeIgnoreCase(@Param("filename") String filename);
 
     Stream<FileItem> findBySizeGreaterThanEqual(@Param("size") long size);
 

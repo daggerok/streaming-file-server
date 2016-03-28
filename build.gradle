@@ -9,8 +9,8 @@ buildscript {
         propertiesPluginEnvironmentNameProperty = 'env'
 
         springBootVersion = '1.3.3.RELEASE'
+        commonsIoVer = '1.3.2'
         lombokVer = '1.16.8'
-
         jqueryVer = '2.2.2'
         bootstrapVer = '3.3.6'
         bootstrapFileInputVer = '4.3.1'
@@ -47,6 +47,7 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-hateoas',
             'com.fasterxml.jackson.core:jackson-databind',
+            "org.apache.commons:commons-io:$commonsIoVer",
             'com.h2database:h2',
 
             'org.springframework.boot:spring-boot-devtools',

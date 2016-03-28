@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -35,12 +34,10 @@ public class DownloadServiceBean implements DownloadService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FileItem> search(String path) {
+    public Stream<FileItem> search(String path) {
         String like = "%".concat(path).concat("%");
 
-        try (Stream<FileItem> items = fileItemRepository.findByPathLikeIgnoreCase(like)) {
-            return items.collect(toList());
-        }
+        return fileItemRepository.findByFilenameLikeIgnoreCase(like);
     }
 
     @Override

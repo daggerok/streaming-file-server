@@ -5,6 +5,7 @@ import com.daggerok.spring.streaming.fileserver.service.api.FileService;
 import com.daggerok.spring.streaming.fileserver.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,15 +34,6 @@ public class FileServiceBean implements FileService {
     @Value("${app.upload.path}")
     String uploadPath;
 
-    @SneakyThrows
-    private static FileItem mapToFileItem(Path path) {
-        return new FileItem()
-                .setFileType(FILE)
-                .setPath(String.valueOf(path))
-                .setPrettySize(FileItemUtil.toString(Files.size(path)))
-                .setSize(Files.size(path));
-    }
-
     @Override
     @SneakyThrows
     public Stream<FileItem> getDownloads() {
@@ -57,9 +49,35 @@ public class FileServiceBean implements FileService {
                 .filter(Files::isReadable)
                 .filter(Files::isWritable)
                 .filter(Files::isRegularFile)
-                .map(Path::toAbsolutePath)
-                .map(Path::normalize)
+                .map(FileServiceBean::normalizeAbsolute)
                 .map(FileServiceBean::mapToFileItem);
+    }
+
+    private static Path normalizeAbsolute(Path path) {
+        return path.toAbsolutePath().normalize();
+    }
+
+    private static String filename(Path path) {
+        return FilenameUtils.getName(string(path));
+    }
+
+    private static String extension(Path path) {
+        return FilenameUtils.getExtension(string(path));
+    }
+
+    private static String string(Path path) {
+        return path.toString();
+    }
+
+    @SneakyThrows
+    private static FileItem mapToFileItem(Path path) {
+        return new FileItem()
+                .setFileType(FILE)
+                .setPath(string(path))
+                .setSize(Files.size(path))
+                .setFilename(filename(path))
+                .setExtension(extension(path))
+                .setPrettySize(FileItemUtil.toString(Files.size(path)));
     }
 
     @Override
@@ -97,7 +115,7 @@ public class FileServiceBean implements FileService {
     @Override
     @SneakyThrows
     public FileItem receive(MultipartFile file) {
-        Path path = resolve(file.getOriginalFilename());
+        Path path = normalizeAbsolute(resolve(file.getOriginalFilename()));
         @Cleanup InputStream from = file.getInputStream();
         @Cleanup OutputStream to = Files.newOutputStream(path);
 

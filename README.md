@@ -3,14 +3,22 @@ streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-se
 
 java file server based on spring mvc and spring-boot with no limitation for upload and download files ..almost :)
 
-
 ```sh
 $ git clone ... cd ...
 $ gradle clean build bootRun
 $ open http://localhost:8080 # enjoy :)
 ```
 
-stack:
+h2 console:
+
+```sh
+open http://localhost:8080/h2
+jdbc url: jdbc:h2:mem:fs
+username: fs
+password: fs
+```
+
+technology stack:
 
 - spring-mvc
 - spring-boot

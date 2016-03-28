@@ -3,11 +3,14 @@ package com.daggerok.spring.streaming.fileserver.web.annotation;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Documented
 @Retention(RUNTIME)

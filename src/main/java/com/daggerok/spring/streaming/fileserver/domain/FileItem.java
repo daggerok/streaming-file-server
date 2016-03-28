@@ -32,6 +32,10 @@ public class FileItem implements Serializable {
 
     @NonNull
     String path;
+    
+    String filename;
+
+    String extension;
 
     @NonNull
     String prettySize;

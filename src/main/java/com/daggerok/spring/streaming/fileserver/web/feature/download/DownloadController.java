@@ -1,6 +1,5 @@
 package com.daggerok.spring.streaming.fileserver.web.feature.download;
 
-import com.daggerok.spring.streaming.fileserver.domain.FileItem;
 import com.daggerok.spring.streaming.fileserver.service.api.DownloadService;
 import com.daggerok.spring.streaming.fileserver.web.annotation.Get;
 import com.daggerok.spring.streaming.fileserver.web.annotation.Post;
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 import static com.daggerok.spring.streaming.fileserver.web.IndexPage.INDEX;
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @WebPage("/download")
@@ -25,11 +24,8 @@ public class DownloadController {
 
     @Post
     public String search(@RequestParam("path") String path, Model model) {
-        List<FileItem> files = downloadService.search(path);
+        model.addAttribute("files", downloadService.search(path).collect(toList()));
 
-        if (!files.isEmpty()) {
-            model.addAttribute("files", files);
-        }
         return INDEX;
     }
 
