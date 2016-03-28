@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -50,11 +51,26 @@ public class FileServiceBean implements FileService {
                 .filter(Files::isWritable)
                 .filter(Files::isRegularFile)
                 .map(FileServiceBean::normalizeAbsolute)
-                .map(FileServiceBean::mapToFileItem);
+                .map(FileServiceBean::pathToFileItem);
     }
 
     private static Path normalizeAbsolute(Path path) {
         return path.toAbsolutePath().normalize();
+    }
+
+    @SneakyThrows
+    private static FileItem pathToFileItem(Path path) {
+        return new FileItem()
+                .setFileType(FILE)
+                .setPath(string(path))
+                .setSize(Files.size(path))
+                .setFilename(filename(path))
+                .setExtension(extension(path))
+                .setPrettySize(FileItemUtil.toString(Files.size(path)));
+    }
+
+    private static String string(Path path) {
+        return path.toString();
     }
 
     private static String filename(Path path) {
@@ -63,21 +79,6 @@ public class FileServiceBean implements FileService {
 
     private static String extension(Path path) {
         return FilenameUtils.getExtension(string(path));
-    }
-
-    private static String string(Path path) {
-        return path.toString();
-    }
-
-    @SneakyThrows
-    private static FileItem mapToFileItem(Path path) {
-        return new FileItem()
-                .setFileType(FILE)
-                .setPath(string(path))
-                .setSize(Files.size(path))
-                .setFilename(filename(path))
-                .setExtension(extension(path))
-                .setPrettySize(FileItemUtil.toString(Files.size(path)));
     }
 
     @Override
@@ -101,7 +102,6 @@ public class FileServiceBean implements FileService {
     to.flush();
     */
 
-
     @Override
     @SneakyThrows
     public void setupUploads() {
@@ -121,7 +121,11 @@ public class FileServiceBean implements FileService {
 
         pipe(FileItemUtil.isLarge(file.getSize()), from, to);
 
-        return mapToFileItem(path);
+        return mapToNewFileItem(path);
+    }
+
+    private static FileItem mapToNewFileItem(Path path) {
+        return pathToFileItem(path).setCreatedAt(LocalDateTime.now());
     }
 
     /**

@@ -17,6 +17,11 @@ jdbc url: jdbc:h2:mem:fs
 username: fs
 password: fs
 ```
+spring data HAL browser:
+
+```sh
+open http://localhost:8080/api/browser
+```
 
 technology stack:
 
@@ -26,6 +31,7 @@ technology stack:
 - spring-data rest and jpa
 - spring-utils, apache fileUpload
 - custom spring annotations ```@AliasFor```
+- spring-data REST HAL browser
 - spring-devtools
 - lombok
 - mustache template engine

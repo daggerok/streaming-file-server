@@ -50,6 +50,7 @@ dependencies {
             "org.apache.commons:commons-io:$commonsIoVer",
             'com.h2database:h2',
 
+            'org.springframework.data:spring-data-rest-hal-browser',
             'org.springframework.boot:spring-boot-devtools',
             "org.projectlombok:lombok:$lombokVer",
 

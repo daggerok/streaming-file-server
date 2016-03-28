@@ -101,5 +101,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework:spring-test:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.objenesis:objenesis:2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-rest-hal-browser:2.4.4.RELEASE" level="project" />
   </component>
 </module>

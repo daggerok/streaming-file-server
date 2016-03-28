@@ -20,9 +20,9 @@ public interface FileItemRepository extends JpaRepository<FileItem, Long> {
 
     Stream<FileItem> findBySizeLessThanEqual(@Param("size") long size);
 
-    Stream<FileItem> findByUpdatedAtBefore(@Param("updatedAt") LocalDateTime updatedAt);
+    Stream<FileItem> findByCreatedAtBefore(@Param("createdAt") LocalDateTime updatedAt);
 
-    Stream<FileItem> findByUpdatedAtBetween(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+    Stream<FileItem> findByCreatedAtBetween(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
-    Stream<FileItem> findByUpdatedAtAfter(@Param("updatedAt") LocalDateTime updatedAt);
+    Stream<FileItem> findByCreatedAtAfter(@Param("createdAt") LocalDateTime updatedAt);
 }

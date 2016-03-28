@@ -22,7 +22,6 @@ public class UploadServiceBean implements UploadService {
     @Autowired
     FileItemRepository fileItemRepository;
 
-
     @PostConstruct
     @Transactional(readOnly = true)
     public void sync() {

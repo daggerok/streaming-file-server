@@ -7,7 +7,7 @@
         <tr>
           <td>&check;</td>
           <td>size</td>
-          <td>updated at</td>
+          <td>updated</td>
           <td>absolute path</td>
         </tr>
         </thead>
@@ -15,16 +15,14 @@
           <tr>
             <td>
               {{#isFile}}
-                <a href="{{ctx}}/{{downloadUrl}}/{{id}}">
-                  <i class="glyphicon glyphicon-download"/>
-                </a>
+                <a href="{{ctx}}/{{downloadUrl}}/{{id}}" class="glyphicon glyphicon-download"/>
               {{/isFile}}
             </td>
             <td>
               <span class="text-muted">{{prettySize}}</span>
             </td>
             <td>
-              <span class="text-muted">{{updatedAt}}</span>
+              <span class="text-muted">{{updatedAt.getMonth.name.toLowerCase}} {{updatedAt.getDayOfMonth}}, {{updatedAt.getYear}} at {{updatedAt.getHour}}:{{updatedAt.getMinute}}:{{updatedAt.getSecond}}</span>
             </td>
             <td class="col-sm-10">
               <span class="text-muted">{{filename}}</span>
