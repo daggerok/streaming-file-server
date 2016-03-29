@@ -9,6 +9,13 @@ $ gradle clean build bootRun
 $ open http://localhost:8080 # enjoy :)
 ```
 
+awesome JGiven reports!
+
+```sh
+gradle jgiven
+open jgiven-reports/html/index.html
+```
+
 h2 console:
 
 ```sh
@@ -36,6 +43,7 @@ technology stack:
 - lombok
 - mustache template engine
 - bootstrap-css, bootstrap-filelinput
+- JGiven, spring mvc and powermock testing (test coverage ...ing)
 - gradle
 - travis CI
 
@@ -47,4 +55,10 @@ todo:
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - security, spring-social
-- JGiven, sprin mvc testing
+
+links:
+
+- [spring](https://spring.io/)
+- [JGiven](http://jgiven.org/)
+- [Powermock](https://github.com/jayway/powermock/wiki)
+- [Mockito](http://mockito.org/)

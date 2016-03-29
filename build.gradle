@@ -20,30 +20,28 @@ buildscript {
 
         gradleVer = '2.12'
     }
-    repositories { jcenter() }
     dependencies {
+        repositories { jcenter() }
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer",
                   "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVer"
     }
 }
-
 plugins {
     id "io.spring.dependency-management" version '0.5.6.RELEASE'
     id 'net.saliman.properties' version '1.4.5'
 }
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'com.github.ben-manes.versions'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = sourceCompatibility
+
 jar {
     baseName = baseName
     version = ver
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = sourceCompatibility
 
 repositories { jcenter() }
 
@@ -78,5 +76,12 @@ dependencyManagement {
 }
 
 bootRun { systemProperties = System.properties }
+
+task jgiven(type: JavaExec, dependsOn: 'test') {
+    main = 'com.tngtech.jgiven.report.ReportGenerator'
+    args '--targetDir=./jgiven-reports/html',
+            '--format=html'
+    classpath = configurations.testCompile
+}
 
 task wrapper(type: Wrapper) { gradleVersion = gradleVer }

@@ -6,3 +6,4 @@ gradle/*
 !gradle/.gitkeep
 files/*
 !files/.gitkeep
+jgiven-reports/
