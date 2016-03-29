@@ -5,12 +5,10 @@ import com.daggerok.spring.streaming.fileserver.domain.FileItemRepository;
 import com.daggerok.spring.streaming.fileserver.web.annotation.Get;
 import com.daggerok.spring.streaming.fileserver.web.annotation.WebPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.util.List;
 
-@Controller
 @WebPage("/")
 public class IndexPage {
 

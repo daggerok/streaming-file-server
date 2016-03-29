@@ -1,5 +1,5 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
-==============================================================================================================================================================
+=====================
 
 java file server based on spring mvc and spring-boot with no limitation for upload and download files ..almost :)
 
@@ -37,7 +37,8 @@ technology stack:
 - h2 db, console
 - spring-data rest and jpa
 - spring-utils, apache fileUpload
-- custom spring annotations ```@AliasFor```
+- custom spring annotations (@Get, @Post, @WebPage)
+- common error handling (home redirect)
 - spring-data REST HAL browser
 - spring-devtools
 - lombok
@@ -49,7 +50,6 @@ technology stack:
 
 todo:
 
-- common error handling
 - support removing files (rly..? as mininum from db)
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - bi-directional files synchronization with spring scheduling or batch
@@ -59,6 +59,13 @@ todo:
 links:
 
 - [spring](https://spring.io/)
-- [JGiven](http://jgiven.org/)
-- [Powermock](https://github.com/jayway/powermock/wiki)
-- [Mockito](http://mockito.org/)
+- [mustache](http://mustache.github.io/)
+- [bootstrap](http://getbootstrap.com/)
+- [bootstrap fileinput](http://plugins.krajee.com/file-input)
+- [h2](http://www.h2database.com/html/cheatSheet.html)
+- [lombok](https://projectlombok.org/)
+- [jgiven](http://jgiven.org/)
+- [powermock](https://github.com/jayway/powermock/wiki)
+- [mockito](http://mockito.org/)
+- [gradle](http://gradle.org/)
+- [travis CI](https://travis-ci.org/)

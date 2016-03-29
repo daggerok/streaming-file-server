@@ -21,7 +21,8 @@ public final class FileItemUtil {
 
     static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
 
-    private FileItemUtil() {}
+    private FileItemUtil() {
+    }
 
     public static boolean isLarge(long size) {
         return size > NORMAL_FILE_SIZE;

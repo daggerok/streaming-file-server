@@ -14,19 +14,15 @@ import java.util.Optional;
 @Component
 public class WebInterceptor implements WebRequestInterceptor {
 
+    private static final ModelMap modelMap = new ModelMap();
     @Value("${app.upload.url}")
     String uploadUrl;
-
     @Value("${app.download.url}")
     String downloadUrl;
-
     @Value("${app.github.url}")
     String githubUrl;
-
     @Autowired
     ServletContext servletContext;
-
-    private static final ModelMap modelMap = new ModelMap();
 
     @PostConstruct
     public void setUp() {
@@ -40,7 +36,8 @@ public class WebInterceptor implements WebRequestInterceptor {
     }
 
     @Override
-    public void preHandle(WebRequest request) throws Exception {}
+    public void preHandle(WebRequest request) throws Exception {
+    }
 
     @Override
     public void postHandle(WebRequest request, ModelMap model) throws Exception {
@@ -48,5 +45,6 @@ public class WebInterceptor implements WebRequestInterceptor {
     }
 
     @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {}
+    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
+    }
 }

@@ -35,25 +35,6 @@ public class FileServiceBean implements FileService {
     @Value("${app.upload.path}")
     String uploadPath;
 
-    @Override
-    @SneakyThrows
-    public Stream<FileItem> getDownloads() {
-        Objects.requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
-
-        Path base = Paths.get(downloadPath);
-
-        if (Files.notExists(base)) {
-            Files.createDirectory(base);
-        }
-
-        return walk(Paths.get(downloadPath), FOLLOW_LINKS)
-                .filter(Files::isReadable)
-                .filter(Files::isWritable)
-                .filter(Files::isRegularFile)
-                .map(FileServiceBean::normalizeAbsolute)
-                .map(FileServiceBean::pathToFileItem);
-    }
-
     private static Path normalizeAbsolute(Path path) {
         return path.toAbsolutePath().normalize();
     }
@@ -81,6 +62,37 @@ public class FileServiceBean implements FileService {
         return FilenameUtils.getExtension(string(path));
     }
 
+    private static FileItem mapToNewFileItem(Path path) {
+        return pathToFileItem(path).setCreatedAt(LocalDateTime.now());
+    }
+
+    @Override
+    @SneakyThrows
+    public Stream<FileItem> getDownloads() {
+        Objects.requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
+
+        Path base = Paths.get(downloadPath);
+
+        if (Files.notExists(base)) {
+            Files.createDirectory(base);
+        }
+
+        return walk(Paths.get(downloadPath), FOLLOW_LINKS)
+                .filter(Files::isReadable)
+                .filter(Files::isWritable)
+                .filter(Files::isRegularFile)
+                .map(FileServiceBean::normalizeAbsolute)
+                .map(FileServiceBean::pathToFileItem);
+    }
+
+    /* // old manual style:
+    static final int EOF = -1;
+    byte[] bytes = new byte[org.springframework.util.StreamUtils.BUFFER_SIZE];
+    for (int read = from.read(bytes); read != EOF; read = from.read(bytes))
+        to.write(bytes, 0, read);
+    to.flush();
+    */
+
     @Override
     @SneakyThrows
     public void send(FileItem fileItem, HttpServletResponse response) {
@@ -93,14 +105,6 @@ public class FileServiceBean implements FileService {
             pipe(fileItem.isLarge(), from, to);
         }
     }
-
-    /* // old manual style:
-    static final int EOF = -1;
-    byte[] bytes = new byte[org.springframework.util.StreamUtils.BUFFER_SIZE];
-    for (int read = from.read(bytes); read != EOF; read = from.read(bytes))
-        to.write(bytes, 0, read);
-    to.flush();
-    */
 
     @Override
     @SneakyThrows
@@ -122,10 +126,6 @@ public class FileServiceBean implements FileService {
         pipe(FileItemUtil.isLarge(file.getSize()), from, to);
 
         return mapToNewFileItem(path);
-    }
-
-    private static FileItem mapToNewFileItem(Path path) {
-        return pathToFileItem(path).setCreatedAt(LocalDateTime.now());
     }
 
     /**

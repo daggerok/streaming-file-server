@@ -17,12 +17,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Target({METHOD, TYPE})
 @RequestMapping(method = POST)
 public @interface Post {
-    @AliasFor(annotation = RequestMapping.class, attribute = "path")
-    String[] value() default {};
+    @AliasFor(annotation = RequestMapping.class, attribute = "path") String[] value() default {};
 
-    @AliasFor(annotation = RequestMapping.class, attribute = "value")
-    String[] path() default {};
+    @AliasFor(annotation = RequestMapping.class, attribute = "value") String[] path() default {};
 
-    @AliasFor(annotation = RequestMapping.class, attribute = "produces")
-    String[] produces() default {};
+    @AliasFor(annotation = RequestMapping.class, attribute = "produces") String[] produces() default {};
 }
