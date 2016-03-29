@@ -13,7 +13,7 @@ import static com.daggerok.spring.streaming.fileserver.web.IndexPage.REDIRECT_IN
 
 @Controller
 @WebPage("/upload")
-public class UploadController {
+public class UploadResource {
 
     @Autowired
     UploadService uploadService;

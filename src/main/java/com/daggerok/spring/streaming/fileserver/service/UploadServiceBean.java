@@ -33,6 +33,7 @@ public class UploadServiceBean implements UploadService {
         FileItem fileItem = fileService.receive(file);
 
         fileItemRepository.save(fileItem);
-        redirectAttributes.addFlashAttribute("message", String.format("done with %s.", file.getOriginalFilename()));
+        redirectAttributes.addFlashAttribute("message",
+                String.format("done with %s.", file.getOriginalFilename()));
     }
 }

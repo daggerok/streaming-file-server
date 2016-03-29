@@ -34,16 +34,15 @@ public class DownloadServiceBean implements DownloadService {
 
     @Override
     @Transactional(readOnly = true)
-    public Stream<FileItem> search(String path) {
-        String like = "%".concat(path).concat("%");
+    public Stream<FileItem> search(String filename) {
+        String like = "%".concat(filename).concat("%");
 
         return fileItemRepository.findByFilenameLikeIgnoreCase(like);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public void download(String id, HttpServletResponse response) {
-        fileItemRepository.findById(Long.parseLong(id))
-                .ifPresent(fileItem -> fileService.send(fileItem, response));
+    public void download(Long id, HttpServletResponse response) {
+        fileItemRepository.findById(id).ifPresent(fileItem -> fileService.send(fileItem, response));
     }
 }

@@ -17,20 +17,20 @@ import static java.util.stream.Collectors.toList;
 
 @Controller
 @WebPage("/download")
-public class DownloadController {
+public class DownloadResource {
 
     @Autowired
     DownloadService downloadService;
 
     @Post
-    public String search(@RequestParam("path") String path, Model model) {
-        model.addAttribute("files", downloadService.search(path).collect(toList()));
+    public String search(@RequestParam("filename") String filename, Model model) {
+        model.addAttribute("files", downloadService.search(filename).collect(toList()));
 
         return INDEX;
     }
 
     @Get(value = "/{id}")
-    public void download(@PathVariable("id") String id, HttpServletResponse response) {
+    public void download(@PathVariable("id") Long id, HttpServletResponse response) {
         downloadService.download(id, response);
     }
 }
