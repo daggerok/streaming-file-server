@@ -32,33 +32,15 @@ open http://localhost:8080/api/browser
 
 technology stack:
 
-- spring-mvc
-- spring-boot
-- h2 db, console
-- spring-data rest and jpa
-- spring-utils, apache fileUpload
-- custom spring annotations (@Get, @Post, @WebPage)
-- common error handling (home redirect)
-- spring-data REST HAL browser
-- spring-devtools
-- lombok
-- mustache template engine
-- bootstrap-css, bootstrap-filelinput
-- JGiven, spring mvc and powermock testing (test coverage ...ing)
-- gradle
-- travis CI
-
-todo:
-
-- support removing files (rly..? as mininum from db)
-- improve files-db sync (replace FileSystem with GridFS or ...?)
-- bi-directional files synchronization with spring scheduling or batch
-- backup, restore, migration
-- security, spring-social
-
-links:
-
 - [spring](https://spring.io/)
+  - spring-mvc (mustache template engine)
+  - spring-boot
+  - spring-data rest and jpa
+  - spring-utils, apache fileUpload
+  - spring annotations (@Get, @Post, @WebPage)
+  - common error handling (home redirect)
+  - spring-data REST HAL browser
+  - spring-devtools
 - [mustache](http://mustache.github.io/)
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
@@ -69,3 +51,12 @@ links:
 - [mockito](http://mockito.org/)
 - [gradle](http://gradle.org/)
 - [travis CI](https://travis-ci.org/)
+
+todo:
+
+- support removing files (rly..? as mininum from db)
+- improve files-db sync (replace FileSystem with GridFS or ...?)
+- bi-directional files synchronization with spring scheduling or batch
+- backup, restore, migration
+- spring-security, spring-social
+
