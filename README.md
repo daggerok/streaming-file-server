@@ -12,7 +12,7 @@ $ open http://localhost:8080 # enjoy :)
 awesome JGiven reports!
 
 ```sh
-gradle jgiven
+gradle clean test jgiven
 open jgiven-reports/html/index.html
 ```
 
