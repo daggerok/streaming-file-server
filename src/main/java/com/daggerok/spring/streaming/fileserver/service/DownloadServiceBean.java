@@ -18,6 +18,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Transactional
 public class DownloadServiceBean implements DownloadService {
+
     @Autowired
     FileItemRepository fileItemRepository;
 

@@ -62,13 +62,8 @@ public class WebInterceptor implements WebRequestInterceptor {
         Optional.ofNullable(model).ifPresent(m -> {
             m.putAll(modelMap);
 
-            Optional.ofNullable(connectionRepository).ifPresent(cr ->
-                Optional.ofNullable(facebook).ifPresent(f ->
-                    Optional.ofNullable(cr.findPrimaryConnection(Facebook.class))
-                            .ifPresent(user -> {
-                                logJson(user);
-                                m.put("user", user);
-                            })));
+            Optional.ofNullable(connectionRepository.findPrimaryConnection(Facebook.class))
+                    .ifPresent(user -> m.put("user", user));
         });
     }
 
