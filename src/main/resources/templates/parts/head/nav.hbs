@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="header navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -18,7 +18,7 @@
         <li>
           <form class="navbar-form navbar-left" role="search" method="post" action="{{downloadUrl}}">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="looking something?" name="filename">
+              <input type="text" class="form-control" placeholder="looking for something?" name="filename">
               <button type="submit" class="btn btn-default">Search files</button>
             </div>
           </form>
@@ -26,7 +26,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          {{#user}}<div class="navbar-text">hi, <a href="{{profileUrl}}">{{displayName}}</a>!</div>{{/user}}
+          {{#user}}
+            <div class="navbar-text">
+              hi, <a class="text-muted btn-social-icon" href="{{profileUrl}}">{{displayName}}</a>!
+            </div>
+          {{/user}}
           {{^user}}
             <form class="navbar-form" role="search" method="post" action="{{ctx}}/connect/facebook">
               <div class="form-group">
