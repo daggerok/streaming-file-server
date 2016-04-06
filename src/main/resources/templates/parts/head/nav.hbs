@@ -25,16 +25,37 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          {{#user}}<div class="navbar-text">hi, <a href="{{profileUrl}}">{{displayName}}</a>!</div>{{/user}}
+          {{^user}}
+            <form class="navbar-form" role="search" method="post" action="{{ctx}}/connect/facebook">
+              <div class="form-group">
+                <input type="hidden" name="scope" value="user_posts"/>
+                <button class="btn btn-primary">
+                  <i class="fa fa-facebook"></i>
+                </button>
+              </div>
+            </form>
+          {{/user}}
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-             aria-expanded="false">Menu <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+             role="button" aria-haspopup="true" aria-expanded="false">
+            Menu <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
-            <li role="separator" class="divider"></li>
-            <li><a href="{{githubUrl}}">Github sources</a></li>
+            <!--<li role="separator" class="divider"></li>-->
+            <li>
+              <a class="btn btn-social-icon btn-github" href="{{githubUrl}}">
+                <i class="fa fa-github"></i> Source Code
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
 </nav>
 <main class="container-fluid">

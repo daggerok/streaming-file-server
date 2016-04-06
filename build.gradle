@@ -14,6 +14,7 @@ buildscript {
         jqueryVer = '2.2.2'
         bootstrapVer = '3.3.6'
         bootstrapFileInputVer = '4.3.1'
+        fontAwesomeVer = '4.5.0'
 
         powermockitoVer = '1.6.4'
         jgivenVer = '0.11.3'
@@ -50,6 +51,7 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-data-rest',
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-hateoas',
+            'org.springframework.social:spring-social-facebook',
             'com.fasterxml.jackson.core:jackson-databind',
             "org.apache.commons:commons-io:$commonsIoVer",
             'com.h2database:h2',
@@ -60,7 +62,8 @@ dependencies {
 
             "org.webjars:jquery:$jqueryVer",
             "org.webjars:bootstrap:$bootstrapVer",
-            "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer"
+            "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
+            "org.webjars.bower:font-awesome:$fontAwesomeVer"
 
     testCompile 'org.springframework.boot:spring-boot-starter-test',
                 "org.powermock:powermock-module-junit4:$powermockitoVer",
