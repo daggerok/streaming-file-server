@@ -1,4 +1,4 @@
-package com.daggerok.spring.streaming.fileserver.web.feature.logout;
+package com.daggerok.spring.streaming.fileserver.web.feature.disconnect;
 
 import com.daggerok.spring.streaming.fileserver.web.annotation.Get;
 import lombok.SneakyThrows;

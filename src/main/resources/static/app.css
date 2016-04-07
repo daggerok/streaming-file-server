@@ -17,7 +17,7 @@ footer {
   padding: 1em;
 }
 
-.item > a:hove {
+.item > a:hover {
   background-color: grey;
 }
 
