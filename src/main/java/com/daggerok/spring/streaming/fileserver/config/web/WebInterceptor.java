@@ -1,7 +1,5 @@
 package com.daggerok.spring.streaming.fileserver.config.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,7 @@ public class WebInterceptor implements WebRequestInterceptor {
 
     @PostConstruct
     public void setUp() {
+
         val ctx = servletContext.getContextPath();
 
         modelMap.put("ctx", ctx);
@@ -58,6 +57,7 @@ public class WebInterceptor implements WebRequestInterceptor {
 
     @Override
     public void postHandle(WebRequest request, ModelMap model) throws Exception {
+
         Optional.ofNullable(model).ifPresent(m -> {
             m.putAll(modelMap);
 
@@ -66,14 +66,6 @@ public class WebInterceptor implements WebRequestInterceptor {
         });
     }
 
-    @SneakyThrows
-    private void logJson(Object obj) {
-        if (null == obj) return;
-
-        log.info("{}\n{}", obj.getClass().getSimpleName(), new ObjectMapper().writeValueAsString(obj));
-    }
-
     @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
-    }
+    public void afterCompletion(WebRequest request, Exception ex) throws Exception {}
 }

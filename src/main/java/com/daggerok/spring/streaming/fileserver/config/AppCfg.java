@@ -9,6 +9,7 @@ public class AppCfg {
 
     @Bean
     public RestTemplate restTemplate() {
+
         return new RestTemplate();
     }
 }

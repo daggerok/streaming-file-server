@@ -29,6 +29,7 @@ import static org.springframework.util.FileCopyUtils.copy;
 
 @Service
 public class FileServiceBean implements FileService {
+
     @Value("${app.download.path}")
     String downloadPath;
 
@@ -36,11 +37,13 @@ public class FileServiceBean implements FileService {
     String uploadPath;
 
     private static Path normalizeAbsolute(Path path) {
+
         return path.toAbsolutePath().normalize();
     }
 
     @SneakyThrows
     private static FileItem pathToFileItem(Path path) {
+
         return new FileItem()
                 .setFileType(FILE)
                 .setPath(string(path))
@@ -63,12 +66,14 @@ public class FileServiceBean implements FileService {
     }
 
     private static FileItem mapToNewFileItem(Path path) {
+
         return pathToFileItem(path).setCreatedAt(LocalDateTime.now());
     }
 
     @Override
     @SneakyThrows
     public Stream<FileItem> getDownloads() {
+
         Objects.requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
 
         Path base = Paths.get(downloadPath);
@@ -96,6 +101,7 @@ public class FileServiceBean implements FileService {
     @Override
     @SneakyThrows
     public void send(FileItem fileItem, HttpServletResponse response) {
+
         if (fileItem.isFile()) {
             Path file = Paths.get(fileItem.getPath());
             @Cleanup InputStream from = Files.newInputStream(file);
@@ -109,6 +115,7 @@ public class FileServiceBean implements FileService {
     @Override
     @SneakyThrows
     public void setupUploads() {
+
         Path base = Paths.get(uploadPath);
 
         if (Files.notExists(base)) {
@@ -119,6 +126,7 @@ public class FileServiceBean implements FileService {
     @Override
     @SneakyThrows
     public FileItem receive(MultipartFile file) {
+
         Path path = normalizeAbsolute(resolve(file.getOriginalFilename()));
         @Cleanup InputStream from = file.getInputStream();
         @Cleanup OutputStream to = Files.newOutputStream(path);
@@ -132,6 +140,7 @@ public class FileServiceBean implements FileService {
      * resolve path using given filename and upload base path from configuration
      */
     private Path resolve(final String filename) {
+
         return Paths.get(uploadPath, filename);
     }
 
@@ -146,6 +155,7 @@ public class FileServiceBean implements FileService {
      */
     @SneakyThrows
     private void pipe(boolean expression, InputStream from, OutputStream to) {
+
         if (expression) {
             copyLarge(from, to);
         } else {

@@ -22,6 +22,7 @@ public class DownloadResource {
 
     @Post
     public String search(@RequestParam("filename") String filename, Model model) {
+
         model.addAttribute("files", downloadService.search(filename).collect(toList()));
 
         return INDEX;
@@ -29,6 +30,7 @@ public class DownloadResource {
 
     @Get("/{id}")
     public void download(@PathVariable("id") Long id, HttpServletResponse response) {
+
         downloadService.download(id, response);
     }
 }

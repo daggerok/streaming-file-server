@@ -21,6 +21,7 @@ public class IndexPage {
 
     @Get
     public String index(Model model) {
+
         List<FileItem> files = fileItemRepository.findAll();
 
         model.addAttribute("files", files);

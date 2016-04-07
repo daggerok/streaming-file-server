@@ -17,6 +17,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Target({METHOD, TYPE})
 @RequestMapping(method = GET)
 public @interface Get {
+
     @AliasFor(annotation = RequestMapping.class, attribute = "path") String[] value() default {};
 
     @AliasFor(annotation = RequestMapping.class, attribute = "value") String[] path() default {};

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Stream;
 
 public interface FileService {
+
     Stream<FileItem> getDownloads();
 
     void send(FileItem fileItem, HttpServletResponse response);

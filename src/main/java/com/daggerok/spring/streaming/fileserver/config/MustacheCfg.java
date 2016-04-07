@@ -8,11 +8,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @Configuration
 public class MustacheCfg extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
+
     @Autowired
     WebInterceptor webInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         super.addInterceptors(registry);
 
         registry.addWebRequestInterceptor(webInterceptor);

@@ -17,6 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Controller
 @RequestMapping
 public @interface WebPage {
+
     @AliasFor(annotation = RequestMapping.class, attribute = "path") String[] value() default {};
 
     @AliasFor(annotation = RequestMapping.class, attribute = "value") String[] path() default {};

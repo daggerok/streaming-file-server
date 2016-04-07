@@ -18,6 +18,7 @@ public class UploadResource {
 
     @Post
     public String post(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+
         uploadService.upload(file, redirectAttributes);
 
         return REDIRECT_INDEX;

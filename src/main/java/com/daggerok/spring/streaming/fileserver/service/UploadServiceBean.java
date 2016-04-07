@@ -25,11 +25,13 @@ public class UploadServiceBean implements UploadService {
     @PostConstruct
     @Transactional(readOnly = true)
     public void sync() {
+
         fileService.setupUploads();
     }
 
     @Override
     public void upload(MultipartFile file, RedirectAttributes redirectAttributes) {
+
         FileItem fileItem = fileService.receive(file);
 
         fileItemRepository.save(fileItem);

@@ -28,12 +28,16 @@
         <li>
           {{#user}}
             <div class="navbar-text">
-              <a class="text-muted" href="{{ctx}}/logout">hi</a>, <a class="text-muted btn-social-icon" href="{{profileUrl}}">{{displayName}}</a>!
+              Hi, <a class="text-muted btn-social-icon" href="{{profileUrl}}">{{displayName}}</a>!
+            </div>
+            <div class="navbar-text">
+              <a class="text-muted btn-social-icon" href="{{ctx}}/disconnect"><i class="fa fa-sign-out"></i></a>
             </div>
           {{/user}}
           {{^user}}
             <form class="navbar-form" role="search" method="post" action="{{ctx}}/connect/facebook">
               <div class="form-group">
+                <span id="anonymous" class="text-muted">Hello, friend! &nbsp;&nbsp;&nbsp;</span>
                 <input type="hidden" name="scope" value="user_posts"/>
                 <button class="btn btn-primary">
                   <i class="fa fa-facebook"></i>

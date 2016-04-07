@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Stream;
 
 public interface DownloadService {
+
     Stream<FileItem> search(String path);
 
     void download(Long id, HttpServletResponse response);

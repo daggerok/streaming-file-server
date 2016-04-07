@@ -28,6 +28,7 @@ public class DownloadServiceBean implements DownloadService {
     @Synchronized
     @PostConstruct
     public void sync() {
+
         try (Stream<FileItem> items = fileService.getDownloads()) {
             fileItemRepository.save(items.collect(toList()));
         }
@@ -36,6 +37,7 @@ public class DownloadServiceBean implements DownloadService {
     @Override
     @Transactional(readOnly = true)
     public Stream<FileItem> search(String filename) {
+
         String like = "%".concat(filename).concat("%");
 
         return fileItemRepository.findByFilenameLikeIgnoreCase(like);
@@ -44,6 +46,7 @@ public class DownloadServiceBean implements DownloadService {
     @Override
     @Transactional(readOnly = true)
     public void download(Long id, HttpServletResponse response) {
+
         fileItemRepository.findById(id).ifPresent(fileItem -> fileService.send(fileItem, response));
     }
 }

@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 @RepositoryRestResource
 public interface FileItemRepository extends JpaRepository<FileItem, Long> {
+
     Optional<FileItem> findById(@Param("id") long id);
 
     Stream<FileItem> findByFilenameLikeIgnoreCase(@Param("filename") String filename);

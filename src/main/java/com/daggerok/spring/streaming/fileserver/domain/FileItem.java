@@ -54,11 +54,13 @@ public class FileItem implements Serializable {
 
     @Transient
     public boolean isFile() {
+
         return FILE.equals(this.fileType);
     }
 
     @Transient
     public boolean isLarge() {
+
         return this.size > NORMAL_FILE_SIZE;
     }
 }

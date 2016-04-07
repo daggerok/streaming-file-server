@@ -6,5 +6,4 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @Configuration
 @ComponentScan(basePackageClasses = Jsr310JpaConverters.class)
-public class Jsr310JpaCfg {
-}
+public class Jsr310JpaCfg {}
