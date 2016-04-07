@@ -27,7 +27,7 @@ public class DownloadResource {
         return INDEX;
     }
 
-    @Get(value = "/{id}")
+    @Get("/{id}")
     public void download(@PathVariable("id") Long id, HttpServletResponse response) {
         downloadService.download(id, response);
     }
