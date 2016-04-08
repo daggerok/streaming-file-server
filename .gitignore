@@ -7,3 +7,4 @@ gradle/*
 files/*
 !files/.gitkeep
 jgiven-reports/
+streaming-file-server.i*
