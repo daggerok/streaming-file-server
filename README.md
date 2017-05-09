@@ -59,4 +59,3 @@ todo:
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - spring-security, spring-social
-

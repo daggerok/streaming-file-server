@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class MustacheCfg extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
+public class MustacheCfg extends WebMvcConfigurerAdapter {
 
     @Autowired
     WebInterceptor webInterceptor;

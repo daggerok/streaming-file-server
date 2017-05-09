@@ -1,48 +1,38 @@
-buildscript {
-    ext {
-        ver = '1.0.0'
-        baseName = 'streaming-file-server'
-        group = 'com.daggerok.spring'
-
-        environmentFileDir = 'gradle'
-        propertiesPluginEnvironmentNameProperty = 'env'
-        gradleVersionsPluginVer = '0.12.0'
-
-        springBootVer = '1.3.3.RELEASE'
-        commonsIoVer = '1.3.2'
-        lombokVer = '1.16.8'
-        jqueryVer = '2.2.2'
-        bootstrapVer = '3.3.6'
-        bootstrapFileInputVer = '4.3.1'
-        fontAwesomeVer = '4.5.0'
-
-        powermockitoVer = '1.6.4'
-        jgivenVer = '0.11.3'
-
-        gradleVer = '2.12'
-    }
-    dependencies {
-        repositories { jcenter() }
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer",
-                  "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVer"
-    }
-}
 plugins {
-    id "io.spring.dependency-management" version '0.5.6.RELEASE'
+    id 'java'
+    id 'idea'
+    id 'application'
+    id 'cn.bestwu.propdeps' version '0.0.10'
+    id 'cn.bestwu.propdeps-idea' version '0.0.10'
+    id 'cn.bestwu.propdeps-maven' version '0.0.10'
+    id 'cn.bestwu.propdeps-eclipse' version '0.0.10'
+    id 'org.springframework.boot' version '1.5.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.2.RELEASE'
+    id 'com.github.ben-manes.versions' version '0.14.0'
     id 'net.saliman.properties' version '1.4.5'
 }
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
-apply plugin: 'com.github.ben-manes.versions'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = sourceCompatibility
+ext {
+    baseName = 'streaming-file-server'
 
-jar {
-    baseName = baseName
-    version = ver
+    environmentFileDir = 'gradle'
+    propertiesPluginEnvironmentNameProperty = 'env'
+    gradleVersionsPluginVer = '0.12.0'
+
+    springBootVersion = '1.5.3.RELEASE'
+    commonsIoVer = '1.3.2'
+    jqueryVer = '2.2.2'
+    bootstrapVer = '3.3.6'
+    bootstrapFileInputVer = '4.3.1'
+    fontAwesomeVer = '4.5.0'
+
+    powermockitoVer = '1.6.4'
+    jgivenVer = '0.11.3'
 }
+
+version '1.0.0'
+group 'com.daggerok.spring'
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories { jcenter() }
 
@@ -58,7 +48,7 @@ dependencies {
 
             'org.springframework.data:spring-data-rest-hal-browser',
             'org.springframework.boot:spring-boot-devtools',
-            "org.projectlombok:lombok:$lombokVer",
+            "org.projectlombok:lombok",
 
             "org.webjars:jquery:$jqueryVer",
             "org.webjars:bootstrap:$bootstrapVer",
@@ -74,7 +64,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVer"
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
     }
 }
 
@@ -86,5 +76,3 @@ task jgiven(type: JavaExec, dependsOn: 'test') {
             '--format=html'
     classpath = configurations.testCompile
 }
-
-task wrapper(type: Wrapper) { gradleVersion = gradleVer }
