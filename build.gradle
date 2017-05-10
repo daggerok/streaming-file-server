@@ -1,3 +1,20 @@
+buildscript {
+    ext {
+        baseName = 'streaming-file-server'
+
+        environmentFileDir = 'gradle'
+        propertiesPluginEnvironmentNameProperty = 'env'
+
+        commonsIoVer = '1.3.2'
+        jqueryVer = '2.2.2'
+        bootstrapVer = '3.3.6'
+        bootstrapFileInputVer = '4.3.1'
+        fontAwesomeVer = '4.5.0'
+        powermockitoVer = '1.6.4'
+        jgivenVer = '0.11.3'
+    }
+}
+
 plugins {
     id 'java'
     id 'idea'
@@ -9,25 +26,7 @@ plugins {
     id 'org.springframework.boot' version '1.5.3.RELEASE'
     id 'io.spring.dependency-management' version '1.0.2.RELEASE'
     id 'com.github.ben-manes.versions' version '0.14.0'
-    id 'net.saliman.properties' version '1.4.5'
-}
-
-ext {
-    baseName = 'streaming-file-server'
-
-    environmentFileDir = 'gradle'
-    propertiesPluginEnvironmentNameProperty = 'env'
-    gradleVersionsPluginVer = '0.12.0'
-
-    springBootVersion = '1.5.3.RELEASE'
-    commonsIoVer = '1.3.2'
-    jqueryVer = '2.2.2'
-    bootstrapVer = '3.3.6'
-    bootstrapFileInputVer = '4.3.1'
-    fontAwesomeVer = '4.5.0'
-
-    powermockitoVer = '1.6.4'
-    jgivenVer = '0.11.3'
+    id 'net.saliman.properties' version '1.4.6'
 }
 
 version '1.0.0'
@@ -48,7 +47,7 @@ dependencies {
 
             'org.springframework.data:spring-data-rest-hal-browser',
             'org.springframework.boot:spring-boot-devtools',
-            "org.projectlombok:lombok",
+            'org.projectlombok:lombok',
 
             "org.webjars:jquery:$jqueryVer",
             "org.webjars:bootstrap:$bootstrapVer",
@@ -64,7 +63,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.5.3.RELEASE'
     }
 }
 
@@ -72,7 +71,6 @@ bootRun { systemProperties = System.properties }
 
 task jgiven(type: JavaExec, dependsOn: 'test') {
     main = 'com.tngtech.jgiven.report.ReportGenerator'
-    args '--targetDir=./jgiven-reports/html',
-            '--format=html'
+    args '--targetDir=./jgiven-reports/html', '--format=html'
     classpath = configurations.testCompile
 }
