@@ -2,8 +2,8 @@ package com.daggerok.spring.streaming.fileserver.service;
 
 import com.daggerok.spring.streaming.fileserver.domain.FileItem;
 import com.daggerok.spring.streaming.fileserver.domain.FileItemRepository;
-import com.daggerok.spring.streaming.fileserver.service.api.DownloadService;
-import com.daggerok.spring.streaming.fileserver.service.api.FileService;
+import com.daggerok.spring.streaming.fileserver.service.contract.DownloadService;
+import com.daggerok.spring.streaming.fileserver.service.contract.FileService;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
@@ -22,8 +22,8 @@ import static java.util.stream.Collectors.toList;
 @Transactional(readOnly = true)
 public class DownloadServiceBean implements DownloadService {
 
-    final FileItemRepository fileItemRepository;
     final FileService fileService;
+    final FileItemRepository fileItemRepository;
 
     @Synchronized
     @PostConstruct

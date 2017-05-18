@@ -1,6 +1,6 @@
-package com.daggerok.spring.streaming.fileserver.web.feature.download;
+package com.daggerok.spring.streaming.fileserver.web.feature;
 
-import com.daggerok.spring.streaming.fileserver.service.api.DownloadService;
+import com.daggerok.spring.streaming.fileserver.service.contract.DownloadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import static com.daggerok.spring.streaming.fileserver.web.IndexPage.INDEX;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/download")
-public class DownloadResource {
+public class DownloadController {
 
     final DownloadService downloadService;
 

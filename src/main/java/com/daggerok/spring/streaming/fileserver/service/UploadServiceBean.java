@@ -1,8 +1,8 @@
 package com.daggerok.spring.streaming.fileserver.service;
 
 import com.daggerok.spring.streaming.fileserver.domain.FileItemRepository;
-import com.daggerok.spring.streaming.fileserver.service.api.FileService;
-import com.daggerok.spring.streaming.fileserver.service.api.UploadService;
+import com.daggerok.spring.streaming.fileserver.service.contract.FileService;
+import com.daggerok.spring.streaming.fileserver.service.contract.UploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,7 @@ public class UploadServiceBean implements UploadService {
 
         val fileItem = fileService.receive(file)
                                   .setOwner(owner);
+
         fileItemRepository.save(fileItem);
         redirectAttributes.addFlashAttribute("message",
                                              format("done with %s.", file.getOriginalFilename()));

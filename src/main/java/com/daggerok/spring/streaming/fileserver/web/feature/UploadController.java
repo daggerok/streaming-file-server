@@ -1,8 +1,7 @@
-package com.daggerok.spring.streaming.fileserver.web.feature.upload;
+package com.daggerok.spring.streaming.fileserver.web.feature;
 
-import com.daggerok.spring.streaming.fileserver.service.api.UploadService;
+import com.daggerok.spring.streaming.fileserver.service.contract.UploadService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
@@ -14,17 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.daggerok.spring.streaming.fileserver.web.IndexPage.REDIRECT_INDEX;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UploadResource {
+public class UploadController {
 
     final UploadService uploadService;
     final ConnectionRepository connectionRepository;
 
     @PostMapping("/upload")
-    public String post(@RequestParam("file") MultipartFile file,
-                       RedirectAttributes redirectAttributes) {
+    public String post(@RequestParam("file") final MultipartFile file, final RedirectAttributes redirectAttributes) {
 
         val connection = connectionRepository.findPrimaryConnection(Facebook.class);
 

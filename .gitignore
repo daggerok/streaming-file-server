@@ -1,5 +1,7 @@
 .DS_Store
-.idea/
+*.iml
+*.ipr
+*.iws
 build/
 jgiven-reports/
 streaming-file-server.i*
@@ -7,3 +9,5 @@ streaming-file-server.i*
 !build.gradle
 files/
 !files/.gitkeep
+.idea/
+!.idea/runConfigurations/*

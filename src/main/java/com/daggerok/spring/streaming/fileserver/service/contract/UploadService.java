@@ -1,4 +1,4 @@
-package com.daggerok.spring.streaming.fileserver.service.api;
+package com.daggerok.spring.streaming.fileserver.service.contract;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

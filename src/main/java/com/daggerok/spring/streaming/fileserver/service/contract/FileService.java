@@ -1,4 +1,4 @@
-package com.daggerok.spring.streaming.fileserver.service.api;
+package com.daggerok.spring.streaming.fileserver.service.contract;
 
 import com.daggerok.spring.streaming.fileserver.domain.FileItem;
 import org.springframework.web.multipart.MultipartFile;

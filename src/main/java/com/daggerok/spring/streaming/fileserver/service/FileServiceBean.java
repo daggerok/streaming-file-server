@@ -2,7 +2,7 @@ package com.daggerok.spring.streaming.fileserver.service;
 
 import com.daggerok.spring.streaming.fileserver.config.props.AppProps;
 import com.daggerok.spring.streaming.fileserver.domain.FileItem;
-import com.daggerok.spring.streaming.fileserver.service.api.FileService;
+import com.daggerok.spring.streaming.fileserver.service.contract.FileService;
 import com.daggerok.spring.streaming.fileserver.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static com.daggerok.spring.streaming.fileserver.domain.FileType.FILE;
@@ -29,43 +28,21 @@ import static java.util.Objects.requireNonNull;
 import static org.apache.tomcat.util.http.fileupload.IOUtils.copyLarge;
 import static org.springframework.util.FileCopyUtils.copy;
 
+/**
+ * old manual style:
+ * <p>
+ * int EOF = -1;
+ * byte[] bytes = new byte[org.springframework.util.StreamUtils.BUFFER_SIZE];
+ * for (int read = from.read(bytes); read != EOF; read = from.read(bytes)) {
+ *   to.write(bytes, 0, read);
+ * }
+ * to.flush();
+*/
 @Service
 @RequiredArgsConstructor
 public class FileServiceBean implements FileService {
 
     final AppProps app;
-
-    private static Path normalizeAbsolute(Path path) {
-        return path.toAbsolutePath().normalize();
-    }
-
-    @SneakyThrows
-    private static FileItem pathToFileItem(Path path) {
-
-        return new FileItem()
-                .setFileType(FILE)
-                .setPath(string(path))
-                .setSize(Files.size(path))
-                .setFilename(filename(path))
-                .setExtension(extension(path))
-                .setPrettySize(FileItemUtil.toString(Files.size(path)));
-    }
-
-    private static String string(Path path) {
-        return path.toString();
-    }
-
-    private static String filename(Path path) {
-        return FilenameUtils.getName(string(path));
-    }
-
-    private static String extension(Path path) {
-        return FilenameUtils.getExtension(string(path));
-    }
-
-    private static FileItem mapToNewFileItem(Path path) {
-        return FileItem.class.cast(pathToFileItem(path).setCreatedAt(LocalDateTime.now()));
-    }
 
     @Override
     @SneakyThrows
@@ -79,21 +56,14 @@ public class FileServiceBean implements FileService {
             createDirectory(base);
         }
 
-        return walk(get(app.download.path), FOLLOW_LINKS)
-                .filter(Files::isReadable)
-                .filter(Files::isWritable)
-                .filter(Files::isRegularFile)
-                .map(FileServiceBean::normalizeAbsolute)
-                .map(FileServiceBean::pathToFileItem);
-    }
+        val fileStream = walk(get(app.download.path), FOLLOW_LINKS);
 
-    /* // old manual style:
-    static final int EOF = -1;
-    byte[] bytes = new byte[org.springframework.util.StreamUtils.BUFFER_SIZE];
-    for (int read = from.read(bytes); read != EOF; read = from.read(bytes))
-        to.write(bytes, 0, read);
-    to.flush();
-    */
+        return fileStream.filter(Files::isReadable)
+                         .filter(Files::isWritable)
+                         .filter(Files::isRegularFile)
+                         .map(FileServiceBean::normalizeAbsolute)
+                         .map(FileServiceBean::pathToFileItem);
+    }
 
     @Override
     @SneakyThrows
@@ -106,7 +76,7 @@ public class FileServiceBean implements FileService {
         @Cleanup val to = response.getOutputStream();
 
         response.setHeader("Content-Disposition", format("attachment; filename=%s", file.getFileName()));
-        pipe(fileItem.isLarge(), from, to);
+        cp(fileItem.isLarge(), from, to);
     }
 
     @Override
@@ -128,8 +98,35 @@ public class FileServiceBean implements FileService {
         @Cleanup val from = file.getInputStream();
         @Cleanup val to = newOutputStream(path);
 
-        pipe(FileItemUtil.isLarge(file.getSize()), from, to);
-        return mapToNewFileItem(path);
+        cp(FileItemUtil.isLarge(file.getSize()), from, to);
+        return pathToFileItem(path);
+    }
+
+    private static Path normalizeAbsolute(Path path) {
+        return path.toAbsolutePath().normalize();
+    }
+
+    @SneakyThrows
+    private static FileItem pathToFileItem(Path path) {
+
+        return new FileItem().setFileType(FILE)
+                             .setPath(string(path))
+                             .setSize(Files.size(path))
+                             .setFilename(filename(path))
+                             .setExtension(extension(path))
+                             .setPrettySize(FileItemUtil.toString(Files.size(path)));
+    }
+
+    private static String string(Path path) {
+        return path.toString();
+    }
+
+    private static String filename(Path path) {
+        return FilenameUtils.getName(string(path));
+    }
+
+    private static String extension(Path path) {
+        return FilenameUtils.getExtension(string(path));
     }
 
     /**
@@ -144,16 +141,19 @@ public class FileServiceBean implements FileService {
      * <p>
      * support large streams, ie > 2Gib, in case: using copyLarge
      *
-     * @param expression large file or not
-     * @param from       source stream
-     * @param to         destination stream
+     * @param isLarge large file or not
+     * @param from    source stream
+     * @param to      destination stream
      */
     @SneakyThrows
-    private void pipe(boolean expression, InputStream from, OutputStream to) {
+    private static void cp(boolean isLarge, InputStream from, OutputStream to) {
 
-        if (expression) {
+        if (isLarge) {
+
             copyLarge(from, to);
+
         } else {
+
             copy(from, to);
         }
     }

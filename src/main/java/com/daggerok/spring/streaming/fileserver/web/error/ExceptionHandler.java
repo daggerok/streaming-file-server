@@ -1,4 +1,4 @@
-package com.daggerok.spring.streaming.fileserver.error;
+package com.daggerok.spring.streaming.fileserver.web.error;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

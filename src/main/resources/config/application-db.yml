@@ -3,7 +3,6 @@ spring:
     url: jdbc:h2:mem:fs;DB_CLOSE_ON_EXIT=FALSE
     username: fs
     password: fs
-  data.rest.base-path: /api
   h2.console:
     enabled: true
     path: /h2

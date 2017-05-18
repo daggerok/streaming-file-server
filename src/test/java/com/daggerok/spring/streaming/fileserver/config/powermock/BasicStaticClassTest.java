@@ -13,8 +13,10 @@ import static org.mockito.Mockito.when;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(BasicStaticClassTest.class)
 public class BasicStaticClassTest {
+
     @Test
     public void testStaticMock() throws Exception {
+
         PowerMockito.mockStatic(StaticClass.class);
 
         when(StaticClass.underscore(anyString())).thenCallRealMethod();
@@ -27,6 +29,7 @@ public class BasicStaticClassTest {
     }
 
     public static class StaticClass {
+
         public static String underscore(String brand) {
             return child(brand.toLowerCase()).replaceAll(" ", "-");
         }
