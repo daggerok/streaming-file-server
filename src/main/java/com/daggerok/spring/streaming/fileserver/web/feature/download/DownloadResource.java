@@ -1,36 +1,31 @@
 package com.daggerok.spring.streaming.fileserver.web.feature.download;
 
 import com.daggerok.spring.streaming.fileserver.service.api.DownloadService;
-import com.daggerok.spring.streaming.fileserver.web.annotation.Get;
-import com.daggerok.spring.streaming.fileserver.web.annotation.Post;
-import com.daggerok.spring.streaming.fileserver.web.annotation.WebPage;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
 import static com.daggerok.spring.streaming.fileserver.web.IndexPage.INDEX;
-import static java.util.stream.Collectors.toList;
 
-@WebPage("/download")
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/download")
 public class DownloadResource {
 
-    @Autowired
-    DownloadService downloadService;
+    final DownloadService downloadService;
 
-    @Post
+    @PostMapping
     public String search(@RequestParam("filename") String filename, Model model) {
 
-        model.addAttribute("files", downloadService.search(filename).collect(toList()));
-
+        model.addAttribute("files", downloadService.search(filename));
         return INDEX;
     }
 
-    @Get("/{id}")
+    @GetMapping("/{id}")
     public void download(@PathVariable("id") Long id, HttpServletResponse response) {
-
         downloadService.download(id, response);
     }
 }

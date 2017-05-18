@@ -24,6 +24,7 @@ jdbc url: jdbc:h2:mem:fs
 username: fs
 password: fs
 ```
+
 spring data HAL browser:
 
 ```sh

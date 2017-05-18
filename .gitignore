@@ -1,10 +1,9 @@
 .DS_Store
-.gradle/
 .idea/
 build/
-gradle/*
-!gradle/.gitkeep
-files/*
-!files/.gitkeep
 jgiven-reports/
 streaming-file-server.i*
+*gradle*
+!build.gradle
+files/
+!files/.gitkeep

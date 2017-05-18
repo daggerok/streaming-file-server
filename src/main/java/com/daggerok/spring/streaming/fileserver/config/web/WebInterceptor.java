@@ -1,8 +1,8 @@
 package com.daggerok.spring.streaming.fileserver.config.web;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
@@ -13,10 +13,12 @@ import org.springframework.web.context.request.WebRequestInterceptor;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
-import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class WebInterceptor implements WebRequestInterceptor {
 
     private static final ModelMap modelMap = new ModelMap();
@@ -30,14 +32,8 @@ public class WebInterceptor implements WebRequestInterceptor {
     @Value("${app.github.url}")
     String githubUrl;
 
-    @Autowired
-    ServletContext servletContext;
-
-    @Autowired
-    ConnectionRepository connectionRepository;
-
-    @Autowired
-    Facebook facebook;
+    final ServletContext servletContext;
+    final ConnectionRepository connectionRepository;
 
     @PostConstruct
     public void setUp() {
@@ -45,24 +41,25 @@ public class WebInterceptor implements WebRequestInterceptor {
         val ctx = servletContext.getContextPath();
 
         modelMap.put("ctx", ctx);
-        modelMap.put("webjars", ctx.concat("/webjars"));
         modelMap.put("downloadUrl", downloadUrl);
         modelMap.put("uploadUrl", uploadUrl);
         modelMap.put("githubUrl", githubUrl);
     }
 
     @Override
-    public void preHandle(WebRequest request) throws Exception {
-    }
+    public void preHandle(WebRequest request) throws Exception {}
 
     @Override
     public void postHandle(WebRequest request, ModelMap model) throws Exception {
 
-        Optional.ofNullable(model).ifPresent(m -> {
+        ofNullable(model).ifPresent(m -> {
+
             m.putAll(modelMap);
 
-            Optional.ofNullable(connectionRepository.findPrimaryConnection(Facebook.class))
-                    .ifPresent(user -> m.put("user", user));
+            val user = connectionRepository.findPrimaryConnection(Facebook.class);
+
+            ofNullable(user)
+                .ifPresent(u -> m.put("user", u));
         });
     }
 

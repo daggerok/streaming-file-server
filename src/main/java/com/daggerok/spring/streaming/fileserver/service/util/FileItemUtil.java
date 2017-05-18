@@ -9,20 +9,13 @@ import java.text.DecimalFormat;
 @Slf4j
 public final class FileItemUtil {
 
-    public static final String ZERO = "0";
-
-    public static final String[] UNITS = new String[]{"b", "kb", "Mb", "Gb", "Tb"};
-
-    public static final int Kib = 1024;
-
-    public static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
-
+    static final int Kib = 1024;
+    static final String ZERO = "0";
+    static final String[] UNITS = new String[]{"b", "kb", "Mb", "Gb", "Tb"};
     static final String DECIMAL_FORMAT_PATTERN = "#,##0.#";
-
     static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
 
-    private FileItemUtil() {
-    }
+    public static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
 
     public static boolean isLarge(long size) {
         return size > NORMAL_FILE_SIZE;
@@ -48,4 +41,6 @@ public final class FileItemUtil {
 
         return String.format("%s %s", amount, unit);
     }
+
+    private FileItemUtil() {}
 }

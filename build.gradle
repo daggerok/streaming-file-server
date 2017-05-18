@@ -12,6 +12,7 @@ buildscript {
         fontAwesomeVer = '4.5.0'
         powermockitoVer = '1.6.4'
         jgivenVer = '0.11.3'
+        webjarsLocatorVer = '0.30'
     }
 }
 
@@ -33,7 +34,10 @@ version '1.0.0'
 group 'com.daggerok.spring'
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
-repositories { jcenter() }
+repositories {
+    jcenter()
+    mavenCentral()
+}
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-mustache',
@@ -42,6 +46,7 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-hateoas',
             'org.springframework.social:spring-social-facebook',
             'com.fasterxml.jackson.core:jackson-databind',
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8',
             "org.apache.commons:commons-io:$commonsIoVer",
             'com.h2database:h2',
 
@@ -49,6 +54,7 @@ dependencies {
             'org.springframework.boot:spring-boot-devtools',
             'org.projectlombok:lombok',
 
+            "org.webjars:webjars-locator:$webjarsLocatorVer",
             "org.webjars:jquery:$jqueryVer",
             "org.webjars:bootstrap:$bootstrapVer",
             "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",

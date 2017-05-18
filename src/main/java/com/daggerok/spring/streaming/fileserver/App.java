@@ -1,6 +1,7 @@
 package com.daggerok.spring.streaming.fileserver;
 
 import com.daggerok.spring.streaming.fileserver.config.AppCfg;
+import com.daggerok.spring.streaming.fileserver.config.AuditConfig;
 import com.daggerok.spring.streaming.fileserver.config.Jsr310JpaCfg;
 import com.daggerok.spring.streaming.fileserver.config.MustacheCfg;
 import org.springframework.boot.SpringApplication;
@@ -9,8 +10,9 @@ import org.springframework.context.annotation.Import;
 
 @Import({
         AppCfg.class,
+        AuditConfig.class,
         MustacheCfg.class,
-        Jsr310JpaCfg.class
+        Jsr310JpaCfg.class,
 })
 @SpringBootApplication
 public class App {

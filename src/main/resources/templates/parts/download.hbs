@@ -6,9 +6,10 @@
         <thead>
         <tr>
           <td>&check;</td>
+          <td>absolute path</td>
+          <td>owner</td>
           <td>size</td>
           <td>updated</td>
-          <td>absolute path</td>
         </tr>
         </thead>
         {{#files}}
@@ -18,14 +19,20 @@
                 <a href="{{ctx}}/{{downloadUrl}}/{{id}}" class="glyphicon glyphicon-download"/>
               {{/isFile}}
             </td>
-            <td>
+            <td class="col-sm-7">
+              <span class="text-muted">{{filename}}</span>
+            </td>
+            <td class="col-sm-2">
+              <span class="text-muted">
+                {{#owner}}{{.}}{{/owner}}
+                {{^owner}}-{{/owner}}
+              </span>
+            </td>
+            <td class="col-sm-1">
               <span class="text-muted">{{prettySize}}</span>
             </td>
             <td class="col-sm-2">
               <span class="text-muted">{{updatedAt.getMonth.name.toLowerCase}} {{updatedAt.getDayOfMonth}}, {{updatedAt.getYear}} at {{updatedAt.getHour}}:{{updatedAt.getMinute}}:{{updatedAt.getSecond}}</span>
-            </td>
-            <td class="col-sm-9">
-              <span class="text-muted">{{filename}}</span>
             </td>
           </tr>
         {{/files}}

@@ -5,6 +5,7 @@ import com.daggerok.spring.streaming.fileserver.service.api.FileService;
 import com.daggerok.spring.streaming.fileserver.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.val;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.daggerok.spring.streaming.fileserver.domain.FileType.FILE;
 import static java.lang.String.format;
 import static java.nio.file.FileVisitOption.FOLLOW_LINKS;
-import static java.nio.file.Files.walk;
+import static java.nio.file.Files.*;
+import static java.nio.file.Paths.get;
+import static java.util.Objects.requireNonNull;
 import static org.apache.tomcat.util.http.fileupload.IOUtils.copyLarge;
 import static org.springframework.util.FileCopyUtils.copy;
 
@@ -37,7 +38,6 @@ public class FileServiceBean implements FileService {
     String uploadPath;
 
     private static Path normalizeAbsolute(Path path) {
-
         return path.toAbsolutePath().normalize();
     }
 
@@ -66,23 +66,22 @@ public class FileServiceBean implements FileService {
     }
 
     private static FileItem mapToNewFileItem(Path path) {
-
-        return pathToFileItem(path).setCreatedAt(LocalDateTime.now());
+        return FileItem.class.cast(pathToFileItem(path).setCreatedAt(LocalDateTime.now()));
     }
 
     @Override
     @SneakyThrows
     public Stream<FileItem> getDownloads() {
 
-        Objects.requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
+        requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
 
-        Path base = Paths.get(downloadPath);
+        val base = get(downloadPath);
 
-        if (Files.notExists(base)) {
-            Files.createDirectory(base);
+        if (notExists(base)) {
+            createDirectory(base);
         }
 
-        return walk(Paths.get(downloadPath), FOLLOW_LINKS)
+        return walk(get(downloadPath), FOLLOW_LINKS)
                 .filter(Files::isReadable)
                 .filter(Files::isWritable)
                 .filter(Files::isRegularFile)
@@ -102,24 +101,24 @@ public class FileServiceBean implements FileService {
     @SneakyThrows
     public void send(FileItem fileItem, HttpServletResponse response) {
 
-        if (fileItem.isFile()) {
-            Path file = Paths.get(fileItem.getPath());
-            @Cleanup InputStream from = Files.newInputStream(file);
-            @Cleanup OutputStream to = response.getOutputStream();
+        if (!fileItem.isFile()) return;
 
-            response.setHeader("Content-Disposition", format("attachment; filename=%s", file.getFileName()));
-            pipe(fileItem.isLarge(), from, to);
-        }
+        val file = get(fileItem.getPath());
+        @Cleanup val from = newInputStream(file);
+        @Cleanup val to = response.getOutputStream();
+
+        response.setHeader("Content-Disposition", format("attachment; filename=%s", file.getFileName()));
+        pipe(fileItem.isLarge(), from, to);
     }
 
     @Override
     @SneakyThrows
     public void setupUploads() {
 
-        Path base = Paths.get(uploadPath);
+        val base = get(uploadPath);
 
-        if (Files.notExists(base)) {
-            Files.createDirectory(base);
+        if (notExists(base)) {
+            createDirectory(base);
         }
     }
 
@@ -127,12 +126,11 @@ public class FileServiceBean implements FileService {
     @SneakyThrows
     public FileItem receive(MultipartFile file) {
 
-        Path path = normalizeAbsolute(resolve(file.getOriginalFilename()));
-        @Cleanup InputStream from = file.getInputStream();
-        @Cleanup OutputStream to = Files.newOutputStream(path);
+        val path = normalizeAbsolute(resolve(file.getOriginalFilename()));
+        @Cleanup val from = file.getInputStream();
+        @Cleanup val to = newOutputStream(path);
 
         pipe(FileItemUtil.isLarge(file.getSize()), from, to);
-
         return mapToNewFileItem(path);
     }
 
@@ -140,8 +138,7 @@ public class FileServiceBean implements FileService {
      * resolve path using given filename and upload base path from configuration
      */
     private Path resolve(final String filename) {
-
-        return Paths.get(uploadPath, filename);
+        return get(uploadPath, filename);
     }
 
     /**

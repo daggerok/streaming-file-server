@@ -1,8 +1,8 @@
 package com.daggerok.spring.streaming.fileserver.web.feature.disconnect;
 
-import com.daggerok.spring.streaming.fileserver.web.annotation.Get;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import static java.lang.String.format;
 
 @RestController
+@RequiredArgsConstructor
 public class DisconnectResource {
 
-    @Autowired
-    RestTemplate restTemplate;
+    final RestTemplate restTemplate;
 
     @SneakyThrows
-    @Get("/disconnect")
+    @GetMapping("/disconnect")
     public void search(HttpServletRequest request, HttpServletResponse response) {
 
         restTemplate.delete(
