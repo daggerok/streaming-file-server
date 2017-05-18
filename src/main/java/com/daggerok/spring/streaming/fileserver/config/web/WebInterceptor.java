@@ -1,9 +1,9 @@
 package com.daggerok.spring.streaming.fileserver.config.web;
 
+import com.daggerok.spring.streaming.fileserver.config.props.AppProps;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Component;
@@ -23,15 +23,7 @@ public class WebInterceptor implements WebRequestInterceptor {
 
     private static final ModelMap modelMap = new ModelMap();
 
-    @Value("${app.upload.url}")
-    String uploadUrl;
-
-    @Value("${app.download.url}")
-    String downloadUrl;
-
-    @Value("${app.github.url}")
-    String githubUrl;
-
+    final AppProps app;
     final ServletContext servletContext;
     final ConnectionRepository connectionRepository;
 
@@ -41,9 +33,9 @@ public class WebInterceptor implements WebRequestInterceptor {
         val ctx = servletContext.getContextPath();
 
         modelMap.put("ctx", ctx);
-        modelMap.put("downloadUrl", downloadUrl);
-        modelMap.put("uploadUrl", uploadUrl);
-        modelMap.put("githubUrl", githubUrl);
+        modelMap.put("downloadUrl", app.download.url);
+        modelMap.put("uploadUrl", app.upload.url);
+        modelMap.put("githubUrl", app.github.url);
     }
 
     @Override

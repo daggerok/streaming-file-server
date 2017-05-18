@@ -30,8 +30,8 @@ plugins {
     id 'net.saliman.properties' version '1.4.6'
 }
 
-version '1.0.0'
-group 'com.daggerok.spring'
+version '2.0.0'
+group 'daggerok'
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {

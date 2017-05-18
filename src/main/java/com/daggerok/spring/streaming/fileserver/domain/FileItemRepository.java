@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -14,16 +13,4 @@ public interface FileItemRepository extends JpaRepository<FileItem, Long> {
     Optional<FileItem> findById(@Param("id") long id);
 
     Stream<FileItem> findByFilenameLikeIgnoreCase(@Param("filename") String filename);
-
-    Stream<FileItem> findBySizeGreaterThanEqual(@Param("size") long size);
-
-    Stream<FileItem> findBySizeBetween(@Param("from") long from, @Param("to") long to);
-
-    Stream<FileItem> findBySizeLessThanEqual(@Param("size") long size);
-
-    Stream<FileItem> findByCreatedAtBefore(@Param("createdAt") LocalDateTime updatedAt);
-
-    Stream<FileItem> findByCreatedAtBetween(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
-
-    Stream<FileItem> findByCreatedAtAfter(@Param("createdAt") LocalDateTime updatedAt);
 }

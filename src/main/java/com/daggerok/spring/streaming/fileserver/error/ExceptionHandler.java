@@ -27,6 +27,7 @@ public class ExceptionHandler implements ErrorController {
     @SneakyThrows
     @GetMapping("/error")
     public void error(HttpServletRequest request, HttpServletResponse response, Exception e) {
+
         log.error(nonNull(e)? e.getMessage() : "unexpected error.", e);
         response.sendRedirect(request.getContextPath().concat("/"));
     }

@@ -1,13 +1,14 @@
 package com.daggerok.spring.streaming.fileserver.service;
 
+import com.daggerok.spring.streaming.fileserver.config.props.AppProps;
 import com.daggerok.spring.streaming.fileserver.domain.FileItem;
 import com.daggerok.spring.streaming.fileserver.service.api.FileService;
 import com.daggerok.spring.streaming.fileserver.service.util.FileItemUtil;
 import lombok.Cleanup;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,13 +30,10 @@ import static org.apache.tomcat.util.http.fileupload.IOUtils.copyLarge;
 import static org.springframework.util.FileCopyUtils.copy;
 
 @Service
+@RequiredArgsConstructor
 public class FileServiceBean implements FileService {
 
-    @Value("${app.download.path}")
-    String downloadPath;
-
-    @Value("${app.upload.path}")
-    String uploadPath;
+    final AppProps app;
 
     private static Path normalizeAbsolute(Path path) {
         return path.toAbsolutePath().normalize();
@@ -73,15 +71,15 @@ public class FileServiceBean implements FileService {
     @SneakyThrows
     public Stream<FileItem> getDownloads() {
 
-        requireNonNull(downloadPath, "downloadPath is null, please, provide app.send.path variable");
+        requireNonNull(app.download.path, "downloadPath is null, please, provide app.send.path variable");
 
-        val base = get(downloadPath);
+        val base = get(app.download.path);
 
         if (notExists(base)) {
             createDirectory(base);
         }
 
-        return walk(get(downloadPath), FOLLOW_LINKS)
+        return walk(get(app.download.path), FOLLOW_LINKS)
                 .filter(Files::isReadable)
                 .filter(Files::isWritable)
                 .filter(Files::isRegularFile)
@@ -115,7 +113,7 @@ public class FileServiceBean implements FileService {
     @SneakyThrows
     public void setupUploads() {
 
-        val base = get(uploadPath);
+        val base = get(app.upload.path);
 
         if (notExists(base)) {
             createDirectory(base);
@@ -138,7 +136,7 @@ public class FileServiceBean implements FileService {
      * resolve path using given filename and upload base path from configuration
      */
     private Path resolve(final String filename) {
-        return get(uploadPath, filename);
+        return get(app.upload.path, filename);
     }
 
     /**
