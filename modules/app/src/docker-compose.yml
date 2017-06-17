@@ -3,7 +3,7 @@ services:
   app-db:
     image: healthcheck/postgres:alpine
     ports: ["5432:5432"]
-    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    volumes: ["app-db-data:/var/lib/postgresql/data"]
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
@@ -22,7 +22,7 @@ services:
       - app-db
     networks: [app-backing-services]
 volumes:
-  app-postgres-data: {}
+  app-db-data: {}
   app-data: {}
 networks:
   app-backing-services:

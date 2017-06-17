@@ -24,6 +24,10 @@ before_install:
   - source "$HOME/.sdkman/bin/sdkman-init.sh"
 script:
   - gradle clean build
+  - gradle dockerUp dockerDown
+  - gradle appUp
+  - sleep 2
+  - gradle dockerDown
   - gradle dependencyUpdates -Drevision=release
 after_script:
   - gradle --stop
