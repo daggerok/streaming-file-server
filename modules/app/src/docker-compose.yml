@@ -1,0 +1,29 @@
+version: "2.1"
+services:
+  app-db:
+    image: healthcheck/postgres:alpine
+    ports: ["5432:5432"]
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks: [app-backing-services]
+  app:
+    environment:
+      DB_HOST: app-db
+      DB_PORT: 5432
+    image: openjdk:8u131-jre-alpine
+    volumes:
+      - ../../../build/libs/streaming-file-server-2.0.0.jar:/var/app.jar:Z
+      - app-data:/var
+    command: java -jar /var/app.jar
+    depends_on:
+      - app-db
+    networks: [app-backing-services]
+volumes:
+  app-postgres-data: {}
+  app-data: {}
+networks:
+  app-backing-services:
+    driver: bridge

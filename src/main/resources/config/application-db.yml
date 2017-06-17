@@ -1,8 +1,19 @@
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:fs;DB_CLOSE_ON_EXIT=FALSE
+#    username: fs
+#    password: fs
+#  h2.console:
+#    enabled: true
+#    path: /h2
 spring:
   datasource:
-    url: jdbc:h2:mem:fs;DB_CLOSE_ON_EXIT=FALSE
-    username: fs
-    password: fs
-  h2.console:
-    enabled: true
-    path: /h2
+    url: jdbc:postgresql://${db.server.host}:${db.server.port}/${db.name}
+    username: ${db.user}
+    password: ${db.pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database: postgresql

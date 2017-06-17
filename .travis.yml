@@ -1,6 +1,32 @@
+group: edge
+dist: trusty
 language: java
 jdk: oraclejdk8
-script: gradle clean build
+install: true
+#env:
+#  SPRING_PROFILES_ACTIVE: default
+before_install:
+  - sudo apt update
+  - sudo apt install -y python-pip curl jq
+  # docker-compose
+  - sudo apt install -y python-pip
+  - sudo pip install docker-compose
+  - sudo usermod -aG docker $(whoami)
+  # kill whatever punning on pg port
+  - true | sudo kill $(sudo lsof -t -i:5432)
+  # gradle
+  - curl -s "https://get.sdkman.io" | bash
+  - mkdir -p "$HOME/.sdkman/etc"
+  - touch "$HOME/.sdkman/etc/config"
+  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - sdk use gradle
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+script:
+  - gradle clean build
+  - gradle dependencyUpdates -Drevision=release
+after_script:
+  - gradle --stop
 cache:
   directories:
     - $HOME/.gradle/

@@ -12,7 +12,6 @@ public class BasicOutcomeThen extends Stage<BasicOutcomeThen> {
     public static String state;
 
     public BasicOutcomeThen commonOutcome() {
-
         state = state.concat("... anymore!");
         assertThat("something wring here...", state, is("this state... will no longer empty... anymore!"));
         return self();

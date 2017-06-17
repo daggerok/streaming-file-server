@@ -3,9 +3,10 @@
 *.ipr
 *.iws
 build/
+gradle/
 jgiven-reports/
 streaming-file-server.i*
-*gradle*
+*gradlew*
 !build.gradle
 files/
 !files/.gitkeep

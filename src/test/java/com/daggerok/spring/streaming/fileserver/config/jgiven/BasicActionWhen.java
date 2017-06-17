@@ -9,7 +9,6 @@ public class BasicActionWhen extends Stage<BasicActionWhen> {
     public static String state;
 
     public BasicActionWhen commonAction() {
-
         state = state.concat("... will no longer empty");
         return self();
     }

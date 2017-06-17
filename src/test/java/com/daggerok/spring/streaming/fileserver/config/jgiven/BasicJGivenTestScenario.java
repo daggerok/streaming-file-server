@@ -7,7 +7,6 @@ public class BasicJGivenTestScenario extends ScenarioTest<BasicStateGiven, Basic
 
     @Test
     public void common_test_scenario() {
-
         given().commonState();
         when().commonAction();
         then().commonOutcome();

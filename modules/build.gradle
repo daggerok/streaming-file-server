@@ -1,0 +1,34 @@
+plugins {
+  id "com.avast.gradle.docker-compose" version "0.4.3" apply false
+}
+
+def thatPath = rootProject.projectDir.absolutePath
+
+configure(subprojects) { p ->
+
+  apply plugin: "docker-compose"
+
+  group "daggerok"
+  version "2.0.0"
+
+  // fucking windows paths... replace all: '\\' -> '/'
+  def root = thatPath.replaceAll("\\\\", '/')
+
+  dockerCompose {
+    useComposeFiles = ["$root/modules/${p.name}/src/docker-compose.yml"]
+    captureContainersOutput = true
+    stopContainers = true
+    removeContainers = true
+    removeImages = "Local"
+    removeVolumes = true
+    projectName = "$rootProject.name"
+  }
+
+  tasks.create("${p.name}Up") {
+    dependsOn ":assemble", composeUp
+  }
+
+  tasks.create("${p.name}Down") {
+    finalizedBy composeDown
+  }
+}

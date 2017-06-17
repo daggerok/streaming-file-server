@@ -6,12 +6,12 @@ buildscript {
         propertiesPluginEnvironmentNameProperty = 'env'
 
         commonsIoVer = '1.3.2'
-        jqueryVer = '2.2.2'
-        bootstrapVer = '3.3.6'
-        bootstrapFileInputVer = '4.3.1'
-        fontAwesomeVer = '4.5.0'
-        powermockitoVer = '1.6.4'
-        jgivenVer = '0.11.3'
+        jqueryVer = '3.2.1'
+        bootstrapVer = '3.3.7'
+        bootstrapFileInputVer = '4.4.0'
+        fontAwesomeVer = '4.7.0'
+        powermockitoVer = '1.7.0'
+        jgivenVer = '0.15.1'
         webjarsLocatorVer = '0.30'
     }
 }
@@ -19,14 +19,16 @@ buildscript {
 plugins {
     id 'java'
     id 'idea'
+    id 'maven'
     id 'application'
     id 'cn.bestwu.propdeps' version '0.0.10'
     id 'cn.bestwu.propdeps-idea' version '0.0.10'
     id 'cn.bestwu.propdeps-maven' version '0.0.10'
     id 'cn.bestwu.propdeps-eclipse' version '0.0.10'
-    id 'org.springframework.boot' version '1.5.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.2.RELEASE'
-    id 'com.github.ben-manes.versions' version '0.14.0'
+    id 'org.springframework.boot' version '1.5.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.3.RELEASE'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.8'
+    id 'com.github.ben-manes.versions' version '0.15.0'
     id 'net.saliman.properties' version '1.4.6'
 }
 
@@ -35,8 +37,9 @@ group 'daggerok'
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-    jcenter()
+    mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -44,9 +47,13 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.social:spring-social-facebook',
             'com.fasterxml.jackson.core:jackson-databind',
-            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8',
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310',
             "org.apache.commons:commons-io:$commonsIoVer",
-            'com.h2database:h2',
+            //'com.h2database:h2',
+
+            'com.querydsl:querydsl-core',
+            'com.querydsl:querydsl-jpa',
+            'com.querydsl:querydsl-apt',
 
             'org.springframework.boot:spring-boot-devtools',
             'org.projectlombok:lombok',
@@ -57,6 +64,8 @@ dependencies {
             "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
             "org.webjars.bower:font-awesome:$fontAwesomeVer"
 
+    runtime 'org.postgresql:postgresql'
+
     testCompile 'org.springframework.boot:spring-boot-starter-test',
                 "org.powermock:powermock-module-junit4:$powermockitoVer",
                 "org.powermock:powermock-api-mockito:$powermockitoVer",
@@ -66,14 +75,31 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.5.3.RELEASE'
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.5.4.RELEASE'
     }
 }
 
+springBoot { executable = true }
 bootRun { systemProperties = System.properties }
 
 task jgiven(type: JavaExec, dependsOn: 'test') {
     main = 'com.tngtech.jgiven.report.ReportGenerator'
     args '--targetDir=./jgiven-reports/html', '--format=html'
     classpath = configurations.testCompile
+}
+
+querydsl {
+    querydslSourcesDir = "src/main/gen"
+    querydslDefault = true
+    jpa = true
+}
+
+sourceSets {
+    generated
+    main
+    test
+}
+
+[test, build, bootRun].each {
+    it.dependsOn ":modules:docker:composeUp"
 }
