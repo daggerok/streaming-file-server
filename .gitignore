@@ -4,6 +4,7 @@
 *.iws
 build/
 gradle/
+.gradle/
 jgiven-reports/
 streaming-file-server.i*
 *gradlew*

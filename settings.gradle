@@ -1,7 +1,6 @@
 rootProject.name = "streaming-file-server"
 include "modules:app"
 include "modules:docker"
-//include "modules"
 
 //def modulesDir = file("$rootProject.projectDir.absolutePath/modules")
 //

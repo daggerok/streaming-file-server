@@ -15,17 +15,17 @@ import static com.daggerok.spring.streaming.fileserver.web.IndexPage.INDEX;
 @RequestMapping("/download")
 public class DownloadController {
 
-    final DownloadService downloadService;
+  final DownloadService downloadService;
 
-    @PostMapping
-    public String search(@RequestParam("filename") String filename, Model model) {
+  @PostMapping
+  public String search(@RequestParam("filename") String filename, Model model) {
 
-        model.addAttribute("files", downloadService.search(filename));
-        return INDEX;
-    }
+    model.addAttribute("files", downloadService.search(filename));
+    return INDEX;
+  }
 
-    @GetMapping("/{id}")
-    public void download(@PathVariable("id") Long id, HttpServletResponse response) {
-        downloadService.download(id, response);
-    }
+  @GetMapping("/{id}")
+  public void download(@PathVariable("id") Long id, HttpServletResponse response) {
+    downloadService.download(id, response);
+  }
 }

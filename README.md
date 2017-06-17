@@ -1,12 +1,15 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-java file server based on spring mvc and spring-boot with no limitation for upload and download files ..almost :)
+java file server based on spring mvc and spring-boot with no limitation for upload and download files
 
 ```sh
 $ git clone ... cd ...
 $ gradle clean build bootRun
 $ open http://localhost:8080 # enjoy :)
+# ctrl+c # to stop
+$ gradle composeDown # or gradle modules:docker:composeDown
+$ gradle --stop
 ```
 
 awesome JGiven reports!
@@ -14,21 +17,6 @@ awesome JGiven reports!
 ```sh
 gradle clean test jgiven
 open jgiven-reports/html/index.html
-```
-
-h2 console:
-
-```sh
-open http://localhost:8080/h2
-jdbc url: jdbc:h2:mem:fs
-username: fs
-password: fs
-```
-
-spring data HAL browser:
-
-```sh
-open http://localhost:8080/api/browser
 ```
 
 technology stack:
@@ -60,4 +48,4 @@ todo:
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - spring-security, spring-social
-- ~~h2~~ postgres in docker using proper gradle plugin
+- ~~h2 and h2 console~~ postgres in docker using proper gradle plugin

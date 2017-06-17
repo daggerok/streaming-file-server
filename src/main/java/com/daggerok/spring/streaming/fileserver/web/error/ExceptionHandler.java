@@ -16,19 +16,19 @@ import static java.util.Objects.nonNull;
 @Controller
 public class ExceptionHandler implements ErrorController {
 
-    @Value("${error.path:/error}")
-    String errorPath;
+  @Value("${error.path:/error}")
+  String errorPath;
 
-    @Override
-    public String getErrorPath() {
-        return errorPath;
-    }
+  @Override
+  public String getErrorPath() {
+    return errorPath;
+  }
 
-    @SneakyThrows
-    @GetMapping("/error")
-    public void error(HttpServletRequest request, HttpServletResponse response, Exception e) {
+  @SneakyThrows
+  @GetMapping("/error")
+  public void error(HttpServletRequest request, HttpServletResponse response, Exception e) {
 
-        log.error(nonNull(e)? e.getMessage() : "unexpected error.", e);
-        response.sendRedirect(request.getContextPath().concat("/"));
-    }
+    log.error(nonNull(e) ? e.getMessage() : "unexpected error.", e);
+    response.sendRedirect(request.getContextPath().concat("/"));
+  }
 }

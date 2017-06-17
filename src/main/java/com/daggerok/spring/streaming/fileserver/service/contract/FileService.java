@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 
 public interface FileService {
 
-    Stream<FileItem> getDownloads();
+  Stream<FileItem> getDownloads();
 
-    void send(FileItem fileItem, HttpServletResponse response);
+  void send(FileItem fileItem, HttpServletResponse response);
 
-    void setupUploads();
+  void setupUploads();
 
-    FileItem receive(MultipartFile file);
+  FileItem receive(MultipartFile file);
 }

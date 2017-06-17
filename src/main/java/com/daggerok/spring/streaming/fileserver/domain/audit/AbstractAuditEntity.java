@@ -2,6 +2,7 @@ package com.daggerok.spring.streaming.fileserver.domain.audit;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 @Accessors(chain = true)
+@EqualsAndHashCode(exclude = "id")
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAuditEntity implements Serializable {
 
@@ -33,7 +35,7 @@ public abstract class AbstractAuditEntity implements Serializable {
   LocalDateTime createdAt;
 
   @LastModifiedDate
-  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:SSS")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:s.SSS")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   LocalDateTime updatedAt;
 }

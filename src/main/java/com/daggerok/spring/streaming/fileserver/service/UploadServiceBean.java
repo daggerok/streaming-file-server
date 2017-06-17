@@ -19,26 +19,26 @@ import static java.lang.String.format;
 @Transactional(readOnly = true)
 public class UploadServiceBean implements UploadService {
 
-    final FileService fileService;
-    final FileItemRepository fileItemRepository;
+  final FileService fileService;
+  final FileItemRepository fileItemRepository;
 
-    @PostConstruct
-    @Transactional
-    public void sync() {
-        fileService.setupUploads();
-    }
+  @PostConstruct
+  @Transactional
+  public void sync() {
+    fileService.setupUploads();
+  }
 
-    @Override
-    @Transactional
-    public void upload(final MultipartFile file,
-                       final RedirectAttributes redirectAttributes,
-                       final String owner) {
+  @Override
+  @Transactional
+  public void upload(final MultipartFile file,
+                     final RedirectAttributes redirectAttributes,
+                     final String owner) {
 
-        val fileItem = fileService.receive(file)
-                                  .setOwner(owner);
+    val fileItem = fileService.receive(file)
+                              .setOwner(owner);
 
-        fileItemRepository.save(fileItem);
-        redirectAttributes.addFlashAttribute("message",
-                                             format("done with %s.", file.getOriginalFilename()));
-    }
+    fileItemRepository.save(fileItem);
+    redirectAttributes.addFlashAttribute("message",
+                                         format("done with %s.", file.getOriginalFilename()));
+  }
 }

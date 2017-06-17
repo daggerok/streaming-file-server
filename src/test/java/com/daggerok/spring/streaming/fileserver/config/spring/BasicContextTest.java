@@ -13,11 +13,11 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BasicContextTest {
 
-    @Autowired
-    ConfigurableApplicationContext app;
+  @Autowired
+  ConfigurableApplicationContext app;
 
-    @Test
-    public void testContext() throws Exception {
-        assertTrue("bean app wasn't found.", app.containsBean("app"));
-    }
+  @Test
+  public void testContext() throws Exception {
+    assertTrue("bean app wasn't found.", app.containsBean("app"));
+  }
 }

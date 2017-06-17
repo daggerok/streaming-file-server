@@ -1,8 +1,8 @@
 spring:
   profiles:
     include: >
-      props,
-      app,
+      app-props,
+      db-props,
       db,
       fb,
       file,

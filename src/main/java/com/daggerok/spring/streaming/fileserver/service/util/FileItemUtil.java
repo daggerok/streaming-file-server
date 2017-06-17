@@ -10,28 +10,27 @@ import static java.lang.String.format;
 @Slf4j
 public final class FileItemUtil {
 
-    static final int Kib = 1024;
-    static final String ZERO = "0";
-    static final String[] UNITS = new String[]{"b", "kb", "Mb", "Gb", "Tb"};
-    static final String DECIMAL_FORMAT_PATTERN = "#,##0.#";
-    static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
+  static final int Kib = 1024;
+  public static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
+  static final String ZERO = "0";
+  static final String[] UNITS = new String[]{ "b", "kb", "Mb", "Gb", "Tb" };
+  static final String DECIMAL_FORMAT_PATTERN = "#,##0.#";
+  static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
 
-    public static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
+  private FileItemUtil() {}
 
-    public static boolean isLarge(long size) {
-        return size > NORMAL_FILE_SIZE;
-    }
+  public static boolean isLarge(long size) {
+    return size > NORMAL_FILE_SIZE;
+  }
 
-    public static String toString(long size) {
+  public static String toString(long size) {
 
-        if (size < 1) return ZERO;
+    if (size < 1) return ZERO;
 
-        val digitGroups = (int) (Math.log10(size) / Math.log10(Kib));
-        val amount = DECIMAL_FORMAT.format(size / Math.pow(Kib, digitGroups));
-        val unit = UNITS[digitGroups];
+    val digitGroups = (int) (Math.log10(size) / Math.log10(Kib));
+    val amount = DECIMAL_FORMAT.format(size / Math.pow(Kib, digitGroups));
+    val unit = UNITS[digitGroups];
 
-        return format("%s %s", amount, unit);
-    }
-
-    private FileItemUtil() {}
+    return format("%s %s", amount, unit);
+  }
 }

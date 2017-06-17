@@ -10,12 +10,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @RequiredArgsConstructor
 public class MustacheCfg extends WebMvcConfigurerAdapter {
 
-    final WebInterceptor webInterceptor;
+  final WebInterceptor webInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
 
-        super.addInterceptors(registry);
-        registry.addWebRequestInterceptor(webInterceptor);
-    }
+    super.addInterceptors(registry);
+    registry.addWebRequestInterceptor(webInterceptor);
+  }
 }

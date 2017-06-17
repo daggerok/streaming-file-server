@@ -14,12 +14,12 @@ services:
       DB_HOST: app-db
       DB_PORT: 5432
     image: openjdk:8u131-jre-alpine
+    ports: ["8080:8080"]
     volumes:
       - ../../../build/libs/streaming-file-server-2.0.0.jar:/var/app.jar:Z
       - app-data:/var
     command: java -jar /var/app.jar
-    depends_on:
-      - app-db
+    depends_on: [app-db]
     networks: [app-backing-services]
 volumes:
   app-db-data: {}

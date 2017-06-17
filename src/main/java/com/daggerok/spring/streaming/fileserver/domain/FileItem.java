@@ -25,37 +25,37 @@ import static javax.persistence.EnumType.STRING;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FileItem extends AbstractAuditEntity {
 
-    private static final long serialVersionUID = -6455969576919191029L;
+  private static final long serialVersionUID = -6455969576919191029L;
 
-    @NonNull
-    String path;
+  @NonNull
+  String path;
 
-    String filename;
+  String filename;
 
-    String extension;
+  String extension;
 
-    @NonNull
-    String prettySize;
+  @NonNull
+  String prettySize;
 
-    @NonNull
-    Long size;
+  @NonNull
+  Long size;
 
-    @NonNull
-    @Enumerated(STRING)
-    FileType fileType;
+  @NonNull
+  @Enumerated(STRING)
+  FileType fileType;
 
-    @Version
-    Long version;
+  @Version
+  Long version;
 
-    String owner;
+  String owner;
 
-    @Transient
-    public boolean isFile() {
-        return FILE.equals(this.fileType);
-    }
+  @Transient
+  public boolean isFile() {
+    return FILE.equals(this.fileType);
+  }
 
-    @Transient
-    public boolean isLarge() {
-        return this.size > NORMAL_FILE_SIZE;
-    }
+  @Transient
+  public boolean isLarge() {
+    return this.size > NORMAL_FILE_SIZE;
+  }
 }

@@ -16,16 +16,16 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class DisconnectController {
 
-    final RestTemplate restTemplate;
+  final RestTemplate restTemplate;
 
-    @SneakyThrows
-    @GetMapping("/disconnect")
-    public void search(HttpServletRequest request, HttpServletResponse response) {
+  @SneakyThrows
+  @GetMapping("/disconnect")
+  public void search(HttpServletRequest request, HttpServletResponse response) {
 
-        val url = format("http://%s:%d/%s/connect/facebook",
-                         request.getServerName(), request.getServerPort(), request.getContextPath());
+    val url = format("http://%s:%d/%s/connect/facebook",
+                     request.getServerName(), request.getServerPort(), request.getContextPath());
 
-        restTemplate.delete(url);
-        response.sendRedirect(request.getContextPath().concat("/"));
-    }
+    restTemplate.delete(url);
+    response.sendRedirect(request.getContextPath().concat("/"));
+  }
 }

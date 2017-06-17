@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DownloadService {
 
-    List<FileItem> search(String path);
+  List<FileItem> search(String path);
 
-    void download(Long id, HttpServletResponse response);
+  void download(Long id, HttpServletResponse response);
 }

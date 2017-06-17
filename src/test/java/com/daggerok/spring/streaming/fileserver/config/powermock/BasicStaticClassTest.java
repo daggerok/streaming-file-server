@@ -14,28 +14,28 @@ import static org.mockito.Mockito.when;
 @PrepareForTest(BasicStaticClassTest.class)
 public class BasicStaticClassTest {
 
-    @Test
-    public void testStaticMock() throws Exception {
+  @Test
+  public void testStaticMock() throws Exception {
 
-        PowerMockito.mockStatic(StaticClass.class);
+    PowerMockito.mockStatic(StaticClass.class);
 
-        when(StaticClass.underscore(anyString())).thenCallRealMethod();
-        when(StaticClass.child(anyString())).thenReturn("powermock is awesome!");
+    when(StaticClass.underscore(anyString())).thenCallRealMethod();
+    when(StaticClass.child(anyString())).thenReturn("powermock is awesome!");
 
-        String actual = StaticClass.underscore("Powermock");
+    String actual = StaticClass.underscore("Powermock");
 
-        PowerMockito.verifyStatic();
-        assertEquals("something wrong here...", "powermock-is-awesome!", actual);
+    PowerMockito.verifyStatic();
+    assertEquals("something wrong here...", "powermock-is-awesome!", actual);
+  }
+
+  public static class StaticClass {
+
+    public static String underscore(String brand) {
+      return child(brand.toLowerCase()).replaceAll(" ", "-");
     }
 
-    public static class StaticClass {
-
-        public static String underscore(String brand) {
-            return child(brand.toLowerCase()).replaceAll(" ", "-");
-        }
-
-        public static String child(String who) {
-            return "we are don't care, anyway it will be mocked soon, so.. " + who;
-        }
+    public static String child(String who) {
+      return "we are don't care, anyway it will be mocked soon, so.. " + who;
     }
+  }
 }

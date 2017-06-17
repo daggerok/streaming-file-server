@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class IndexPage {
 
-    public static final String INDEX = "index";
-    public static final String REDIRECT_INDEX = "redirect:/";
+  public static final String INDEX = "index";
+  public static final String REDIRECT_INDEX = "redirect:/";
 
-    final FileItemRepository fileItemRepository;
+  final FileItemRepository fileItemRepository;
 
-    @GetMapping("")
-    public String redirect(Model model) {
-        return REDIRECT_INDEX;
-    }
+  @GetMapping("")
+  public String redirect(Model model) {
+    return REDIRECT_INDEX;
+  }
 
-    @GetMapping("/")
-    public String index(Model model) {
+  @GetMapping("/")
+  public String index(Model model) {
 
-        val files = fileItemRepository.findAll();
+    val files = fileItemRepository.findAll();
 
-        model.addAttribute("files", files);
-        return INDEX;
-    }
+    model.addAttribute("files", files);
+    return INDEX;
+  }
 }

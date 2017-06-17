@@ -22,33 +22,33 @@ import static java.util.stream.Collectors.toList;
 @Transactional(readOnly = true)
 public class DownloadServiceBean implements DownloadService {
 
-    final FileService fileService;
-    final FileItemRepository fileItemRepository;
+  final FileService fileService;
+  final FileItemRepository fileItemRepository;
 
-    @Synchronized
-    @PostConstruct
-    @Transactional
-    public void sync() {
+  @Synchronized
+  @PostConstruct
+  @Transactional
+  public void sync() {
 
-        @Cleanup val stream = fileService.getDownloads();
-        val items = stream.collect(toList());
+    @Cleanup val stream = fileService.getDownloads();
+    val items = stream.collect(toList());
 
-        fileItemRepository.save(items);
-    }
+    fileItemRepository.save(items);
+  }
 
-    @Override
-    public List<FileItem> search(String filename) {
+  @Override
+  public List<FileItem> search(String filename) {
 
-        val like = "%" + filename + "%";
-        @Cleanup val stream = fileItemRepository.findByFilenameLikeIgnoreCase(like);
+    val like = "%" + filename + "%";
+    @Cleanup val stream = fileItemRepository.findByFilenameLikeIgnoreCase(like);
 
-        return stream.collect(toList());
-    }
+    return stream.collect(toList());
+  }
 
-    @Override
-    public void download(Long id, HttpServletResponse response) {
+  @Override
+  public void download(Long id, HttpServletResponse response) {
 
-        fileItemRepository.findById(id)
-                          .ifPresent(fileItem -> fileService.send(fileItem, response));
-    }
+    fileItemRepository.findById(id)
+                      .ifPresent(fileItem -> fileService.send(fileItem, response));
+  }
 }

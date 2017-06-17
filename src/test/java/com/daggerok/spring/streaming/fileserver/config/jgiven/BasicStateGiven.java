@@ -5,11 +5,11 @@ import com.tngtech.jgiven.annotation.ProvidedScenarioState;
 
 public class BasicStateGiven extends Stage<BasicStateGiven> {
 
-    @ProvidedScenarioState
-    public static String state;
+  @ProvidedScenarioState
+  public static String state;
 
-    BasicStateGiven commonState() {
-        state = "this state";
-        return self();
-    }
+  BasicStateGiven commonState() {
+    state = "this state";
+    return self();
+  }
 }

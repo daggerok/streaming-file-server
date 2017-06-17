@@ -17,15 +17,15 @@ import static com.daggerok.spring.streaming.fileserver.web.IndexPage.REDIRECT_IN
 @RequiredArgsConstructor
 public class UploadController {
 
-    final UploadService uploadService;
-    final ConnectionRepository connectionRepository;
+  final UploadService uploadService;
+  final ConnectionRepository connectionRepository;
 
-    @PostMapping("/upload")
-    public String post(@RequestParam("file") final MultipartFile file, final RedirectAttributes redirectAttributes) {
+  @PostMapping("/upload")
+  public String post(@RequestParam("file") final MultipartFile file, final RedirectAttributes redirectAttributes) {
 
-        val connection = connectionRepository.findPrimaryConnection(Facebook.class);
+    val connection = connectionRepository.findPrimaryConnection(Facebook.class);
 
-        uploadService.upload(file, redirectAttributes, connection.getDisplayName());
-        return REDIRECT_INDEX;
-    }
+    uploadService.upload(file, redirectAttributes, connection.getDisplayName());
+    return REDIRECT_INDEX;
+  }
 }

@@ -21,40 +21,40 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class WebInterceptor implements WebRequestInterceptor {
 
-    private static final ModelMap modelMap = new ModelMap();
+  private static final ModelMap modelMap = new ModelMap();
 
-    final AppProps app;
-    final ServletContext servletContext;
-    final ConnectionRepository connectionRepository;
+  final AppProps app;
+  final ServletContext servletContext;
+  final ConnectionRepository connectionRepository;
 
-    @PostConstruct
-    public void setUp() {
+  @PostConstruct
+  public void setUp() {
 
-        val ctx = servletContext.getContextPath();
+    val ctx = servletContext.getContextPath();
 
-        modelMap.put("ctx", ctx);
-        modelMap.put("downloadUrl", app.download.url);
-        modelMap.put("uploadUrl", app.upload.url);
-        modelMap.put("githubUrl", app.github.url);
-    }
+    modelMap.put("ctx", ctx);
+    modelMap.put("downloadUrl", app.download.url);
+    modelMap.put("uploadUrl", app.upload.url);
+    modelMap.put("githubUrl", app.github.url);
+  }
 
-    @Override
-    public void preHandle(WebRequest request) throws Exception {}
+  @Override
+  public void preHandle(WebRequest request) throws Exception {}
 
-    @Override
-    public void postHandle(WebRequest request, ModelMap model) throws Exception {
+  @Override
+  public void postHandle(WebRequest request, ModelMap model) throws Exception {
 
-        ofNullable(model).ifPresent(m -> {
+    ofNullable(model).ifPresent(m -> {
 
-            m.putAll(modelMap);
+      m.putAll(modelMap);
 
-            val user = connectionRepository.findPrimaryConnection(Facebook.class);
+      val user = connectionRepository.findPrimaryConnection(Facebook.class);
 
-            ofNullable(user)
-                .ifPresent(u -> m.put("user", u));
-        });
-    }
+      ofNullable(user)
+          .ifPresent(u -> m.put("user", u));
+    });
+  }
 
-    @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {}
+  @Override
+  public void afterCompletion(WebRequest request, Exception ex) throws Exception {}
 }

@@ -8,9 +8,6 @@ configure(subprojects) { p ->
 
   apply plugin: "docker-compose"
 
-  group "daggerok"
-  version "2.0.0"
-
   // fucking windows paths... replace all: '\\' -> '/'
   def root = thatPath.replaceAll("\\\\", '/')
 
@@ -21,11 +18,13 @@ configure(subprojects) { p ->
     removeContainers = true
     removeImages = "Local"
     removeVolumes = true
+    removeOrphans = true
     projectName = "$rootProject.name"
   }
 
   tasks.create("${p.name}Up") {
-    dependsOn ":assemble", composeUp
+    if (it.name.contains("app")) dependsOn ":assemble"
+    dependsOn composeUp
   }
 
   tasks.create("${p.name}Down") {
