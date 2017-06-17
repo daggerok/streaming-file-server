@@ -60,3 +60,4 @@ todo:
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - spring-security, spring-social
+- ~~h2~~ postgres in docker using proper gradle plugin
