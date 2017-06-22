@@ -5,6 +5,7 @@ buildscript {
     environmentFileDir = "."
     propertiesPluginEnvironmentNameProperty = "env"
 
+    springBootVersion = "1.5.4.RELEASE"
     commonsIoVer = "1.3.2"
     jqueryVer = "3.2.1"
     bootstrapVer = "3.3.7"
@@ -74,7 +75,7 @@ dependencies {
 
 dependencyManagement {
   imports {
-    mavenBom "org.springframework.boot:spring-boot-starter-parent:1.5.4.RELEASE"
+    mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
   }
 }
 
@@ -99,7 +100,7 @@ sourceSets {
   test
 }
 
-[test, build, bootRun].each { Task task ->
+[test, build, bootRun].each { task ->
   task.dependsOn ":modules:docker:composeUp"
   ["app", "docker"].each { id ->
     task.finalizedBy ":modules:$id:${id}Down"
