@@ -1,7 +1,9 @@
 package com.daggerok.spring.streaming.fileserver.web.error;
 
+import io.vavr.control.Try;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static java.util.Objects.nonNull;
 
 @Slf4j
 @Controller
@@ -26,9 +26,15 @@ public class ExceptionHandler implements ErrorController {
 
   @SneakyThrows
   @GetMapping("/error")
-  public void error(HttpServletRequest request, HttpServletResponse response, Exception e) {
+  public void error(final HttpServletRequest request,
+                    final HttpServletResponse response,
+                    final Exception e) {
 
-    log.error(nonNull(e) ? e.getMessage() : "unexpected error.", e);
+    val message = Try.of(e::getMessage)
+                     .getOrElse(() -> "no message");
+
+    log.error("unexpected error: {}", message, e);
+    // fix fb redirect error: just go to home page...
     response.sendRedirect(request.getContextPath().concat("/"));
   }
 }

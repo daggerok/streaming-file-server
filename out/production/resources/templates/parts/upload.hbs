@@ -1,0 +1,7 @@
+<div class="container-fluid">
+  <form {{^user}}hidden{{/user}} action="{{uploadUrl}}" enctype="multipart/form-data" method="post">
+    <h3 class="panel panel-heading">upload</h3>
+    <label class="control-label">Select File</label>
+    <input id="file" name="file" type="file" class="file" data-show-preview="false">
+  </form>
+</div>

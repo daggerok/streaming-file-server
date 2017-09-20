@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @Repository
 public interface FileItemRepository extends JpaRepository<FileItem, Long>, QueryDslPredicateExecutor<FileItem> {
 
-  Optional<FileItem> findById(@Param("id") long id);
+  Optional<FileItem> findById(@Param("id") final long id);
 
-  Stream<FileItem> findByFilenameLikeIgnoreCase(@Param("filename") String filename);
+  Stream<FileItem> findByFilenameContainingIgnoreCase(@Param("filename") final String filename);
 }

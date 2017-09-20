@@ -12,6 +12,7 @@ public class DbProps {
   public String name;
   public String user;
   public String pass;
+  public Server server;
 
   @Data
   public static class Server {

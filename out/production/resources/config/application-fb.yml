@@ -1,0 +1,4 @@
+spring:
+  social.facebook:
+    appId: 1357459827613700
+    appSecret: 6a07be77455f07cdc9345368955a9e5f

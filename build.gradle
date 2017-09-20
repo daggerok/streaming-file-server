@@ -5,11 +5,12 @@ buildscript {
     environmentFileDir = "."
     propertiesPluginEnvironmentNameProperty = "env"
 
-    springBootVersion = "1.5.4.RELEASE"
+    springBootVersion = "1.5.7.RELEASE"
     commonsIoVer = "1.3.2"
+    vavrVer = "0.9.1"
     jqueryVer = "3.2.1"
     bootstrapVer = "3.3.7"
-    bootstrapFileInputVer = "4.4.0"
+    bootstrapFileInputVer = "4.4.2"
     fontAwesomeVer = "4.7.0"
     powermockitoVer = "1.7.0"
     jgivenVer = "0.15.1"
@@ -26,14 +27,14 @@ plugins {
   id "cn.bestwu.propdeps-idea" version "0.0.10"
   id "cn.bestwu.propdeps-maven" version "0.0.10"
   id "cn.bestwu.propdeps-eclipse" version "0.0.10"
-  id "org.springframework.boot" version "1.5.4.RELEASE"
+  id "org.springframework.boot" version "1.5.7.RELEASE"
   id "io.spring.dependency-management" version "1.0.3.RELEASE"
-  id "com.ewerk.gradle.plugins.querydsl" version "1.0.8"
+  id "com.ewerk.gradle.plugins.querydsl" version "1.0.9"
   id "com.github.ben-manes.versions" version "0.15.0"
   id "net.saliman.properties" version "1.4.6"
 }
 
-version "2.0.0"
+version "2.0.1"
 group "daggerok"
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -57,6 +58,7 @@ dependencies {
 
       "org.springframework.boot:spring-boot-devtools",
       "org.projectlombok:lombok",
+      "io.vavr:vavr:$vavrVer",
 
       "org.webjars:webjars-locator:$webjarsLocatorVer",
       "org.webjars:jquery:$jqueryVer",
@@ -100,9 +102,17 @@ sourceSets {
   test
 }
 
+task pgUp(dependsOn: [":modules:docker:composeUp"])
+task pgDown(dependsOn: [":modules:docker:composeDown"])
+
 [test, build, bootRun].each { task ->
-  task.dependsOn ":modules:docker:composeUp"
+  task.dependsOn pgUp
+  task.shouldRunAfter pgUp
   ["app", "docker"].each { id ->
     task.finalizedBy ":modules:$id:${id}Down"
   }
+}
+
+wrapper {
+  gradleVersion = "4.2-rc-2"
 }

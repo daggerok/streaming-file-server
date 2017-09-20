@@ -13,8 +13,7 @@ public class MustacheCfg extends WebMvcConfigurerAdapter {
   final WebInterceptor webInterceptor;
 
   @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-
+  public void addInterceptors(final InterceptorRegistry registry) {
     super.addInterceptors(registry);
     registry.addWebRequestInterceptor(webInterceptor);
   }

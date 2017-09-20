@@ -1,36 +1,64 @@
 group: edge
 dist: trusty
+
 language: java
-jdk: oraclejdk8
+jdk:
+  - openjdk8
+  - oraclejdk8
+
 install: true
-#env:
-#  SPRING_PROFILES_ACTIVE: default
 before_install:
   - sudo apt update
-  - sudo apt install -y python-pip curl jq
-  # docker-compose
-  - sudo apt install -y python-pip
-  - sudo pip install docker-compose
+
+  # install docker-compose
+  - sudo apt install -y python-pip curl jq libxml2-utils
+  - sudo pip install docker-compose httpie
   - sudo usermod -aG docker $(whoami)
-  # kill whatever punning on pg port
-  - true | sudo kill $(sudo lsof -t -i:5432)
-  # gradle
-  - curl -s "https://get.sdkman.io" | bash
-  - mkdir -p "$HOME/.sdkman/etc"
-  - touch "$HOME/.sdkman/etc/config"
-  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
-  - source "$HOME/.sdkman/bin/sdkman-init.sh"
-  - sdk use gradle
-  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+  # kill whatever punning on postgres / rabbitmq port
+  - sudo kill $(sudo lsof -t -i:5432) | true
+  - sudo kill $(sudo lsof -t -i:5672) | true
+  - sudo kill $(sudo lsof -t -i:27017) | true
+
+#  # gradle
+#  - curl -s "https://get.sdkman.io" | bash
+#  - mkdir -p "$HOME/.sdkman/etc"
+#  - touch "$HOME/.sdkman/etc/config"
+#  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
+#  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+#  - sdk use gradle
+#  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 script:
-  - gradle clean build
-  - gradle dockerUp dockerDown
-  - gradle appUp
-  - sleep 2
-  - gradle dockerDown
-  - gradle dependencyUpdates -Drevision=release
+  - bash gradlew clean build jgiven
+
+  - cp -Rf build files/
+  - export APP_UPLOAD_PATH=$PWD/files
+  - export APP_DOWNLOAD_PATH=$APP_UPLOAD_PATH
+  - bash gradlew appUp
+  - http -f post :8080/upload filename="build.gradle" file@build.gradle
+  - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
+  - http :8080/api/v1/files
+  - http :8080/
+  - bash gradlew appDown
+
+  - bash gradlew dockerUp
+  - sudo mkdir -p /var/app/files/
+  - sudo mv -f build/libs/*.jar /var/app/fileserver.jar
+  - sudo ln -s /var/app/fileserver.jar /etc/init.d/fileserver
+  - export JAVA_OPTS="-Dapp.upload.path=$PWD/files -Dapp.download.path=$PWD/files"
+  - sudo service fileserver start
+  - sleep 15
+  - http -f post :8080/upload filename="file-server-app.jar" file@$/var/app/fileserver.jar
+  - http :8080/
+  - http :8080/api/v1/files
+  - bash gradlew dependencyUpdates -Drevision=release
+
 after_script:
-  - gradle --stop
+  - sudo service fileserver stop
+  - bash gradlew dockerDown
+  - bash gradlew --stop
+
 cache:
   directories:
     - $HOME/.gradle/

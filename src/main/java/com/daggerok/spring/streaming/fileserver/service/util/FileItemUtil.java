@@ -1,13 +1,16 @@
 package com.daggerok.spring.streaming.fileserver.service.util;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import java.text.DecimalFormat;
 
 import static java.lang.String.format;
+import static lombok.AccessLevel.PRIVATE;
 
 @Slf4j
+@NoArgsConstructor(access = PRIVATE)
 public final class FileItemUtil {
 
   static final int Kib = 1024;
@@ -17,13 +20,11 @@ public final class FileItemUtil {
   static final String DECIMAL_FORMAT_PATTERN = "#,##0.#";
   static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
 
-  private FileItemUtil() {}
-
-  public static boolean isLarge(long size) {
+  public static boolean isLarge(final long size) {
     return size > NORMAL_FILE_SIZE;
   }
 
-  public static String toString(long size) {
+  public static String toString(final long size) {
 
     if (size < 1) return ZERO;
 

@@ -19,7 +19,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class App {
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
 
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 

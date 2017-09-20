@@ -1,0 +1,26 @@
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  padding: 3em 0 3em;
+  height: 100%;
+}
+
+main {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+footer {
+  padding: 1em;
+}
+
+.item > a:hover {
+  background-color: grey;
+}
+
+body > .container-fluid {
+  padding-bottom: 20px;
+}

@@ -30,11 +30,11 @@ public class BasicStaticClassTest {
 
   public static class StaticClass {
 
-    public static String underscore(String brand) {
+    public static String underscore(final String brand) {
       return child(brand.toLowerCase()).replaceAll(" ", "-");
     }
 
-    public static String child(String who) {
+    public static String child(final String who) {
       return "we are don't care, anyway it will be mocked soon, so.. " + who;
     }
   }

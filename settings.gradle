@@ -1,10 +1,19 @@
 rootProject.name = "streaming-file-server"
-include "modules:app"
-include "modules:docker"
 
-//def modulesDir = file("$rootProject.projectDir.absolutePath/modules")
-//
-//modulesDir.listFiles().each { File build ->
-//  if (!build.isDirectory()) return
-//  includeBuild build
-//}
+//include "modules:app"
+//include "modules:docker"
+
+// do it hard :)
+def modulesDirName = "modules"
+def ignores = file('.gitignore').readLines()
+def modulesDir = file("$rootProject.projectDir.absolutePath")
+
+modulesDir
+    .listFiles()
+    .findAll { !ignores.contains(it.name) }
+    .findAll { it.name.startsWith(modulesDirName) && it.isDirectory() }
+    .collect { it.listFiles() }
+    .collectMany { it.flatten() } // -> [.DS_Store, app, build.gradle, docker, README.adoc, settings.gradle]
+    .findAll { !ignores.contains(it.name) }
+    .findAll { File build -> build.isDirectory() }
+    .each { File build -> include ":$modulesDirName:$build.name" }

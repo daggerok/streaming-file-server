@@ -13,10 +13,13 @@ services:
     environment:
       DB_HOST: app-db
       DB_PORT: 5432
+      JAVA_OPTS: "-Dapp.upload.path=/var/files -Dapp.download.path=/var/files"
     image: openjdk:8u131-jre-alpine
     ports: ["8080:8080"]
     volumes:
-      - ../../../build/libs/streaming-file-server-2.0.0.jar:/var/app.jar:Z
+      - ../../../build/libs/streaming-file-server-2.0.1.jar:/var/app.jar:Z
+      - ../../../build:/var/files:ro
+      - ../../../files:/var/files:rw
       - app-data:/var
     command: java -jar /var/app.jar
     depends_on: [app-db]

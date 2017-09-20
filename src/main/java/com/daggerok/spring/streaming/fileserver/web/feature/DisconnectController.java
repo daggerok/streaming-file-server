@@ -20,7 +20,7 @@ public class DisconnectController {
 
   @SneakyThrows
   @GetMapping("/disconnect")
-  public void search(HttpServletRequest request, HttpServletResponse response) {
+  public void search(final HttpServletRequest request, final HttpServletResponse response) {
 
     val url = format("http://%s:%d/%s/connect/facebook",
                      request.getServerName(), request.getServerPort(), request.getContextPath());

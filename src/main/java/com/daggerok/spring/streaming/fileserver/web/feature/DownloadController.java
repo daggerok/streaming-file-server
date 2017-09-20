@@ -1,6 +1,6 @@
 package com.daggerok.spring.streaming.fileserver.web.feature;
 
-import com.daggerok.spring.streaming.fileserver.service.contract.DownloadService;
+import com.daggerok.spring.streaming.fileserver.service.DownloadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +18,13 @@ public class DownloadController {
   final DownloadService downloadService;
 
   @PostMapping
-  public String search(@RequestParam("filename") String filename, Model model) {
-
+  public String search(@RequestParam("filename") final String filename, final Model model) {
     model.addAttribute("files", downloadService.search(filename));
     return INDEX;
   }
 
   @GetMapping("/{id}")
-  public void download(@PathVariable("id") Long id, HttpServletResponse response) {
+  public void download(@PathVariable("id") final Long id, final HttpServletResponse response) {
     downloadService.download(id, response);
   }
 }

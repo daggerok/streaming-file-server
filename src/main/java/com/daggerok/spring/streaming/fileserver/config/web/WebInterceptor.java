@@ -21,7 +21,7 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class WebInterceptor implements WebRequestInterceptor {
 
-  private static final ModelMap modelMap = new ModelMap();
+  static final ModelMap modelMap = new ModelMap();
 
   final AppProps app;
   final ServletContext servletContext;
@@ -39,22 +39,20 @@ public class WebInterceptor implements WebRequestInterceptor {
   }
 
   @Override
-  public void preHandle(WebRequest request) throws Exception {}
+  public void preHandle(final WebRequest request) throws Exception {}
 
   @Override
-  public void postHandle(WebRequest request, ModelMap model) throws Exception {
+  public void postHandle(final WebRequest request, final ModelMap model) throws Exception {
 
     ofNullable(model).ifPresent(m -> {
-
       m.putAll(modelMap);
 
       val user = connectionRepository.findPrimaryConnection(Facebook.class);
-
       ofNullable(user)
           .ifPresent(u -> m.put("user", u));
     });
   }
 
   @Override
-  public void afterCompletion(WebRequest request, Exception ex) throws Exception {}
+  public void afterCompletion(final WebRequest request, final Exception ex) throws Exception {}
 }

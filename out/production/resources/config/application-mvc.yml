@@ -1,0 +1,3 @@
+spring:
+  mustache.suffix: .hbs
+  resources.chain.enabled: true

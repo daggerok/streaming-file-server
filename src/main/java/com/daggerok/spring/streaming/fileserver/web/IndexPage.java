@@ -17,15 +17,13 @@ public class IndexPage {
   final FileItemRepository fileItemRepository;
 
   @GetMapping("")
-  public String redirect(Model model) {
+  public String redirect(final Model model) {
     return REDIRECT_INDEX;
   }
 
   @GetMapping("/")
-  public String index(Model model) {
-
+  public String index(final Model model) {
     val files = fileItemRepository.findAll();
-
     model.addAttribute("files", files);
     return INDEX;
   }
