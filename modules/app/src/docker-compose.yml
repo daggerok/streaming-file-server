@@ -13,7 +13,7 @@ services:
     environment:
       DB_HOST: app-db
       DB_PORT: 5432
-      JAVA_OPTS: "-Dapp.upload.path=/var/files -Dapp.download.path=/var/files"
+      JAVA_OPTS: "-Dapp.upload.path=/var/files"
     image: openjdk:8u131-jre-alpine
     ports: ["8080:8080"]
     volumes:

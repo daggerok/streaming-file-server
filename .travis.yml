@@ -33,8 +33,7 @@ script:
   - bash gradlew clean build jgiven
 
   - cp -Rf build files/
-  - export APP_UPLOAD_PATH=$PWD/files
-  - export APP_DOWNLOAD_PATH=$APP_UPLOAD_PATH
+  - export APP_PATH="$PWD/files"
   - bash gradlew appUp
   - http -f post :8080/upload filename="build.gradle" file@build.gradle
   - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
@@ -43,13 +42,12 @@ script:
   - bash gradlew appDown
 
   - bash gradlew dockerUp
-  - sudo mkdir -p /var/app/files/
+  - sudo mkdir -p /var/app
   - sudo mv -f build/libs/*.jar /var/app/fileserver.jar
   - sudo ln -s /var/app/fileserver.jar /etc/init.d/fileserver
-  - export JAVA_OPTS="-Dapp.upload.path=$PWD/files -Dapp.download.path=$PWD/files"
   - sudo service fileserver start
   - sleep 15
-  - http -f post :8080/upload filename="file-server-app.jar" file@$/var/app/fileserver.jar
+  - http -f post :8080/upload filename="readme" file@README.md
   - http :8080/
   - http :8080/api/v1/files
   - bash gradlew dependencyUpdates -Drevision=release
