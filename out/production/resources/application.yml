@@ -1,9 +1,0 @@
-spring:
-  profiles:
-    include:
-      - app-props
-      - db-props
-      - db
-      - fb
-      - file
-      - mvc

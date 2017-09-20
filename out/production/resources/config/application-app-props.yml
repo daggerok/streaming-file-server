@@ -1,8 +1,0 @@
-app:
-  upload:
-    path: files
-    url: upload
-  download:
-    path: files
-    url: download
-  github.url: https://github.com/daggerok/streaming-file-server
