@@ -50,8 +50,6 @@ bash streaming-file-server-$VERSION.jar --spring.profiles.active=db-h2
 
 ### development
 
-**try it locally**
-
 ```sh
 gradle clean build bootRun
 open http://localhost:8080 # enjoy :)
