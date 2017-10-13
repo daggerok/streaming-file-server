@@ -5,42 +5,46 @@ java file server based on spring mvc and spring-boot with no limitation for uplo
 
 ### Installation:
 
-**with postgres (using docker)**
+**with postgres in using docker**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/docker-compose-2.0.1.yml
-docker-compose -f docker-compose-2.0.1.yml up -d
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/streaming-file-server-2.0.1.jar
+# database
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/docker-compose-2.1.0.yml
+docker-compose -f docker-compose-2.1.0.yml up -d
+
+# application
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.jar
 mkdir -p ./path/to/file-storage
-bash streaming-file-server-2.0.1.jar --app.upload.path=./path/to/file-storage
+bash streaming-file-server-2.1.0.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
-docker-compose -f docker-compose-2.0.1.yml down -v
+docker-compose -f docker-compose-2.1.0.yml down -v
 ```
 
 or simply:
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/streaming-file-server-2.0.1.bash
-bash streaming-file-server-2.0.1.bash start ./path/to/file-storage
+# start
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.bash
+bash streaming-file-server-2.1.0.bash start ./path/to/file-storage
 
 # stop
-bash streaming-file-server-2.0.1.bash stop
+bash streaming-file-server-2.1.0.bash stop
 
 # cleanup
-bash streaming-file-server-2.0.1.bash clean ./path/to/file-storage
+bash streaming-file-server-2.1.0.bash clean ./path/to/file-storage
 ```
 
-*note: tested on osx, binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir` and `bash` are required*
+*note: tested on osx, installed binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir`, `bash` and of caurse `java` are required*
 
 **with h2 in-memory database**
 
 ```bash
 wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.jar
-bash streaming-file-server-2.1.0.jar --spring.profiles.active=db-h2 --app.upload.path=./file-storage
+bash streaming-file-server-2.1.0.jar --spring.profiles.active=db-h2
 ```
 
-**try locally**
+**try it locally**
 
 #### development
 
@@ -49,7 +53,7 @@ gradle clean build bootRun
 open http://localhost:8080 # enjoy :)
 
 # cleanup
-gradle composeDown # or gradle modules:docker:composeDown
+gradle composeDown
 $ gradle --stop
 ```
 
