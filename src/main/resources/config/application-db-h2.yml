@@ -1,8 +1,11 @@
 spring:
-  active:
-    profiles: h2-db
   datasource:
     url: jdbc:h2:mem:${db.name};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: ${db.user}
     password: ${db.pass}
-    database: postgresql
+    driver-class-name: org.h2.Driver
+  h2.console:
+    enabled: true
+    path: /h2
+  active:
+    profiles: h2-db

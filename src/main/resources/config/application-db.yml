@@ -3,7 +3,7 @@ spring:
     url: jdbc:postgresql://${db.server.host}:${db.server.port}/${db.name}
     username: ${db.user}
     password: ${db.pass}
-    #driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
