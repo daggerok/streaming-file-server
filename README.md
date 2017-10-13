@@ -75,6 +75,7 @@ technology stack:
   - common error handling (home redirect)
   - spring-data REST HAL browser
   - spring-devtools
+  - spring-security / spring-social (facebook login required for upload ability)
 - [mustache](http://mustache.github.io/)
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
@@ -92,4 +93,3 @@ todo:
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
-- spring-security, spring-social
