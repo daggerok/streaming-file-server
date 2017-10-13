@@ -1,6 +1,5 @@
 file-storage/
 !file-storage/.gitkeep
-
 .DS_Store
 *.iml
 *.ipr

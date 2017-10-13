@@ -15,7 +15,7 @@ services:
   app:
     build:
       context: ../../..
-      dockerfile: ./modules/app/src/Dockerfile
+      dockerfile: ./docker-modules/app/src/Dockerfile
     depends_on: [db]
     environment:
       DB_HOST: db

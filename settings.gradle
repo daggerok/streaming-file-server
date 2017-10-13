@@ -1,10 +1,10 @@
 rootProject.name = "streaming-file-server"
 
-//include "modules:app"
-//include "modules:docker"
+//include "docker-modules:app"
+//include "docker-modules:docker"
 
 // do it hard :)
-def modulesDirName = "modules"
+def modulesDirName = "docker-modules"
 def ignores = file('.gitignore').readLines()
 def modulesDir = file("$rootProject.projectDir.absolutePath")
 

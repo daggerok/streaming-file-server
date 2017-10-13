@@ -12,7 +12,7 @@ configure(subprojects) { p ->
   def root = thatPath.replaceAll("\\\\", '/')
 
   dockerCompose {
-    useComposeFiles = ["$root/modules/${p.name}/src/docker-compose.yml"]
+    useComposeFiles = ["$root/docker-modules/${p.name}/src/docker-compose.yml"]
     captureContainersOutput = true
     stopContainers = true
     removeContainers = true
