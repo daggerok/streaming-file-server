@@ -79,6 +79,21 @@ bash streaming-file-server-h2-$VERSION.bash stop
 bash streaming-file-server-h2-$VERSION.bash clean ./path/to/file-storage
 ```
 
+for windows use: https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-h2-$VERSION.cmd
+
+```cmd
+@rem start
+streaming-file-server-h2-$VERSION.cmd start path\to\file-storage
+
+@rem stop
+streaming-file-server-h2-$VERSION.cmd stop
+
+@rem cleanup
+streaming-file-server-h2-$VERSION.cmd clean path\to\file-storage
+```
+
+*note: tested on windows 10.
+installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of caurse `java`, `jps` are required*
 
 ### development
 
