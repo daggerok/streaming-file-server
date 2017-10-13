@@ -39,7 +39,24 @@ bash streaming-file-server-$VERSION.bash stop
 bash streaming-file-server-$VERSION.bash clean ./path/to/file-storage
 ```
 
-*note: tested on osx, installed binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir`, `bash` and of caurse `java` are required*
+*note: tested on osx with localhost docker.
+installed binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir`, `bash` and of caurse `java` are required*
+
+for windows use: https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.cmd
+
+```cmd
+@rem start
+streaming-file-server-$VERSION.cmd start path\to\file-storage
+
+@rem stop
+streaming-file-server-$VERSION.cmd stop
+
+@rem cleanup
+streaming-file-server-$VERSION.cmd clean path\to\file-storage
+```
+
+*note: tested on windows 10 with localhost docker for postgres.
+installed binaries: `which`, `del`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of caurse `java`, `jps` are required*
 
 **with h2 in-memory database**
 
