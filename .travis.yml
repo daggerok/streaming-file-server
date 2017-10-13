@@ -20,26 +20,35 @@ before_install:
   - sudo kill $(sudo lsof -t -i:5672) | true
   - sudo kill $(sudo lsof -t -i:27017) | true
 
-#  # gradle
-#  - curl -s "https://get.sdkman.io" | bash
-#  - mkdir -p "$HOME/.sdkman/etc"
-#  - touch "$HOME/.sdkman/etc/config"
-#  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
-#  - source "$HOME/.sdkman/bin/sdkman-init.sh"
-#  - sdk use gradle
-#  - source "$HOME/.sdkman/bin/sdkman-init.sh"
-
 script:
-  - bash gradlew clean build jgiven
+  - bash gradlew clean test jgiven build
 
-  - cp -Rf build files/
-  - export APP_PATH="$PWD/files"
+  - export APP_UPLOAD_PATH="$PWD/file-storage"
+  - mkdir -p $APP_UPLOAD_PATH
+  - cp -Rf build "$APP_UPLOAD_PATH/"
+
   - bash gradlew appUp
   - http -f post :8080/upload filename="build.gradle" file@build.gradle
   - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
   - http :8080/api/v1/files
   - http :8080/
   - bash gradlew appDown
+
+  - bash gradlew clean assemble
+  - bash ./build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH --spring.profiles.active=h2-db &
+  - sleep 30
+  - http -f post :8080/upload filename="build.gradle" file@build.gradle
+  - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
+  - http :8080/api/v1/files
+  - http :8080/
+  - >
+    export APPLICATION_PID=$(ps waux|grep streaming-file-server|grep -v 'grep'|awk '{print $2}');
+    for P_ID in "$APPLICATION_PID"; do
+      if [ "''" != "'$P_ID'" ]; then
+        echo "killing $P_ID";
+        kill "-9" ${P_ID}
+      fi
+    done
 
   - bash gradlew dockerUp
   - sudo mkdir -p /var/app
@@ -50,11 +59,11 @@ script:
   - http -f post :8080/upload filename="readme" file@README.md
   - http :8080/
   - http :8080/api/v1/files
-  - bash gradlew dependencyUpdates -Drevision=release
-
-after_script:
   - sudo service fileserver stop
   - bash gradlew dockerDown
+
+after_script:
+  - bash gradlew dependencyUpdates -Drevision=release
   - bash gradlew --stop
 
 cache:

@@ -11,7 +11,7 @@ buildscript {
     vavrVer = "0.9.1"
     jqueryVer = "3.2.1"
     bootstrapVer = "3.3.7"
-    bootstrapFileInputVer = "4.4.5"
+    bootstrapFileInputVer = "4.4.2"
     fontAwesomeVer = "4.7.0"
     powermockitoVer = "1.7.3"
     jgivenVer = "0.15.3"
@@ -52,15 +52,16 @@ dependencies {
   compile "org.projectlombok:lombok"
 
   compile "org.springframework.boot:spring-boot-starter-mustache",
+      "org.springframework.boot:spring-boot-starter-actuator",
       "org.springframework.boot:spring-boot-starter-data-jpa",
       "org.springframework.social:spring-social-facebook",
       "com.fasterxml.jackson.core:jackson-databind",
       "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
       "org.apache.commons:commons-io:$commonsIoVer",
 
-      "com.querydsl:querydsl-core:$querydslVer",
-      "com.querydsl:querydsl-jpa:$querydslVer",
-      "com.querydsl:querydsl-apt:$querydslVer",
+      "com.querydsl:querydsl-core",
+      "com.querydsl:querydsl-jpa",
+      "com.querydsl:querydsl-apt",
 
       "org.springframework.boot:spring-boot-devtools",
       "io.vavr:vavr:$vavrVer",
@@ -69,7 +70,8 @@ dependencies {
       "org.webjars:jquery:$jqueryVer",
       "org.webjars:bootstrap:$bootstrapVer",
       "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
-      "org.webjars.bower:font-awesome:$fontAwesomeVer"
+      "org.webjars.bower:font-awesome:$fontAwesomeVer",
+      "org.webjars.npm:popper.js:1.12.5"
 
   runtime "org.postgresql:postgresql",
       "com.h2database:h2"
@@ -94,6 +96,7 @@ task jgiven(type: JavaExec, dependsOn: "test") {
   main = "com.tngtech.jgiven.report.ReportGenerator"
   args "--targetDir=./jgiven-reports/html", "--format=html"
   classpath = configurations.testCompile
+  shouldRunAfter clean, assemble
 }
 
 querydsl {
@@ -109,12 +112,15 @@ sourceSets {
 }
 
 clean {
+  /*
   ["app", "docker"].each { id ->
     dependsOn ":modules:$id:${id}Down"
   }
-  doLast {
-    delete querydsl.querydslSourcesDir
-  }
+  */
+  delete querydsl.querydslSourcesDir
+  delete "$projectDir/file-storage/*"
+  delete "$projectDir/jgiven-reports"
+  delete "$projectDir/out"
 }
 
 task pgUp(dependsOn: [":modules:docker:composeUp"])

@@ -1,32 +1,38 @@
 version: "2.1"
+
 services:
-  app-db:
+
+  db:
     image: healthcheck/postgres:alpine
     ports: ["5432:5432"]
-    volumes: ["app-db-data:/var/lib/postgresql/data"]
+    volumes: ["db-data:/var/lib/postgresql/data"]
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     networks: [app-backing-services]
+
   app:
+    build:
+      context: ../../..
+      dockerfile: ./modules/app/src/Dockerfile
+    depends_on: [db]
     environment:
-      DB_HOST: app-db
+      DB_HOST: db
       DB_PORT: 5432
-      JAVA_OPTS: "-Dapp.upload.path=/var/files"
-    image: openjdk:8u131-jre-alpine
+      #APP_UPLOAD_PATH: /tmp/file-storage
+    image: 127.0.0.1:5000/app
     ports: ["8080:8080"]
     volumes:
-      - ../../../build/libs/streaming-file-server-2.0.1.jar:/var/app.jar:Z
-      - ../../../build:/var/files:ro
-      - ../../../files:/var/files:rw
-      - app-data:/var
-    command: java -jar /var/app.jar
-    depends_on: [app-db]
+      - ./file-storage:/tmp/file-storage:rw
+      - ./build:/tmp/file-storage
+      - app-data:/tmp/app
     networks: [app-backing-services]
+
 volumes:
-  app-db-data: {}
+  db-data: {}
   app-data: {}
+
 networks:
   app-backing-services:
     driver: bridge
