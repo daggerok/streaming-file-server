@@ -141,3 +141,8 @@ open jgiven-reports/html/index.html
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
+
+befor start, install all what you needed:
+ 
+- [java](https://java.com/ru/download/)
+- if you on windows: [powershell](https://www.microsoft.com/en-us/download/details.aspx?id=34595) and [scoop](https://github.com/lukesampson/scoop)
