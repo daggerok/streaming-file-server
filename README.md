@@ -144,5 +144,5 @@ open jgiven-reports/html/index.html
 
 befor start, install all what you needed:
  
-- [java](https://java.com/ru/download/)
+- java [from here](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or [from here](https://java.com/ru/download/)
 - if you on windows: [powershell](https://www.microsoft.com/en-us/download/details.aspx?id=34595) and [scoop](https://github.com/lukesampson/scoop)
