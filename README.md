@@ -10,31 +10,33 @@ fullstack java file server based on spring-boot / spring-* with no limitation fo
 **with postgres in using docker**
 
 ```bash
+export VERSION="2.1.0"
+
 # database
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/docker-compose-2.1.0.yml
-docker-compose -f docker-compose-2.1.0.yml up -d
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose-$VERSION.yml
+docker-compose -f docker-compose-$VERSION.yml up -d
 
 # application
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.jar
 mkdir -p ./path/to/file-storage
-bash streaming-file-server-2.1.0.jar --app.upload.path=./path/to/file-storage
+bash streaming-file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
-docker-compose -f docker-compose-2.1.0.yml down -v
+docker-compose -f docker-compose-$VERSION.yml down -v
 ```
 
 or simply:
 
 ```bash
 # start
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.bash
-bash streaming-file-server-2.1.0.bash start ./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.bash
+bash streaming-file-server-$VERSION.bash start ./path/to/file-storage
 
 # stop
-bash streaming-file-server-2.1.0.bash stop
+bash streaming-file-server-$VERSION.bash stop
 
 # cleanup
-bash streaming-file-server-2.1.0.bash clean ./path/to/file-storage
+bash streaming-file-server-$VERSION.bash clean ./path/to/file-storage
 ```
 
 *note: tested on osx, installed binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir`, `bash` and of caurse `java` are required*
@@ -42,8 +44,8 @@ bash streaming-file-server-2.1.0.bash clean ./path/to/file-storage
 **with h2 in-memory database**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.jar
-bash streaming-file-server-2.1.0.jar --spring.profiles.active=db-h2
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.jar
+bash streaming-file-server-$VERSION.jar --spring.profiles.active=db-h2
 ```
 
 ### development
