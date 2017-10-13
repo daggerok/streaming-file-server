@@ -65,6 +65,21 @@ wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSIO
 bash streaming-file-server-$VERSION.jar --spring.profiles.active=db-h2
 ```
 
+or simply for h2:
+
+```bash
+# start
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-h2-$VERSION.bash
+bash streaming-file-server-h2-$VERSION.bash start ./path/to/file-storage
+
+# stop
+bash streaming-file-server-h2-$VERSION.bash stop
+
+# cleanup
+bash streaming-file-server-h2-$VERSION.bash clean ./path/to/file-storage
+```
+
+
 ### development
 
 ```sh
