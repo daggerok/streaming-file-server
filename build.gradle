@@ -54,7 +54,7 @@ dependencies {
   compile "org.springframework.boot:spring-boot-starter-mustache",
       "org.springframework.boot:spring-boot-starter-actuator",
       "org.springframework.boot:spring-boot-starter-data-jpa",
-      "org.springframework.social:spring-social-facebook",
+      "org.springframework.boot:spring-boot-starter-security",
       "com.fasterxml.jackson.core:jackson-databind",
       "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
       "org.apache.commons:commons-io:$commonsIoVer",

@@ -1,8 +1,9 @@
 package com.daggerok.spring.streaming.fileserver.web.feature;
 
+import com.daggerok.spring.streaming.fileserver.service.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
@@ -10,8 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static java.lang.String.format;
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class DisconnectController {
@@ -20,12 +20,19 @@ public class DisconnectController {
 
   @SneakyThrows
   @GetMapping("/disconnect")
-  public void search(final HttpServletRequest request, final HttpServletResponse response) {
+  public void search(final HttpServletRequest req, final HttpServletResponse resp) {
+/*
+    val url = UriComponentsBuilder.fromHttpUrl(format("%s://%s:%d", protocol, req.getServerName(), req.getServerPort()))
+                                  .path(uri)
+                                  .build()
+                                  .toString();
 
-    val url = format("http://%s:%d/%s/connect/facebook",
-                     request.getServerName(), request.getServerPort(), request.getContextPath());
+    Try.run(() -> restTemplate.delete(url))
+       .onFailure(throwable -> log.error("disconnect controller error: {}",
+                                         throwable.getLocalizedMessage(), throwable));
+*/
+    SecurityUtil.disconnect();
 
-    restTemplate.delete(url);
-    response.sendRedirect(request.getContextPath().concat("/"));
+    resp.sendRedirect(req.getContextPath().concat("/"));
   }
 }

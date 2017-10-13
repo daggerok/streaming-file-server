@@ -5,6 +5,6 @@ spring:
       - app-props
       - db-props
       - db
-      - fb
       - file
       - mvc
+      - security

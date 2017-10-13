@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
-@Controller
 public class ExceptionHandler implements ErrorController {
 
   @Value("${error.path:/error}")
