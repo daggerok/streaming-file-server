@@ -10,7 +10,7 @@ fullstack java file server based on spring-boot / spring-* with no limitation fo
 **with postgres in using docker**
 
 ```bash
-export VERSION="2.1.2"
+export VERSION="2.2.0"
 
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose-$VERSION.yml

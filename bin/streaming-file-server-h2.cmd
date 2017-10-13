@@ -16,7 +16,7 @@ SETLOCAL ENABLEEXTENSIONS
 SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
-SET Version=2.1.2
+SET Version=2.2.0
 SET ApplicationFile=streaming-file-server-%Version%.jar
 SET ApplicationUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%ApplicationFile%
 SET ApplicationCommand=java -jar %ApplicationFile% --spring.profiles.active=db-h2
