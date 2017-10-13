@@ -6,7 +6,7 @@ LOG_LEVEL=info
 #LOG_LEVEL=debug
 
 # app info
-VERSION=2.1.1
+VERSION=2.1.2
 COMPOSE_FILE="docker-compose-${VERSION}.yml"
 FILENAME="streaming-file-server-${VERSION}.jar"
 

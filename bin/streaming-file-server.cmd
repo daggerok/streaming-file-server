@@ -17,7 +17,7 @@ SETLOCAL ENABLEEXTENSIONS
 SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
-SET Version=2.1.1
+SET Version=2.1.2
 SET DockerComposeFile=docker-compose-%Version%.yml
 SET ComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %DockerComposeFile%
