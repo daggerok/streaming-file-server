@@ -67,15 +67,14 @@ open jgiven-reports/html/index.html
 technology stack:
 
 - [spring](https://spring.io/)
-  - spring-mvc (mustache template engine)
   - spring-boot
-  - spring-data rest and jpa
-  - spring-utils, apache fileUpload
-  - ~~spring annotations (@Get, @Post, @WebPage)~~ (deprecated and removed in favour @GetMapping, @PostMappinr, etc)
+  - spring-mvc (mustache template engine)
+  - spring-data, QueryDSL, spring-data-rest, spring-data-jpa
+  - spring-utils, spring-devtools, apache fileUpload, lombok, vavr
   - common error handling (home redirect)
-  - spring-data REST HAL browser
-  - spring-devtools
   - spring-security / spring-social (facebook login required for upload ability)
+  - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
+  - ~~spring-data REST HAL browser~~ (removed)
 - [mustache](http://mustache.github.io/)
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
