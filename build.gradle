@@ -118,9 +118,12 @@ clean {
   }
   */
   delete querydsl.querydslSourcesDir
-  delete "$projectDir/file-storage/*"
   delete "$projectDir/jgiven-reports"
   delete "$projectDir/out"
+  //if (System.getProperty("os.name").toLowerCase().contains("windows")) return
+  //delete "$projectDir/file-storage/*"
+  delete file("$projectDir/file-storage").listFiles().findAll { ".gitkeep" != it.name }
+
 }
 
 task pgUp(dependsOn: [":modules:docker:composeUp"])
