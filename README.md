@@ -1,7 +1,9 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-java file server based on spring mvc and spring-boot with no limitation for upload and download files
+fullstack java file server based on spring-boot / spring-* with no limitation for upload and download files
+
+[**try it locally**](https://github.com/daggerok/streaming-file-server/releases)
 
 ### Installation:
 
@@ -44,9 +46,9 @@ wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/s
 bash streaming-file-server-2.1.0.jar --spring.profiles.active=db-h2
 ```
 
-**try it locally**
+### development
 
-#### development
+**try it locally**
 
 ```sh
 gradle clean build bootRun
@@ -64,7 +66,7 @@ gradle clean test jgiven
 open jgiven-reports/html/index.html
 ```
 
-technology stack:
+### technology stack
 
 - [spring](https://spring.io/)
   - spring-boot
@@ -86,7 +88,7 @@ technology stack:
 - [gradle](http://gradle.org/)
 - [travis CI](https://travis-ci.org/)
 
-todo:
+**todo**
 
 - support removing files (rly..? as minimum from db)
 - improve files-db sync (replace FileSystem with GridFS or ...?)
