@@ -70,18 +70,18 @@ open jgiven-reports/html/index.html
 
 - [spring](https://spring.io/)
   - spring-boot
-  - spring-mvc (mustache template engine)
+  - spring-mvc ([mustache template engine](http://mustache.github.io/))
   - spring-data, QueryDSL, spring-data-rest, spring-data-jpa
-  - spring-utils, spring-devtools, apache fileUpload, lombok, vavr
+  - spring-utils, spring-devtools, apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
   - common error handling (home redirect)
   - spring-security / spring-social (facebook login required for upload ability)
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)
-- [mustache](http://mustache.github.io/)
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
+- [docker](https://www.docker.com/)
+- [postgres](https://www.postgresql.org/)
 - [h2](http://www.h2database.com/html/cheatSheet.html)
-- [lombok](https://projectlombok.org/)
 - [jgiven](http://jgiven.org/)
 - [powermock](https://github.com/jayway/powermock/wiki)
 - [mockito](http://mockito.org/)
