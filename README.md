@@ -71,7 +71,7 @@ technology stack:
   - spring-boot
   - spring-data rest and jpa
   - spring-utils, apache fileUpload
-  - spring annotations (@Get, @Post, @WebPage)
+  - ~~spring annotations (@Get, @Post, @WebPage)~~ (deprecated and removed in favour @GetMapping, @PostMappinr, etc)
   - common error handling (home redirect)
   - spring-data REST HAL browser
   - spring-devtools
