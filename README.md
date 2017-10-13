@@ -3,16 +3,41 @@ streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-se
 
 java file server based on spring mvc and spring-boot with no limitation for upload and download files
 
-#### install
+### Installation:
+
+**with postgres (using docker)**
 
 ```bash
-# start postgres
-wget https://raw.githubusercontent.com/daggerok/streaming-file-server/master/modules/docker/src/docker-compose.yml
-docker-compose up -d
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/docker-compose-2.0.1.yml
+docker-compose -f docker-compose-2.0.1.yml up -d
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/streaming-file-server-2.0.1.jar
+mkdir -p ./path/to/file-storage
+bash streaming-file-server-2.0.1.jar --app.upload.path=./path/to/file-storage
 
-# run app
-wget ...jar
+# cleanup
+docker-compose -f docker-compose-2.0.1.yml down -v
+```
 
+or simply:
+
+```bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.0.1/streaming-file-server-2.0.1.bash
+bash streaming-file-server-2.0.1.bash start ./path/to/file-storage
+
+# stop
+bash streaming-file-server-2.0.1.bash stop
+
+# cleanup
+bash streaming-file-server-2.0.1.bash clean ./path/to/file-storage
+```
+
+*note: tested on osx, binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir` and `bash` are required*
+
+**with h2 in-memory database**
+
+```bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/2.1.0/streaming-file-server-2.1.0.jar
+bash streaming-file-server-2.1.0.jar --spring.profiles.active=db-h2 --app.upload.path=./file-storage
 ```
 
 **try locally**
@@ -20,11 +45,11 @@ wget ...jar
 #### development
 
 ```sh
-$ git clone ... cd ...
-$ gradle clean build bootRun
-$ open http://localhost:8080 # enjoy :)
-# ctrl+c # to stop
-$ gradle composeDown # or gradle modules:docker:composeDown
+gradle clean build bootRun
+open http://localhost:8080 # enjoy :)
+
+# cleanup
+gradle composeDown # or gradle modules:docker:composeDown
 $ gradle --stop
 ```
 
@@ -59,9 +84,8 @@ technology stack:
 
 todo:
 
-- support removing files (rly..? as mininum from db)
+- support removing files (rly..? as minimum from db)
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
 - spring-security, spring-social
-- ~~h2 and h2 console~~ postgres in docker using proper gradle plugin

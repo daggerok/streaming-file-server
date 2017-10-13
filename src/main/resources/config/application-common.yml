@@ -1,0 +1,7 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  file: streaming-file-server.log

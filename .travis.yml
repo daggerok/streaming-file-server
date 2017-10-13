@@ -25,8 +25,9 @@ script:
 
   - export APP_UPLOAD_PATH="$PWD/file-storage"
   - mkdir -p $APP_UPLOAD_PATH
-  - cp -Rf build "$APP_UPLOAD_PATH/"
+  - cp -Rf build/libs "$APP_UPLOAD_PATH/"
 
+  # docker
   - bash gradlew appUp
   - http -f post :8080/upload filename="build.gradle" file@build.gradle
   - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
@@ -34,9 +35,10 @@ script:
   - http :8080/
   - bash gradlew appDown
 
+  # h2
   - bash gradlew clean assemble
-  - bash ./build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH --spring.profiles.active=h2-db &
-  - sleep 30
+  - bash ./build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH --spring.profiles.active=db-h2 &
+  - sleep 25
   - http -f post :8080/upload filename="build.gradle" file@build.gradle
   - http -f post :8080/upload filename="settings.gradle" file@settings.gradle
   - http :8080/api/v1/files
@@ -50,16 +52,18 @@ script:
       fi
     done
 
-  - bash gradlew dockerUp
-  - sudo mkdir -p /var/app
-  - sudo mv -f build/libs/*.jar /var/app/fileserver.jar
-  - sudo ln -s /var/app/fileserver.jar /etc/init.d/fileserver
-  - sudo service fileserver start
-  - sleep 15
+  # install as linux service
+  - bash gradlew clean assemble dockerUp
+  - cp -Rf build/libs "$APP_UPLOAD_PATH/"
+  - mv -f ./build/libs/*.jar /tmp/streaming-file-server.jar
+  - sudo ln -s /tmp/streaming-file-server.jar /etc/init.d/streaming-file-server
+  - sudo service streaming-file-server start
+  - sleep 30
   - http -f post :8080/upload filename="readme" file@README.md
   - http :8080/
+  - http :8080/health
   - http :8080/api/v1/files
-  - sudo service fileserver stop
+  - sudo service streaming-file-server stop
   - bash gradlew dockerDown
 
 after_script:
