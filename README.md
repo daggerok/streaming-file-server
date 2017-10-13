@@ -121,7 +121,7 @@ open jgiven-reports/html/index.html
   - spring-data, QueryDSL, spring-data-rest, spring-data-jpa
   - spring-utils, spring-devtools, apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
   - common error handling (home redirect)
-  - spring-security / spring-social (facebook login required for upload ability)
+  - ~~spring-social (facebook login required for upload ability)~~ replaced with basic spring-security for now
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)
 - [bootstrap](http://getbootstrap.com/)
@@ -141,8 +141,9 @@ open jgiven-reports/html/index.html
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - bi-directional files synchronization with spring scheduling or batch
 - backup, restore, migration
+- add more security...
 
-befor start, install all what you needed:
- 
+_before start, install all what you needed:_
+
 - java [from here](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or [from here](https://java.com/ru/download/)
 - if you on windows: [powershell](https://www.microsoft.com/en-us/download/details.aspx?id=34595) and [scoop](https://github.com/lukesampson/scoop)
