@@ -3,6 +3,22 @@ streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-se
 
 java file server based on spring mvc and spring-boot with no limitation for upload and download files
 
+#### install
+
+```bash
+# start postgres
+wget https://raw.githubusercontent.com/daggerok/streaming-file-server/master/modules/docker/src/docker-compose.yml
+docker-compose up -d
+
+# run app
+wget ...jar
+
+```
+
+**try locally**
+
+#### development
+
 ```sh
 $ git clone ... cd ...
 $ gradle clean build bootRun

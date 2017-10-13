@@ -1,5 +1,5 @@
-files/
-!files/.gitkeep
+file-storage/
+!file-storage/.gitkeep
 
 .DS_Store
 *.iml
@@ -11,3 +11,6 @@ files/
 jgiven-reports/
 src/main/gen/
 out/
+node_modules/
+yarn.lock
+*.log

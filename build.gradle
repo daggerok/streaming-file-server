@@ -7,13 +7,14 @@ buildscript {
 
     springBootVersion = "1.5.7.RELEASE"
     commonsIoVer = "1.3.2"
+    querydslVer = "4.1.4"
     vavrVer = "0.9.1"
     jqueryVer = "3.2.1"
     bootstrapVer = "3.3.7"
-    bootstrapFileInputVer = "4.4.2"
+    bootstrapFileInputVer = "4.4.5"
     fontAwesomeVer = "4.7.0"
-    powermockitoVer = "1.7.0"
-    jgivenVer = "0.15.1"
+    powermockitoVer = "1.7.3"
+    jgivenVer = "0.15.3"
     webjarsLocatorVer = "0.32-1"
   }
 }
@@ -34,7 +35,7 @@ plugins {
   id "net.saliman.properties" version "1.4.6"
 }
 
-version "2.0.1"
+version "2.1.0"
 group "daggerok"
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -45,6 +46,11 @@ repositories {
 }
 
 dependencies {
+  //// because of QueryDSL:
+  // compileOnly "org.projectlombok:lombok"
+  // testCompileOnly "org.projectlombok:lombok"
+  compile "org.projectlombok:lombok"
+
   compile "org.springframework.boot:spring-boot-starter-mustache",
       "org.springframework.boot:spring-boot-starter-data-jpa",
       "org.springframework.social:spring-social-facebook",
@@ -52,12 +58,11 @@ dependencies {
       "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
       "org.apache.commons:commons-io:$commonsIoVer",
 
-      "com.querydsl:querydsl-core",
-      "com.querydsl:querydsl-jpa",
-      "com.querydsl:querydsl-apt",
+      "com.querydsl:querydsl-core:$querydslVer",
+      "com.querydsl:querydsl-jpa:$querydslVer",
+      "com.querydsl:querydsl-apt:$querydslVer",
 
       "org.springframework.boot:spring-boot-devtools",
-      "org.projectlombok:lombok",
       "io.vavr:vavr:$vavrVer",
 
       "org.webjars:webjars-locator:$webjarsLocatorVer",
@@ -66,7 +71,8 @@ dependencies {
       "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
       "org.webjars.bower:font-awesome:$fontAwesomeVer"
 
-  runtime "org.postgresql:postgresql"
+  runtime "org.postgresql:postgresql",
+      "com.h2database:h2"
 
   testCompile "org.springframework.boot:spring-boot-starter-test",
       "org.powermock:powermock-module-junit4:$powermockitoVer",
@@ -102,17 +108,26 @@ sourceSets {
   test
 }
 
+clean {
+  ["app", "docker"].each { id ->
+    dependsOn ":modules:$id:${id}Down"
+  }
+  doLast {
+    delete querydsl.querydslSourcesDir
+  }
+}
+
 task pgUp(dependsOn: [":modules:docker:composeUp"])
 task pgDown(dependsOn: [":modules:docker:composeDown"])
 
 [test, build, bootRun].each { task ->
-  task.dependsOn pgUp
-  task.shouldRunAfter pgUp
+  task.dependsOn assemble, pgUp
+  task.shouldRunAfter assemble, pgUp
   ["app", "docker"].each { id ->
     task.finalizedBy ":modules:$id:${id}Down"
   }
 }
 
 wrapper {
-  gradleVersion = "4.2-rc-2"
+  gradleVersion = "4.2.1"
 }
