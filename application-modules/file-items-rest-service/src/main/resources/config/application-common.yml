@@ -1,6 +1,9 @@
 server:
   port: 8001
 
+logging:
+  file: ./logs/file-items-rest-service.log
+
 spring:
 
   application:
@@ -9,6 +12,3 @@ spring:
   output:
     ansi:
       enabled: always
-
-logging:
-  file: ./logs/file-items-rest-service.log

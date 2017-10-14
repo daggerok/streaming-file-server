@@ -1,5 +1,9 @@
+logging:
+  file: ./logs/streaming-file-server.log
+
 server:
   port: 8002
+
 spring:
 
   application:
@@ -8,6 +12,3 @@ spring:
   output:
     ansi:
       enabled: always
-
-logging:
-  file: ./logs/streaming-file-server.log

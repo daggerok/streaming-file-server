@@ -1,5 +1,6 @@
 spring:
-  http.multipart:
-    max-file-size: 40960Mb
-    max-request-size: 40960Mb
-    file-size-threshold: 10Mb
+  http:
+    multipart:
+      max-file-size: 40960Mb
+      max-request-size: 40960Mb
+      file-size-threshold: 10Mb

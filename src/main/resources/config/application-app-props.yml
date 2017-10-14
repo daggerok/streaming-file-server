@@ -5,4 +5,5 @@ app:
   download:
     path: ${$APP_DOWNLOAD_PATH:${app.upload.path}}
     url: download
-  github.url: https://github.com/daggerok/streaming-file-server
+  github:
+    url: https://github.com/daggerok/streaming-file-server

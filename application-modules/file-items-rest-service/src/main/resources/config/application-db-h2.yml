@@ -4,8 +4,9 @@ spring:
     username: ${db.user}
     password: ${db.pass}
     driver-class-name: org.h2.Driver
-  h2.console:
-    enabled: true
-    path: /h2
+  h2:
+    console:
+      enabled: true
+      path: /h2
   active:
     profiles: h2-db
