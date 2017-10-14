@@ -1,7 +1,7 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-fullstack java file server based on spring-boot / spring-* with no limitation for upload and download files
+full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
 [**try it locally**](https://github.com/daggerok/streaming-file-server/releases)
 
@@ -16,7 +16,10 @@ export VERSION="2.3.0"
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose-$VERSION.yml
 docker-compose -f docker-compose-$VERSION.yml up -d
 
-# application
+# file-items data service
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/file-items-rest-service-$VERSION.jar
+
+# file server
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.jar
 mkdir -p ./path/to/file-storage
 bash streaming-file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
@@ -25,7 +28,7 @@ bash streaming-file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
 docker-compose -f docker-compose-$VERSION.yml down -v
 ```
 
-or simply:
+or simply using shell-script:
 
 ```bash
 # start
@@ -39,8 +42,9 @@ bash streaming-file-server-$VERSION.bash stop
 bash streaming-file-server-$VERSION.bash clean ./path/to/file-storage
 ```
 
-*note: tested on osx with localhost docker.
-installed binaries: `which`, `rm`, `wget`, `docker-compose`, `kill`, `grep`, `awk`, `mkdir`, `bash` and of caurse `java` are required*
+*note: tested on osx with localhost docker.*
+
+installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
 for windows use: https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.cmd
 
@@ -55,17 +59,21 @@ streaming-file-server-$VERSION.cmd stop
 streaming-file-server-$VERSION.cmd clean path\to\file-storage
 ```
 
-*note: tested on windows 10 with localhost docker for postgres.
-installed binaries: `which`, `del`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of caurse `java`, `jps` are required*
+*note: tested on windows 10 with localhost docker for postgres.*
+
+installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of course java (binaries: `java` and `jps`) are required
 
 **with h2 in-memory database**
 
 ```bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/file-items-rest-service-$VERSION.jar
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.jar
-bash streaming-file-server-$VERSION.jar --spring.profiles.active=db-h2
+
+bash file-items-rest-service-$VERSION.jar --spring.profiles.active=db-h2
+bash streaming-file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
 ```
 
-or simply for h2:
+or simply shell script for h2:
 
 ```bash
 # start
@@ -92,24 +100,27 @@ streaming-file-server-h2-$VERSION.cmd stop
 streaming-file-server-h2-$VERSION.cmd clean path\to\file-storage
 ```
 
-*note: tested on windows 10.
-installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of caurse `java`, `jps` are required*
+*note: tested on windows 10.*
+
+installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of caurse `java`, `jps` are required
 
 ### development
 
 ```sh
-gradle clean build bootRun
+bash gradlew clean build
+bash gradlew file-items-rest-service:bootRun
+bash gradlew bootRun
 open http://localhost:8080 # enjoy :)
 
 # cleanup
-gradle composeDown
-$ gradle --stop
+bash gradlew composeDown
+bash gradlew --stop
 ```
 
 awesome JGiven reports!
 
 ```sh
-gradle clean test jgiven
+bash gradlew clean test jgiven
 open jgiven-reports/html/index.html
 ```
 
