@@ -16,7 +16,9 @@ services:
     build:
       context: ../../..
       dockerfile: ./docker-modules/app/src/file-items-rest-service/Dockerfile
-    depends_on: [db]
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       DB_HOST: db
     image: 127.0.0.1:5000/file-items-rest-service

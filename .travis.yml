@@ -29,20 +29,22 @@ script:
 
   # docker
   - bash gradlew appUp
-  - http --auth user:password -f post :8080/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8080/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password :8080/api/v1/files
-  - http --auth user:password :8080/
+  - http --auth user:password :8001/health
+  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/
   - bash gradlew appDown
 
   # h2
   - bash gradlew clean assemble
   - bash ./build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH --spring.profiles.active=db-h2 &
   - sleep 25
-  - http --auth user:password -f post :8080/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8080/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password :8080/api/v1/files
-  - http --auth user:password :8080/
+  - http --auth user:password :8001/health
+  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/
   - >
     export APPLICATION_PID=$(ps waux|grep streaming-file-server|grep -v 'grep'|awk '{print $2}');
     for P_ID in "$APPLICATION_PID"; do
@@ -59,10 +61,11 @@ script:
   - sudo ln -s /tmp/streaming-file-server.jar /etc/init.d/streaming-file-server
   - sudo service streaming-file-server start
   - sleep 30
-  - http --auth user:password -f post :8080/upload filename="readme" file@README.md
-  - http --auth user:password :8080/
-  - http --auth user:password :8080/health
-  - http --auth user:password :8080/api/v1/files
+  - http --auth user:password :8001/health
+  - http --auth user:password :8002/health
+  - http --auth user:password -f post :8002/upload filename="readme" file@README.md
+  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/
   - sudo service streaming-file-server stop
   - bash gradlew dockerDown
 
