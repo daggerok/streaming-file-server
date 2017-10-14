@@ -23,9 +23,9 @@ before_install:
 script:
   - bash gradlew clean test jgiven build
 
-  - export APP_UPLOAD_PATH="$PWD/file-storage"
+  - export APP_UPLOAD_PATH="$PWD/application-modules/file-server/file-storage"
   - mkdir -p $APP_UPLOAD_PATH
-  - cp -Rf build/libs "$APP_UPLOAD_PATH/"
+  - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
 
   # docker
   - bash gradlew appUp
@@ -38,9 +38,9 @@ script:
 
   # h2
   - bash gradlew clean assemble
-  - bash ./application-modules/file-items-rest-service/build/libs/*jar --spring.profiles.active=db-h2 &
+  - bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 &
   - sleep 25
-  - bash ./build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH &
+  - bash ./application-modules/file-server/build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH &
   - sleep 25
   - http --auth user:password :8001/health
   - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
@@ -48,7 +48,7 @@ script:
   - http --auth user:password :8002/api/v1/files
   - http --auth user:password :8002/
   - >
-    for APP_NAME in "streaming-file-server" "file-items-rest-service"; do
+    for APP_NAME in "file-server" "file-items-service"; do
       export APPLICATION_PID=$(ps waux|grep ${APP_NAME}|grep -v 'grep'|awk '{print $2}');
       for P_ID in "$APPLICATION_PID"; do
         if [ "''" != "'$P_ID'" ]; then
@@ -60,22 +60,22 @@ script:
 
   # install as linux service
   - bash gradlew clean assemble dockerUp
-  - cp -Rf build/libs "$APP_UPLOAD_PATH/"
-  - mv -f ./application-modules/file-items-rest-service/build/libs/*.jar /tmp/file-items-rest-service.jar
-  - mv -f ./build/libs/*.jar /tmp/streaming-file-server.jar
-  - sudo ln -s /tmp/file-items-rest-service.jar /etc/init.d/file-items-rest-service
-  - sudo ln -s /tmp/streaming-file-server.jar /etc/init.d/streaming-file-server
-  - sudo service file-items-rest-service start
+  - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
+  - mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
+  - mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
+  - sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
+  - sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
+  - sudo service file-items-service                                 start
   - sleep 30
-  - sudo service streaming-file-server start
+  - sudo service file-server                                        start
   - sleep 30
   - http --auth user:password :8001/health
   - http --auth user:password :8002/health
   - http --auth user:password -f post :8002/upload filename="readme" file@README.md
   - http --auth user:password :8002/api/v1/files
   - http --auth user:password :8002/
-  - sudo service streaming-file-server stop
-  - sudo service file-items-rest-service stop
+  - sudo service file-server                                        stop
+  - sudo service file-items-service                                 stop
   - bash gradlew dockerDown
 
 after_script:
