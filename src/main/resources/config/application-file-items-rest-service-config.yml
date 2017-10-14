@@ -1,0 +1,5 @@
+file-items-rest-service:
+  protocol: ${$FILE_ITEM_REST_SERVICE_PROTOCOL:http}
+  host: ${$FILE_ITEM_REST_SERVICE_HOST:127.0.0.1}
+  port: ${$FILE_ITEM_REST_SERVICE_PORT:8001}
+  url: ${$FILE_ITEM_REST_SERVICE_URL:${file-items-rest-service.protocol}://${file-items-rest-service.host}:${file-items-rest-service.port}}

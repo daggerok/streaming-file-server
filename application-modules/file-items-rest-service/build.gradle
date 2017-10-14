@@ -1,0 +1,62 @@
+apply plugin: "org.springframework.boot"
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+dependencies {
+  //// because of QueryDSL:
+  // compileOnly "org.projectlombok:lombok"
+  // testCompileOnly "org.projectlombok:lombok"
+
+  compile "org.springframework.boot:spring-boot-starter-web",
+      "org.springframework.boot:spring-boot-starter-data-jpa",
+      "org.springframework.boot:spring-boot-starter-actuator",
+
+      "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+      "com.fasterxml.jackson.core:jackson-databind",
+
+      "com.querydsl:querydsl-core",
+      "com.querydsl:querydsl-jpa",
+      "com.querydsl:querydsl-apt",
+
+      "org.apache.commons:commons-io:$commonsIoVer",
+      "org.projectlombok:lombok",
+      "io.vavr:vavr:$vavrVer"
+
+  runtime "org.postgresql:postgresql",
+      //"org.springframework.boot:spring-boot-devtools",
+      "com.h2database:h2"
+}
+
+springBoot { executable = true }
+bootRun { systemProperties = System.properties }
+
+querydsl {
+  querydslSourcesDir = "$projectDir/src/main/gen"
+  querydslDefault = true
+  jpa = true
+}
+
+sourceSets {
+  generated
+  main
+  test
+}
+
+clean {
+  delete querydsl.querydslSourcesDir
+  delete "$projectDir/jgiven-reports"
+  delete "$projectDir/out"
+  //if (System.getProperty("os.name").toLowerCase().contains("windows")) return
+  //delete "$projectDir/file-storage/*"
+  delete file("$projectDir/file-storage").listFiles().findAll { ".gitkeep" != it.name }
+}
+
+task pgUp(dependsOn: [":docker-modules:docker:composeUp"])
+task pgDown(dependsOn: [":docker-modules:docker:composeDown"])
+
+[test, build, bootRun].each { task ->
+  task.dependsOn assemble, pgUp
+  task.shouldRunAfter assemble, pgUp
+  ["app", "docker"].each { id ->
+    task.finalizedBy ":docker-modules:$id:${id}Down"
+  }
+}

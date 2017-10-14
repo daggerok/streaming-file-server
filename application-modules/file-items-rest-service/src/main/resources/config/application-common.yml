@@ -1,13 +1,14 @@
 server:
-  port: 8002
+  port: 8001
+
 spring:
 
   application:
-    name: streaming-file-server
+    name: fileitems-rest-service
 
   output:
     ansi:
       enabled: always
 
 logging:
-  file: streaming-file-server.log
+  file: fileitems-rest-service.log

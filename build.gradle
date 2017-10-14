@@ -22,21 +22,20 @@ buildscript {
 plugins {
   id "idea"
   id "eclipse"
-  id "cn.bestwu.propdeps" version "0.0.10"
-  id "cn.bestwu.propdeps-idea" version "0.0.10"
-  id "cn.bestwu.propdeps-maven" version "0.0.10"
-  id "cn.bestwu.propdeps-eclipse" version "0.0.10"
+  id "net.saliman.properties" version "1.4.6"
+  id "com.github.ben-manes.versions" version "0.15.0"
   id "org.springframework.boot" version "1.5.7.RELEASE"
   id "io.spring.dependency-management" version "1.0.3.RELEASE"
-  id "com.ewerk.gradle.plugins.querydsl" version "1.0.9"
-  id "com.github.ben-manes.versions" version "0.15.0"
-  id "net.saliman.properties" version "1.4.6"
+  id "com.ewerk.gradle.plugins.querydsl" version "1.0.9" apply false
+  id "cn.bestwu.propdeps-eclipse" version "0.0.10" apply false
+  id "cn.bestwu.propdeps-maven" version "0.0.10" apply false
+  id "cn.bestwu.propdeps-idea" version "0.0.10" apply false
+  id "cn.bestwu.propdeps" version "0.0.10" apply false
 }
 
 allprojects {
 
   apply plugin: "java"
-
   version "2.2.1"
   group "daggerok"
   sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
@@ -47,6 +46,10 @@ allprojects {
     jcenter()
   }
 
+  apply plugin: "cn.bestwu.propdeps"
+  apply plugin: "cn.bestwu.propdeps-idea"
+  apply plugin: "cn.bestwu.propdeps-maven"
+  apply plugin: "cn.bestwu.propdeps-eclipse"
   apply plugin: "io.spring.dependency-management"
 
   dependencyManagement {
@@ -73,16 +76,11 @@ dependencies {
   // testCompileOnly "org.projectlombok:lombok"
 
   compile "org.springframework.boot:spring-boot-starter-mustache",
-      "org.springframework.boot:spring-boot-starter-data-jpa",
       "org.springframework.boot:spring-boot-starter-security",
       "org.springframework.boot:spring-boot-starter-actuator",
 
       "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
       "com.fasterxml.jackson.core:jackson-databind",
-
-      "com.querydsl:querydsl-core",
-      "com.querydsl:querydsl-jpa",
-      "com.querydsl:querydsl-apt",
 
       "org.apache.commons:commons-io:$commonsIoVer",
       "org.projectlombok:lombok",
@@ -95,9 +93,7 @@ dependencies {
       "org.webjars.bower:font-awesome:$fontAwesomeVer",
       "org.webjars.npm:popper.js:1.12.5"
 
-  runtime "org.postgresql:postgresql",
-      "org.springframework.boot:spring-boot-devtools",
-      "com.h2database:h2"
+  runtime "org.springframework.boot:spring-boot-devtools"
 
   testCompile "org.springframework.boot:spring-boot-starter-test",
       "org.powermock:powermock-module-junit4:$powermockitoVer",
@@ -116,25 +112,8 @@ task jgiven(type: JavaExec, dependsOn: "test") {
   shouldRunAfter clean, assemble
 }
 
-querydsl {
-  querydslSourcesDir = "src/main/gen"
-  querydslDefault = true
-  jpa = true
-}
-
-sourceSets {
-  generated
-  main
-  test
-}
 
 clean {
-  /*
-  ["app", "docker"].each { id ->
-    dependsOn ":modules:$id:${id}Down"
-  }
-  */
-  delete querydsl.querydslSourcesDir
   delete "$projectDir/jgiven-reports"
   delete "$projectDir/out"
   //if (System.getProperty("os.name").toLowerCase().contains("windows")) return
@@ -143,6 +122,7 @@ clean {
 
 }
 
+/*
 task pgUp(dependsOn: [":docker-modules:docker:composeUp"])
 task pgDown(dependsOn: [":docker-modules:docker:composeDown"])
 
@@ -153,6 +133,7 @@ task pgDown(dependsOn: [":docker-modules:docker:composeDown"])
     task.finalizedBy ":docker-modules:$id:${id}Down"
   }
 }
+*/
 
 wrapper {
   gradleVersion = "4.2.1"

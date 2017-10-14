@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    include:
+      - common
+      - db-props
+      - db

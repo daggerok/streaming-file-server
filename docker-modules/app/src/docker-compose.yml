@@ -12,26 +12,44 @@ services:
       POSTGRES_PASSWORD: password
     networks: [app-backing-services]
 
-  app:
+  file-item-rest-service:
     build:
       context: ../../..
-      dockerfile: ./docker-modules/app/src/Dockerfile
-    depends_on: [db]
+      dockerfile: ./docker-modules/app/file-item-rest-service/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       DB_HOST: db
       DB_PORT: 5432
+    image: 127.0.0.1:5000/file-item-rest-service
+    ports: ["8001:8001"]
+    volumes: ["file-item-rest-service-data:/tmp/app"]
+    networks: [app-backing-services]
+
+  streaming-file-server:
+    build:
+      context: ../../..
+      dockerfile: ./docker-modules/app/streaming-file-server/Dockerfile
+    depends_on:
+      file-item-rest-service:
+        condition: service_healthy
+    environment:
+      FILE_ITEM_REST_SERVICE_HOST: file-item-rest-service
+      FILE_ITEM_REST_SERVICE_PORT: 8001
       #APP_UPLOAD_PATH: /tmp/file-storage
-    image: 127.0.0.1:5000/app
-    ports: ["8080:8080"]
+    image: 127.0.0.1:5000/streaming-file-server
+    ports: ["8002:8002"]
     volumes:
       - ./file-storage:/tmp/file-storage:rw
       - ./build:/tmp/file-storage
-      - app-data:/tmp/app
+      - streaming-file-server-data:/tmp/app
     networks: [app-backing-services]
 
 volumes:
   db-data: {}
-  app-data: {}
+  file-item-rest-service-data: {}
+  streaming-file-server-data: {}
 
 networks:
   app-backing-services:
