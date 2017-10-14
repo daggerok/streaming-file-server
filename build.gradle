@@ -7,7 +7,6 @@ buildscript {
 
     springBootVersion = "1.5.7.RELEASE"
     commonsIoVer = "1.3.2"
-    querydslVer = "4.1.4"
     vavrVer = "0.9.1"
     jqueryVer = "3.2.1"
     bootstrapVer = "3.3.7"
