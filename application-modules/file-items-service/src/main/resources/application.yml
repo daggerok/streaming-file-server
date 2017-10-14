@@ -4,3 +4,4 @@ spring:
       - common
       - db-props
       - db
+      - mvc
