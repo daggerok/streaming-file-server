@@ -10,4 +10,4 @@ spring:
       enabled: always
 
 logging:
-  file: streaming-file-server.log
+  file: ./logs/streaming-file-server.log

@@ -4,11 +4,11 @@ server:
 spring:
 
   application:
-    name: fileitems-rest-service
+    name: file-items-rest-service
 
   output:
     ansi:
       enabled: always
 
 logging:
-  file: fileitems-rest-service.log
+  file: ./logs/file-items-rest-service.log
