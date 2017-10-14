@@ -4,3 +4,6 @@ spring:
   resources:
     chain:
       enabled: true
+  mvc:
+    favicon:
+      enabled: false
