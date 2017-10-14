@@ -1,5 +1,7 @@
 version: "2.1"
+
 services:
+
   postgres:
     image: healthcheck/postgres:alpine
     ports: ["5432:5432"]
@@ -9,8 +11,10 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     networks: [backing-services]
+
 volumes:
   postgres-data: {}
+
 networks:
   backing-services:
     driver: bridge
