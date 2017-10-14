@@ -18,6 +18,6 @@ public class BasicContextTest {
 
   @Test
   public void testContext() throws Exception {
-    assertTrue("bean app wasn't found.", app.containsBean("app"));
+    assertTrue("bean app wasn't found.", app.containsBean("fileServer"));
   }
 }

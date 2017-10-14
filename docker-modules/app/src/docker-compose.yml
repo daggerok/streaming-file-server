@@ -2,53 +2,53 @@ version: "2.1"
 
 services:
 
-  db:
+  postgres:
     image: healthcheck/postgres:alpine
     ports: ["5432:5432"]
-    volumes: ["db-data:/var/lib/postgresql/data"]
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     networks: [app-backing-services]
 
-  file-items-rest-service:
+  file-items-service:
     build:
       context: ../../..
-      dockerfile: ./docker-modules/app/src/file-items-rest-service/Dockerfile
+      dockerfile: ./docker-modules/app/src/file-items-service/Dockerfile
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     environment:
-      DB_HOST: db
-    image: 127.0.0.1:5000/file-items-rest-service
+      DB_HOST: postgres
+    image: 127.0.0.1:5000/file-items-service
     ports: ["8001:8001"]
-    volumes: ["file-items-rest-service-data:/home/app"]
+    volumes: ["file-items-service-data:/home/app"]
     networks: [app-backing-services]
 
-  streaming-file-server:
+  file-server:
     build:
       context: ../../..
-      dockerfile: ./docker-modules/app/src/streaming-file-server/Dockerfile
+      dockerfile: ./docker-modules/app/src/file-server/Dockerfile
     depends_on:
-      file-items-rest-service:
+      file-items-service:
         condition: service_healthy
     environment:
-      FILE_ITEMS_REST_SERVICE_HOST: file-items-rest-service
+      FILE_ITEMS_REST_SERVICE_HOST: file-items-service
       FILE_ITEMS_REST_SERVICE_PORT: 8001
       #APP_UPLOAD_PATH: /home/app/file-storage
-    image: 127.0.0.1:5000/streaming-file-server
+    image: 127.0.0.1:5000/file-server
     ports: ["8002:8002"]
     volumes:
-      - ./file-storage:/home/app/file-storage:rw
-      - ./build:/home/app/file-storage
-      - streaming-file-server-data:/home/app
+      - ./application-modules/file-server/file-storage:/home/app/file-storage:rw
+      - ./application-modules/file-server/build:/home/app/file-storage
+      - file-server-data:/home/app
     networks: [app-backing-services]
 
 volumes:
-  db-data: {}
-  file-items-rest-service-data: {}
-  streaming-file-server-data: {}
+  postgres-data: {}
+  file-items-service-data: {}
+  file-server-data: {}
 
 networks:
   app-backing-services:

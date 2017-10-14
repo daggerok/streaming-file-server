@@ -1,7 +1,7 @@
 package daggerok;
 
-import daggerok.config.AppCfg;
-import daggerok.web.config.MustacheCfg;
+import daggerok.config.AuditConfig;
+import daggerok.config.Jsr310JpaCfg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Import;
 import java.util.TimeZone;
 
 @Import({
-    AppCfg.class,
-    MustacheCfg.class,
+    AuditConfig.class,
+    Jsr310JpaCfg.class,
 })
 @SpringBootApplication
-public class App {
+public class FileItemsService {
 
   public static void main(final String[] args) {
 
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
     SpringApplication
-        .run(App.class, args)
+        .run(FileItemsService.class, args)
         .registerShutdownHook();
   }
 }

@@ -11,4 +11,4 @@ VOLUME ["/home/app/file-storage"]
 ENTRYPOINT ["java", "-jar", "./app.jar"]
 EXPOSE 8002
 HEALTHCHECK --interval=30s --timeout=30s --retries=10 CMD curl -f http://127.0.0.1:8002/health || exit 1
-COPY ./build/libs/*.jar ./app.jar
+COPY ./application-modules/file-server/build/libs/*.jar ./app.jar

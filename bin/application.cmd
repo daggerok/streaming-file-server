@@ -1,158 +1,165 @@
-@echo off
+@ECHO OFF
 
-@rem require binaries: which, find, taskkill, scoop (wget), docker (docker-compose) and of course java: (java, jps)
+@REM require binaries: which, find, taskkill, scoop (wget), docker (docker-compose) and of course java: (java, jps)
 
-rem SET WhereCmd=C:\Windows\System32\where.exe
-rem for /f %%i in ('%WhereCmd% docker-compose') do SET ComposeCmd=%%i
+REM SET WhereCmd=C:\Windows\System32\where.exe
+REM FOR /f %%i IN ('%WhereCmd% docker-compose') DO SET ComposeCmd=%%i
 
-rem if not exist %ScoopCmd% (
-rem   powershell -noexit "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
-rem )
+REM IF NOT EXIST %ScoopCmd% (
+REM   powershell -noexit "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
+REM )
 
-rem for /f %%i in ('%WhereCmd% scoop') do SET ScoopCmd=%%i
-rem for /f %%i in ('%WhereCmd% wget') do SET WgetCmd=%%i
+REM FOR /f %%i IN ('%WhereCmd% scoop') DO SET ScoopCmd=%%i
+REM FOR /f %%i IN ('%WhereCmd% wget') DO SET WgetCmd=%%i
 
 SETLOCAL ENABLEEXTENSIONS
 
 SET InfoLogLevel=0
-@rem SET DebugLogLevel=0
+@REM SET DebugLogLevel=0
 
 SET Version=3.0.0
-SET DockerComposeFile=docker-compose-%Version%.yml
-SET ComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
+SET DockerComposeFile=docker-compose.yml
+SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %DockerComposeFile%
-SET ApplicationFile=streaming-file-server-%Version%.jar
-SET ApplicationUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%ApplicationFile%
-SET ApplicationCommand=java -jar %ApplicationFile%
-SET DataLayerFile=file-items-rest-service-%Version%.jar
-SET DataLayerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%DataLayerFile%
-SET DataLayerCommand=java -jar %DataLayerFile%
+SET FileServerFile=streaming-file-server-%Version%.jar
+SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
+SET FileServerCommand=java -jar %FileServerFile%
+SET FileItemsServiceFile=file-items-rest-service-%Version%.jar
+SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
+SET FileItemsServiceCommand=java -jar %FileItemsServiceFile%
+
+SET Timeout=25
 
 SET Script=%0
 SET Command=%1
 SET FileStoragePath=%2
 
-
 :Debug
-setlocal
-if DEFINED InfoLogLevel (
-  echo Script          : "%Script%"
-  echo Command         : "%Command%"
-  echo FileStoragePath : "%FileStoragePath%"
-  echo All             : "%*"
+SETLOCAL
+IF DEFINED InfoLogLevel (
+  ECHO Script            : "%Script%"
+  ECHO Command           : "%Command%"
+  ECHO FileStoragePath   : "%FileStoragePath%"
+  ECHO All               : "%*"
 )
-endlocal
+ENDLOCAL
 
 :Info
-setlocal
-if DEFINED DebugLogLevel (
-  echo Version           : "%Version%"
-  echo DockerComposeFile : "%DockerComposeFile%"
-  echo ApplicationFile   : "%ApplicationFile%"
-  echo DataLayerFile     : "%DataLayerFile%"
-  echo LogLevel          : "%LogLevel%"
+SETLOCAL
+IF DEFINED DebugLogLevel (
+  ECHO Version              : "%Version%"
+  ECHO DockerComposeFile    : "%DockerComposeFile%"
+  ECHO FileServerFile       : "%FileServerFile%"
+  ECHO FileItemsServiceFile : "%FileItemsServiceFile%"
+  ECHO LogLevel             : "%LogLevel%"
 )
-endlocal
+ENDLOCAL
 
 :ValidateInputs
-setlocal
-if ".%Command%" == "." goto :UsageBlock
-if ".%Command%" == ".stop" goto :StopBlock
-if ".%FileStoragePath%" == "." goto :UsageBlock
-if ".%Command%" == ".start" goto :StartBlock
-if ".%Command%" == ".clean" goto :CleanBlock
-endlocal
+SETLOCAL
+IF ".%Command%" == "." GOTO :UsageBlock
+IF ".%Command%" == ".stop" GOTO :StopBlock
+IF ".%FileStoragePath%" == "." GOTO :UsageBlock
+IF ".%Command%" == ".start" GOTO :StartBlock
+IF ".%Command%" == ".clean" GOTO :CleanBlock
+ENDLOCAL
 
-goto UsageBlock
+GOTO UsageBlock
 
-:UsageBlock echo "require at least one argument."
-setlocal
-echo Usage:
-echo        start      : %0 start path\to\file-storage
-echo        stop       : %0 stop
-echo        cleanup    : %0 clean path\to\file-storage
-endlocal
-goto :eof
+:UsageBlock ECHO "require at least one argument."
+SETLOCAL
+ECHO Usage:
+ECHO        start        : %0 start path\to\file-storage
+ECHO        stop         : %0 stop
+ECHO        cleanup      : %0 clean path\to\file-storage
+ENDLOCAL
+GOTO :EOF
 
 :GetDockerComposeFile
-setlocal
+SETLOCAL
 FOR %%i IN (%DockerComposeFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %ComposeUrl%
+  wget %DockerComposeUrl%
 )
-endlocal
-goto :eof
+ENDLOCAL
+GOTO :EOF
 
 :StartDockerCompose
-setlocal
-if NOT EXIST %DockerComposeFile% (
-  call :GetDockerComposeFile
+SETLOCAL
+IF NOT EXIST %DockerComposeFile% (
+  CALL :GetDockerComposeFile
 )
 %DockerComposeCommand% up -d --build
-endlocal
-goto :eof
+ENDLOCAL
+GOTO :EOF
 
-:GetApplicationFile
-setlocal
-FOR %%i IN (%DataLayerFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %DataLayerFile%
+:GetFileServerFile
+SETLOCAL
+FOR %%i IN (%FileItemsServiceFile%) DO IF NOT EXIST %%~si\NUL (
+  wget %FileItemsServiceUrl%
 )
-FOR %%i IN (%ApplicationFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %ApplicationUrl%
+
+FOR %%i IN (%FileServerFile%) DO IF NOT EXIST %%~si\NUL (
+  wget %FileServerUrl%
 )
-endlocal
-goto :eof
+ENDLOCAL
+GOTO :EOF
 
 :StartApplication
-setlocal
-if NOT EXIST %ApplicationFile% (
-  call :GetApplicationFile
+SETLOCAL
+IF NOT EXIST %FileServerFile% (
+  CALL :GetFileServerFile
 )
+
+START %FileItemsServiceCommand%
+ECHO waiting %Timeout% for %FileItemsServiceFile% bootstrap...
+ping -n %Timeout% 127.0.0.1 >nul
+
 FOR %%i IN ("%FileStoragePath%") DO IF NOT EXIST %%~si\NUL (
   CALL DEL /q /f "%FileStoragePath%"
   CALL MKDIR "%FileStoragePath%"
 )
-%ApplicationCommand% --app.upload.path="%FileStoragePath%"
-endlocal
-goto :eof
+%FileServerCommand% --app.upload.path="%FileStoragePath%"
+ENDLOCAL
+GOTO :EOF
 
 :StartBlock
-setlocal
-call :StartDockerCompose
-call :StartApplication
-endlocal
-goto :eof
+SETLOCAL
+CALL :StartDockerCompose
+CALL :StartApplication
+ENDLOCAL
+GOTO :EOF
 
 :StopDockerCompose
-setlocal
-if NOT EXIST %DockerComposeFile (
-  call :GetDockerComposeFile
+SETLOCAL
+IF NOT EXIST %DockerComposeFile (
+  CALL :GetDockerComposeFile
 )
 %DockerComposeCommand% down -v
-endlocal
-goto :eof
+ENDLOCAL
+GOTO :EOF
 
 :StopApplication
-setlocal
-for /f "tokens=1" %%A in ('jps -lv ^| find "%ApplicationFile%"') do (taskkill /F /PID %%A)
-for /f "tokens=1" %%A in ('jps -lv ^| find "%DataLayerFile%"') do (taskkill /F /PID %%A)
-endlocal
-goto :eof
+SETLOCAL
+FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileServerFile%"') DO (taskkill /F /PID %%A)
+FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileItemsServiceFile%"') DO (taskkill /F /PID %%A)
+ENDLOCAL
+GOTO :EOF
 
 :StopBlock
-setlocal
-call :StopApplication
-call :StopDockerCompose
-endlocal
-goto :eof
+SETLOCAL
+CALL :StopApplication
+CALL :StopDockerCompose
+ENDLOCAL
+GOTO :EOF
 
 :CleanBlock
-setlocal
-call :StopBlock
-del /q /f %DockerComposeFile%
-del /q /f %ApplicationFile%
-del /q /f %DataLayerFile%
-del /f "%FileStoragePath%"
-endlocal
-goto :eof
+SETLOCAL
+CALL :StopBlock
+DEL /q /f %DockerComposeFile%
+DEL /q /f %FileServerFile%
+DEL /q /f %FileItemsServiceFile%
+DEL /f "%FileStoragePath%"
+ENDLOCAL
+GOTO :EOF
 
 ENDLOCAL

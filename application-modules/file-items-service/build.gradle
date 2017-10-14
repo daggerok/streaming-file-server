@@ -1,35 +1,19 @@
-apply plugin: "org.springframework.boot"
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 dependencies {
-  //// because of QueryDSL:
-  // compileOnly "org.projectlombok:lombok"
-  // testCompileOnly "org.projectlombok:lombok"
 
   compile "org.springframework.boot:spring-boot-starter-web",
       "org.springframework.boot:spring-boot-starter-data-jpa",
-      "org.springframework.boot:spring-boot-starter-actuator",
-
-      "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
-      "com.fasterxml.jackson.datatype:jackson-datatype-jdk8",
-      "com.fasterxml.jackson.core:jackson-databind",
       "org.hibernate:hibernate-java8",
 
       "com.querydsl:querydsl-core",
       "com.querydsl:querydsl-jpa",
-      "com.querydsl:querydsl-apt",
-
-      "org.apache.commons:commons-io:$commonsIoVer",
-      "org.projectlombok:lombok",
-      "io.vavr:vavr:$vavrVer"
+      "com.querydsl:querydsl-apt"
 
   runtime "org.postgresql:postgresql",
-      //"org.springframework.boot:spring-boot-devtools",
+//      "org.springframework.boot:spring-boot-devtools",
       "com.h2database:h2"
 }
-
-springBoot { executable = true }
-bootRun { systemProperties = System.properties }
 
 querydsl {
   querydslSourcesDir = "$projectDir/src/main/gen"

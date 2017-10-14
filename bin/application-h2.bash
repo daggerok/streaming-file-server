@@ -7,19 +7,24 @@ LOG_LEVEL=info
 
 # app info
 VERSION=3.0.0
-FILENAME="streaming-file-server-${VERSION}.jar"
-ITEMS_SERVICE_FILENAME="file-items-rest-service-${VERSION}.jar"
+APPLICATION_PATH="app"
+FILE_SERVER_FILENAME="streaming-file-server-${VERSION}.jar"
+FILE_ITEMS_SERVICE_FILENAME="file-items-rest-service-${VERSION}.jar"
+
+TIMEOUT=25
 
 if [ "'$LOG_LEVEL'" == "'debug'" ]; then
   echo "version                   : $VERSION"
-  echo "web application           : $FILENAME"
-  echo "data-layer application    : $ITEMS_SERVICE_FILENAME"
+  echo "application path          : $APPLICATION_PATH"
+  echo "file-server               : $FILE_SERVER_FILENAME"
+  echo "file-items-service        : $FILE_ITEMS_SERVICE_FILENAME"
   echo
 fi
 
 # required binaries info
 WHICH=$(which which)
 RM=$(which rm)
+SLEEP=$(whict sleep)
 PS=$(which ps)
 KILL=$(which kill)
 GREP=$(which grep)
@@ -81,24 +86,25 @@ VALIDATE_INPUTS_FUNC
 
 # application
 function GET_APPLICATION_FUNC {
-  if [ ! -f "$FILENAME" ]; then
+  if [ ! -f "${APPLICATION_PATH}/${FILE_SERVER_FILENAME}" ]; then
 
     if [ "'$LOG_LEVEL'" == "'info'" ]; then
       echo "download application"
     fi
 
-    ${WGET} "https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/$FILENAME"
-    ${WGET} "https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/$ITEMS_SERVICE_FILENAME"
+    ${MKDIR} -p ${APPLICATION_PATH}
+    ${WGET} -P ${APPLICATION_PATH} "https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/$FILE_SERVER_FILENAME"
+    ${WGET} -P ${APPLICATION_PATH} "https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/$FILE_ITEMS_SERVICE_FILENAME"
   fi
 }
 
 function START_APPLICATION_FUNC {
   GET_APPLICATION_FUNC
 
-  ${BASH_CMD} ${ITEMS_SERVICE_FILENAME} --spring.profiles.active=db-h2
-
+  ${BASH_CMD} "${APPLICATION_PATH}/${FILE_ITEMS_SERVICE_FILENAME}" --spring.profiles.active=db-h2
+  ${SLEEP} ${TIMEOUT}
   ${MKDIR} -p "$FILE_STORAGE_PATH"
-  ${BASH_CMD} ${FILENAME} --app.upload.path="$FILE_STORAGE_PATH"
+  ${BASH_CMD} "${APPLICATION_PATH}/${FILE_SERVER_FILENAME}" --app.upload.path="$FILE_STORAGE_PATH"
 }
 
 if [ "'$APPLICATION_COMMAND'" == "'start'" ]; then
@@ -106,7 +112,7 @@ if [ "'$APPLICATION_COMMAND'" == "'start'" ]; then
 fi
 
 function STOP_APPLICATION_FUNC {
-  for F_NAME in ${FILENAME} ${ITEMS_SERVICE_FILENAME}; do
+  for F_NAME in ${FILE_SERVER_FILENAME} ${FILE_ITEMS_SERVICE_FILENAME}; do
     APPLICATION_PID=$(${PS} waux|${GREP} ${F_NAME}|${GREP} -v 'grep'|${AWK} '{print $2}')
 
     if [ "'$LOG_LEVEL'" == "'info'" ]; then
@@ -130,22 +136,6 @@ fi
 function CLEANUP_FUNC {
   STOP_APPLICATION_FUNC
 
-  if [ "'$LOG_LEVEL'" == "'info'" ]; then
-    echo "remove web app file: '$FILENAME'"
-  fi
-
-  if [ -f "$FILENAME" ]; then
-    ${RM} -rf "$FILENAME"
-  fi
-
-  if [ "'$LOG_LEVEL'" == "'info'" ]; then
-    echo "remove data-layer app file: '$ITEMS_SERVICE_FILENAME'"
-  fi
-
-  if [ -f "$ITEMS_SERVICE_FILENAME" ]; then
-    ${RM} -rf "$ITEMS_SERVICE_FILENAME"
-  fi
-
   if [ "'$FILE_STORAGE_PATH'" != "''" ]; then
     read -p "Are you sure about removing '$FILE_STORAGE_PATH'? " -n 1 -r
     echo # move to a new line
@@ -153,6 +143,14 @@ function CLEANUP_FUNC {
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       ${RM} -rf ${FILE_STORAGE_PATH}
     fi
+  fi
+
+  if [ "'$LOG_LEVEL'" == "'info'" ]; then
+    echo "remove application: '$APPLICATION_PATH'"
+  fi
+
+  if [ -f ${APPLICATION_PATH} ]; then
+    ${RM} -rf ${APPLICATION_PATH}
   fi
 }
 

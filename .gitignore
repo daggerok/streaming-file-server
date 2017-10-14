@@ -7,10 +7,11 @@
 *.gradle/
 *jgiven-reports/
 src/main/gen/
-application-modules/file-items-rest-service/src/main/gen/
+application-modules/*/src/main/gen/
 *out/
 *node_modules/
 *yarn.lock
+*logs/
 *.log
 *.classpath
 *.settings

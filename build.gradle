@@ -24,104 +24,22 @@ plugins {
   id "eclipse"
   id "net.saliman.properties" version "1.4.6"
   id "com.github.ben-manes.versions" version "0.15.0"
-  id "org.springframework.boot" version "1.5.7.RELEASE"
-  id "io.spring.dependency-management" version "1.0.3.RELEASE"
-  id "com.ewerk.gradle.plugins.querydsl" version "1.0.9" apply false
-  id "cn.bestwu.propdeps-eclipse" version "0.0.10" apply false
-  id "cn.bestwu.propdeps-maven" version "0.0.10" apply false
-  id "cn.bestwu.propdeps-idea" version "0.0.10" apply false
+
   id "cn.bestwu.propdeps" version "0.0.10" apply false
+  id "cn.bestwu.propdeps-idea" version "0.0.10" apply false
+  id "cn.bestwu.propdeps-maven" version "0.0.10" apply false
+  id "cn.bestwu.propdeps-eclipse" version "0.0.10" apply false
+  id "org.springframework.boot" version "1.5.7.RELEASE" apply false
+  id "com.ewerk.gradle.plugins.querydsl" version "1.0.9" apply false
+  id "io.spring.dependency-management" version "1.0.3.RELEASE" apply false
 }
 
 allprojects {
 
-  apply plugin: "java"
+  apply plugin: "base"
+
   version "3.0.0"
   group "daggerok"
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-  }
-
-  apply plugin: "cn.bestwu.propdeps"
-  apply plugin: "cn.bestwu.propdeps-idea"
-  apply plugin: "cn.bestwu.propdeps-maven"
-  apply plugin: "cn.bestwu.propdeps-eclipse"
-  apply plugin: "io.spring.dependency-management"
-
-  dependencyManagement {
-    imports {
-      mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
-    }
-  }
-}
-
-subprojects {
-
-  dependencies {
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
-        "com.fasterxml.jackson.core:jackson-databind",
-        "org.apache.commons:commons-io:$commonsIoVer",
-        "org.projectlombok:lombok",
-        "io.vavr:vavr:$vavrVer"
-  }
-}
-
-dependencies {
-  //// because of QueryDSL:
-  // compileOnly "org.projectlombok:lombok"
-  // testCompileOnly "org.projectlombok:lombok"
-
-  compile "org.springframework.boot:spring-boot-starter-mustache",
-      "org.springframework.boot:spring-boot-starter-security",
-      "org.springframework.boot:spring-boot-starter-actuator",
-
-      "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
-      "com.fasterxml.jackson.datatype:jackson-datatype-jdk8",
-      "com.fasterxml.jackson.core:jackson-databind",
-      "org.hibernate:hibernate-java8",
-
-      "org.apache.commons:commons-io:$commonsIoVer",
-      "org.projectlombok:lombok",
-      "io.vavr:vavr:$vavrVer",
-
-      "org.webjars:webjars-locator:$webjarsLocatorVer",
-      "org.webjars:jquery:$jqueryVer",
-      "org.webjars:bootstrap:$bootstrapVer",
-      "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
-      "org.webjars.bower:font-awesome:$fontAwesomeVer",
-      "org.webjars.npm:popper.js:1.12.5"
-
-  runtime "org.springframework.boot:spring-boot-devtools"
-
-  testCompile "org.springframework.boot:spring-boot-starter-test",
-      "org.powermock:powermock-module-junit4:$powermockitoVer",
-      "org.powermock:powermock-api-mockito:$powermockitoVer",
-      "com.tngtech.jgiven:jgiven-html5-report:$jgivenVer",
-      "com.tngtech.jgiven:jgiven-junit:$jgivenVer"
-}
-
-springBoot { executable = true }
-bootRun { systemProperties = System.properties }
-
-task jgiven(type: JavaExec, dependsOn: "test") {
-  main = "com.tngtech.jgiven.report.ReportGenerator"
-  args "--targetDir=./jgiven-reports/html", "--format=html"
-  classpath = configurations.testCompile
-  shouldRunAfter clean, assemble
-}
-
-
-clean {
-  delete "$projectDir/jgiven-reports"
-  delete "$projectDir/out"
-  //if (System.getProperty("os.name").toLowerCase().contains("windows")) return
-  //delete "$projectDir/file-storage/*"
-  delete file("$projectDir/file-storage").listFiles().findAll { ".gitkeep" != it.name }
-
 }
 
 wrapper {

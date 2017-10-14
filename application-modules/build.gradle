@@ -1,0 +1,54 @@
+subprojects {
+
+    apply plugin: "java"
+
+    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
+
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "cn.bestwu.propdeps-eclipse"
+    apply plugin: "cn.bestwu.propdeps-maven"
+    apply plugin: "cn.bestwu.propdeps-idea"
+    apply plugin: "cn.bestwu.propdeps"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        //// because of QueryDSL:
+        // compileOnly "org.projectlombok:lombok"
+        // testCompileOnly "org.projectlombok:lombok"
+
+        compile "org.springframework.boot:spring-boot-starter-actuator",
+
+                "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+                "com.fasterxml.jackson.datatype:jackson-datatype-jdk8",
+                "com.fasterxml.jackson.core:jackson-databind",
+                "org.hibernate:hibernate-java8",
+
+                "org.apache.commons:commons-io:$commonsIoVer",
+                "org.projectlombok:lombok",
+                "io.vavr:vavr:$vavrVer"
+
+        testCompile "org.springframework.boot:spring-boot-starter-test",
+                "org.powermock:powermock-module-junit4:$powermockitoVer",
+                "org.powermock:powermock-api-mockito:$powermockitoVer",
+                "com.tngtech.jgiven:jgiven-html5-report:$jgivenVer",
+                "com.tngtech.jgiven:jgiven-junit:$jgivenVer"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
+        }
+    }
+
+    springBoot {
+        executable = true
+    }
+
+    bootRun {
+        systemProperties = System.properties
+    }
+}

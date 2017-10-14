@@ -1,6 +1,6 @@
 @echo off
 
-@rem require binaries: which, find, taskkill, scoop (wget) and of course java: (java, jps)
+@rem require binaries: which, find, taskkill, scoop (wget) and of course java (binaries: java and jps)
 
 rem SET WhereCmd=C:\Windows\System32\where.exe
 
@@ -8,8 +8,8 @@ rem if not exist %ScoopCmd% (
 rem   powershell -noexit "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
 rem )
 
-rem for /f %%i in ('%WhereCmd% scoop') do SET ScoopCmd=%%i
-rem for /f %%i in ('%WhereCmd% wget') do SET WgetCmd=%%i
+rem FOR /f %%i IN ('%WhereCmd% scoop') DO SET ScoopCmd=%%i
+rem FOR /f %%i IN ('%WhereCmd% wget') DO SET WgetCmd=%%i
 
 SETLOCAL ENABLEEXTENSIONS
 
@@ -17,109 +17,115 @@ SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
 SET Version=3.0.0
-SET ApplicationFile=streaming-file-server-%Version%.jar
-SET ApplicationUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%ApplicationFile%
-SET ApplicationCommand=java -jar %ApplicationFile%
-SET DataLayerFile=file-items-rest-service-%Version%.jar
-SET DataLayerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%DataLayerFile%
-SET DataLayerCommand=java -jar %DataLayerFile%
+SET FileServerFile=streaming-file-server-%Version%.jar
+SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
+SET FileServerCommand=java -jar %FileServerFile%
+SET FileItemsServiceFile=file-items-rest-service-%Version%.jar
+SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
+SET FileItemsServiceCommand=java -jar %FileItemsServiceFile%
+
+SET Timeout=25
 
 SET Script=%0
 SET Command=%1
 SET FileStoragePath=%2
 
-
 :Debug
-setlocal
-if DEFINED InfoLogLevel (
-  echo Script          : "%Script%"
-  echo Command         : "%Command%"
-  echo FileStoragePath : "%FileStoragePath%"
-  echo All             : "%*"
+SETLOCAL
+IF DEFINED InfoLogLevel (
+  ECHO Script               : "%Script%"
+  ECHO Command              : "%Command%"
+  ECHO FileStoragePath      : "%FileStoragePath%"
+  ECHO All                  : "%*"
 )
-endlocal
+ENDLOCAL
 
 :Info
-setlocal
-if DEFINED DebugLogLevel (
-  echo Version           : "%Version%"
-  echo ApplicationFile   : "%ApplicationFile%"
-  echo DataLayerFile     : "%DataLayerFile%"
-  echo LogLevel          : "%LogLevel%"
+SETLOCAL
+IF DEFINED DebugLogLevel (
+  ECHO Version              : "%Version%"
+  ECHO FileServerFile       : "%FileServerFile%"
+  ECHO FileItemsServiceFile : "%FileItemsServiceFile%"
+  ECHO LogLevel             : "%LogLevel%"
 )
-endlocal
+ENDLOCAL
 
 :ValidateInputs
-setlocal
-if ".%Command%" == "." goto :UsageBlock
-if ".%Command%" == ".stop" goto :StopBlock
-if ".%FileStoragePath%" == "." goto :UsageBlock
-if ".%Command%" == ".start" goto :StartBlock
-if ".%Command%" == ".clean" goto :CleanBlock
-endlocal
+SETLOCAL
+IF ".%Command%" == "." GOTO :UsageBlock
+IF ".%Command%" == ".stop" GOTO :StopBlock
+IF ".%FileStoragePath%" == "." GOTO :UsageBlock
+IF ".%Command%" == ".start" GOTO :StartBlock
+IF ".%Command%" == ".clean" GOTO :CleanBlock
+ENDLOCAL
 
-goto UsageBlock
+GOTO UsageBlock
 
-:UsageBlock echo "require at least one argument."
-setlocal
-echo Usage:
-echo        start      : %0 start path\to\file-storage
-echo        stop       : %0 stop
-echo        cleanup    : %0 clean path\to\file-storage
-endlocal
-goto :eof
+:UsageBlock ECHO "require at least one argument."
+SETLOCAL
+ECHO Usage:
+ECHO        start        : %0 start path\to\file-storage
+ECHO        stop         : %0 stop
+ECHO        cleanup      : %0 clean path\to\file-storage
+ENDLOCAL
+GOTO :EOF
 
-:GetApplicationFile
-setlocal
-FOR %%i IN (%DataLayerFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %DataLayerFile%
+:GetFileServerFile
+SETLOCAL
+FOR %%i IN (%FileItemsServiceFile%) DO IF NOT EXIST %%~si\NUL (
+  wget %FileItemsServiceUrl%
 )
-FOR %%i IN (%ApplicationFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %ApplicationUrl%
+
+FOR %%i IN (%FileServerFile%) DO IF NOT EXIST %%~si\NUL (
+  wget %FileServerUrl%
 )
-endlocal
-goto :eof
+ENDLOCAL
+GOTO :EOF
 
 :StartApplication
-setlocal
-if NOT EXIST %ApplicationFile% (
-  call :GetApplicationFile
+SETLOCAL
+IF NOT EXIST %FileServerFile% (
+  CALL :GetFileServerFile
 )
-%DataLayerCommand% --spring.profiles.active=db-h2
+
+START %FileItemsServiceCommand% --spring.profiles.active=db-h2
+ECHO waiting %Timeout% FOR %FileItemsServiceFile% bootstrap...
+PING -n %Timeout% 127.0.0.1 >nul
+
 FOR %%i IN ("%FileStoragePath%") DO IF NOT EXIST %%~si\NUL (
   CALL DEL /q /f "%FileStoragePath%"
   CALL MKDIR "%FileStoragePath%"
 )
-%ApplicationCommand% --app.upload.path="%FileStoragePath%"
-endlocal
-goto :eof
+%FileServerCommand% --app.upload.path="%FileStoragePath%"
+ENDLOCAL
+GOTO :EOF
 
 :StartBlock
-setlocal
-call :StartApplication
-endlocal
-goto :eof
+SETLOCAL
+CALL :StartApplication
+ENDLOCAL
+GOTO :EOF
 
 :StopApplication
-setlocal
-for /f "tokens=1" %%A in ('jps -lv ^| find "%ApplicationFile%"') do (taskkill /F /PID %%A)
-for /f "tokens=1" %%A in ('jps -lv ^| find "%DataLayerFile%"') do (taskkill /F /PID %%A)
-endlocal
-goto :eof
+SETLOCAL
+FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileServerFile%"') DO (TASKKILL /F /PID %%A)
+FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileItemsServiceFile%"') DO (TASKKILL /F /PID %%A)
+ENDLOCAL
+GOTO :EOF
 
 :StopBlock
-setlocal
-call :StopApplication
-endlocal
-goto :eof
+SETLOCAL
+CALL :StopApplication
+ENDLOCAL
+GOTO :EOF
 
 :CleanBlock
-setlocal
-call :StopBlock
-del /q /f %ApplicationFile%
-del /q /f %DataLayerFile%
-del /f "%FileStoragePath%"
-endlocal
-goto :eof
+SETLOCAL
+CALL :StopBlock
+DEL /q /f %FileServerFile%
+DEL /q /f %FileItemsServiceFile%
+DEL /f "%FileStoragePath%"
+ENDLOCAL
+GOTO :EOF
 
 ENDLOCAL
