@@ -6,7 +6,7 @@ LOG_LEVEL=info
 #LOG_LEVEL=debug
 
 # app info
-VERSION=2.2.0
+VERSION=2.3.0
 FILENAME="streaming-file-server-${VERSION}.jar"
 ITEMS_SERVICE_FILENAME="file-items-rest-service-${VERSION}.jar"
 

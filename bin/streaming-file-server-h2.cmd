@@ -16,10 +16,13 @@ SETLOCAL ENABLEEXTENSIONS
 SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
-SET Version=2.2.0
+SET Version=2.3.0
 SET ApplicationFile=streaming-file-server-%Version%.jar
 SET ApplicationUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%ApplicationFile%
-SET ApplicationCommand=java -jar %ApplicationFile% --spring.profiles.active=db-h2
+SET ApplicationCommand=java -jar %ApplicationFile%
+SET DataLayerFile=file-items-rest-service-%Version%.jar
+SET DataLayerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%DataLayerFile%
+SET DataLayerCommand=java -jar %DataLayerFile%
 
 SET Script=%0
 SET Command=%1
@@ -41,6 +44,7 @@ setlocal
 if DEFINED DebugLogLevel (
   echo Version           : "%Version%"
   echo ApplicationFile   : "%ApplicationFile%"
+  echo DataLayerFile     : "%DataLayerFile%"
   echo LogLevel          : "%LogLevel%"
 )
 endlocal
@@ -67,6 +71,9 @@ goto :eof
 
 :GetApplicationFile
 setlocal
+FOR %%i IN (%DataLayerFile%) DO IF NOT EXIST %%~si\NUL (
+  wget %DataLayerFile%
+)
 FOR %%i IN (%ApplicationFile%) DO IF NOT EXIST %%~si\NUL (
   wget %ApplicationUrl%
 )
@@ -78,6 +85,7 @@ setlocal
 if NOT EXIST %ApplicationFile% (
   call :GetApplicationFile
 )
+%DataLayerCommand% --spring.profiles.active=db-h2
 FOR %%i IN ("%FileStoragePath%") DO IF NOT EXIST %%~si\NUL (
   CALL DEL /q /f "%FileStoragePath%"
   CALL MKDIR "%FileStoragePath%"
@@ -95,6 +103,7 @@ goto :eof
 :StopApplication
 setlocal
 for /f "tokens=1" %%A in ('jps -lv ^| find "%ApplicationFile%"') do (taskkill /F /PID %%A)
+for /f "tokens=1" %%A in ('jps -lv ^| find "%DataLayerFile%"') do (taskkill /F /PID %%A)
 endlocal
 goto :eof
 
@@ -108,6 +117,7 @@ goto :eof
 setlocal
 call :StopBlock
 del /q /f %ApplicationFile%
+del /q /f %DataLayerFile%
 del /f "%FileStoragePath%"
 endlocal
 goto :eof
