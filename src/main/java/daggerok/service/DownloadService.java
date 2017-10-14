@@ -30,8 +30,7 @@ public class DownloadService {
   }
 
   public List<FileItem> search(final String filename) {
-    @Cleanup val stream = fileItemRestClient.findByFilenameContainingIgnoreCase(filename);
-    return stream.collect(toList());
+    return fileItemRestClient.findByFilenameContainingIgnoreCase(filename);
   }
 
   public void download(final Long id, final HttpServletResponse response) {

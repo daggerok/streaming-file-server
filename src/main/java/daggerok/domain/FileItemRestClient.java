@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -55,8 +56,24 @@ public class FileItemRestClient {
     return ofNullable(item);
   }
 
-  public Stream<FileItem> findByFilenameContainingIgnoreCase(final String filename) {
-    return Stream.empty();
+  public List<FileItem> findByFilenameContainingIgnoreCase(final String filename) {
+
+    if (StringUtils.isEmpty(filename)) {
+      return findAll();
+    }
+
+    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
+                                  .path("/api/v1/file-items/like")
+                                  .pathSegment(filename)
+                                  .build()
+                                  .toString();
+
+    val list = Try.of(() -> restTemplate.getForEntity(url, ArrayList.class))
+                  .map(HttpEntity::getBody)
+                  .getOrElseGet(throwable -> new ArrayList<FileItem>());
+
+    return Try.of(() -> (List<FileItem>) list)
+              .getOrElseGet(throwable -> new ArrayList<>());
   }
 
   public FileItem save(final FileItem fileItem) {

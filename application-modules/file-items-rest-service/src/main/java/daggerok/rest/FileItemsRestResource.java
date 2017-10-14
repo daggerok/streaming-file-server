@@ -2,13 +2,16 @@ package daggerok.rest;
 
 import daggerok.domain.FileItem;
 import daggerok.domain.FileItemRepository;
+import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -22,6 +25,12 @@ public class FileItemsRestResource {
   @GetMapping
   public List<FileItem> getAll() {
     return repository.findAll();
+  }
+
+  @GetMapping("/like/{filename}")
+  public List<FileItem> searchAny(@PathVariable("filename") final String filename) {
+    @Cleanup val stream = repository.findByFilenameContainingIgnoreCase(filename);
+    return stream.collect(toList());
   }
 
   @GetMapping("/{id}")
