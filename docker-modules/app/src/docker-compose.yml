@@ -23,7 +23,7 @@ services:
       DB_HOST: db
     image: 127.0.0.1:5000/file-items-rest-service
     ports: ["8001:8001"]
-    volumes: ["file-items-rest-service-data:/tmp/app"]
+    volumes: ["file-items-rest-service-data:/home/app"]
     networks: [app-backing-services]
 
   streaming-file-server:
@@ -36,13 +36,13 @@ services:
     environment:
       FILE_ITEMS_REST_SERVICE_HOST: file-items-rest-service
       FILE_ITEMS_REST_SERVICE_PORT: 8001
-      #APP_UPLOAD_PATH: /tmp/file-storage
+      #APP_UPLOAD_PATH: /home/app/file-storage
     image: 127.0.0.1:5000/streaming-file-server
     ports: ["8002:8002"]
     volumes:
-      - ./file-storage:/tmp/file-storage:rw
-      - ./build:/tmp/file-storage
-      - streaming-file-server-data:/tmp/app
+      - ./file-storage:/home/app/file-storage:rw
+      - ./build:/home/app/file-storage
+      - streaming-file-server-data:/home/app
     networks: [app-backing-services]
 
 volumes:

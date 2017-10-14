@@ -6,13 +6,15 @@ LOG_LEVEL=info
 #LOG_LEVEL=debug
 
 # app info
-VERSION=2.3.0
+VERSION=3.0.0
+COMPOSE_FILE="docker-compose-${VERSION}.yml"
 FILENAME="streaming-file-server-${VERSION}.jar"
 ITEMS_SERVICE_FILENAME="file-items-rest-service-${VERSION}.jar"
 
 if [ "'$LOG_LEVEL'" == "'debug'" ]; then
   echo "version                   : $VERSION"
-  echo "web application           : $FILENAME"
+  echo "docker-compose file       : $COMPOSE_FILE"
+  echo "application filename      : $FILENAME"
   echo "data-layer application    : $ITEMS_SERVICE_FILENAME"
   echo
 fi
@@ -20,6 +22,7 @@ fi
 # required binaries info
 WHICH=$(which which)
 RM=$(which rm)
+DOCKER_COMPOSE=$(which docker-compose)
 PS=$(which ps)
 KILL=$(which kill)
 GREP=$(which grep)
@@ -42,6 +45,7 @@ if [ "'$LOG_LEVEL'" == "'debug'" ]; then
   echo
   echo "using which          from : '$WHICH'"
   echo "using rm             from : '$RM'"
+  echo "using docker-compose from : '$DOCKER_COMPOSE'"
   echo "using ps             from : '$PS'"
   echo "using kill           from : '$KILL'"
   echo "using grep           from : '$GREP'"
@@ -59,7 +63,7 @@ function FAIL_STOP_WITH_USAGE_FUNC {
     echo "stop      application : $0 stop"
     echo "stop      application : $0 clean \$PATH_TO_FILE_STORAGE"
     echo ""
-    echo "note                  : binaries: 'which', 'rm', 'wget', 'kill', 'grep', 'awk', 'mkdir' and 'bash' are required"
+    echo "note                  : binaries: 'which', 'rm', 'wget', 'docker-compose', 'kill', 'grep', 'awk', 'mkdir' and 'bash' are required"
     exit 1
 }
 
@@ -79,6 +83,23 @@ function VALIDATE_INPUTS_FUNC {
 
 VALIDATE_INPUTS_FUNC
 
+# docker compose
+function GET_COMPOSE_FUNC {
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    ${WGET} "https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/$COMPOSE_FILE"
+  fi
+}
+
+function START_DATABASE_FUNC {
+  GET_COMPOSE_FUNC
+
+  if [ "'$LOG_LEVEL'" == "'info'" ]; then
+    echo "start postgres database"
+  fi
+
+  ${DOCKER_COMPOSE} -f ${COMPOSE_FILE} up -d
+}
+
 # application
 function GET_APPLICATION_FUNC {
   if [ ! -f "$FILENAME" ]; then
@@ -93,9 +114,11 @@ function GET_APPLICATION_FUNC {
 }
 
 function START_APPLICATION_FUNC {
+  GET_COMPOSE_FUNC
+  START_DATABASE_FUNC
   GET_APPLICATION_FUNC
 
-  ${BASH_CMD} ${ITEMS_SERVICE_FILENAME} --spring.profiles.active=db-h2
+  ${BASH_CMD} ${ITEMS_SERVICE_FILENAME}
 
   ${MKDIR} -p "$FILE_STORAGE_PATH"
   ${BASH_CMD} ${FILENAME} --app.upload.path="$FILE_STORAGE_PATH"
@@ -122,8 +145,21 @@ function STOP_APPLICATION_FUNC {
   done
 }
 
+function STOP_DATABASE_FUNC {
+  if [ "'$1'" != "'--download=false'" ]; then
+    GET_COMPOSE_FUNC
+  fi
+
+  if [ "'$LOG_LEVEL'" == "'info'" ]; then
+    echo "stop postgres database"
+  fi
+
+  ${DOCKER_COMPOSE} -f ${COMPOSE_FILE} down -v
+}
+
 if [ "'$APPLICATION_COMMAND'" == "'stop'" ]; then
   STOP_APPLICATION_FUNC
+  STOP_DATABASE_FUNC
   exit 0;
 fi
 
@@ -144,6 +180,16 @@ function CLEANUP_FUNC {
 
   if [ -f "$ITEMS_SERVICE_FILENAME" ]; then
     ${RM} -rf "$ITEMS_SERVICE_FILENAME"
+  fi
+
+  STOP_DATABASE_FUNC --download=false
+
+  if [ "'$LOG_LEVEL'" == "'info'" ]; then
+    echo "remove docker compose file: '$COMPOSE_FILE' if exists"
+  fi
+
+  if [ -f "$COMPOSE_FILE" ]; then
+    ${RM} -rf "$COMPOSE_FILE"
   fi
 
   if [ "'$FILE_STORAGE_PATH'" != "''" ]; then

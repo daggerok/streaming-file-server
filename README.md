@@ -10,7 +10,7 @@ full-stack java file server based on spring-boot / spring-* with no limitation f
 **with postgres in using docker**
 
 ```bash
-export VERSION="2.3.0"
+export VERSION="3.0.0"
 
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose-$VERSION.yml
@@ -32,31 +32,31 @@ or simply using shell-script:
 
 ```bash
 # start
-wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.bash
-bash streaming-file-server-$VERSION.bash start ./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application-$VERSION.bash
+bash application-$VERSION.bash start ./path/to/file-storage
 
 # stop
-bash streaming-file-server-$VERSION.bash stop
+bash application-$VERSION.bash stop
 
 # cleanup
-bash streaming-file-server-$VERSION.bash clean ./path/to/file-storage
+bash application-$VERSION.bash clean ./path/to/file-storage
 ```
 
 *note: tested on osx with localhost docker.*
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-for windows use: https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/streaming-file-server-$VERSION.cmd
+for windows use: https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application-$VERSION.cmd
 
 ```cmd
 @rem start
-streaming-file-server-$VERSION.cmd start path\to\file-storage
+application-$VERSION.cmd start path\to\file-storage
 
 @rem stop
-streaming-file-server-$VERSION.cmd stop
+application-$VERSION.cmd stop
 
 @rem cleanup
-streaming-file-server-$VERSION.cmd clean path\to\file-storage
+application-$VERSION.cmd clean path\to\file-storage
 ```
 
 *note: tested on windows 10 with localhost docker for postgres.*

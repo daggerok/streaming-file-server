@@ -16,7 +16,7 @@ SETLOCAL ENABLEEXTENSIONS
 SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
-SET Version=2.3.0
+SET Version=3.0.0
 SET ApplicationFile=streaming-file-server-%Version%.jar
 SET ApplicationUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%ApplicationFile%
 SET ApplicationCommand=java -jar %ApplicationFile%
