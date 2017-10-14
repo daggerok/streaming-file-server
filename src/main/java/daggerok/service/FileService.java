@@ -1,7 +1,7 @@
 package daggerok.service;
 
 import daggerok.config.props.AppProps;
-import daggerok.domain.FileItem;
+import daggerok.client.model.FileItem;
 import daggerok.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static daggerok.domain.FileType.FILE;
+import static daggerok.client.model.FileType.FILE;
 import static java.lang.String.format;
 import static java.nio.file.FileVisitOption.FOLLOW_LINKS;
 import static java.nio.file.Files.*;

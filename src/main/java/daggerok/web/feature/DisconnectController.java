@@ -19,7 +19,7 @@ public class DisconnectController {
   final RestTemplate restTemplate;
 
   @SneakyThrows
-  @GetMapping("/disconnect")
+  @GetMapping("/disconnect") // TODO...
   public void search(final HttpServletRequest req, final HttpServletResponse resp) {
 /*
     val url = UriComponentsBuilder.fromHttpUrl(format("%s://%s:%d", protocol, req.getServerName(), req.getServerPort()))

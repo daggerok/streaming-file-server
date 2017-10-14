@@ -1,7 +1,7 @@
 package daggerok.service;
 
-import daggerok.domain.FileItem;
-import daggerok.domain.FileItemRestClient;
+import daggerok.client.model.FileItem;
+import daggerok.client.FileItemRestClient;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;

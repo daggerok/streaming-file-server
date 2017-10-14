@@ -1,7 +1,7 @@
 package daggerok;
 
 import daggerok.config.AppCfg;
-import daggerok.config.MustacheCfg;
+import daggerok.web.config.MustacheCfg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

@@ -124,6 +124,7 @@ open jgiven-reports/html/index.html
   - ~~spring-social (facebook login required for upload ability)~~ replaced with basic spring-security for now
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)
+- code / architecture splitting into micro-services
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
 - [jgiven](http://jgiven.org/)

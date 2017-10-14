@@ -124,19 +124,6 @@ clean {
 
 }
 
-/*
-task pgUp(dependsOn: [":docker-modules:docker:composeUp"])
-task pgDown(dependsOn: [":docker-modules:docker:composeDown"])
-
-[test, build, bootRun].each { task ->
-  task.dependsOn assemble, pgUp
-  task.shouldRunAfter assemble, pgUp
-  ["app", "docker"].each { id ->
-    task.finalizedBy ":docker-modules:$id:${id}Down"
-  }
-}
-*/
-
 wrapper {
   gradleVersion = "4.2.1"
 }

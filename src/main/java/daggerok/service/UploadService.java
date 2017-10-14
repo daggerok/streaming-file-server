@@ -1,6 +1,6 @@
 package daggerok.service;
 
-import daggerok.domain.FileItemRestClient;
+import daggerok.client.FileItemRestClient;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
