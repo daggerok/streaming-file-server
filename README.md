@@ -109,10 +109,9 @@ installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of course `j
 ### development
 
 ```sh
-bash gradlew clean build
+bash gradlew clean assemble
 bash gradlew :a-m:f-i-r-s:bootRun
 bash gradlew :a-m:s-f-s:bootRun
-open http://localhost:8002 # enjoy :)
 
 # cleanup
 bash gradlew composeDown
