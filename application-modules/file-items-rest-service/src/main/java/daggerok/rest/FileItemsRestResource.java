@@ -26,7 +26,7 @@ public class FileItemsRestResource {
 
   @GetMapping("/{id}")
   public FileItem getById(@PathVariable("id") final String id) {
-        return repository.findOne(Long.valueOf(id));
+    return repository.findOne(Long.valueOf(id));
   }
 
   @PostMapping
@@ -34,5 +34,12 @@ public class FileItemsRestResource {
   @ResponseStatus(CREATED)
   public FileItem save(@RequestBody @Validated final FileItem fileItem) {
     return repository.save(fileItem);
+  }
+
+  @Transactional
+  @PostMapping("/all")
+  @ResponseStatus(CREATED)
+  public List<FileItem> save(@RequestBody @Validated final List<FileItem> fileItems) {
+    return repository.save(fileItems);
   }
 }

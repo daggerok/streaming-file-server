@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.Optional.ofNullable;
-import static org.springframework.http.HttpMethod.GET;
 
 @Slf4j
 @Service
@@ -50,12 +48,10 @@ public class FileItemRestClient {
                                   .build()
                                   .toString();
 
-    final FileItem item = Try.of(() -> restTemplate.getForEntity(url, FileItem.class))
-                             .map(HttpEntity::getBody)
-                             .getOrElseGet(throwable -> {
-                               log.error(throwable.getLocalizedMessage(), throwable);
-                               return null;
-                             });
+    val item = Try.of(() -> restTemplate.getForEntity(url, FileItem.class))
+                  .map(HttpEntity::getBody)
+                  .getOrElseGet(throwable -> null);
+
     return ofNullable(item);
   }
 
@@ -77,6 +73,19 @@ public class FileItemRestClient {
   }
 
   public Stream<FileItem> save(final List<FileItem> fileItems) {
-    return Stream.empty();
+
+    val request = new HttpEntity<>(fileItems);
+    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
+                                  .path("/api/v1/file-items/all")
+                                  .build()
+                                  .toString();
+
+    val list = Try.of(() -> restTemplate.postForEntity(url, request, ArrayList.class))
+                  .map(HttpEntity::getBody)
+                  .getOrElseGet(throwable -> new ArrayList<FileItem>());
+
+    return Try.of(() -> (List<FileItem>) list)
+              .getOrElseGet(throwable -> new ArrayList<>())
+              .stream();
   }
 }
