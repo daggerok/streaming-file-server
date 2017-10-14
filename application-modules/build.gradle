@@ -1,4 +1,4 @@
-subprojects {
+subprojects { sp ->
 
     apply plugin: "java"
 
@@ -50,5 +50,9 @@ subprojects {
 
     bootRun {
         systemProperties = System.properties
+    }
+
+    clean {
+        delete "$sp.projectDir/logs"
     }
 }
