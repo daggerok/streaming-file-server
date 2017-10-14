@@ -15,9 +15,9 @@
         {{#files}}
           <tr>
             <td>
-              {{#isFile}}
+              {{#file}}
                 <a href="{{ctx}}/{{downloadUrl}}/{{id}}" class="glyphicon glyphicon-download"/>
-              {{/isFile}}
+              {{/file}}
             </td>
             <td class="col-sm-7">
               <span class="text-muted">{{filename}}</span>
@@ -32,8 +32,7 @@
               <span class="text-muted">{{prettySize}}</span>
             </td>
             <td class="col-sm-2">
-              <span class="text-muted">{{updatedAt.month.toLowerCase}} {{updatedAt.dayOfMonth}}
-                , {{updatedAt.year}} at {{updatedAt.hour}}:{{updatedAt.minute}}:{{updatedAt.second}}</span>
+              <span class="text-muted">{{updatedAt}}</span>
             </td>
           </tr>
         {{/files}}

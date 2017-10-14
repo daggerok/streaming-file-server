@@ -24,6 +24,11 @@ public class FileItemsRestResource {
     return repository.findAll();
   }
 
+  @GetMapping("/{id}")
+  public FileItem getById(@PathVariable("id") final String id) {
+        return repository.findOne(Long.valueOf(id));
+  }
+
   @PostMapping
   @Transactional
   @ResponseStatus(CREATED)

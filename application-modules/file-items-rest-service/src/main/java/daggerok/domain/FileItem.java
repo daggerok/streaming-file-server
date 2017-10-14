@@ -10,8 +10,10 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import static daggerok.domain.FileType.FILE;
 import static javax.persistence.EnumType.STRING;
 
 @Data
@@ -45,4 +47,20 @@ public class FileItem extends AbstractAuditEntity {
   Long version;
 
   String owner;
+
+  @Transient
+  public boolean isFile() {
+    return FILE.equals(this.fileType);
+  }
+
+  @Transient
+  private static final int Kib = 1024;
+
+  @Transient
+  private static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
+
+  @Transient
+  public boolean isLarge() {
+    return this.size > NORMAL_FILE_SIZE;
+  }
 }

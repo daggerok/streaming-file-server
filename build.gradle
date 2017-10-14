@@ -80,7 +80,9 @@ dependencies {
       "org.springframework.boot:spring-boot-starter-actuator",
 
       "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+      "com.fasterxml.jackson.datatype:jackson-datatype-jdk8",
       "com.fasterxml.jackson.core:jackson-databind",
+      "org.hibernate:hibernate-java8",
 
       "org.apache.commons:commons-io:$commonsIoVer",
       "org.projectlombok:lombok",

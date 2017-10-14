@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static java.util.Optional.ofNullable;
+import static org.springframework.http.HttpMethod.GET;
 
 @Slf4j
 @Service
@@ -39,7 +43,20 @@ public class FileItemRestClient {
   }
 
   public Optional<FileItem> findById(final long id) {
-    return Optional.empty();
+
+    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
+                                  .path("/api/v1/file-items")
+                                  .pathSegment("" + id)
+                                  .build()
+                                  .toString();
+
+    final FileItem item = Try.of(() -> restTemplate.getForEntity(url, FileItem.class))
+                             .map(HttpEntity::getBody)
+                             .getOrElseGet(throwable -> {
+                               log.error(throwable.getLocalizedMessage(), throwable);
+                               return null;
+                             });
+    return ofNullable(item);
   }
 
   public Stream<FileItem> findByFilenameContainingIgnoreCase(final String filename) {
