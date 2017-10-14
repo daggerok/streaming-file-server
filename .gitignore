@@ -1,4 +1,3 @@
-file-storage/
 *.DS_Store
 *.iml
 *.ipr
@@ -16,4 +15,5 @@ application-modules/file-items-rest-service/src/main/gen/
 *.classpath
 *.settings
 *.project
+*file-storage/
 !*.gitkeep
