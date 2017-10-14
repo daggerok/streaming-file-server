@@ -24,7 +24,7 @@ public class BasicStaticClassTest {
 
     String actual = StaticClass.underscore("Powermock");
 
-    PowerMockito.verifyStatic();
+    PowerMockito.verifyStatic(StaticClass.class);
     assertEquals("something wrong here...", "powermock-is-awesome!", actual);
   }
 
