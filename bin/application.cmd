@@ -21,10 +21,10 @@ SET Version=3.0.0
 SET DockerComposeFile=docker-compose.yml
 SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %DockerComposeFile%
-SET FileServerFile=streaming-file-server-%Version%.jar
+SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %FileServerFile%
-SET FileItemsServiceFile=file-items-rest-service-%Version%.jar
+SET FileItemsServiceFile=file-items-service-%Version%.jar
 SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
 SET FileItemsServiceCommand=java -jar %FileItemsServiceFile%
 

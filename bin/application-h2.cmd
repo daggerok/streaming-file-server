@@ -17,10 +17,10 @@ SET InfoLogLevel=0
 @rem SET DebugLogLevel=0
 
 SET Version=3.0.0
-SET FileServerFile=streaming-file-server-%Version%.jar
+SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %FileServerFile%
-SET FileItemsServiceFile=file-items-rest-service-%Version%.jar
+SET FileItemsServiceFile=file-items-service-%Version%.jar
 SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
 SET FileItemsServiceCommand=java -jar %FileItemsServiceFile%
 

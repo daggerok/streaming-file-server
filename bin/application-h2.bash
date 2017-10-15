@@ -8,8 +8,8 @@ LOG_LEVEL=info
 # app info
 VERSION=3.0.0
 APPLICATION_PATH="app"
-FILE_SERVER_FILENAME="streaming-file-server-${VERSION}.jar"
-FILE_ITEMS_SERVICE_FILENAME="file-items-rest-service-${VERSION}.jar"
+FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
+FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
 
 TIMEOUT=25
 
