@@ -6,6 +6,7 @@ import daggerok.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ import static org.springframework.util.FileCopyUtils.copy;
  * }
  * to.flush();
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -100,7 +102,8 @@ public class FileService {
       deleteIfExists(base);
 
     if (notExists(base))
-      createDirectory(base);
+      if (base.toFile().mkdirs())
+        log.error("directory {} cannot be created", base);
 
     val fileStream = walk(get(app.download.path), FOLLOW_LINKS);
 
