@@ -3,19 +3,15 @@ version: "2.1"
 services:
 
   postgres:
-    image: healthcheck/postgres:alpine
-    ports: ["5432:5432"]
-    volumes: ["postgres-data:/var/lib/postgresql/data"]
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    networks: [app-backing-services]
+    extends:
+      file: ../postgres/docker-compose.yml
+      service: postgres
+    networks: [backing-services]
 
   file-items-service:
     build:
-      context: ../../..
-      dockerfile: ./docker-modules/app/src/file-items-service/Dockerfile
+      context: ../..
+      dockerfile: ./docker-modules/all/file-items-service/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
@@ -24,12 +20,12 @@ services:
     image: 127.0.0.1:5000/file-items-service
     ports: ["8001:8001"]
     volumes: ["file-items-service-data:/home/app"]
-    networks: [app-backing-services]
+    networks: [backing-services]
 
   file-server:
     build:
-      context: ../../..
-      dockerfile: ./docker-modules/app/src/file-server/Dockerfile
+      context: ../..
+      dockerfile: ./docker-modules/all/file-server/Dockerfile
     depends_on:
       file-items-service:
         condition: service_healthy
@@ -43,7 +39,7 @@ services:
       - ./application-modules/file-server/file-storage:/home/app/file-storage:rw
       - ./application-modules/file-server/build:/home/app/file-storage
       - file-server-data:/home/app
-    networks: [app-backing-services]
+    networks: [backing-services]
 
 volumes:
   postgres-data: {}
@@ -51,5 +47,5 @@ volumes:
   file-server-data: {}
 
 networks:
-  app-backing-services:
+  backing-services:
     driver: bridge

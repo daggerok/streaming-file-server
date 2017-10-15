@@ -4,7 +4,7 @@ plugins {
 
 def thatPath = rootProject.projectDir.absolutePath
 
-configure(subprojects) { p ->
+subprojects { sp ->
 
   apply plugin: "docker-compose"
 
@@ -12,22 +12,22 @@ configure(subprojects) { p ->
   def root = thatPath.replaceAll("\\\\", '/')
 
   dockerCompose {
-    useComposeFiles = ["$root/docker-modules/${p.name}/src/docker-compose.yml"]
+    useComposeFiles = ["$root/docker-modules/${sp.name}/docker-compose.yml"]
     captureContainersOutput = true
     stopContainers = true
     removeContainers = true
     removeImages = "Local"
     removeVolumes = true
     removeOrphans = true
-    projectName = "$rootProject.name"
+    projectName = "$sp.parent.name"
   }
 
-  tasks.create("${p.name}Up") {
+  tasks.create("${sp.name}Up") {
     if (it.name.contains("app")) dependsOn ":assemble"
     dependsOn composeUp
   }
 
-  tasks.create("${p.name}Down") {
+  tasks.create("${sp.name}Down") {
     finalizedBy composeDown
   }
 }

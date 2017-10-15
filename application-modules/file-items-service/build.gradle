@@ -29,20 +29,15 @@ sourceSets {
 
 clean {
   delete querydsl.querydslSourcesDir
-  delete "$projectDir/jgiven-reports"
   delete "$projectDir/out"
-  //if (System.getProperty("os.name").toLowerCase().contains("windows")) return
-  //delete "$projectDir/file-storage/*"
-  delete file("$projectDir/file-storage").listFiles().findAll { ".gitkeep" != it.name }
 }
 
-task pgUp(dependsOn: [":docker-modules:docker:composeUp"])
-task pgDown(dependsOn: [":docker-modules:docker:composeDown"])
+def postgersUp = tasks.findByPath(":docker-modules:postgres:composeUp")
 
 [test, build, bootRun].each { task ->
-  task.dependsOn assemble, pgUp
-  task.shouldRunAfter assemble, pgUp
-  ["app", "docker"].each { id ->
+  task.dependsOn assemble, postgersUp
+  task.shouldRunAfter assemble, postgersUp
+  ["all", "postgres"].each { id ->
     task.finalizedBy ":docker-modules:$id:${id}Down"
   }
 }

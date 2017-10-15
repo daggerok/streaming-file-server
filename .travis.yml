@@ -28,13 +28,13 @@ script:
   - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
 
   # docker
-  - bash gradlew appUp
+  - bash gradlew allUp
   - http --auth user:password :8001/health
   - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
   - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
   - http --auth user:password :8002/api/v1/files
   - http --auth user:password :8002/
-  - bash gradlew appDown
+  - bash gradlew allDown
 
   # h2
   - bash gradlew clean assemble
@@ -59,7 +59,7 @@ script:
     done
 
   # install as linux service
-  - bash gradlew clean assemble dockerUp
+  - bash gradlew clean assemble postgresUp
   - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
   - mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
   - mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
@@ -76,7 +76,7 @@ script:
   - http --auth user:password :8002/
   - sudo service file-server                                        stop
   - sudo service file-items-service                                 stop
-  - bash gradlew dockerDown
+  - bash gradlew postgresDown
 
 after_script:
   - bash gradlew dependencyUpdates -Drevision=release
