@@ -2,11 +2,8 @@
 //tag::content[]
 
 .postgres in docker
-[sources,cmd]
+[source,cmd]
 ----
-@rem batch shell-script
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd
-
 @rem start
 application.cmd start path\to\file-storage
 
@@ -20,11 +17,8 @@ application.cmd clean path\to\file-storage
 get link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd[application.cmd]
 
 .h2 in-memory database
-[sources,bash]
+[source,bash]
 ----
-@ cmd script
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application-h2.cmd
-
 @rem start
 application-h2.cmd start path\to\file-storage
 

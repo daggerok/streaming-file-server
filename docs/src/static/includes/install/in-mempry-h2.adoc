@@ -1,9 +1,0 @@
-
-//tag::content[]
-
-.if you do not have docker -- feel free to use h2 in memory database
-----
-ava file-items-service-{project-version}.jar --spring.profiles.active=db-h2
-----
-
-//end::content[]

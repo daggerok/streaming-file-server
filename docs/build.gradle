@@ -4,7 +4,6 @@ plugins {
 }
 
 group "daggerok"
-version "0.0.1"
 
 asciidoctorj {
   version = "1.5.5"
@@ -25,14 +24,14 @@ asciidoctor {
       "source-highlighter": "coderay",
       "toc-title": "Table of Contents",
       "build-gradle": file("build.gradle"),
-      "endpoint-url": "https://daggerok.github.io/node-examples"
+      "endpoint-url": "https://daggerok.github.io/streaming-file-server"
 }
 
 asciidoctor.shouldRunAfter clean
 
 // read more: https://github.com/ajoberstar/gradle-git-publish
 gitPublish {
-  repoUri = "git@github.com:daggerok/node-examples.git"
+  repoUri = "git@github.com:daggerok/streaming-file-server.git"
   branch = "gh-pages"
   contents {
     from "$buildDir/asciidoc/html5"
@@ -41,7 +40,7 @@ gitPublish {
   }
 }
 
-build.dependsOn asciidoctor
-gitPublishPush.dependsOn build
-gitPublishPush.shouldRunAfter clean, build
+assemble.dependsOn asciidoctor
+gitPublishPush.dependsOn assemble
+gitPublishPush.shouldRunAfter clean, assemble
 task deploy(dependsOn: [gitPublishPush])

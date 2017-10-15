@@ -20,21 +20,21 @@ It uses file multipart protocol
 == Installation
 
 === postgres database
-include::./includes/install/postgres-in-docker.adoc
+include::./includes/install/postgres-in-docker.adoc[tags=content]
 
 === in-memory h2 database
-include::./includes/install/in-mempry-h2.adoc
+include::./includes/install/in-mempry-h2.adoc[tags=content]
 
 === take advantages of spring-boot executable jar
-include::./includes/run/executable-jar.adoc
+include::./includes/run/executable-jar.adoc[tags=content]
 
 === simplicity bootstrap with automation shell-script
 
 ==== unix (bash)
-include::./includes/run/unix.adoc
+include::./includes/run/unix.adoc[tags=content]
 
 ==== windows (batch cmd)
-include::./includes/run/windows.adoc
+include::./includes/run/windows.adoc[tags=content]
 
 ---
 Enjoy :)
