@@ -1,0 +1,47 @@
+plugins {
+  id "org.asciidoctor.convert" version "1.5.3"
+  id "org.ajoberstar.git-publish" version "0.3.0"
+}
+
+group "daggerok"
+version "0.0.1"
+
+asciidoctorj {
+  version = "1.5.5"
+}
+
+asciidoctor {
+  sourceDir = project.file("src")
+  sources {
+    include "index.adoc"
+  }
+  outputDir = project.file("$buildDir/asciidoc")
+  attributes toc: "left",
+      idprefix: "",
+      docinfo1: "",
+      icons: "font",
+      idseparator: "-",
+      setanchors: "true",
+      "source-highlighter": "coderay",
+      "toc-title": "Table of Contents",
+      "build-gradle": file("build.gradle"),
+      "endpoint-url": "https://daggerok.github.io/node-examples"
+}
+
+asciidoctor.shouldRunAfter clean
+
+// read more: https://github.com/ajoberstar/gradle-git-publish
+gitPublish {
+  repoUri = "git@github.com:daggerok/node-examples.git"
+  branch = "gh-pages"
+  contents {
+    from "$buildDir/asciidoc/html5"
+    from "$projectDir/src/static"
+    into "."
+  }
+}
+
+build.dependsOn asciidoctor
+gitPublishPush.dependsOn build
+gitPublishPush.shouldRunAfter clean, build
+task deploy(dependsOn: [gitPublishPush])

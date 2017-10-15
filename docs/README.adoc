@@ -1,0 +1,6 @@
+= streaming-file-server docs image:https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/streaming-file-server"]
+
+.build and deploy documentation
+----
+bash gradlew clean build deploy
+----

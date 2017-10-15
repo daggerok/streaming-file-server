@@ -5,3 +5,5 @@ include "docker-modules:all"
 
 include "application-modules:file-items-service"
 include "application-modules:file-server"
+
+include "docs"

@@ -1,0 +1,42 @@
+
+//tag::content[]
+
+.postgres in docker
+[sources,cmd]
+----
+@rem batch shell-script
+wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd
+
+@rem start
+application.cmd start path\to\file-storage
+
+@rem stop
+application.cmd stop
+
+@rem cleanup
+application.cmd clean path\to\file-storage
+----
+
+get link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd[application.cmd]
+
+.h2 in-memory database
+[sources,bash]
+----
+@ cmd script
+wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application-h2.cmd
+
+@rem start
+application-h2.cmd start path\to\file-storage
+
+@rem stop
+application-h2.cmd stop
+
+@rem cleanup
+application-h2.cmd clean path\to\file-storage
+----
+
+get link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application-h2.cmd[application-h2.cmd]
+
+_note: binaries `wget`, `docker-compose` and of course jre (binaries: `java` and `jps`) are required_
+
+//end::content[]
