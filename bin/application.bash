@@ -7,11 +7,11 @@ LOG_LEVEL=info
 
 # app info
 VERSION=3.0.0
-APPLICATION_PATH="app"
 COMPOSE_FILE="docker-compose.yml"
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
 
+APPLICATION_PATH="app"
 TIMEOUT=25
 
 if [ "'$LOG_LEVEL'" == "'debug'" ]; then

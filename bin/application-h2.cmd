@@ -13,18 +13,15 @@ rem FOR /f %%i IN ('%WhereCmd% wget') DO SET WgetCmd=%%i
 
 SETLOCAL ENABLEEXTENSIONS
 
-SET InfoLogLevel=0
-@rem SET DebugLogLevel=0
+SET ApplicationPath="app"
 
 SET Version=3.0.0
 SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
-SET FileServerCommand=java -jar %FileServerFile%
+SET FileServerCommand=java -jar %ApplicationPath%\%FileServerFile%
 SET FileItemsServiceFile=file-items-service-%Version%.jar
 SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
-SET FileItemsServiceCommand=java -jar %FileItemsServiceFile%
-
-SET Timeout=25
+SET FileItemsServiceCommand=java -jar %ApplicationPath%\%FileItemsServiceFile%
 
 SET Script=%0
 SET Command=%1
@@ -32,99 +29,123 @@ SET FileStoragePath=%2
 
 :Debug
 SETLOCAL
-IF DEFINED InfoLogLevel (
-  ECHO Script               : "%Script%"
-  ECHO Command              : "%Command%"
-  ECHO FileStoragePath      : "%FileStoragePath%"
-  ECHO All                  : "%*"
-)
+  IF DEFINED InfoLogLevel (
+    ECHO Script               : "%Script%"
+    ECHO Command              : "%Command%"
+    ECHO FileStoragePath      : "%FileStoragePath%"
+    ECHO All                  : "%*"
+  )
 ENDLOCAL
 
 :Info
 SETLOCAL
-IF DEFINED DebugLogLevel (
-  ECHO Version              : "%Version%"
-  ECHO FileServerFile       : "%FileServerFile%"
-  ECHO FileItemsServiceFile : "%FileItemsServiceFile%"
-  ECHO LogLevel             : "%LogLevel%"
-)
+  IF DEFINED DebugLogLevel (
+    ECHO Version              : "%Version%"
+    ECHO FileServerFile       : "%FileServerFile%"
+    ECHO FileItemsServiceFile : "%FileItemsServiceFile%"
+    ECHO LogLevel             : "%LogLevel%"
+  )
 ENDLOCAL
 
 :ValidateInputs
 SETLOCAL
-IF ".%Command%" == "." GOTO :UsageBlock
-IF ".%Command%" == ".stop" GOTO :StopBlock
-IF ".%FileStoragePath%" == "." GOTO :UsageBlock
-IF ".%Command%" == ".start" GOTO :StartBlock
-IF ".%Command%" == ".clean" GOTO :CleanBlock
+  IF ".%Command%"         == "."      GOTO :UsageBlock
+  IF ".%Command%"         == ".stop"  GOTO :StopBlock
+  IF ".%FileStoragePath%" == "."      GOTO :UsageBlock
+  IF ".%Command%"         == ".start" GOTO :StartBlock
+  IF ".%Command%"         == ".clean" GOTO :CleanBlock
 ENDLOCAL
 
-GOTO UsageBlock
+GOTO :UsageBlock
 
 :UsageBlock ECHO "require at least one argument."
 SETLOCAL
-ECHO Usage:
-ECHO        start        : %0 start path\to\file-storage
-ECHO        stop         : %0 stop
-ECHO        cleanup      : %0 clean path\to\file-storage
+  ECHO Usage:
+  ECHO        start            : %0 start path\to\file-storage
+  ECHO        stop             : %0 stop
+  ECHO        stop and cleanup : %0 clean path\to\file-storage
 ENDLOCAL
 GOTO :EOF
 
-:GetFileServerFile
+:GetApplicationFiles
 SETLOCAL
-FOR %%i IN (%FileItemsServiceFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %FileItemsServiceUrl%
-)
+  IF NOT EXIST "%ApplicationPath%" (
+    CALL MKDIR %ApplicationPath%
+  )
 
-FOR %%i IN (%FileServerFile%) DO IF NOT EXIST %%~si\NUL (
-  wget %FileServerUrl%
-)
+  IF NOT EXIST "%ApplicationPath%\%FileItemsServiceFile%" (
+    wget -P %ApplicationPath% %FileItemsServiceUrl%
+  )
+
+  IF NOT EXIST "%ApplicationPath%\%FileServerFile%" (
+    wget -P %ApplicationPath% %FileServerUrl%
+  )
+ENDLOCAL
+GOTO :EOF
+
+:StopFileServerIfRunning
+SETLOCAL
+  FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileServerFile%"') DO (taskkill /F /PID %%A)
+ENDLOCAL
+GOTO :EOF
+
+:StopFileItemsServiceIfRunning
+SETLOCAL
+  FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileItemsServiceFile%"') DO (taskkill /F /PID %%A)
 ENDLOCAL
 GOTO :EOF
 
 :StartApplication
 SETLOCAL
-IF NOT EXIST %FileServerFile% (
-  CALL :GetFileServerFile
-)
+  CALL :GetApplicationFiles
 
-START %FileItemsServiceCommand% --spring.profiles.active=db-h2
-ECHO waiting %Timeout% FOR %FileItemsServiceFile% bootstrap...
-PING -n %Timeout% 127.0.0.1 >nul
+  CALL :StopFileItemsServiceIfRunning
+  START /MIN CMD /C %FileItemsServiceCommand%
+  ECHO %FileItemsServiceFile% not yet ready, waiting for bootstrap...
 
-FOR %%i IN ("%FileStoragePath%") DO IF NOT EXIST %%~si\NUL (
-  CALL DEL /q /f "%FileStoragePath%"
-  CALL MKDIR "%FileStoragePath%"
-)
-%FileServerCommand% --app.upload.path="%FileStoragePath%"
+  :BeginOfWaiting
+  SETLOCAL
+    wget -q --spider http://localhost:8001/health
+    if ".%ERRORLEVEL%" == ".0" (
+      ECHO %FileItemsServiceFile% is ready!
+      GOTO :EndOfWaiting
+    )
+
+    TIMEOUT /NOBREAK /t 1
+    GOTO :BeginOfWaiting
+  ENDLOCAL
+
+  :EndOfWaiting
+    CALL :StopFileServerIfRunning
+
+  %FileServerCommand% --app.upload.path="%FileStoragePath%"
 ENDLOCAL
 GOTO :EOF
 
 :StartBlock
 SETLOCAL
-CALL :StartApplication
+  CALL :StartApplication
 ENDLOCAL
 GOTO :EOF
 
 :StopApplication
 SETLOCAL
-FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileServerFile%"') DO (TASKKILL /F /PID %%A)
-FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileItemsServiceFile%"') DO (TASKKILL /F /PID %%A)
+  CALL :FileServerIfRunning
+  CALL :StopFileItemsServiceIfRunning
 ENDLOCAL
 GOTO :EOF
 
 :StopBlock
 SETLOCAL
-CALL :StopApplication
+  CALL :StopApplication
 ENDLOCAL
 GOTO :EOF
 
 :CleanBlock
 SETLOCAL
-CALL :StopBlock
-DEL /q /f %FileServerFile%
-DEL /q /f %FileItemsServiceFile%
-DEL /f "%FileStoragePath%"
+  CALL :StopBlock
+  DEL /f "%FileStoragePath%"
+  DEL /q /f "%ApplicationPath%
 ENDLOCAL
 GOTO :EOF
 
