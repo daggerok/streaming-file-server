@@ -96,9 +96,11 @@ public class FileService {
 
     val base = get(app.download.path);
 
-    if (notExists(base)) {
+    if (exists(base) && !base.toFile().isDirectory())
+      deleteIfExists(base);
+
+    if (notExists(base))
       createDirectory(base);
-    }
 
     val fileStream = walk(get(app.download.path), FOLLOW_LINKS);
 
