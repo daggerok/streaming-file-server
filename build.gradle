@@ -5,7 +5,7 @@ buildscript {
     environmentFileDir = "."
     propertiesPluginEnvironmentNameProperty = "env"
 
-    springBootVersion = "1.5.7.RELEASE"
+    springBootVersion = "1.5.8.RELEASE"
     commonsIoVer = "1.3.2"
     vavrVer = "0.9.1"
     jqueryVer = "3.2.1"
@@ -28,7 +28,7 @@ plugins {
   id "cn.bestwu.propdeps-idea" version "0.0.10" apply false
   id "cn.bestwu.propdeps-maven" version "0.0.10" apply false
   id "cn.bestwu.propdeps-eclipse" version "0.0.10" apply false
-  id "org.springframework.boot" version "1.5.7.RELEASE" apply false
+  id "org.springframework.boot" version "1.5.8.RELEASE" apply false
   id "com.ewerk.gradle.plugins.querydsl" version "1.0.9" apply false
   id "io.spring.dependency-management" version "1.0.3.RELEASE" apply false
 }
