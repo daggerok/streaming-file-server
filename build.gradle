@@ -39,6 +39,8 @@ allprojects {
   version "3.0.0"
 }
 
-wrapper {
-  gradleVersion = "4.2.1"
+task wrapper(type: Wrapper) {
+  gradleVersion = "4.3"
+  distributionType = "ALL"
 }
+
