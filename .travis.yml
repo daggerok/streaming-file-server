@@ -25,7 +25,7 @@ before_install:
   - sudo kill $(sudo lsof -t -i:27017) | true
 
 script:
-  - bash gradlew clean test jgiven build
+  - bash gradlew clean test jgiven build docs
 
   - export APP_UPLOAD_PATH="$PWD/application-modules/file-server/file-storage"
   - mkdir -p $APP_UPLOAD_PATH
