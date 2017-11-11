@@ -8,7 +8,7 @@ RUN apk --no-cache add busybox-suid bash curl \
 USER app
 WORKDIR /home/app
 VOLUME ["/home/app/file-storage"]
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+CMD ["java", "-jar", "./app.jar"]
 EXPOSE 8002
-HEALTHCHECK --interval=30s --timeout=30s --retries=10 CMD curl -f http://127.0.0.1:8002/health || exit 1
+HEALTHCHECK --interval=10s --timeout=10s --retries=30 CMD curl -f http://127.0.0.1:8002/health || exit 1
 COPY ./application-modules/file-server/build/libs/*.jar ./app.jar
