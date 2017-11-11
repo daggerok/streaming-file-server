@@ -1,3 +1,7 @@
+env:
+  global:
+    TERM=dumb
+
 group: edge
 dist: trusty
 
