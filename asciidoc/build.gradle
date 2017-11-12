@@ -9,9 +9,6 @@ plugins {
   id "org.asciidoctor.convert" version "1.5.6"
 }
 
-group "daggerok"
-version "0.0.1"
-
 asciidoctorj {
   version = "1.5.5"
 }
@@ -46,7 +43,7 @@ clean.doFirst {
   delete ghPagesFolder
 }
 
-build.dependsOn asciidoctor
+assemble.dependsOn asciidoctor
 asciidoctor.shouldRunAfter clean
 
 task wrapper(type: Wrapper) {

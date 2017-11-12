@@ -2,5 +2,5 @@
 
 .build and deploy documentation
 ----
-bash gradlew clean build deploy
+bash gradlew docs
 ----
