@@ -19,10 +19,14 @@ before_install:
   - sudo pip install docker-compose httpie
   - sudo usermod -aG docker $(whoami)
 
+  # helper bash functions
+  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/src/stop_any.bash)
+  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/src/wait_for.bash)
+
   # kill whatever punning on postgres / rabbitmq port
-  - sudo kill $(sudo lsof -t -i:5432) | true
-  - sudo kill $(sudo lsof -t -i:5672) | true
-  - sudo kill $(sudo lsof -t -i:27017) | true
+  - stop_any 5432
+  - stop_any 5672
+  - stop_any 27017
 
 script:
   - bash gradlew clean test jgiven build docs
@@ -43,24 +47,16 @@ script:
   # h2
   - bash gradlew clean assemble
   - bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 &
-  - sleep 25
+  - wait_for 8001
   - bash ./application-modules/file-server/build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH &
-  - sleep 25
+  - wait_for 8002
   - http --auth user:password :8001/health
   - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
   - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
   - http --auth user:password :8002/api/v1/files
   - http --auth user:password :8002/
-  - >
-    for APP_NAME in "file-server" "file-items-service"; do
-      export APPLICATION_PID=$(ps waux|grep ${APP_NAME}|grep -v 'grep'|awk '{print $2}');
-      for P_ID in "$APPLICATION_PID"; do
-        if [ "''" != "'$P_ID'" ]; then
-          echo "killing $P_ID";
-          kill "-9" ${P_ID}
-        fi
-      done
-    done
+  - stop_any 8002
+  - stop_any 8001
 
   # install as linux service
   - bash gradlew clean assemble postgresUp
@@ -70,9 +66,9 @@ script:
   - sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
   - sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
   - sudo service file-items-service                                 start
-  - sleep 30
+  - wait_for 8001
   - sudo service file-server                                        start
-  - sleep 30
+  - wait_for 8002
   - http --auth user:password :8001/health
   - http --auth user:password :8002/health
   - http --auth user:password -f post :8002/upload filename="readme" file@README.md
