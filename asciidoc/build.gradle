@@ -1,3 +1,56 @@
+plugins {
+  id "base"
+  id "org.asciidoctor.convert" version "1.5.7"
+  id "org.ajoberstar.git-publish" version "0.2.2"
+}
+
+group "daggerok"
+version "3.0.2"
+
+asciidoctorj {
+  version = "1.5.5"
+}
+
+asciidoctor {
+  sourceDir = project.file("src")
+  sources {
+    include "index.adoc"
+  }
+  outputDir = project.file("$buildDir/asciidoc")
+  attributes toc: "left",
+      idprefix: "",
+      docinfo1: "",
+      icons: "font",
+      idseparator: "-",
+      setanchors: "true",
+      "source-highlighter": "coderay",
+      "toc-title": "Table of Contents",
+      "build-gradle": file("build.gradle"),
+      "endpoint-url": "https://daggerok.github.io/streaming-file-server"
+}
+
+asciidoctor.shouldRunAfter clean
+
+// read more: https://github.com/ajoberstar/gradle-git-publish
+gitPublish {
+  repoUri = "git@github.com:daggerok/streaming-file-server.git"
+  branch = "gh-pages"
+  contents {
+    from "$buildDir/asciidoc/html5"
+    from "$projectDir/src/static"
+    into "."
+  }
+}
+
+build.dependsOn asciidoctor
+
+task docs {
+  dependsOn gitPublishPush
+  shouldRunAfter clean, build
+}
+
+/*
+// manual solution
 buildscript {
   ext {
     ghPagesFolder = "$projectDir.parent/docs"
@@ -6,7 +59,7 @@ buildscript {
 
 plugins {
   id "base"
-  id "org.asciidoctor.convert" version "1.5.6"
+  id "org.asciidoctor.convert" version "1.5.7"
 }
 
 asciidoctorj {
@@ -45,8 +98,4 @@ clean.doFirst {
 
 assemble.dependsOn asciidoctor
 asciidoctor.shouldRunAfter clean
-
-task wrapper(type: Wrapper) {
-  gradleVersion = "4.3.1"
-  distributionType = "ALL"
-}
+*/

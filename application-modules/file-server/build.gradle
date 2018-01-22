@@ -8,7 +8,7 @@ dependencies {
       "org.webjars:bootstrap:$bootstrapVer",
       "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
       "org.webjars.bower:font-awesome:$fontAwesomeVer",
-      "org.webjars.npm:popper.js:1.12.5"
+      "org.webjars.npm:popper.js:1.13.0"
 
 //  runtime "org.springframework.boot:spring-boot-devtools"
 }

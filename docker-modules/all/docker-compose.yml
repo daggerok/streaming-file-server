@@ -19,7 +19,7 @@ services:
       DB_HOST: postgres
     image: 127.0.0.1:5000/file-items-service
     ports: ["8001:8001"]
-    volumes: ["file-items-service-data:/home/app"]
+    volumes: ["file-items-service-data:/home/appuser"]
     networks: [backing-services]
 
   file-server:
@@ -32,13 +32,13 @@ services:
     environment:
       FILE_ITEMS_REST_SERVICE_HOST: file-items-service
       FILE_ITEMS_REST_SERVICE_PORT: 8001
-      #APP_UPLOAD_PATH: /home/app/file-storage
+      #APP_UPLOAD_PATH: /home/appuser/file-storage
     image: 127.0.0.1:5000/file-server
     ports: ["8002:8002"]
     volumes:
-      - ./application-modules/file-server/file-storage:/home/app/file-storage:rw
-      - ./application-modules/file-server/build:/home/app/file-storage
-      - file-server-data:/home/app
+      - ./application-modules/file-server/file-storage:/home/appuser/file-storage:rw
+      - ./application-modules/file-server/build:/home/appuser/file-storage
+      - file-server-data:/home/appuser
     networks: [backing-services]
 
 volumes:

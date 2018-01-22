@@ -36,5 +36,8 @@ include::./includes/run/unix.adoc[tags=content]
 ==== windows (batch cmd)
 include::./includes/run/windows.adoc[tags=content]
 
+==== create new release
+include::./includes/release/create-new.adoc[tags=content]
+
 ---
 Enjoy :)

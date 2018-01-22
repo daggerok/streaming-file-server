@@ -1,5 +1,5 @@
 plugins {
-  id "com.avast.gradle.docker-compose" version "0.5.0" apply false
+  id "com.avast.gradle.docker-compose" version "0.6.12" apply false
 }
 
 def thatPath = rootProject.projectDir.absolutePath

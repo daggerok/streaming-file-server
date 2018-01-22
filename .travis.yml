@@ -1,108 +1,106 @@
+sudo: required
+group: travis_lts
+
 env:
   global:
     TERM=dumb
 
-group: edge
-dist: trusty
+service:
+- docker
 
 language: java
 jdk:
-  - openjdk8
-  - oraclejdk8
+- openjdk8
+- oraclejdk8
 
 install: true
 before_install:
-  - sudo apt update
+# install required
+- sudo apt update -y || true
+- sudo apt install -y docker-ce python-pip curl jq libxml2-utils
+- sudo pip install docker-compose httpie
+- sudo usermod -aG docker $(whoami)
 
-  # install docker-compose
-  - sudo apt install -y python-pip curl jq libxml2-utils wget
-  - sudo pip install docker-compose httpie
-  - sudo usermod -aG docker $(whoami)
-
-  # helper bash functions
-  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/src/stop_any.bash)
-  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/src/wait_for.bash)
-
-  # kill whatever punning on postgres / rabbitmq port
-  - stop_any 5432
-  - stop_any 5672
-  - stop_any 27017
+# helper bash functions
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- stop_any 5432 5672 27017
 
 script:
-  - bash gradlew clean test jgiven build docs
+- bash gradlew clean test jgiven build
 
-  - export APP_UPLOAD_PATH="$PWD/application-modules/file-server/file-storage"
-  - mkdir -p $APP_UPLOAD_PATH
-  - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
+- export APP_UPLOAD_PATH="$PWD/application-modules/file-server/file-storage"
+- mkdir -p ${APP_UPLOAD_PATH}
+- cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
 
-  # docker
-  - bash gradlew allUp
-  - http --auth user:password :8001/health
-  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password :8002/api/v1/files
-  - http --auth user:password :8002/
-  - bash gradlew allDown
+# docker
+- bash gradlew allUp
+- http --auth user:password :8001/health
+- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+- http --auth user:password :8002/api/v1/files
+- http --auth user:password :8002/
+- bash gradlew allDown
 
-  # h2
-  - bash gradlew clean assemble
-  - bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 &
-  - wait_for 8001
-  - bash ./application-modules/file-server/build/libs/*jar --app.upload.path=$APP_UPLOAD_PATH &
-  - wait_for 8002
-  - http --auth user:password :8001/health
-  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password :8002/api/v1/files
-  - http --auth user:password :8002/
-  - stop_any 8002
-  - stop_any 8001
+# h2
+- bash gradlew clean assemble
+- bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 &
+- wait_for 8001
+- bash ./application-modules/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} &
+- wait_for 8002
+- http --auth user:password :8001/health
+- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+- http --auth user:password :8002/api/v1/files
+- http --auth user:password :8002/
+- stop_any 8002
+- stop_any 8001
 
-  # install as linux service
-  - bash gradlew clean assemble postgresUp
-  - cp -Rf ./application-modules/file-server/build/libs "$APP_UPLOAD_PATH/"
-  - mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
-  - mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
-  - sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
-  - sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
-  - sudo service file-items-service                                 start
-  - wait_for 8001
-  - sudo service file-server                                        start
-  - wait_for 8002
-  - http --auth user:password :8001/health
-  - http --auth user:password :8002/health
-  - http --auth user:password -f post :8002/upload filename="readme" file@README.md
-  - http --auth user:password :8002/api/v1/files
-  - http --auth user:password :8002/
-  - sudo service file-server                                        stop
-  - sudo service file-items-service                                 stop
-  - bash gradlew postgresDown
+# install as linux service
+- bash gradlew clean assemble postgresUp
+- cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
+- mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
+- mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
+- sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
+- sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
+- sudo service file-items-service                                 start
+- wait_for 8001
+- sudo service file-server                                        start
+- wait_for 8002
+- http --auth user:password :8001/health
+- http --auth user:password :8002/health
+- http --auth user:password -f post :8002/upload filename="readme" file@README.md
+- http --auth user:password :8002/api/v1/files
+- http --auth user:password :8002/
+- sudo service file-server                                        stop
+- sudo service file-items-service                                 stop
+- bash gradlew postgresDown
 
-  - bash ./scripts/application.bash start build
-  - bash ./scripts/application.bash stop build
-  - bash ./scripts/application.bash start build
-  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password -f post :8002/upload filename="readme" file@README.md
-  - http --auth user:password :8001/api/v1/file-itemss
-  - http --auth user:password :8002/api/v1/files
-  - yes | bash ./scripts/application.bash clean build
-
-  - bash ./scripts/application-h2.bash start build
-  - bash ./scripts/application-h2.bash stop build
-  - bash ./scripts/application-h2.bash start build
-  - http --auth user:password :8001/health
-  - http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-  - http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-  - http --auth user:password :8002/api/v1/files
-  - http --auth user:password :8002/
-  - yes | bash ./scripts/application-h2.bash clean build
+## scripts/application.bash
+#- bash ./scripts/application.bash start build
+#- bash ./scripts/application.bash stop build
+#- bash ./scripts/application.bash start build
+#- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+#- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+#- http --auth user:password -f post :8002/upload filename="readme" file@README.md
+#- http --auth user:password :8001/api/v1/file-itemss
+#- http --auth user:password :8002/api/v1/files
+#- yes | bash ./scripts/application.bash clean build
+#
+## scripts/application-h2.bash
+#- bash ./scripts/application-h2.bash start build
+#- bash ./scripts/application-h2.bash stop build
+#- bash ./scripts/application-h2.bash start build
+#- http --auth user:password :8001/health
+#- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
+#- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+#- http --auth user:password :8002/api/v1/files
+#- http --auth user:password :8002/
+#- yes | bash ./scripts/application-h2.bash clean build
 
 after_script:
-  - bash gradlew dependencyUpdates -Drevision=release
-  - bash gradlew --stop
-
+- bash gradlew dependencyUpdates -Drevision=release
+- bash gradlew --stop
 cache:
   directories:
-    - $HOME/.gradle/
-    - .gradle/
+  - $HOME/.gradle/
+  - .gradle/

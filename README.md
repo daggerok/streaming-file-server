@@ -10,7 +10,7 @@ full-stack java file server based on spring-boot / spring-* with no limitation f
 **with postgres in using docker**
 
 ```bash
-export VERSION="3.0.1"
+export VERSION="3.0.2"
 
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose.yml
@@ -106,23 +106,34 @@ application-h2.cmd clean path\to\file-storage
 
 installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of course `java`, `jps` are required
 
-### development
+### development (gradle)
 
 ```sh
 bash gradlew clean assemble
-bash gradlew :a-m:f-i-r-s:bootRun
-bash gradlew :a-m:s-f-s:bootRun
+bash gradlew postgresUp
+bash gradlew :a-m:f-i-s:bootRun
+bash gradlew :a-m:f-s:bootRun
 
 # cleanup
 bash gradlew composeDown
 bash gradlew --stop
 ```
 
+### development (testing)
+
 awesome JGiven reports!
 
 ```sh
 bash gradlew clean test jgiven
 open application-modules/streaming-file-server/jgiven-reports/html/index.html
+```
+
+### development (quick boot all with docker)
+
+```sh
+bash gradlew clean assemble
+bash gradlew :d-m:a:composeUp
+http -a user:password :8002
 ```
 
 ### technology stack

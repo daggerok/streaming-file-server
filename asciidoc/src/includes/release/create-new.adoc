@@ -1,0 +1,19 @@
+
+//tag::content[]
+
+to create new release do next
+
+. bump version in:
+  .. build.gradle
+  .. README.md
+  .. scripts/application.cmd
+  .. scripts/application.bash
+  .. scripts/application-h2.cmd
+  .. scripts/application-h2.bash
+. commit (check CI)
+. create release on github, put:
+  .. application-modules/*/build/libs/*
+  .. scripts/*
+  .. docker-modules/postgres
+
+//end::content[]
