@@ -80,27 +80,27 @@ script:
 - sudo service file-items-service                                 stop
 - bash gradlew postgresDown
 
-## scripts/application.bash
-#- bash ./scripts/application.bash start build
-#- bash ./scripts/application.bash stop build
-#- bash ./scripts/application.bash start build
-#- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
-#- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
-#- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-#- http --auth user:password :8001/api/v1/file-itemss
-#- http --auth user:password :8002/api/v1/files
-#- yes | bash ./scripts/application.bash clean build
-#
-## scripts/application-h2.bash
-#- bash ./scripts/application-h2.bash start build
-#- bash ./scripts/application-h2.bash stop build
-#- bash ./scripts/application-h2.bash start build
-#- http --auth user:password :8001/actuator/health
-#- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
-#- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
-#- http --auth user:password :8002/api/v1/files
-#- http --auth user:password :8002/
-#- yes | bash ./scripts/application-h2.bash clean build
+# scripts/application.bash
+- bash ./scripts/application.bash start build
+- bash ./scripts/application.bash stop build
+- bash ./scripts/application.bash start build
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+- http --auth user:password :8001/api/v1/file-items
+- http --auth user:password :8002/api/v1/files
+- yes | bash ./scripts/application.bash clean build
+
+# scripts/application-h2.bash
+- bash ./scripts/application-h2.bash start build
+- bash ./scripts/application-h2.bash stop build
+- bash ./scripts/application-h2.bash start build
+- http --auth user:password :8001/actuator/health
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+- http --auth user:password :8002/api/v1/files
+- http --auth user:password :8002/
+- yes | bash ./scripts/application-h2.bash clean build
 
 cache:
   directories:
