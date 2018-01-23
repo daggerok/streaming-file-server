@@ -10,10 +10,13 @@ to create new release do next
   .. scripts/application.bash
   .. scripts/application-h2.cmd
   .. scripts/application-h2.bash
-. commit (check CI)
+. comment scipts tests in .travis.yml
+. commit, push and check CI if build was successfully passed
 . create release on github, put:
   .. application-modules/*/build/libs/*
   .. scripts/*
   .. docker-modules/postgres
+. uncomment .travis.yml
+. commit, push and check CI again to verify if scripts tests was successfully passed
 
 //end::content[]
