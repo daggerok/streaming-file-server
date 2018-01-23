@@ -1,11 +1,14 @@
 dependencies {
 
-  compile "org.springframework.boot:spring-boot-starter-mustache",
+  compile "org.springframework.boot:spring-boot-starter-web",
+      "org.springframework.boot:spring-boot-starter-mustache",
       "org.springframework.boot:spring-boot-starter-security",
+      "org.springframework.security:spring-security-web",
+      "org.springframework.security:spring-security-config",
 
       "org.webjars:webjars-locator:$webjarsLocatorVer",
       "org.webjars:jquery:$jqueryVer",
-      "org.webjars:bootstrap:$bootstrapVer",
+      "org.webjars.bower:bootstrap:$bootstrapVer",
       "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVer",
       "org.webjars.bower:font-awesome:$fontAwesomeVer",
       "org.webjars.npm:popper.js:1.13.0"

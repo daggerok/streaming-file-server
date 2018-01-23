@@ -1,34 +1,15 @@
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
-
 dependencies {
 
   compile "org.springframework.boot:spring-boot-starter-web",
       "org.springframework.boot:spring-boot-starter-data-jpa",
-      "org.hibernate:hibernate-java8",
+      "org.hibernate:hibernate-java8"
 
-      "com.querydsl:querydsl-core",
-      "com.querydsl:querydsl-jpa",
-      "com.querydsl:querydsl-apt"
-
+//  runtime "org.springframework.boot:spring-boot-devtools"
   runtime "org.postgresql:postgresql",
-//      "org.springframework.boot:spring-boot-devtools",
       "com.h2database:h2"
 }
 
-querydsl {
-  querydslSourcesDir = "$projectDir/src/main/gen"
-  querydslDefault = true
-  jpa = true
-}
-
-sourceSets {
-  generated
-  main
-  test
-}
-
 clean {
-  delete querydsl.querydslSourcesDir
   delete "$projectDir/out"
 }
 

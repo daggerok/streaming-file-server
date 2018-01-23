@@ -3,14 +3,18 @@ streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-se
 
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
+- minimum java 8 is required
+- with postgres: docker-ce on windows 10 is required
+- if you on windows, use scoop to install java and required command line tools.
+
 [**try it locally**](https://github.com/daggerok/streaming-file-server/releases)
 
 ### Installation
 
-**with postgres in using docker**
+**with postgres in docker**
 
 ```bash
-export VERSION="3.0.2"
+export VERSION="4.0.0"
 
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose.yml
@@ -28,7 +32,7 @@ bash file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
 docker-compose -f docker-compose.yml down -v
 ```
 
-or simply using shell-script
+**or simply using shell-script**
 
 ```bash
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application.bash
@@ -47,7 +51,7 @@ bash application.bash clean ./path/to/file-storage
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-for windows use https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application.cmd
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application.cmd**
 
 ```cmd
 @rem start
@@ -74,7 +78,7 @@ bash file-items-service-$VERSION.jar --spring.profiles.active=db-h2
 bash file-server-$VERSION.jar --app.upload.path=./path/to/file-storage
 ```
 
-or simply shell script for h2
+**or simply shell script for h2**
 
 ```bash
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application-h2.bash
@@ -89,7 +93,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ```
 
-for windows use https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application-h2.cmd
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/application-h2.cmd**
 
 ```cmd
 @rem start
@@ -106,11 +110,12 @@ application-h2.cmd clean path\to\file-storage
 
 installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of course `java`, `jps` are required
 
-### development (gradle)
+### development
+
+**gradle**
 
 ```sh
-bash gradlew clean assemble
-bash gradlew postgresUp
+bash gradlew clean assemble postgresUp
 bash gradlew :a-m:f-i-s:bootRun
 bash gradlew :a-m:f-s:bootRun
 
@@ -119,7 +124,7 @@ bash gradlew composeDown
 bash gradlew --stop
 ```
 
-### development (testing)
+**testing**
 
 awesome JGiven reports!
 
@@ -128,22 +133,59 @@ bash gradlew clean test jgiven
 open application-modules/streaming-file-server/jgiven-reports/html/index.html
 ```
 
-### development (quick boot all with docker)
+**quick boot all with docker**
 
 ```sh
-bash gradlew clean assemble
-bash gradlew :d-m:a:composeUp
+bash gradlew clean assemble allUp
 http -a user:password :8002
 ```
+
+**run all in docker manually**
+
+```bash
+./gradelw clean assemble
+docker-compose -f ./docker-modules/all/docker-compose.yml up --build --force-recreate
+```
+
+**cleanup**
+
+NOTE: if you feel that changes take no effect, clean docker
+
+```bash
+# remove containers
+docker rm -v -f $(docker ps -a|grep -v CONTAINER|awk '{print $1}')
+# remove volumes
+docker volume rm -f $(docker volume ls|grep -v DRIVER|awk '{print $2}')
+# remove images
+docker rmi -f $(docker images -a | grep -v 'IMAGE ID'| awk '{print $3}')
+# remove everything
+docker system prune -af --volumes
+```
+
+### known issues
+
+- SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.
+- static methods mocking using powermock
+
+### todo
+
+- migrate from mvc to reactive webflux
+- migrate from postgres to reactive postgres or some reactive NoSQL (mongodb, etc...)
+- add more advanced security...
+- improve files-db sync (replace FileSystem with GridFS or ...?)
+- backup, restore, migration
+- support removing files (rly..? as minimum from db)
+- p2p: bi-directional files synchronization with spring scheduling or batch
 
 ### technology stack
 
 - [spring](https://spring.io/)
-  - spring-boot
+  - spring-boot ~~1.x~~ 2.0.0.M7
   - spring-mvc ([mustache template engine](http://mustache.github.io/))
-  - spring-data, QueryDSL, spring-data-rest, spring-data-jpa
-  - spring-utils, spring-devtools, apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
-  - common error handling (home redirect)
+  - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
+  - apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
+  - cors: see application-modules/file-items-service/src/main/java/daggerok/config/AppCfg.java
+  - 404 fallback: see application-modules/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
   - ~~spring-social (facebook login required for upload ability)~~ replaced with basic spring-security for now
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)
@@ -158,16 +200,3 @@ http -a user:password :8002
 - [docker](https://www.docker.com/)
 - [gradle](http://gradle.org/)
 - [travis CI](https://travis-ci.org/)
-
-**todo**
-
-- support removing files (rly..? as minimum from db)
-- improve files-db sync (replace FileSystem with GridFS or ...?)
-- bi-directional files synchronization with spring scheduling or batch
-- backup, restore, migration
-- add more security...
-
-_before start, install all what you needed_
-
-- java [from here](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or [from here](https://java.com/ru/download/)
-- if you on windows: [powershell](https://www.microsoft.com/en-us/download/details.aspx?id=34595) and [scoop](https://github.com/lukesampson/scoop)

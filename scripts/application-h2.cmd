@@ -15,7 +15,7 @@ SETLOCAL ENABLEEXTENSIONS
 
 SET ApplicationPath="app"
 
-SET Version=3.0.2
+SET Version=4.0.0
 SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %ApplicationPath%\%FileServerFile%
@@ -105,7 +105,7 @@ SETLOCAL
 
   :BeginOfWaiting
   SETLOCAL
-    wget -q --spider http://localhost:8001/health
+    wget -q --spider http://localhost:8001/actuator/health
     if ".%ERRORLEVEL%" == ".0" (
       ECHO %FileItemsServiceFile% is ready!
       GOTO :EndOfWaiting

@@ -4,6 +4,11 @@ spring:
     username: ${db.user}
     password: ${db.pass}
     driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: h2
   h2:
     console:
       enabled: true

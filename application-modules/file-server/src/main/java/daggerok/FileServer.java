@@ -1,6 +1,7 @@
 package daggerok;
 
 import daggerok.config.AppCfg;
+import daggerok.config.SecurityConfig;
 import daggerok.web.config.MustacheCfg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import java.util.TimeZone;
 @Import({
     AppCfg.class,
     MustacheCfg.class,
+    SecurityConfig.class,
 })
 @SpringBootApplication
 public class FileServer {
@@ -19,8 +21,7 @@ public class FileServer {
 
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
-    SpringApplication
-        .run(FileServer.class, args)
-        .registerShutdownHook();
+    SpringApplication.run(FileServer.class, args)
+                     .registerShutdownHook();
   }
 }

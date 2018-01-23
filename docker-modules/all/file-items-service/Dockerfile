@@ -17,5 +17,5 @@ CMD /bin/bash
 EXPOSE 8001
 HEALTHCHECK --timeout=2s \
             --retries=22 \
-            CMD curl -f http://127.0.0.1:8001/health || exit 1
+            CMD curl -f http://127.0.0.1:8001/actuator/health || exit 1
 COPY --chown=appuser ./application-modules/file-items-service/build/libs/*.jar ./app.jar

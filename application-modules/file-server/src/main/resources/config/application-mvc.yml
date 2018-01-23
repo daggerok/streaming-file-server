@@ -1,9 +1,9 @@
 spring:
   mustache:
     suffix: .hbs
-  resources:
-    chain:
-      enabled: true
+#  resources:
+#    chain:
+#      enabled: true
   mvc:
     favicon:
       enabled: false

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -35,7 +36,8 @@ public class FileItemsRestResource {
 
   @GetMapping("/{id}")
   public FileItem getById(@PathVariable("id") final String id) {
-    return repository.findOne(Long.valueOf(id));
+    return repository.findById(Long.valueOf(id))
+                     .orElseThrow(() -> new RuntimeException(format("file item with id %s wasn't found.", id)));
   }
 
   @PostMapping
@@ -49,6 +51,6 @@ public class FileItemsRestResource {
   @PostMapping("/all")
   @ResponseStatus(CREATED)
   public List<FileItem> save(@RequestBody @Validated final List<FileItem> fileItems) {
-    return repository.save(fileItems);
+    return repository.saveAll(fileItems);
   }
 }

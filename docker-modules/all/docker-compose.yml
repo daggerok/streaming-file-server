@@ -6,6 +6,7 @@ services:
     extends:
       file: ../postgres/docker-compose.yml
       service: postgres
+    ports: ["5432:5432"]
     networks: [backing-services]
 
   file-items-service:
@@ -19,32 +20,26 @@ services:
       DB_HOST: postgres
     image: 127.0.0.1:5000/file-items-service
     ports: ["8001:8001"]
-    volumes: ["file-items-service-data:/home/appuser"]
     networks: [backing-services]
 
   file-server:
     build:
       context: ../..
       dockerfile: ./docker-modules/all/file-server/Dockerfile
+      args:
+        APP_UPLOAD_PATH_ARG: /var/file-storage
     depends_on:
       file-items-service:
         condition: service_healthy
     environment:
       FILE_ITEMS_REST_SERVICE_HOST: file-items-service
       FILE_ITEMS_REST_SERVICE_PORT: 8001
-      #APP_UPLOAD_PATH: /home/appuser/file-storage
     image: 127.0.0.1:5000/file-server
     ports: ["8002:8002"]
     volumes:
-      - ./application-modules/file-server/file-storage:/home/appuser/file-storage:rw
-      - ./application-modules/file-server/build:/home/appuser/file-storage
-      - file-server-data:/home/appuser
+      - ./file-storage:/var/file-storage:rw
+      - ./application-modules/file-server/build:/var/file-storage
     networks: [backing-services]
-
-volumes:
-  postgres-data: {}
-  file-items-service-data: {}
-  file-server-data: {}
 
 networks:
   backing-services:

@@ -11,7 +11,7 @@ to create new release do next
   .. scripts/application-h2.cmd
   .. scripts/application-h2.bash
 . comment scipts tests in .travis.yml
-. commit, push and check CI if build was successfully passed
+. commit, push and check CI if builds was successfully passed
 . create release on github, put:
   .. application-modules/*/build/libs/*
   .. scripts/*

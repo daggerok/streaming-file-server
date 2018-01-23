@@ -5,5 +5,4 @@ spring:
       - app-props
       - file
       - mvc
-      - security
       - file-items-rest-service-config

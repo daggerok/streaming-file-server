@@ -8,6 +8,7 @@
 *jgiven-reports/
 src/main/gen/
 application-modules/*/src/main/gen/
+docker-modules/all/application-modules/
 *out/
 *node_modules/
 *yarn.lock

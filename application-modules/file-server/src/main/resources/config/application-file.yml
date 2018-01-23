@@ -1,6 +1,13 @@
 spring:
-  http:
+  servlet:
     multipart:
-      max-file-size: 40960Mb
-      max-request-size: 40960Mb
+      max-file-size: -1
+      max-request-size: -1
       file-size-threshold: 10Mb
+      resolve-lazily: true
+#  # old legacy (spring-boot 1.x):
+#  http:
+#    multipart:
+#      max-file-size: 40960Mb
+#      max-request-size: 40960Mb
+#      file-size-threshold: 10Mb

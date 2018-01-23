@@ -17,7 +17,7 @@ install: true
 before_install:
 # install required
 - sudo apt update -y || true
-- sudo apt install -y docker-ce python-pip curl jq libxml2-utils
+- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils || true
 - sudo pip install docker-compose httpie
 - sudo usermod -aG docker $(whoami)
 
@@ -28,18 +28,24 @@ before_install:
 script:
 - bash gradlew clean test jgiven build
 
-- export APP_UPLOAD_PATH="$PWD/application-modules/file-server/file-storage"
+- export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
 - cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
 
-# docker
-- bash gradlew allUp
-- http --auth user:password :8001/health
-- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+# postgres
+- bash gradlew clean assemble postgresUp
+- gradle :application-modules:file-items-service:bootRun &
+- wait_for 8001
+- gradle :application-modules:file-server:bootRun &
+- wait_for 8002
+- http --auth user:password :8001/actuator/health
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- bash gradlew allDown
+- bash gradlew --stop || true
+- stop_any 8002 8001
+- bash gradlew postgresDown
 
 # h2
 - bash gradlew clean assemble
@@ -47,13 +53,12 @@ script:
 - wait_for 8001
 - bash ./application-modules/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} &
 - wait_for 8002
-- http --auth user:password :8001/health
-- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
+- http --auth user:password :8001/actuator/health
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- stop_any 8002
-- stop_any 8001
+- stop_any 8002 8001
 
 # install as linux service
 - bash gradlew clean assemble postgresUp
@@ -66,40 +71,37 @@ script:
 - wait_for 8001
 - sudo service file-server                                        start
 - wait_for 8002
-- http --auth user:password :8001/health
-- http --auth user:password :8002/health
-- http --auth user:password -f post :8002/upload filename="readme" file@README.md
+- http --auth user:password :8001/actuator/health
+- http --auth user:password :8002/actuator/health
+- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
 - sudo service file-server                                        stop
 - sudo service file-items-service                                 stop
 - bash gradlew postgresDown
 
-# scripts/application.bash
-- bash ./scripts/application.bash start build
-- bash ./scripts/application.bash stop build
-- bash ./scripts/application.bash start build
-- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-- http --auth user:password -f post :8002/upload filename="readme" file@README.md
-- http --auth user:password :8001/api/v1/file-itemss
-- http --auth user:password :8002/api/v1/files
-- yes | bash ./scripts/application.bash clean build
+## scripts/application.bash
+#- bash ./scripts/application.bash start build
+#- bash ./scripts/application.bash stop build
+#- bash ./scripts/application.bash start build
+#- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+#- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+#- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+#- http --auth user:password :8001/api/v1/file-itemss
+#- http --auth user:password :8002/api/v1/files
+#- yes | bash ./scripts/application.bash clean build
+#
+## scripts/application-h2.bash
+#- bash ./scripts/application-h2.bash start build
+#- bash ./scripts/application-h2.bash stop build
+#- bash ./scripts/application-h2.bash start build
+#- http --auth user:password :8001/actuator/health
+#- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+#- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+#- http --auth user:password :8002/api/v1/files
+#- http --auth user:password :8002/
+#- yes | bash ./scripts/application-h2.bash clean build
 
-# scripts/application-h2.bash
-- bash ./scripts/application-h2.bash start build
-- bash ./scripts/application-h2.bash stop build
-- bash ./scripts/application-h2.bash start build
-- http --auth user:password :8001/health
-- http --auth user:password -f post :8002/upload filename="build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="settings.gradle" file@settings.gradle
-- http --auth user:password :8002/api/v1/files
-- http --auth user:password :8002/
-- yes | bash ./scripts/application-h2.bash clean build
-
-after_script:
-- bash gradlew dependencyUpdates -Drevision=release
-- bash gradlew --stop
 cache:
   directories:
   - $HOME/.gradle/

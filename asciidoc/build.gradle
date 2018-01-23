@@ -4,9 +4,6 @@ plugins {
   id "org.ajoberstar.git-publish" version "0.2.2"
 }
 
-group "daggerok"
-version "3.0.2"
-
 asciidoctorj {
   version = "1.5.5"
 }

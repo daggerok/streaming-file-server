@@ -12,7 +12,10 @@ subprojects { sp ->
     apply plugin: "cn.bestwu.propdeps"
 
     repositories {
+        mavenLocal()
         mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
     }
 
     dependencies {
@@ -33,7 +36,7 @@ subprojects { sp ->
 
         testCompile "org.springframework.boot:spring-boot-starter-test",
                 "org.powermock:powermock-module-junit4:$powermockitoVer",
-                "org.powermock:powermock-api-mockito:$powermockitoVer",
+                "org.powermock:powermock-api-mockito2:$powermockitoVer",
                 "com.tngtech.jgiven:jgiven-html5-report:$jgivenVer",
                 "com.tngtech.jgiven:jgiven-junit:$jgivenVer"
     }
@@ -44,8 +47,8 @@ subprojects { sp ->
         }
     }
 
-    springBoot {
-        executable = true
+    bootJar {
+        launchScript()
     }
 
     bootRun {

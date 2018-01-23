@@ -19,7 +19,7 @@ SET InfoLogLevel=0
 
 SET ApplicationPath="app"
 
-SET Version=3.0.2
+SET Version=4.0.0
 SET DockerComposeFile=docker-compose.yml
 SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %ApplicationPath%\%DockerComposeFile%
@@ -121,7 +121,7 @@ SETLOCAL
 
     :BeginOfWaiting
     SETLOCAL
-      wget -q --spider http://localhost:8001/health
+      wget -q --spider http://localhost:8001/actuator/health
 
       if ".%ERRORLEVEL%" == ".0" (
         ECHO %FileItemsServiceFile% is ready!

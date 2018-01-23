@@ -5,7 +5,7 @@
 #LOG_LEVEL=debug
 
 # app info
-VERSION=3.0.2
+VERSION=4.0.0
 COMPOSE_FILE="docker-compose.yml"
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
@@ -88,7 +88,7 @@ function WAIT_FOR {
   if [ "'$1'" != "'health'" ]; then
     return
   fi
-  HEALTH_CHECK_URL="http://localhost:"$2"/health"
+  HEALTH_CHECK_URL="http://localhost:"$2"/actuator/health"
   (exit -1)
   while (($?))
   do
