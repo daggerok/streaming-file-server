@@ -19,9 +19,8 @@ subprojects { sp ->
     }
 
     dependencies {
-        //// because of QueryDSL:
-        // compileOnly "org.projectlombok:lombok"
-        // testCompileOnly "org.projectlombok:lombok"
+
+        compileOnly "org.projectlombok:lombok"
 
         compile "org.springframework.boot:spring-boot-starter-actuator",
 
@@ -31,8 +30,9 @@ subprojects { sp ->
                 "org.hibernate:hibernate-java8",
 
                 "org.apache.commons:commons-io:$commonsIoVer",
-                "org.projectlombok:lombok",
                 "io.vavr:vavr:$vavrVer"
+
+        testCompileOnly "org.projectlombok:lombok"
 
         testCompile "org.springframework.boot:spring-boot-starter-test",
                 "org.powermock:powermock-module-junit4:$powermockitoVer",
