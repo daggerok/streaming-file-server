@@ -14,7 +14,7 @@ full-stack java file server based on spring-boot / spring-* with no limitation f
 **with postgres in docker**
 
 ```bash
-export VERSION="4.0.0"
+export VERSION="4.1.0"
 
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/$VERSION/docker-compose.yml
@@ -169,7 +169,7 @@ docker system prune -af --volumes
 
 ### todo
 
-- migrate from mvc to reactive webflux
+- migrate ~~file-items-service and~~ file-server from mvc to reactive webflux
 - migrate from postgres to reactive postgres or some reactive NoSQL (mongodb, etc...)
 - add more advanced security...
 - improve files-db sync (replace FileSystem with GridFS or ...?)
@@ -190,6 +190,8 @@ docker system prune -af --volumes
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)
 - code / architecture splitting into micro-services
+- migrate postgres from blocking to nonblocking (wrapped in Schedules.elastic())
+- migrate REST API from spring mvn to webflux
 - [bootstrap](http://getbootstrap.com/)
 - [bootstrap fileinput](http://plugins.krajee.com/file-input)
 - [jgiven](http://jgiven.org/)

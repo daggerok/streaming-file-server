@@ -24,9 +24,9 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 @Accessors(chain = true)
-@EqualsAndHashCode(exclude = "id")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(exclude = { "id", "createdAt", "updatedAt" })
 public abstract class AbstractAuditEntity implements Serializable {
 
   private static final long serialVersionUID = 9207056121666919093L;

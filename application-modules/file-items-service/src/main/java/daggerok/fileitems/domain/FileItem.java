@@ -20,8 +20,8 @@ import static javax.persistence.EnumType.STRING;
 @Entity
 @NoArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(callSuper = true, exclude = { "version", "prettySize" })
 public class FileItem extends AbstractAuditEntity {
 
   private static final long serialVersionUID = -6455969576919191029L;
@@ -29,6 +29,7 @@ public class FileItem extends AbstractAuditEntity {
   @NonNull
   String path;
 
+  @NonNull
   String filename;
 
   String extension;
