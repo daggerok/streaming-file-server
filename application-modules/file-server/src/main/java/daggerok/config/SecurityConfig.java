@@ -2,8 +2,8 @@ package daggerok.config;
 
 import lombok.SneakyThrows;
 import lombok.val;
-import org.springframework.boot.actuate.autoconfigure.security.EndpointRequest;
-import org.springframework.boot.autoconfigure.security.StaticResourceRequest;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            .permitAll()
           .requestMatchers(EndpointRequest.to("status", "info", "health"))
             .permitAll()
-          .requestMatchers(StaticResourceRequest.toCommonLocations())
+          .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
             .permitAll()
           .anyRequest()
             .authenticated()

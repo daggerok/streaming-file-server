@@ -1,5 +1,5 @@
 plugins {
-  id "com.avast.gradle.docker-compose" version "0.6.12" apply false
+  id "com.avast.gradle.docker-compose" version "0.6.13" apply false
 }
 
 def thatPath = rootProject.projectDir.absolutePath
@@ -13,12 +13,15 @@ subprojects { sp ->
 
   dockerCompose {
     useComposeFiles = ["$root/docker-modules/${sp.name}/docker-compose.yml"]
-    captureContainersOutput = true
+    // captureContainersOutput = true
+    captureContainersOutput = false
     stopContainers = true
     removeContainers = true
     removeImages = "Local"
     removeVolumes = true
     removeOrphans = true
+    forceRecreate = true
+    waitForTcpPorts = false
     projectName = "$sp.parent.name"
   }
 

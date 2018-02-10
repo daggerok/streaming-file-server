@@ -1,32 +1,23 @@
+service:
+- docker
 sudo: required
 group: travis_lts
-
 env:
   global:
     TERM=dumb
-
-service:
-- docker
-
 language: java
 jdk:
 - openjdk8
 - oraclejdk8
-
 install: true
 before_install:
-# install required
 - sudo apt update -y || true
-- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils || true
+- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils
 - sudo pip install docker-compose httpie
-- sudo usermod -aG docker $(whoami)
-
-# helper bash functions
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
 - stop_any 5432 5672 27017
-
 script:
-- bash gradlew clean test jgiven build
+- bash gradlew clean test jgiven build docs
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
@@ -34,16 +25,15 @@ script:
 
 # postgres
 - bash gradlew clean assemble postgresUp
-- gradle :application-modules:file-items-service:bootRun &
+- bash ./application-modules/file-items-service/build/libs/*.jar &
 - wait_for 8001
-- gradle :application-modules:file-server:bootRun &
+- bash ./application-modules/file-server/build/libs/*.jar &
 - wait_for 8002
 - http --auth user:password :8001/actuator/health
 - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
 - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- bash gradlew --stop || true
 - stop_any 8002 8001
 - bash gradlew postgresDown
 
@@ -101,8 +91,3 @@ script:
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
 - yes | bash ./scripts/application-h2.bash clean build
-
-cache:
-  directories:
-  - $HOME/.gradle/
-  - .gradle/
