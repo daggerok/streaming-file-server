@@ -1,18 +1,9 @@
-#service:
-#- docker
-#sudo: required
-#group: travis_lts
-
 env:
   global:
-    TERM=dumb
+  - TERM=dumb
 
 language: java
 jdk: oraclejdk8
-
-#jdk:
-#- openjdk8
-#- oraclejdk8
 
 install: true
 before_install:
@@ -23,8 +14,9 @@ before_install:
 - stop_any 5432 5672 27017 8082 8081 8080 80
 
 script:
+
 # jgiven tests and docs
-- bash gradlew clean test jgiven build asciidoctor
+- bash gradlew clean test jgiven build asciidoctor >/dev/null 2>&1
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}

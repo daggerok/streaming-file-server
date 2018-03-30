@@ -177,10 +177,10 @@ docker system prune -af --volumes
 - support removing files (rly..? as minimum from db)
 - p2p: bi-directional files synchronization with spring scheduling or batch
 
-### technology stack
+### stack
 
 - [spring](https://spring.io/)
-  - spring-boot ~~1.x~~ 2.0.0.RC1
+  - spring-boot 2.0.0.RELEASE ~~2.0.0.RC1~~ ~~1.x~~
   - spring-mvc ([mustache template engine](http://mustache.github.io/))
   - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
   - apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
