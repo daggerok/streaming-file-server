@@ -1,23 +1,30 @@
-service:
-- docker
-sudo: required
-group: travis_lts
+#service:
+#- docker
+#sudo: required
+#group: travis_lts
+
 env:
   global:
     TERM=dumb
+
 language: java
-jdk:
-- openjdk8
-- oraclejdk8
+jdk: oraclejdk8
+
+#jdk:
+#- openjdk8
+#- oraclejdk8
+
 install: true
 before_install:
-- sudo apt update -y || true
-- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils
-- sudo pip install docker-compose httpie
+- sudo apt update -y >/dev/null 2>&1 || true
+- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils >/dev/null 2>&1
+- sudo pip install docker-compose httpie >/dev/null 2>&1
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 5432 5672 27017
+- stop_any 5432 5672 27017 8082 8081 8080 80
+
 script:
-- bash gradlew clean test jgiven build docs
+# jgiven tests and docs
+- bash gradlew clean test jgiven build asciidoctor
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
