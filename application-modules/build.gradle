@@ -4,23 +4,27 @@ subprojects { sp ->
 
     targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
 
-    apply plugin: "org.springframework.boot"
-    apply plugin: "io.spring.dependency-management"
-    apply plugin: "cn.bestwu.propdeps-eclipse"
-    apply plugin: "cn.bestwu.propdeps-maven"
-    apply plugin: "cn.bestwu.propdeps-idea"
     apply plugin: "cn.bestwu.propdeps"
+    apply plugin: "cn.bestwu.propdeps-idea"
+    apply plugin: "cn.bestwu.propdeps-maven"
+    apply plugin: "cn.bestwu.propdeps-eclipse"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "org.springframework.boot"
 
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
     }
+
+    compileJava.dependsOn(processResources)
 
     dependencies {
 
         compileOnly "org.projectlombok:lombok"
+        testCompileOnly "org.projectlombok:lombok"
+        compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+        testCompileOnly "org.springframework.boot:spring-boot-configuration-processor"
+        // FIXME: annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
         compile "org.springframework.boot:spring-boot-starter-actuator",
 
@@ -31,8 +35,6 @@ subprojects { sp ->
 
                 "org.apache.commons:commons-io:$commonsIoVer",
                 "io.vavr:vavr:$vavrVer"
-
-        testCompileOnly "org.projectlombok:lombok"
 
         testCompile "org.springframework.boot:spring-boot-starter-test",
                 "org.powermock:powermock-module-junit4:$powermockitoVer",

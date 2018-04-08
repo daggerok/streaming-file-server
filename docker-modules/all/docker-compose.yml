@@ -37,8 +37,8 @@ services:
     image: 127.0.0.1:5000/file-server
     ports: ["8002:8002"]
     volumes:
-      - ./file-storage:/var/file-storage:rw
-      - ./application-modules/file-server/build:/var/file-storage
+    - ./file-storage:/var/file-storage:rw
+    - ./application-modules/file-server/build:/var/file-storage
     networks: [backing-services]
 
 networks:

@@ -1,6 +1,5 @@
 package daggerok.config;
 
-import lombok.SneakyThrows;
 import lombok.val;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -12,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
@@ -23,9 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-//        .requestMatchers()
-//          .antMatchers("/actuator/health")
-//            .permitAll()
+        /*
+        .requestMatchers()
+          .antMatchers("/actuator/health")
+            .permitAll()
+          */
           .requestMatchers(EndpointRequest.to("status", "info", "health"))
             .permitAll()
           .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
@@ -47,23 +50,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  @SneakyThrows
-  public UserDetailsService userDetailsService() {
+  PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
+
+  @Bean
+  public UserDetailsService userDetailsService(final PasswordEncoder encoder) {
 
     val inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 
-    inMemoryUserDetailsManager.createUser(User//.withUsername("user")
-                                              .withDefaultPasswordEncoder()
-                                              .username("user")
-                                              .password("password")
+    inMemoryUserDetailsManager.createUser(User.withUsername("user")
+                                              .password(encoder.encode("password"))
                                               .roles("USER")
                                               .build());
 
-    inMemoryUserDetailsManager.createUser(User//.withUsername("admin")
-                                              .withDefaultPasswordEncoder()
-                                              .username("admin")
-                                              .password("admin")
-                                              .roles("USER")
+    inMemoryUserDetailsManager.createUser(User.withUsername("admin")
+                                              .password(encoder.encode("admin"))
+                                              .roles("USER", "ADMIN")
                                               .build());
     return inMemoryUserDetailsManager;
   }
