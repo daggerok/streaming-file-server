@@ -180,7 +180,7 @@ docker system prune -af --volumes
 ### stack
 
 - [spring](https://spring.io/)
-  - spring-boot 2.0.0.RELEASE ~~2.0.0.RC1~~ ~~1.x~~
+  - spring-boot 2.0.1.RELEASE ~~1.x~~
   - spring-mvc ([mustache template engine](http://mustache.github.io/))
   - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
   - apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
