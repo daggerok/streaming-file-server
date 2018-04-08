@@ -1,6 +1,8 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
+_latests VERSION: 4.2.1_
+
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
 - minimum java 8 is required
@@ -14,8 +16,6 @@ full-stack java file server based on spring-boot / spring-* with no limitation f
 **with postgres in docker**
 
 ```bash
-export VERSION="4.2.1"
-
 # database
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/docker-compose.yml
 docker-compose -f docker-compose.yml up -d
