@@ -11,7 +11,7 @@ before_install:
 - sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils >/dev/null 2>&1
 - sudo pip install docker-compose httpie >/dev/null 2>&1
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 5432 5672 27017 8082 8081 8080 80
+- stop_any 5432 5672 27017 8082 8082 8081 8081 8080 8080 80 80
 
 script:
 
@@ -23,34 +23,34 @@ script:
 - cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
 
 # postgres
-- bash gradlew clean assemble postgresUp
-- bash ./application-modules/file-items-service/build/libs/*.jar &
+- bash gradlew clean assemble postgresUp >/dev/null
+- bash ./application-modules/file-items-service/build/libs/*.jar >/dev/null &
 - wait_for 8001
-- bash ./application-modules/file-server/build/libs/*.jar &
+- bash ./application-modules/file-server/build/libs/*.jar >/dev/null &
 - wait_for 8002
 - http --auth user:password :8001/actuator/health
 - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
 - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- stop_any 8002 8001
-- bash gradlew postgresDown
+- stop_any 8002 8002 8001 8001 80 80
+- bash gradlew postgresDown >/dev/null
 
 # h2
-- bash gradlew clean assemble
-- bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 &
+- bash gradlew clean assemble >/dev/null
+- bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 >/dev/null &
 - wait_for 8001
-- bash ./application-modules/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} &
+- bash ./application-modules/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
 - wait_for 8002
 - http --auth user:password :8001/actuator/health
 - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
 - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- stop_any 8002 8001
+- stop_any 8002 8002 8001 8001 80 80
 
 # install as linux service
-- bash gradlew clean assemble postgresUp
+- bash gradlew clean assemble postgresUp >/dev/null 2>&1
 - cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
 - mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
 - mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
@@ -67,7 +67,7 @@ script:
 - http --auth user:password :8002/
 - sudo service file-server                                        stop
 - sudo service file-items-service                                 stop
-- bash gradlew postgresDown
+- bash gradlew postgresDown >/dev/null 2>&1
 
 # scripts/application.bash
 - bash ./scripts/application.bash start build
