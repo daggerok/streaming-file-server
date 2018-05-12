@@ -545,39 +545,55 @@ table.CodeRay td.code>pre{padding:0}
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
 <span id="revnumber">version 4.3.1,</span>
-<span id="revdate">2018-05-12 21:12:07 EEST</span>
+<span id="revdate">2018-05-12 21:24:04 EEST</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#installation">1. Installation</a>
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#installation">2. Installation</a>
 <ul class="sectlevel2">
-<li><a href="#download-files">1.1. download files</a></li>
-<li><a href="#postgres-database">1.2. postgres database</a></li>
-<li><a href="#in-memory-h2-database">1.3. in-memory h2 database</a></li>
-<li><a href="#take-advantages-of-spring-boot-executable-jar">1.4. take advantages of spring-boot executable jar</a></li>
-<li><a href="#simplicity-bootstrap-with-automation-shell-script">1.5. simplicity bootstrap with automation shell-script</a></li>
+<li><a href="#download-files">2.1. download files</a></li>
 </ul>
 </li>
+<li><a href="#run">3. Run</a>
+<ul class="sectlevel2">
+<li><a href="#postgres-database">3.1. postgres database</a></li>
+<li><a href="#in-memory-h2-database">3.2. in-memory h2 database</a></li>
+<li><a href="#take-advantages-of-spring-boot-executable-jar">3.3. take advantages of spring-boot executable jar</a></li>
+</ul>
+</li>
+<li><a href="#usage-scripts">4. Usage scripts</a>
+<ul class="sectlevel2">
+<li><a href="#simplicity-bootstrap-with-automation-shell-script">4.1. simplicity bootstrap with automation shell-script</a></li>
+</ul>
+</li>
+<li><a href="#create-new-release">5. Create new release</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<h2 id="introduction" class="discrete">Introduction</h2>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction">1. Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/daggerok/streaming-file-server">Streaming file server</a>&#8201;&#8212;&#8201;java based project on top of spring-boot.
 This is a simple file-server which is allowed upload and download files with no memory limitation.
 It uses file multipart protocol</p>
 </div>
+<hr>
 </div>
 </div>
 <div class="sect1">
-<h2 id="installation">1. Installation</h2>
+<h2 id="installation">2. Installation</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="download-files">1.1. download files</h3>
+<h3 id="download-files">2.1. download files</h3>
 <div class="listingblock">
 <div class="title">if you have docker installed and wanna use postgres, then <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/docker-compose.yml">download docker-compose.yaml file</a></div>
 <div class="content">
@@ -596,9 +612,15 @@ It uses file multipart protocol</p>
 <pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar</code></pre>
 </div>
 </div>
+<hr>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="run">3. Run</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="postgres-database">1.2. postgres database</h3>
+<h3 id="postgres-database">3.1. postgres database</h3>
 <div class="listingblock">
 <div class="title">install using postgres in docker</div>
 <div class="content">
@@ -617,7 +639,7 @@ docker-compose down -v</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="in-memory-h2-database">1.3. in-memory h2 database</h3>
+<h3 id="in-memory-h2-database">3.2. in-memory h2 database</h3>
 <div class="listingblock">
 <div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file items service</a>:</div>
 <div class="content">
@@ -640,7 +662,7 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="take-advantages-of-spring-boot-executable-jar">1.4. take advantages of spring-boot executable jar</h3>
+<h3 id="take-advantages-of-spring-boot-executable-jar">3.3. take advantages of spring-boot executable jar</h3>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
@@ -651,11 +673,17 @@ wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/f
 bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
+<hr>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage-scripts">4. Usage scripts</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="simplicity-bootstrap-with-automation-shell-script">1.5. simplicity bootstrap with automation shell-script</h3>
+<h3 id="simplicity-bootstrap-with-automation-shell-script">4.1. simplicity bootstrap with automation shell-script</h3>
 <div class="sect3">
-<h4 id="unix-bash">1.5.1. unix (bash)</h4>
+<h4 id="unix-bash">4.1.1. unix (bash)</h4>
 <div class="listingblock">
 <div class="title">postgres in docker</div>
 <div class="content">
@@ -695,13 +723,11 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 <p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash">application-h2.bash</a></p>
 </div>
 <div class="paragraph">
-<p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
+<p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em>
+==== windows (batch cmd)
+.postgres in docker</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="windows-batch-cmd">1.5.2. windows (batch cmd)</h4>
 <div class="listingblock">
-<div class="title">postgres in docker</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="cmd">@rem start
 application.cmd start path\to\file-storage
@@ -735,9 +761,14 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
 </div>
+<hr>
 </div>
-<div class="sect3">
-<h4 id="create-new-release">1.5.3. create new release</h4>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-new-release">5. Create new release</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>to create new release do next</p>
 </div>
@@ -808,12 +839,10 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
 Version 4.3.1<br>
-Last updated 2018-05-12 21:12:07 EEST
+Last updated 2018-05-12 21:24:04 EEST
 </div>
 </div>
 </body>
