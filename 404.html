@@ -639,7 +639,10 @@ java file-items-service.jar --spring.profiles.active=db-h2</pre>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
-<pre>bash file-items-service.jar
+<pre>bash file-items-service-{project-version}.jar
+bash file-items-service-\{project-version}.jar
+bash file-items-service-\{project-version\}.jar
+bash file-items-service-\\{project-version\\}.jar
 bash file-server.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
@@ -649,7 +652,7 @@ bash file-server.jar --app.upload.path=./path/to/file-storage</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file-items-service.jar</a> and</p>
+<p><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file-items-service.jar</a></p>
 </li>
 <li>
 <p><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar">file-server.jar</a></p>
@@ -675,7 +678,7 @@ bash application.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.bash">application.bash</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.bash">application.bash</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
@@ -691,7 +694,7 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash">application-h2.bash</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash">application-h2.bash</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
@@ -713,7 +716,7 @@ application.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.cmd">application.cmd</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.cmd">application.cmd</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
@@ -729,7 +732,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.cmd">application-h2.cmd</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.cmd">application-h2.cmd</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
