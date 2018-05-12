@@ -670,7 +670,10 @@ bash file-server.jar --app.upload.path=./path/to/file-storage</pre>
 <div class="listingblock">
 <div class="title">postgres in docker</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash"># start
+<pre class="CodeRay highlight"><code data-lang="bash"># get
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.bash
+
+# start
 bash application.bash start ./path/to/file-storage
 
 # stop
@@ -686,7 +689,10 @@ bash application.bash clean ./path/to/file-storage</code></pre>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash"># start
+<pre class="CodeRay highlight"><code data-lang="bash"># fetch
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash
+
+# start
 bash application-h2.bash start ./path/to/file-storage
 
 # stop
