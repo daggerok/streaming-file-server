@@ -56,7 +56,7 @@ gitPublish {
     }
   }
 
-  commitMessage = "Documentation for ${project.group}:${project.name}:${project.version}".toString()
+  commitMessage = "Update documentation for ${project.group}:${project.name}:${project.version}".toString()
 }
 
 gitPublishPush.dependsOn asciidoctor

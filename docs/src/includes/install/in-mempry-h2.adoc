@@ -3,9 +3,14 @@
 
 .if you do not have docker -- feel free to use h2 in memory database
 ----
-ava file-items-service.jar --spring.profiles.active=db-h2
+java file-items-service.jar
+# or
+java file-items-service.jar --spring.profiles.active=db-h2
 ----
 
-get link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file-items-service.jar]
+download files:
+
+- link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file-items-service.jar]
+- link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file-file-server.jar]
 
 //end::content[]
