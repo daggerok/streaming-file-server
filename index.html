@@ -645,8 +645,11 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
-<pre>bash file-items-service.jar
-bash file-server.jar --app.upload.path=./path/to/file-storage</pre>
+<pre>wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
+bash file-items-service-4.3.1.jar
+
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
+bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
 <div class="paragraph">
