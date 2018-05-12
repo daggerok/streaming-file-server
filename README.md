@@ -22,7 +22,7 @@ docker-compose -f docker-compose.yml up -d
 
 # file-items data service
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
-bash file-items-service-4.3.1.jar
+bash file-items-service-4.3.1.jar --spring.profiles.active=db-pg
 
 # file server
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
@@ -74,7 +74,8 @@ installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and o
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
 
-bash file-items-service-4.3.1.jar --spring.profiles.active=db-h2
+# bash file-items-service-4.3.1.jar --spring.profiles.active=db-h2 # or just:
+bash file-items-service-4.3.1.jar
 bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage
 ```
 
@@ -116,8 +117,8 @@ installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of course `j
 
 ```sh
 bash gradlew clean assemble postgresUp
-bash gradlew :a-m:f-i-s:bootRun
-bash gradlew :a-m:f-s:bootRun
+bash gradlew :m:a:f-i-s:bootRun
+bash gradlew :m:a:f-s:bootRun
 
 # cleanup
 bash gradlew composeDown
@@ -136,7 +137,7 @@ open modules/apps/streaming-file-server/jgiven-reports/html/index.html
 **quick boot all with docker**
 
 ```sh
-bash gradlew clean assemble allUp
+bash gradlew clean assemble allUp -Pdebug
 http -a user:password :8002
 ```
 
@@ -144,7 +145,7 @@ http -a user:password :8002
 
 ```bash
 ./gradelw clean assemble
-docker-compose -f ./docker-modules/all/docker-compose.yml up --build --force-recreate
+docker-compose -f ./modules/docker/all/docker-compose.yml up --build --force-recreate
 ```
 
 **cleanup**
@@ -165,7 +166,7 @@ docker system prune -af --volumes
 ### known issues
 
 - SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.
-- static methods mocking using powermock
+- static methods mocking using PowerMock
 
 ### todo
 
