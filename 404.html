@@ -581,12 +581,15 @@ It uses file multipart protocol</p>
 <div class="title">install using postgres in docker</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash"># docker compose file for postgres database
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/docker-compose.yml
 docker-compose up -d
 
 # file-items data service
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
 java -jar file-items-service-4.3.1.jar --spring.profiles.active=db-pg
 
 # file server
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
 java -jar file-server-4.3.1.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
@@ -615,7 +618,9 @@ docker-compose down -v</code></pre>
 <div class="listingblock">
 <div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">java file-items-service-4.3.1.jar
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
+
+java file-items-service-4.3.1.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 </div>
@@ -623,7 +628,8 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 <div class="listingblock">
 <div class="title">or same:</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">java file-items-service-4.3.1.jar --spring.profiles.active=db-h2</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
+java file-items-service-4.3.1.jar --spring.profiles.active=db-h2</code></pre>
 </div>
 </div>
 <div class="paragraph">
