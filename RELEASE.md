@@ -2,7 +2,9 @@
 
 _version: 4.3.1_
 
-Java file server based on spring-boot with no upload / download files size limitation
+## Java file server 
+
+**Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
 - Update spring-boot version up to 2.0.2.RELEASE. Update some webjars
 - Fix docker-compose / docker files

@@ -1,6 +1,5 @@
 
 //tag::content[]
-
 to create new release do next
 
 . bump version in:
@@ -13,10 +12,11 @@ to create new release do next
 . comment scipts tests in .travis.yml
 . commit, push and check CI if builds was successfully passed
 . create release on github, put:
-  .. modules/apps/*/build/libs/*
+  .. modules/apps/\*/build/libs/*
   .. scripts/*
   .. docker-modules/postgres
 . uncomment .travis.yml
 . commit, push and check CI again to verify if scripts tests was successfully passed
 
+download all files link:https://github.com/daggerok/streaming-file-server/releases/[here]
 //end::content[]

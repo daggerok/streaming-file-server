@@ -1,16 +1,18 @@
 
 //tag::content[]
-
-.if you do not have docker -- feel free to use h2 in memory database
+.if you do not have docker -- feel free to use h2 in memory database for link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file items service]:
+[source,bash]
+[subs="verbatim,attributes"]
 ----
-java file-items-service.jar
+java file-items-service-{project-version}.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2
 ----
 
-download files:
-
-- link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file-items-service.jar]
-- link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file-file-server.jar]
-
+. and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file server]:
+[source,bash]
+[subs="specialcharacters,callouts,attributes"]
+----
+java file-items-service-{project-version}.jar --spring.profiles.active=db-h2
+----
 //end::content[]
