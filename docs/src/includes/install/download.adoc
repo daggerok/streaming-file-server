@@ -1,6 +1,6 @@
 
 //tag::content[]
-.if you have docker installed and wanna use postgres, then link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/docker-compose.yml[download docker-compose.yaml file]
+.if you have docker installed and wanna use postgres, then link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/docker-compose.yml[download docker-compose.yml file]
 [source,bash]
 [subs="verbatim,attributes"]
 ----

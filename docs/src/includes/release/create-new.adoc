@@ -14,7 +14,7 @@ to create new release do next
 . create release on github, put:
   .. modules/apps/\*/build/libs/*
   .. scripts/*
-  .. docker-modules/postgres
+  .. modules/docker/postgres/docker-compose.yml
 . uncomment .travis.yml
 . commit, push and check CI again to verify if scripts tests was successfully passed
 
