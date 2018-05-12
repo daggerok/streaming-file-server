@@ -545,7 +545,7 @@ table.CodeRay td.code>pre{padding:0}
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
 <span id="revnumber">version 4.3.1,</span>
-<span id="revdate">2018-05-12 21:05:53 EEST</span>
+<span id="revdate">2018-05-12 21:12:07 EEST</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -554,8 +554,9 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#download-files">1.1. download files</a></li>
 <li><a href="#postgres-database">1.2. postgres database</a></li>
-<li><a href="#take-advantages-of-spring-boot-executable-jar">1.3. take advantages of spring-boot executable jar</a></li>
-<li><a href="#simplicity-bootstrap-with-automation-shell-script">1.4. simplicity bootstrap with automation shell-script</a></li>
+<li><a href="#in-memory-h2-database">1.3. in-memory h2 database</a></li>
+<li><a href="#take-advantages-of-spring-boot-executable-jar">1.4. take advantages of spring-boot executable jar</a></li>
+<li><a href="#simplicity-bootstrap-with-automation-shell-script">1.5. simplicity bootstrap with automation shell-script</a></li>
 </ul>
 </li>
 </ul>
@@ -583,38 +584,16 @@ It uses file multipart protocol</p>
 <pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/docker-compose.yml</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file items service</a></p>
 <div class="listingblock">
+<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file items service</a></div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">.or same:</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar</code></pre>
 </div>
-</div>
-</li>
-</ol>
 </div>
 <div class="listingblock">
+<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar">file server</a></div>
 <div class="content">
-<pre>wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar</pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar">file server</a></p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">.or same:</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar</pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar</code></pre>
 </div>
 </div>
 </div>
@@ -637,11 +616,13 @@ docker-compose down -v</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>download all files <a href="https://github.com/daggerok/streaming-file-server/releases/">here</a>
-=== in-memory h2 database
-.if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file items service</a>:</p>
+<p>download all files <a href="https://github.com/daggerok/streaming-file-server/releases/">here</a></p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="in-memory-h2-database">1.3. in-memory h2 database</h3>
 <div class="listingblock">
+<div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file items service</a>:</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">java file-items-service-4.3.1.jar
 # or
@@ -662,7 +643,7 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="take-advantages-of-spring-boot-executable-jar">1.3. take advantages of spring-boot executable jar</h3>
+<h3 id="take-advantages-of-spring-boot-executable-jar">1.4. take advantages of spring-boot executable jar</h3>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
@@ -688,9 +669,9 @@ bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="simplicity-bootstrap-with-automation-shell-script">1.4. simplicity bootstrap with automation shell-script</h3>
+<h3 id="simplicity-bootstrap-with-automation-shell-script">1.5. simplicity bootstrap with automation shell-script</h3>
 <div class="sect3">
-<h4 id="unix-bash">1.4.1. unix (bash)</h4>
+<h4 id="unix-bash">1.5.1. unix (bash)</h4>
 <div class="listingblock">
 <div class="title">postgres in docker</div>
 <div class="content">
@@ -734,7 +715,7 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="windows-batch-cmd">1.4.2. windows (batch cmd)</h4>
+<h4 id="windows-batch-cmd">1.5.2. windows (batch cmd)</h4>
 <div class="listingblock">
 <div class="title">postgres in docker</div>
 <div class="content">
@@ -772,7 +753,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-new-release">1.4.3. create new release</h4>
+<h4 id="create-new-release">1.5.3. create new release</h4>
 <div class="paragraph">
 <p>to create new release do next</p>
 </div>
@@ -845,7 +826,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 4.3.1<br>
-Last updated 2018-05-12 21:05:53 EEST
+Last updated 2018-05-12 21:12:07 EEST
 </div>
 </div>
 </body>
