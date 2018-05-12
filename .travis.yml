@@ -52,6 +52,7 @@ script:
 
 # install as linux service
 - bash gradlew clean assemble postgresUp >/dev/null 2>&1
+- export SPRING_PROFILES_ACTIVE=db-pg
 - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
 - mv -f ./modules/apps/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
 - mv -f ./modules/apps/file-server/build/libs/*.jar        /tmp/file-server.jar
@@ -69,6 +70,7 @@ script:
 - sudo service file-server                                        stop
 - sudo service file-items-service                                 stop
 - bash gradlew postgresDown >/dev/null 2>&1
+- unset SPRING_PROFILES_ACTIVE
 
 # scripts/application.bash
 - bash ./scripts/application.bash start build
