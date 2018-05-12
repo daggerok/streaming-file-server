@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
 <meta name="author" content="Maksim Kostromin">
-<title>streaming-file-server docs (4.2.1)</title>
+<title>streaming-file-server docs (4.3.1)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -540,11 +540,11 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>streaming-file-server docs (4.2.1) <span class="image"><a class="image" href="https://github.com/daggerok/streaming-file-server"><img src="https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master" alt="Build Status"></a></span></h1>
+<h1>streaming-file-server docs (4.3.1) <span class="image"><a class="image" href="https://github.com/daggerok/streaming-file-server"><img src="https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master" alt="Build Status"></a></span></h1>
 <div class="details">
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
-<span id="revnumber">version 4.2.1,</span>
+<span id="revnumber">version 4.3.1,</span>
 <span id="revdate">2018-05-12 13:35:26 EEST</span>
 </div>
 <div id="toc" class="toc2">
@@ -594,9 +594,9 @@ docker-compose down -v</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/docker-compose.yml">docker-compose.yml</a>,
-<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-items-service-4.2.1.jar">file-items-service.jar</a>,
-<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-server-4.2.1.jar">file-server.jar</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/docker-compose.yml">docker-compose.yml</a>,
+<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file-items-service.jar</a>,
+<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar">file-server.jar</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -608,7 +608,7 @@ docker-compose down -v</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-items-service-4.2.1.jar">file-items-service.jar</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file-items-service.jar</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -621,8 +621,8 @@ bash file-server.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-items-service-4.2.1.jar">file-items-service-4.2.1.jar</a> and
-<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-server-4.2.1.jar">file-server-4.2.1.jar</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar">file-items-service-4.3.1.jar</a> and
+<a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar">file-server-4.3.1.jar</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -643,7 +643,7 @@ bash application.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application.bash">application.bash</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.bash">application.bash</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
@@ -659,7 +659,7 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application-h2.bash">application-h2.bash</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash">application-h2.bash</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
@@ -681,7 +681,7 @@ application.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application.cmd">application.cmd</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.cmd">application.cmd</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
@@ -697,7 +697,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application-h2.cmd">application-h2.cmd</a></p>
+<p>get <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.cmd">application-h2.cmd</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
@@ -746,7 +746,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>application-modules/<strong>/build/libs/</strong></p>
+<p>modules/apps/<strong>/build/libs/</strong></p>
 </li>
 <li>
 <p>scripts/*</p>
@@ -776,7 +776,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 4.2.1<br>
+Version 4.3.1<br>
 Last updated 2018-05-12 13:35:26 EEST
 </div>
 </div>
