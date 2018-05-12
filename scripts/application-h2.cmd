@@ -15,7 +15,7 @@ SETLOCAL ENABLEEXTENSIONS
 
 SET ApplicationPath="app"
 
-SET Version=4.2.1
+SET Version=4.3.1
 SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %ApplicationPath%\%FileServerFile%
@@ -100,7 +100,7 @@ SETLOCAL
   CALL :GetApplicationFiles
 
   CALL :StopFileItemsServiceIfRunning
-  START /MIN CMD /C %FileItemsServiceCommand%
+  START /MIN CMD /C %FileItemsServiceCommand% --spring.profiles.active=db-h2
   ECHO %FileItemsServiceFile% not yet ready, waiting for bootstrap...
 
   :BeginOfWaiting

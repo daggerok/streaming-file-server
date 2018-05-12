@@ -4,15 +4,19 @@ buildscript {
   }
 }
 
+/*
 plugins {
   id "org.asciidoctor.convert" version "1.5.7"
-//id "org.ajoberstar.git-publish" version "0.2.2"
   id "org.ajoberstar.git-publish" version "0.3.0"
 }
 
 asciidoctorj {
-  version = "1.5.5"
+  version = "1.5.6"
 }
+*/
+
+apply plugin: "org.asciidoctor.convert"     // version "1.5.7"
+apply plugin: "org.ajoberstar.git-publish"  // version "0.3.0" // version "0.4.1" - is not working: Algorithm negotiation fail
 
 asciidoctor {
   sourceDir = project.file("src")
@@ -52,7 +56,7 @@ gitPublish {
     }
   }
 
-  commitMessage = "Documentation for ${project.group}:${project.name}:$project.version"
+  commitMessage = "Documentation for ${project.group}:${project.name}:${project.version}".toString()
 }
 
 gitPublishPush.dependsOn asciidoctor

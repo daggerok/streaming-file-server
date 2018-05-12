@@ -1,0 +1,46 @@
+version: "2.1"
+
+services:
+
+  postgres:
+    extends:
+      file: ../postgres/docker-compose.yml
+      service: postgres
+    ports: ["5432:5432"]
+    networks: [backing-services]
+
+  file-items-service:
+    build:
+      context: ../..
+      dockerfile: ./docker-modules/all/file-items-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+    image: 127.0.0.1:5000/file-items-service
+    ports: ["8001:8001"]
+    networks: [backing-services]
+
+  file-server:
+    build:
+      context: ../..
+      dockerfile: ./docker-modules/all/file-server/Dockerfile
+      args:
+        APP_UPLOAD_PATH_ARG: /var/file-storage
+    depends_on:
+      file-items-service:
+        condition: service_healthy
+    environment:
+      FILE_ITEMS_REST_SERVICE_HOST: file-items-service
+      FILE_ITEMS_REST_SERVICE_PORT: 8001
+    image: 127.0.0.1:5000/file-server
+    ports: ["8002:8002"]
+    volumes:
+    - ./file-storage:/var/file-storage:rw
+    - ./modules/apps/file-server/build:/var/file-storage
+    networks: [backing-services]
+
+networks:
+  backing-services:
+    driver: bridge

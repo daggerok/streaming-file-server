@@ -19,7 +19,7 @@ SET InfoLogLevel=0
 
 SET ApplicationPath="app"
 
-SET Version=4.2.1
+SET Version=4.3.1
 SET DockerComposeFile=docker-compose.yml
 SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %ApplicationPath%\%DockerComposeFile%
@@ -116,7 +116,7 @@ SETLOCAL
 
   FOR /f "tokens=1" %%A IN ('jps -lv ^| find "%FileItemsServiceFile%"') DO GOTO :EndOfWaiting
 
-  START /MIN %FileItemsServiceCommand%
+  START /MIN %FileItemsServiceCommand% --spring.profiles.active=db-pg
   ECHO %FileItemsServiceFile% is not ready yet. waiting for bootstrap...
 
     :BeginOfWaiting

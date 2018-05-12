@@ -1,0 +1,11 @@
+idea {
+  module {
+    downloadSources = true
+  }
+}
+
+eclipse {
+  classpath {
+    downloadSources = true
+  }
+}

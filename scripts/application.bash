@@ -5,7 +5,7 @@
 #LOG_LEVEL=debug
 
 # app info
-VERSION=4.2.1
+VERSION=4.3.1
 COMPOSE_FILE="docker-compose.yml"
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
@@ -102,7 +102,7 @@ function START_APPLICATION_FUNC {
   START_DATABASE_FUNC
   GET_APPLICATION_FUNC
 
-  bash "${APPLICATION_PATH}/${FILE_ITEMS_SERVICE_FILENAME}" &
+  bash "${APPLICATION_PATH}/${FILE_ITEMS_SERVICE_FILENAME}" --spring.profiles.acrive-db-pg &
   WAIT_FOR "health" 8001
 
   bash "${APPLICATION_PATH}/${FILE_SERVER_FILENAME}" --app.upload.path="$FILE_STORAGE_PATH" &

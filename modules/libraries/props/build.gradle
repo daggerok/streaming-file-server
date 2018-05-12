@@ -1,0 +1,13 @@
+apply plugin: "cn.bestwu.propdeps"
+apply plugin: "cn.bestwu.propdeps-idea"
+apply plugin: "cn.bestwu.propdeps-maven"
+apply plugin: "cn.bestwu.propdeps-eclipse"
+
+compileJava.dependsOn(processResources)
+
+dependencies {
+  compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+  testCompileOnly("org.springframework.boot:spring-boot-configuration-processor")
+  annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+  testAnnotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+}

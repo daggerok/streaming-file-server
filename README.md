@@ -1,7 +1,7 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-_latests VERSION: 4.2.1_
+_latests VERSION: 4.3.1_
 
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
@@ -17,16 +17,16 @@ full-stack java file server based on spring-boot / spring-* with no limitation f
 
 ```bash
 # database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/docker-compose.yml
 docker-compose -f docker-compose.yml up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-items-service-4.2.1.jar
-bash file-items-service-4.2.1.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
+bash file-items-service-4.3.1.jar
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-server-4.2.1.jar
-bash file-server-4.2.1.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
+bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose -f docker-compose.yml down -v
@@ -35,7 +35,7 @@ docker-compose -f docker-compose.yml down -v
 **or simply using shell-script**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -51,7 +51,7 @@ bash application.bash clean ./path/to/file-storage
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application.cmd**
 
 ```cmd
 @rem start
@@ -71,17 +71,17 @@ installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and o
 **with h2 in-memory database**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-items-service-4.2.1.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/file-server-4.2.1.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-items-service-4.3.1.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/file-server-4.3.1.jar
 
-bash file-items-service-4.2.1.jar --spring.profiles.active=db-h2
-bash file-server-4.2.1.jar --app.upload.path=./path/to/file-storage
+bash file-items-service-4.3.1.jar --spring.profiles.active=db-h2
+bash file-server-4.3.1.jar --app.upload.path=./path/to/file-storage
 ```
 
 **or simply shell script for h2**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -93,7 +93,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ```
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.2.1/application-h2.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.1/application-h2.cmd**
 
 ```cmd
 @rem start
@@ -130,7 +130,7 @@ awesome JGiven reports!
 
 ```sh
 bash gradlew clean test jgiven
-open application-modules/streaming-file-server/jgiven-reports/html/index.html
+open modules/apps/streaming-file-server/jgiven-reports/html/index.html
 ```
 
 **quick boot all with docker**
@@ -184,8 +184,8 @@ docker system prune -af --volumes
   - spring-mvc ([mustache template engine](http://mustache.github.io/))
   - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
   - apache fileUpload, [lombok](https://projectlombok.org/), [vavr](http://www.vavr.io/)
-  - cors: see application-modules/file-items-service/src/main/java/daggerok/config/AppCfg.java
-  - 404 fallback: see application-modules/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
+  - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
+  - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
   - ~~spring-social (facebook login required for upload ability)~~ replaced with basic spring-security for now
   - ~~spring annotations (`@Get`, `@Post`, `@WebPage`)~~ (use `@GetMapping`, `@PostMapping`, etc...)
   - ~~spring-data REST HAL browser~~ (removed)

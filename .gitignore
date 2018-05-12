@@ -7,8 +7,8 @@
 *.gradle/
 *jgiven-reports/
 src/main/gen/
-application-modules/*/src/main/gen/
-docker-modules/all/application-modules/
+modules/apps/*/src/main/gen/
+modules/docker/all/modules/apps/
 *out/
 *node_modules/
 *yarn.lock

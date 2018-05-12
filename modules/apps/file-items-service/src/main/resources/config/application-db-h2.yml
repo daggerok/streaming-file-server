@@ -1,0 +1,21 @@
+spring:
+  active:
+    profiles: db-h2
+  datasource:
+    url: jdbc:h2:mem:${db.name};MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: ${db.user}
+    password: ${db.pass}
+    driver-class-name: org.h2.Driver
+    hikari:
+      connection-test-query: 'SELECT 1'
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2

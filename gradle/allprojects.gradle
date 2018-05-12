@@ -1,0 +1,28 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+allprojects {
+
+  apply plugin: "base"
+
+  group("$project.applicationGroup")
+  version("$project.applicationVersion")
+  defaultTasks("clean", "build")
+
+  clean.doFirst {
+    Os.isFamily(Os.FAMILY_WINDOWS) ? [] : [
+        project.file(".gradle"),
+        rootProject.file("file-storage"),
+    ] + [
+        project.buildDir,
+        project.file("out"),
+        project.file("bin"),
+        project.file("target"),
+        project.file("logs"),
+        project.file("jgiven-reports"),
+        project.file("jgiven-reports"),
+    ].each { delete it }
+    ////if (System.getProperty("os.name").toLowerCase().contains("windows")) return
+    ////delete "$rootDir/file-storage/*"
+    //delete(file("$rootDir/file-storage").listFiles().findAll { ".gitkeep" != it.name })
+  }
+}

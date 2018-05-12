@@ -1,9 +1,12 @@
 rootProject.name = "streaming-file-server"
 
-include "docker-modules:postgres"
-include "docker-modules:all"
+include "modules:libraries:props"
+include "modules:libraries:web-security"
 
-include "application-modules:file-items-service"
-include "application-modules:file-server"
+include "modules:apps:file-items-service"
+include "modules:apps:file-server"
+
+include "modules:docker:postgres"
+include "modules:docker:all"
 
 include "docs"

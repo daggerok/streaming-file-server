@@ -1,0 +1,9 @@
+app:
+  upload:
+    url: ${APP_UPLOAD_URL}
+    path: ${APP_UPLOAD_PATH}
+  download:
+    url: ${APP_DOWNLOAD_URL}
+    path: ${APP_DOWNLOAD_PATH}
+  github:
+    url: ${APP_GITHUB_URL}

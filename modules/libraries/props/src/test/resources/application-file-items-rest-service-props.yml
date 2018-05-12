@@ -1,0 +1,2 @@
+file-items-rest-service:
+  url: ${FILE_ITEMS_REST_SERVICE_URL}

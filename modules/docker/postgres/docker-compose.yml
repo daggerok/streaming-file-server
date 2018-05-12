@@ -1,0 +1,22 @@
+version: "2.1"
+
+services:
+  postgres:
+    image: postgres:9.4-alpine
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks: [backing-services]
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      timeout: 2s
+      retries: 22
+      #interval: 10s
+    #restart: unless-stopped
+    #mem_limit: 786432000 # container limit: 700Mb (700 * 1024 * 1024)
+
+networks:
+  backing-services:
+    driver: bridge

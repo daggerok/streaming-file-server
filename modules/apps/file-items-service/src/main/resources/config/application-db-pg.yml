@@ -1,0 +1,22 @@
+spring:
+  active:
+    profiles: db-pg
+  datasource:
+    url: jdbc:postgresql://${db.server.host}:${db.server.port}/${db.name}
+    username: ${db.user}
+    password: ${db.pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: 'SELECT 1'
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    database: postgresql
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      temp:
+        use_jdbc_metadata_defaults: false
+        use_jdbc_metadata: false
+      use_jdbc_metadata_defaults: false
+      use_jdbc_metadata: false

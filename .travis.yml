@@ -16,17 +16,17 @@ before_install:
 script:
 
 # jgiven tests and docs
-- bash gradlew clean test jgiven build asciidoctor >/dev/null 2>&1
+- bash gradlew -S -Pdebug clean test jgiven build asciidoctor >/dev/null 2>&1
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
-- cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
+- cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
 
 # postgres
 - bash gradlew clean assemble postgresUp >/dev/null
-- bash ./application-modules/file-items-service/build/libs/*.jar >/dev/null &
+- bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg >/dev/null &
 - wait_for 8001
-- bash ./application-modules/file-server/build/libs/*.jar >/dev/null &
+- bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
 - wait_for 8002
 - http --auth user:password :8001/actuator/health
 - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
@@ -38,9 +38,10 @@ script:
 
 # h2
 - bash gradlew clean assemble >/dev/null
-- bash ./application-modules/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 >/dev/null &
+#- bash ./modules/apps/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 >/dev/null &
+- bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
 - wait_for 8001
-- bash ./application-modules/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
+- bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
 - wait_for 8002
 - http --auth user:password :8001/actuator/health
 - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
@@ -51,9 +52,9 @@ script:
 
 # install as linux service
 - bash gradlew clean assemble postgresUp >/dev/null 2>&1
-- cp -Rf ./application-modules/file-server/build/libs "${APP_UPLOAD_PATH}/"
-- mv -f ./application-modules/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
-- mv -f ./application-modules/file-server/build/libs/*.jar        /tmp/file-server.jar
+- cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+- mv -f ./modules/apps/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
+- mv -f ./modules/apps/file-server/build/libs/*.jar        /tmp/file-server.jar
 - sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
 - sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
 - sudo service file-items-service                                 start

@@ -13,7 +13,7 @@ to create new release do next
 . comment scipts tests in .travis.yml
 . commit, push and check CI if builds was successfully passed
 . create release on github, put:
-  .. application-modules/*/build/libs/*
+  .. modules/apps/*/build/libs/*
   .. scripts/*
   .. docker-modules/postgres
 . uncomment .travis.yml
