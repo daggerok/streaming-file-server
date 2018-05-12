@@ -616,6 +616,10 @@ docker-compose down -v</pre>
 <div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database</div>
 <div class="content">
 <pre>java file-items-service.jar
+java file-items-service-{project-version}.jar
+java file-items-service-\{project-version}.jar
+java file-items-service-\{project-version\}.jar
+java file-items-service-\\{project-version\\}.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2</pre>
 </div>
@@ -639,7 +643,8 @@ java file-items-service.jar --spring.profiles.active=db-h2</pre>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
-<pre>bash file-items-service-{project-version}.jar
+<pre>bash file-items-service.jar
+bash file-items-service-{project-version}.jar
 bash file-items-service-\{project-version}.jar
 bash file-items-service-\{project-version\}.jar
 bash file-items-service-\\{project-version\\}.jar
