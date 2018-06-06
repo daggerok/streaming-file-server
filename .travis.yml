@@ -1,10 +1,13 @@
 service:
 - docker
+
 env:
   global:
   - TERM=dumb
+
 language: java
 jdk: oraclejdk8
+
 apt:
   update: true
   packages:
@@ -15,6 +18,7 @@ apt:
   - unzip
   - docker-ce
   - python-pip
+
 install: true
 before_install:
 - sudo pip install docker-compose httpie >/dev/null 2>&1
