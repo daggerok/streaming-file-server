@@ -1,14 +1,22 @@
+service:
+- docker
 env:
   global:
   - TERM=dumb
-
 language: java
 jdk: oraclejdk8
-
+apt:
+  update: true
+  packages:
+  - bash
+  - curl
+  - jq
+  - libxml2-utils
+  - unzip
+  - docker-ce
+  - python-pip
 install: true
 before_install:
-- sudo apt update -y >/dev/null 2>&1 || true
-- sudo apt install -y --no-install-recommends docker-ce python-pip curl jq libxml2-utils >/dev/null 2>&1
 - sudo pip install docker-compose httpie >/dev/null 2>&1
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
 - stop_any 5432 5672 27017 8082 8082 8081 8081 8080 8080 80 80
