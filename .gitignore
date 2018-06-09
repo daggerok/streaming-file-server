@@ -19,3 +19,4 @@ modules/docker/all/modules/apps/
 *.project
 *file-storage/
 !*.gitkeep
+/public/

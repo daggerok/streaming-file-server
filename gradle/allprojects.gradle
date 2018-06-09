@@ -1,7 +1,4 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 allprojects {
-
   apply plugin: "base"
 
   group("$project.applicationGroup")
@@ -9,15 +6,14 @@ allprojects {
   defaultTasks("clean", "build")
 
   clean.doFirst {
-    Os.isFamily(Os.FAMILY_WINDOWS) ? [] : [
-        project.file(".gradle"),
-        rootProject.file("file-storage"),
-    ] + [
+    [
         project.buildDir,
         project.file("out"),
         project.file("bin"),
-        project.file("target"),
         project.file("logs"),
+        project.file("build"),
+        project.file("public"),
+        project.file("target"),
         project.file("jgiven-reports"),
         project.file("jgiven-reports"),
     ].each { delete it }

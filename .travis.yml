@@ -28,7 +28,8 @@ before_install:
 script:
 
 # jgiven tests and docs
-- bash gradlew -S -Pdebug clean test jgiven build asciidoctor >/dev/null 2>&1
+#- bash gradlew -S -Pdebug clean test jgiven build documentation >/dev/null || true
+- bash gradlew -S -Pdebug clean check build documentation >/dev/null || true
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}

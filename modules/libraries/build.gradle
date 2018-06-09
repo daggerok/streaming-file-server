@@ -1,6 +1,6 @@
 subprojects {
 
-  apply from: "$rootDir/gradle/subprojects.gradle"
+  apply from: "$project.rootDir/gradle/subprojects.gradle"
 
   bootJar {
     enabled = false

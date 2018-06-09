@@ -20,19 +20,19 @@ apply plugin: "org.springframework.boot"
 compileJava.dependsOn(processResources)
 
 dependencies {
-  compile("io.vavr:vavr:$vavrVersion")
+  implementation("io.vavr:vavr:$vavrVersion")
 
   compileOnly("org.projectlombok:lombok")
   testCompileOnly("org.projectlombok:lombok")
   annotationProcessor("org.projectlombok:lombok")
   testAnnotationProcessor("org.projectlombok:lombok")
 
-  compile("org.springframework.boot:spring-boot-starter")
+  implementation("org.springframework.boot:spring-boot-starter")
 
-  testCompile("org.springframework.boot:spring-boot-starter-test")
-  testCompile("org.powermock:powermock-module-junit4:$powermockitoVersion")
-  testCompile("org.powermock:powermock-api-mockito2:$powermockitoVersion")
-  testCompile("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
-  testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
-  testCompile("com.codeborne:selenide:$selenideVersion")
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
+  testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
+  testImplementation("com.codeborne:selenide:$selenideVersion")
 }
+
+apply from: "$rootDir/gradle/jgiven.gradle"

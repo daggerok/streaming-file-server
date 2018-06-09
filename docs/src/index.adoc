@@ -1,14 +1,33 @@
-= streaming-file-server {project-name} ({project-version}) image:https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master["Build Status", link={github_url}]
+= {root-project-name} ({project-version})
 Maksim Kostromin <daggerok@gmail.com>
 {docdatetime}
-:toc:
+:doctype: book
+:toc: left
+:toclevels: 4
+:source-highlighter: prettify
+:numbered:
+:icons: font
+:hide-uri-scheme:
 :revnumber: {project-version}
 :example-caption!:
-:icons: font
-:toc: left
-:numbered:
-:github_url: https://github.com/daggerok/streaming-file-server
-:github_project_path: {github_url}/tree/master
+
+Travis CI status:
+ifdef::backend-html5[image:https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master["Build Status", link={github_url}]]
+
+PDF:
+ifdef::backend-html5[link:./index.pdf["Documentation in PFD format"]]
+
+//= streaming-file-server {project-name} ({project-version})
+//Maksim Kostromin <daggerok@gmail.com>
+//{docdatetime}
+//:toc:
+//:revnumber: {project-version}
+//:example-caption!:
+//:icons: font
+//:toc: left
+//:numbered:
+//:github_url: https://github.com/daggerok/streaming-file-server
+//:github_project_path: {github_url}/tree/master
 //[discrete]
 
 == Introduction

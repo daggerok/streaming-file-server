@@ -1,43 +1,9 @@
 subprojects {
 
-  apply plugin: "java"
-
-  targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
-
-  repositories {
-    mavenLocal()
-    mavenCentral()
-  }
-
-  apply plugin: "io.spring.dependency-management"
-
-  dependencyManagement {
-    imports {
-      mavenBom("org.springframework.boot:spring-boot-starter-parent:$springBootVersion")
-    }
-  }
-
-  apply plugin: "org.springframework.boot"
-
-  compileJava.dependsOn(processResources)
+  apply from: "$project.rootDir/gradle/subprojects.gradle"
 
   dependencies {
-    compile("io.vavr:vavr:$vavrVersion")
-
-    compileOnly("org.projectlombok:lombok")
-    testCompileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-    testAnnotationProcessor("org.projectlombok:lombok")
-
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.powermock:powermock-module-junit4:$powermockitoVersion")
-    testCompile("org.powermock:powermock-api-mockito2:$powermockitoVersion")
-    testCompile("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
-    testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
-    testCompile("com.codeborne:selenide:$selenideVersion")
+    implementation("org.springframework.boot:spring-boot-starter")
   }
 
   bootJar {

@@ -8,26 +8,19 @@ dependencies {
 
     annotationProcessor(project(it))
     compileOnly(project(it))
-    compile(project(it))
+    implementation(project(it))
   }
 
-  compile("org.springframework.boot:spring-boot-starter-web")
-  compile("org.springframework.boot:spring-boot-starter-mustache")
-  compile("org.apache.commons:commons-io:$commonsIoVersion")
+  implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-mustache")
+  implementation("org.apache.commons:commons-io:$commonsIoVersion")
 
-  compile("org.webjars:webjars-locator:$webjarsLocatorVersion")
-  compile("org.webjars:jquery:$jqueryVersion")
-  compile("org.webjars.bower:bootstrap:$bootstrapVersion")
-  compile("org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion")
-  compile("org.webjars.bower:font-awesome:$fontAwesomeVersion")
-  compile("org.webjars.npm:popper.js:$popperVersion")
+  implementation("org.webjars:webjars-locator:$webjarsLocatorVersion")
+  implementation("org.webjars:jquery:$jqueryVersion")
+  implementation("org.webjars.bower:bootstrap:$bootstrapVersion")
+  implementation("org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion")
+  implementation("org.webjars.bower:font-awesome:$fontAwesomeVersion")
+  implementation("org.webjars.npm:popper.js:$popperVersion")
 
   //runtime("org.springframework.boot:spring-boot-devtools")
-}
-
-task jgiven(type: JavaExec, dependsOn: "test") {
-  main = "com.tngtech.jgiven.report.ReportGenerator"
-  args "--targetDir=./jgiven-reports/html", "--format=html"
-  classpath = configurations.testCompile
-  shouldRunAfter clean, assemble
 }

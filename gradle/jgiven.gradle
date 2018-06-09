@@ -1,0 +1,26 @@
+/*
+apply plugin: "com.tngtech.jgiven.gradle-plugin"
+
+dependencies {
+  testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
+  testRuntime("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
+}
+*/
+
+dependencies {
+  testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
+  testRuntime("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
+  //testRuntime("org.slf4j:slf4j-api:$slf4jVersion")
+  //testRuntime("org.slf4j:jul-to-slf4j:$slf4jVersion")
+  //testRuntime("org.slf4j:log4j-over-slf4j:$slf4jVersion")
+  testCompile("ch.qos.logback:logback-classic:$logbackVersion")
+}
+
+task jgivenTestReport(type: JavaExec, dependsOn: "test") {
+  main = "com.tngtech.jgiven.report.ReportGenerator"
+  args "--targetDir=./build/jgiven-report", "--format=html"
+  classpath = configurations.testCompile
+  shouldRunAfter clean, assemble
+}
+
+test.finalizedBy jgivenTestReport
