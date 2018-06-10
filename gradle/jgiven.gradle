@@ -9,10 +9,11 @@ dependencies {
 
 dependencies {
   testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
-  testRuntime("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
-  //testRuntime("org.slf4j:slf4j-api:$slf4jVersion")
-  //testRuntime("org.slf4j:jul-to-slf4j:$slf4jVersion")
-  //testRuntime("org.slf4j:log4j-over-slf4j:$slf4jVersion")
+  testCompile("com.tngtech.jgiven:jgiven-junit5:$jgivenVersion")
+  testRuntimeOnly("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
+  //testRuntimeOnly("org.slf4j:slf4j-api:$slf4jVersion")
+  //testRuntimeOnly("org.slf4j:jul-to-slf4j:$slf4jVersion")
+  //testRuntimeOnly("org.slf4j:log4j-over-slf4j:$slf4jVersion")
   testCompile("ch.qos.logback:logback-classic:$logbackVersion")
 }
 
