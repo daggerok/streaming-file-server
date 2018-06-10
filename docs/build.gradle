@@ -42,7 +42,7 @@ asciidoctor {
       'toc-title': 'Table of Contents',
       'root-project-name': rootProject.name,
       'build-gradle': project.file('build.gradle'),
-      "endpoint-url": "https://daggerok.github.io/$rootProject.name"
+      'github-url': "https://github.com/daggerok/$rootProject.name"
 
   logDocuments = true
   //backends 'pdf', 'html5'

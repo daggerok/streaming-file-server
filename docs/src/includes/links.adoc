@@ -1,0 +1,22 @@
+
+//tag::content[]
+links:
+
+- link:https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception[fix issue: SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.]
+- link:https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html[spring-mvc]
+- link:https://spring.io/[spring]
+- link:http://mustache.github.io/[mustache template engine]
+- link:https://commons.apache.org/proper/commons-fileupload/[apache fileUpload]
+- link:https://projectlombok.org/[lombok]
+- link:http://www.vavr.io/[vavr]
+- link:http://getbootstrap.com/[bootstrap]
+- link:http://plugins.krajee.com/file-input[bootstrap fileinput]
+- link:http://jgiven.org/[jgiven]
+- link:https://github.com/jayway/powermock/wiki[powermock]
+- link:http://mockito.org/[mockito]
+- link:http://www.h2database.com/html/cheatSheet.html[h2]
+- link:https://www.postgresql.org/[postgres]
+- link:https://www.docker.com/[docker]
+- link:http://gradle.org/[gradle]
+- link:https://travis-ci.org/[travis CI]
+//end::content[]

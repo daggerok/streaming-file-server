@@ -1,4 +1,8 @@
 spring:
+  profiles:
+    active:
+    - file-orig
+
   servlet:
     multipart:
       max-file-size: 40960MB

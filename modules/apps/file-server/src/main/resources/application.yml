@@ -1,8 +1,87 @@
 spring:
   profiles:
     include:
-      - common
-      - app-props
-      - file
-      - mvc
-      - file-items-rest-service-config
+    - common
+    - app-props
+    - file
+    - mvc
+    - file-items-rest-service-config
+---
+spring:
+  profiles:
+    active:
+    - common
+
+  application:
+    name: streaming-file-server
+
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  file: ./logs/streaming-file-server.log
+
+server:
+  port: 8002
+---
+spring:
+  profiles:
+    active:
+    - app-props
+
+app:
+  upload:
+    path: ${$APP_UPLOAD_PATH:./file-storage}
+    url: upload
+  download:
+    path: ${$APP_DOWNLOAD_PATH:${app.upload.path}}
+    url: download
+  github:
+    url: https://github.com/daggerok/streaming-file-server
+---
+spring:
+  profiles:
+    active:
+    - file
+
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      file-size-threshold: 10Mb
+      resolve-lazily: true
+
+#  # old legacy (spring-boot 1.x):
+#  http:
+#    multipart:
+#      max-file-size: 40960Mb
+#      max-request-size: 40960Mb
+#      file-size-threshold: 10Mb
+---
+spring:
+  profiles:
+    active:
+    - mvc
+
+  mustache:
+    suffix: .hbs
+
+  mvc:
+    favicon:
+      enabled: false
+
+#  resources:
+#    chain:
+#      enabled: true
+---
+spring:
+  profiles:
+    active:
+    - file-items-rest-service-config
+
+file-items-rest-service:
+  protocol: ${$FILE_ITEMS_REST_SERVICE_PROTOCOL:http}
+  host: ${$FILE_ITEMS_REST_SERVICE_HOST:127.0.0.1}
+  port: ${$FILE_ITEMS_REST_SERVICE_PORT:8001}
+  url: ${$FILE_ITEMS_REST_SERVICE_URL:${file-items-rest-service.protocol}://${file-items-rest-service.host}:${file-items-rest-service.port}}

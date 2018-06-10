@@ -1,9 +1,0 @@
-app:
-  upload:
-    path: ${$APP_UPLOAD_PATH:./file-storage}
-    url: upload
-  download:
-    path: ${$APP_DOWNLOAD_PATH:${app.upload.path}}
-    url: download
-  github:
-    url: https://github.com/daggerok/streaming-file-server

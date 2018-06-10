@@ -1,5 +1,4 @@
 subprojects { sp ->
-
   apply plugin: "docker-compose"
 
   // fucking windows paths... replace all: '\\' -> '/'

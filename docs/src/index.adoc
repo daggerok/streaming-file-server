@@ -12,7 +12,7 @@ Maksim Kostromin <daggerok@gmail.com>
 :example-caption!:
 
 Travis CI status:
-ifdef::backend-html5[image:https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master["Build Status", link={github_url}]]
+ifdef::backend-html5[image:https://travis-ci.org/daggerok/{root-project-name}.svg?branch=master["Build Status", link={github-url}]]
 
 PDF:
 ifdef::backend-html5[link:./index.pdf["Documentation in PFD format"]]
@@ -56,6 +56,9 @@ include::./includes/run/windows.adoc[tags=content]
 
 == Create new release
 include::./includes/release/create-new.adoc[tags=content]
+
+---
+include::./includes/links.adoc[tags=content]
 
 ---
 Enjoy :)

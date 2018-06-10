@@ -14,19 +14,12 @@ public class FileItemsRoutes {
 
   @Bean
   public RouterFunction<ServerResponse> routes(final FileItemsHandler handler) {
-
     return
-
         route(GET("/api/v1/file-items"), handler::getAll)
-
             .andRoute(GET("/api/v1/file-items/{id}"), handler::getById)
-
             .andRoute(GET("/api/v1/file-items/like/{filename}"), handler::searchAny)
-
             .andRoute(POST("/api/v1/file-items"), handler::save)
-
             .andRoute(POST("/api/v1/file-items/all"), handler::saveAll)
-
         ;
   }
 }

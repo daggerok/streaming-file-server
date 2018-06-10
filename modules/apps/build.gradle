@@ -1,9 +1,9 @@
 subprojects {
-
   apply from: "$project.rootDir/gradle/subprojects.gradle"
 
   dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
   }
 
   bootJar {

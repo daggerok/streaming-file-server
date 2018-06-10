@@ -1,7 +1,0 @@
-db:
-  name: ${DB_NAME:db}
-  user: ${DB_USER:user}
-  pass: ${DB_PASSWORD:password}
-  server:
-    host: ${DB_HOST:127.0.0.1}
-    port: ${DB_PORT:5432}

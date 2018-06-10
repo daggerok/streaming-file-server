@@ -1,7 +1,46 @@
 spring:
   profiles:
     include:
-      - common
-      - db-props
-      - db
-      - mvc
+    - common
+    - db-props
+    - mvc
+---
+spring:
+  profiles:
+    active:
+    - common
+
+  application:
+    name: file-items-rest-service
+
+  output:
+    ansi:
+      enabled: always
+
+server:
+  port: 8001
+
+logging:
+  file: ./logs/file-items-rest-service.log
+---
+spring:
+  profiles:
+    active:
+    - db-props
+
+db:
+  name: ${DB_NAME:db}
+  user: ${DB_USER:user}
+  pass: ${DB_PASSWORD:password}
+  server:
+    host: ${DB_HOST:127.0.0.1}
+    port: ${DB_PORT:5432}
+---
+spring:
+  profiles:
+    active:
+    - mvc
+
+  mvc:
+    favicon:
+      enabled: false

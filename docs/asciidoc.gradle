@@ -42,7 +42,7 @@ asciidoctor {
       'toc-title': 'Table of Contents',
       'root-project-name': rootProject.name,
       'build-gradle': project.file('build.gradle'),
-      "endpoint-url": "https://daggerok.github.io/$rootProject.name"
+      "github-url": "https://daggerok.github.io/$rootProject.name"
 
   logDocuments = true
   //backends 'pdf', 'html5'
@@ -62,7 +62,7 @@ task documentation(type: Copy, dependsOn: asciidoctor) {
   from "$asciidoctor.sourceDir/static", {
     into '.'
   }
-  into "$rootDir/docs"
+  into "$rootDir/public"
 }
 
 task docs(dependsOn: documentation)

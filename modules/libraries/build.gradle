@@ -1,5 +1,4 @@
 subprojects {
-
   apply from: "$project.rootDir/gradle/subprojects.gradle"
 
   bootJar {
