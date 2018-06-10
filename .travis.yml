@@ -65,9 +65,10 @@ script:
 
 # install as linux service
 - bash gradlew clean assemble postgresUp >/dev/null 2>&1
-- export SPRING_PROFILES_ACTIVE=db-pg
 - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
 - mv -f ./modules/apps/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
+- #export SPRING_PROFILES_ACTIVE=db-pg
+- echo 'JAVA_OPTS="-Dspring.profiles.active=pg-db"' > /tmp/file-items-service.conf
 - mv -f ./modules/apps/file-server/build/libs/*.jar        /tmp/file-server.jar
 - sudo ln -s /tmp/file-items-service.jar                          /etc/init.d/file-items-service
 - sudo ln -s /tmp/file-server.jar                                 /etc/init.d/file-server
