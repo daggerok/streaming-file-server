@@ -182,7 +182,7 @@ docker system prune -af --volumes
 - backup, restore, migration
 - support removing files (rly..? as minimum from db)
 - p2p: bi-directional files synchronization with spring scheduling or batch
-- gradle github release plugin (at the moment is used maven, see `pom.xml`)
+- gradle github release plugin (at the moment, for publishing releases to github is using maven. see `pom.xml`)
 
 ### stack
 
