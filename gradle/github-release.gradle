@@ -42,5 +42,8 @@ githubRelease {
       project.file("$rootDir/modules/docker/postgres/docker-compose.yml")
   ]
 
-  releaseAssets = jarFiles + sctiptsFiles + dockerFiles
+  def assets = (jarFiles + sctiptsFiles + dockerFiles).collect { it.absolutePath }
+  println(assets)
+
+  releaseAssets = assets
 }

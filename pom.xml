@@ -48,7 +48,7 @@
 
   -->
 
-  <version>4.3.4</version>
+  <version>4.3.3</version>
 
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>

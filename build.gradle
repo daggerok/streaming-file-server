@@ -1,6 +1,6 @@
 buildscript {
   ext {
-    applicationVersion = '4.3.4'
+    applicationVersion = '4.3.3'
     applicationGroup = 'com.github.daggerok'
     applicationName = 'streaming-file-server'
 
