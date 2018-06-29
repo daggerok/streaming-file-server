@@ -1,10 +1,6 @@
 service:
 - docker
 
-env:
-  global:
-  - TERM=dumb
-
 language: java
 jdk: oraclejdk8
 
@@ -12,6 +8,9 @@ addons:
   apt:
     update: true
     packages:
+    - sudo
+    - lsof
+    - wget
     - bash
     - curl
     - jq
@@ -108,3 +107,20 @@ script:
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
 - yes | bash ./scripts/application-h2.bash clean build
+
+before_deploy: "./gradlew documentation"
+
+env:
+  global:
+  - TERM=dumb
+  - secure: Eh+HT5YScrFz1JoZLHtbxPqFT6E/7+qHFDoN2fqYXX2lpahCJmTX6dW/8lyk32sMUvTpljJPpKQb/Xavxk8lHE0tDcdr/1l5N4WHnZPGJqKLB36VQpuFkMwmsbQH7dfJskDpFjJZSKa0oXTa8AEU8U2nstdFdyKZt2wChWOMMNCmEiL7YVu0bqjn08Qlfkye3pg9q6tMRGMLIL3Y0pvqWrhb2zfbjojcq+pQLrZGmuh0XUqshPQqc9M959KDSq3aq1INjSFYI3siIHN8b/He1qBSECWURvsgA9uKBNo2LuvLfvzFzHmzpHBNRbRcjrCzF8gzxuVxkfxjW5zOtJbe/7KOxM5NHKtWfCeTunrzJoEl9v9h/AYRlS0UBBFyie3XWraxed9aFuT7QbR0mTmx7s33vNGRMkujG+nPhkPzuM0ABpU/t5quvvo9zMmnd1LOe3XV+kAo3HOqkAD/FC5JZI5aaMJXrSS+O9XzPXS+E2CjGPAgBY0VIX0LwVVc80t00xkppfINtj/0HYyKE3xXE6cnM34204u+9Mksxb/TZQY+GMpAOCIUn+RrO0vxM7hvv8anm59rMOAZ/FgvLs+i3d1CuJJDCn9fuFxa0Etnn/krusLdwzjvI+9AgMknVCo1mnxbNuIAo2BnkOdzz35PxX8iDxc7fThYt9u5mx8M79E=
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: "$GITHUB_TOKEN"
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public
+  target_branch: gh-pages

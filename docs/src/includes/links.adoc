@@ -1,5 +1,6 @@
 
 //tag::content[]
+
 links:
 
 - link:https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception[fix issue: SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.]
@@ -19,4 +20,6 @@ links:
 - link:https://www.docker.com/[docker]
 - link:http://gradle.org/[gradle]
 - link:https://travis-ci.org/[travis CI]
+- link:https://github.com/jutzig/github-release-plugin[GitHub release maven plugin]
+
 //end::content[]

@@ -1,22 +1,20 @@
 
 //tag::content[]
+
 to create new release do next
 
-. bump version in:
+. bump version in (better use IDE find and replace functionality):
   .. build.gradle
   .. README.md
   .. scripts/application.cmd
   .. scripts/application.bash
   .. scripts/application-h2.cmd
   .. scripts/application-h2.bash
-. comment scipts tests in .travis.yml
-. commit, push and check CI if builds was successfully passed
-. create release on github, put:
-  .. modules/apps/\*/build/libs/*
-  .. scripts/*
-  .. modules/docker/postgres/docker-compose.yml
-. uncomment .travis.yml
-. commit, push and check CI again to verify if scripts tests was successfully passed
+. exec `bash mvnw` command to create new release
+. commit amend and push
+. check CI if builds was successfully passed
+- update created release page on github according last changes
 
 download all files link:https://github.com/daggerok/streaming-file-server/releases/[here]
+
 //end::content[]

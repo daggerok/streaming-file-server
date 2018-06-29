@@ -1,5 +1,6 @@
 
 //tag::content[]
+
 [source,bash]
 [subs="+attributes"]
 .install using postgres in docker
@@ -16,4 +17,5 @@ java -jar file-server-{project-version}.jar --app.upload.path=./path/to/file-sto
 # cleanup
 docker-compose down -v
 ----
+
 //end::content[]

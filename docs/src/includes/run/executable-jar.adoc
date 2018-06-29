@@ -1,5 +1,6 @@
 
 //tag::content[]
+
 .if you are using bash -- run even simply
 [subs="verbatim,attributes"]
 ----
@@ -9,4 +10,5 @@ bash file-items-service-{project-version}.jar
 wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar
 bash file-server-{project-version}.jar --app.upload.path=./path/to/file-storage
 ----
+
 //end::content[]

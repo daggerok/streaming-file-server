@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="
+         http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!--
+
+    github release
+
+    ./mvnw exec:exec de.jutzig:github-release-plugin:1.1.1:release
+
+    do not forget:
+
+      - keep version in sync between pom.xml and build.gradle files
+      - update ~/.m2/settings.xml:
+
+        <servers>
+            <server>
+                <id>github</id>
+                <username>GITHUB_USERNAME</username>
+                <password>GITHUB_PASSWORD</password>
+            </server>
+        </servers>
+
+    important:
+
+      <scm>
+        <connection/>
+      </scm>
+
+      value must be `scm:git:https://github.com...` but not `scm:git:git://github.com...`
+
+    tips:
+
+      creates the release in draft state:
+
+        ./mvnw -Dgithub.draft=true
+
+      allows to specify a commitsh:
+
+        ./mvnw -Dgithub.commitish=release/1.0.0
+
+      override credentials with system properties:
+
+        ./mvnw -Dusername=ololo -Dpassword=trololo
+
+  -->
+
+  <version>4.3.3</version>
+
+  <groupId>com.github.daggerok</groupId>
+  <artifactId>streaming-file-server</artifactId>
+  <packaging>pom</packaging>
+  <modelVersion>4.0.0</modelVersion>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <scm>
+    <url>https://github.com/daggerok/streaming-file-server.git</url>
+    <!--<connection>scm:git:git://github.com/daggerok/streaming-file-server.git</connection>-->
+    <connection>scm:git:https://github.com/daggerok/streaming-file-server.git</connection>
+    <developerConnection>scm:git:git@github.com:daggerok/streaming-file-server.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <build>
+    <defaultGoal>exec:exec de.jutzig:github-release-plugin:1.1.1:release</defaultGoal>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>compile-gradle</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>${gradle.executable}</executable>
+          <arguments>
+            <argument>clean</argument>
+            <argument>build</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>de.jutzig</groupId>
+        <artifactId>github-release-plugin</artifactId>
+        <version>1.1.1</version>
+        <executions>
+          <execution>
+            <id>release</id>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <overwriteArtifact>true</overwriteArtifact>
+          <description>${project.artifactId} release</description>
+          <releaseName>v${project.version}</releaseName>
+          <tag>${project.version}</tag>
+          <fileSets>
+            <fileSet>
+              <directory>${project.basedir}/scripts</directory>
+              <includes>
+                <include>application*.bash</include>
+                <include>application*.cmd</include>
+              </includes>
+            </fileSet>
+            <fileSet>
+              <directory>${project.basedir}/modules/docker/postgres</directory>
+              <includes>
+                <include>docker-compose.yml</include>
+              </includes>
+            </fileSet>
+            <fileSet>
+              <directory>${project.basedir}/modules/apps/file-items-service/build/libs</directory>
+              <includes>
+                <include>*.jar</include>
+              </includes>
+            </fileSet>
+            <fileSet>
+              <directory>${project.basedir}/modules/apps/file-server/build/libs</directory>
+              <includes>
+                <include>*.jar</include>
+              </includes>
+            </fileSet>
+          </fileSets>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>Windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <properties>
+        <gradle.executable>gradlew.bat</gradle.executable>
+      </properties>
+    </profile>
+    <profile>
+      <id>unix</id>
+      <activation>
+        <os>
+          <family>unix</family>
+        </os>
+      </activation>
+      <properties>
+        <gradle.executable>./gradlew</gradle.executable>
+      </properties>
+    </profile>
+  </profiles>
+</project>
