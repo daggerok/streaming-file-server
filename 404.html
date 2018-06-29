@@ -544,7 +544,7 @@ table.CodeRay td.code>pre{padding:0}
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
 <span id="revnumber">version 4.3.3,</span>
-<span id="revdate">2018-06-29 00:54:23 UTC</span>
+<span id="revdate">2018-06-29 01:04:30 UTC</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -567,6 +567,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#simplicity-bootstrap-with-automation-shell-script">4.1. simplicity bootstrap with automation shell-script</a>
 <ul class="sectlevel3">
 <li><a href="#unix-bash">4.1.1. unix (bash)</a></li>
+<li><a href="#windows-batch-cmd">4.1.2. windows (batch cmd)</a></li>
 </ul>
 </li>
 </ul>
@@ -730,11 +731,13 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 <p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash">application-h2.bash</a></p>
 </div>
 <div class="paragraph">
-<p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em>
-==== windows (batch cmd)
-.postgres in docker</p>
+<p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="windows-batch-cmd"><a class="anchor" href="#windows-batch-cmd"></a>4.1.2. windows (batch cmd)</h4>
 <div class="listingblock">
+<div class="title">postgres in docker</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="cmd">@rem start
 application.cmd start path\to\file-storage
@@ -781,7 +784,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>bump version in:</p>
+<p>bump version in (better use IDE find and replace functionality):</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -806,32 +809,20 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </li>
 <li>
-<p>comment scipts tests in .travis.yml</p>
+<p>exec <code>bash mvnw</code> command to create new release</p>
 </li>
 <li>
-<p>commit, push and check CI if builds was successfully passed</p>
+<p>commit amend and push</p>
 </li>
 <li>
-<p>create release on github, put:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>check CI if builds was successfully passed</p>
+<div class="ulist">
+<ul>
 <li>
-<p>modules/apps/*/build/libs/*</p>
+<p>update created release page on github according last changes</p>
 </li>
-<li>
-<p>scripts/*</p>
-</li>
-<li>
-<p>modules/docker/postgres/docker-compose.yml</p>
-</li>
-</ol>
+</ul>
 </div>
-</li>
-<li>
-<p>uncomment .travis.yml</p>
-</li>
-<li>
-<p>commit, push and check CI again to verify if scripts tests was successfully passed</p>
 </li>
 </ol>
 </div>
@@ -910,7 +901,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 4.3.3<br>
-Last updated 2018-06-29 00:54:23 UTC
+Last updated 2018-06-29 01:04:30 UTC
 </div>
 </div>
 </body>
