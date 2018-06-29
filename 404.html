@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Maksim Kostromin">
-<title>streaming-file-server (4.3.2)</title>
+<title>streaming-file-server (4.3.3)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -510,6 +510,18 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .change .change{color:#66f}
 .CodeRay .head .head{color:#f4f}
 </style>
+<style>
+  #content {
+    max-width: 98%;
+  }
+  .positioned-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+  }
+</style>
+
 <meta name="keywords" content="spring, spring-boot, retry, sse, server-side events, documentation">
 <meta name="description" content="Spring and spring-boot playground projects documentation.">
 
@@ -524,21 +536,15 @@ table.CodeRay td.code>pre{padding:0}
              alt="Fork me if u want :)">
     </a>
 </div>
-
-<style>
-    #content {
-        max-width: 95%;
-    }
-</style>
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>streaming-file-server (4.3.2)</h1>
+<h1>streaming-file-server (4.3.3)</h1>
 <div class="details">
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
-<span id="revnumber">version 4.3.2,</span>
-<span id="revdate">2018-06-10 17:36:58 EEST</span>
+<span id="revnumber">version 4.3.3,</span>
+<span id="revdate">2018-06-29 00:54:23 UTC</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -598,21 +604,21 @@ It uses file multipart protocol</p>
 <div class="sect2">
 <h3 id="download-files"><a class="anchor" href="#download-files"></a>2.1. download files</h3>
 <div class="listingblock">
-<div class="title">if you have docker installed and wanna use postgres, then <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/docker-compose.yml">download docker-compose.yml file</a></div>
+<div class="title">if you have docker installed and wanna use postgres, then <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml">download docker-compose.yml file</a></div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/docker-compose.yml</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-items-service-4.3.2.jar">file items service</a></div>
+<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar">file items service</a></div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-items-service-4.3.2.jar</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-server-4.3.2.jar">file server</a></div>
+<div class="title"><a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar">file server</a></div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-server-4.3.2.jar</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar</code></pre>
 </div>
 </div>
 </div>
@@ -630,10 +636,10 @@ It uses file multipart protocol</p>
 docker-compose up -d
 
 # file-items data service
-java -jar file-items-service-4.3.2.jar --spring.profiles.active=db-pg
+java -jar file-items-service-4.3.3.jar --spring.profiles.active=db-pg
 
 # file server
-java -jar file-server-4.3.2.jar --app.upload.path=./path/to/file-storage
+java -jar file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v</code></pre>
@@ -643,9 +649,9 @@ docker-compose down -v</code></pre>
 <div class="sect2">
 <h3 id="in-memory-h2-database"><a class="anchor" href="#in-memory-h2-database"></a>3.2. in-memory h2 database</h3>
 <div class="listingblock">
-<div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-items-service-4.3.2.jar">file items service</a>:</div>
+<div class="title">if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar">file items service</a>:</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">java file-items-service-4.3.2.jar
+<pre class="CodeRay highlight"><code data-lang="bash">java file-items-service-4.3.3.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 </div>
@@ -653,7 +659,7 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>and then run <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-server-4.3.2.jar">file server</a>:</p>
+<p>and then run <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar">file server</a>:</p>
 </li>
 </ol>
 </div>
@@ -668,11 +674,11 @@ java file-items-service.jar --spring.profiles.active=db-h2</code></pre>
 <div class="listingblock">
 <div class="title">if you are using bash&#8201;&#8212;&#8201;run even simply</div>
 <div class="content">
-<pre>wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-items-service-4.3.2.jar
-bash file-items-service-4.3.2.jar
+<pre>wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
+bash file-items-service-4.3.3.jar
 
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/file-server-4.3.2.jar
-bash file-server-4.3.2.jar --app.upload.path=./path/to/file-storage</pre>
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
+bash file-server-4.3.3.jar --app.upload.path=./path/to/file-storage</pre>
 </div>
 </div>
 </div>
@@ -689,7 +695,7 @@ bash file-server-4.3.2.jar --app.upload.path=./path/to/file-storage</pre>
 <div class="title">postgres in docker</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash"># get
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -702,13 +708,13 @@ bash application.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application.bash">application.bash</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash">application.bash</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash"># fetch
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -721,7 +727,7 @@ bash application-h2.bash clean ./path/to/file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application-h2.bash">application-h2.bash</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash">application-h2.bash</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em>
@@ -741,7 +747,7 @@ application.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application.cmd">application.cmd</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.cmd">application.cmd</a></p>
 </div>
 <div class="listingblock">
 <div class="title">h2 in-memory database</div>
@@ -757,7 +763,7 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.2/application-h2.cmd">application-h2.cmd</a></p>
+<p>download: <a href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.cmd">application-h2.cmd</a></p>
 </div>
 <div class="paragraph">
 <p><em>note: binaries <code>wget</code>, <code>docker-compose</code> and of course jre (binaries: <code>java</code> and <code>jps</code>) are required</em></p>
@@ -889,6 +895,9 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 <li>
 <p><a href="https://travis-ci.org/">travis CI</a></p>
 </li>
+<li>
+<p><a href="https://github.com/jutzig/github-release-plugin">GitHub release maven plugin</a></p>
+</li>
 </ul>
 </div>
 <hr>
@@ -900,8 +909,8 @@ application-h2.cmd clean path\to\file-storage</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 4.3.2<br>
-Last updated 2018-06-10 17:36:58 EEST
+Version 4.3.3<br>
+Last updated 2018-06-29 00:54:23 UTC
 </div>
 </div>
 </body>
