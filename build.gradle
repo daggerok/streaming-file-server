@@ -69,4 +69,4 @@ wrapper {
 
 apply from: "$rootDir/gradle/ide.gradle"
 apply from: "$rootDir/gradle/clean.gradle"
-apply from: "$rootDir/gradle/github-release.gradle"
+//apply from: "$rootDir/gradle/github-release.gradle"
