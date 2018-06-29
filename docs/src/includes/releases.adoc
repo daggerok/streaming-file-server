@@ -11,9 +11,10 @@ to create new release do next
   .. scripts/application-h2.cmd
   .. scripts/application-h2.bash
 . exec `bash mvnw` command to create new release
+//. exec `bash gradlew assemble githubRelease` command to create new release
 . commit amend and push
 . check CI if builds was successfully passed
-- update created release page on github according last changes
+. update created release page on github according last changes
 
 download all files link:https://github.com/daggerok/streaming-file-server/releases/[here]
 

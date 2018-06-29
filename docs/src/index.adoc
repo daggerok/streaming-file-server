@@ -55,7 +55,7 @@ include::./includes/run/unix.adoc[tags=content]
 include::./includes/run/windows.adoc[tags=content]
 
 == Create new release
-include::./includes/release/create-new.adoc[tags=content]
+include::./includes/releases.adoc[tags=content]
 
 ---
 include::./includes/links.adoc[tags=content]

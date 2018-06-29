@@ -1,6 +1,6 @@
 # streaming-file-server
 
-_version: 4.3.3_
+_version: 4.3.4_
 
 ## Java file server 
 
@@ -17,16 +17,16 @@ _version: 4.3.3_
 
 ```bash
 # docker compose file for postgres database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/docker-compose.yml
 docker-compose up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
-java -jar file-items-service-4.3.3.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-items-service-4.3.4.jar
+java -jar file-items-service-4.3.4.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
-java -jar file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-server-4.3.4.jar
+java -jar file-server-4.3.4.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v
@@ -36,7 +36,7 @@ docker-compose down -v
 
 ```bash
 # bash script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -56,7 +56,7 @@ binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
 ```cmd
 @rem batch shell-script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application.cmd
 
 @rem start
 application.cmd start path\to\file-storage
@@ -77,18 +77,18 @@ binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of course j
 #### manual setup
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-items-service-4.3.4.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-server-4.3.4.jar
 
-bash file-items-service-4.3.3.jar --spring.profiles.active=db-h2
-bash file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
+bash file-items-service-4.3.4.jar --spring.profiles.active=db-h2
+bash file-server-4.3.4.jar --app.upload.path=./path/to/file-storage
 ```
 
 #### or for simplicity use special h2 automation shell-script
 
 ```bash
 # bash shell script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -104,7 +104,7 @@ bash application-h2.bash clean ./path/to/file-storage
 
 ```cmd
 @ cmd script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application-h2.cmd
 
 @rem start
 application-h2.cmd start path\to\file-storage

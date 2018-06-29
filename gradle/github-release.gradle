@@ -1,0 +1,46 @@
+//https://github.com/BreadMoirai/github-release-gradle-plugin
+
+apply plugin: 'com.github.breadmoirai.github-release'
+
+// required token for your personal access with repo permissions
+if (!project.hasProperty('GITHUB_TOKEN')) {
+  throw new RuntimeException('github token may not be emoty')
+}
+
+def githubToken = project.property('GITHUB_TOKEN')
+if (githubToken.isEmpty()) {
+  throw new RuntimeException('github token may not be emoty')
+}
+
+githubRelease {
+  token = githubToken
+  owner = 'daggerok' // default is the last part of your group. Eg group: 'com.github.breadmoirai' => owner: 'breadmoirai'
+  repo = rootProject.name // by default this is set to your project name
+
+  // by default this is set to 'v$project.version'
+  tagName = project.version
+  // Release title, by default this is the same as the tagName
+  releaseName = "v$project.version"
+
+  targetCommitish = 'master'
+  body = "$rootProject.name release"
+  draft = false
+  prerelease = false
+
+  def jarFiles = ['file-items-service',
+                  'file-server']
+      .collect { project(":modules:apps:$it") }
+      .collect { it.jar.archivePath }
+      .collect { project.file it }
+
+  def sctiptsFiles = fileTree("$rootDir/scripts") {
+    include '*.bash'
+    include '*.cmd'
+  }.files
+
+  def dockerFiles = [
+      project.file("$rootDir/modules/docker/postgres/docker-compose.yml")
+  ]
+
+  releaseAssets = jarFiles + sctiptsFiles + dockerFiles
+}

@@ -1,9 +1,5 @@
 allprojects {
-  apply plugin: "base"
-
-  group("$project.applicationGroup")
-  version("$project.applicationVersion")
-  defaultTasks("clean", "build")
+  apply plugin: 'base'
 
   clean.doFirst {
     [
@@ -17,8 +13,5 @@ allprojects {
         project.file("jgiven-reports"),
         project.file("jgiven-reports"),
     ].each { delete it }
-    ////if (System.getProperty("os.name").toLowerCase().contains("windows")) return
-    ////delete "$rootDir/file-storage/*"
-    //delete(file("$rootDir/file-storage").listFiles().findAll { ".gitkeep" != it.name })
   }
 }

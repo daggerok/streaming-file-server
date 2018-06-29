@@ -1,6 +1,6 @@
 buildscript {
   ext {
-    applicationVersion = '4.3.3'
+    applicationVersion = '4.3.4'
     applicationGroup = 'com.github.daggerok'
     applicationName = 'streaming-file-server'
 
@@ -36,10 +36,6 @@ buildscript {
 }
 
 plugins {
-  id 'idea'
-  id 'maven'
-  id 'eclipse'
-
   id 'net.saliman.properties' version '1.4.6'
   id 'com.github.ben-manes.versions' version '0.17.0'
 
@@ -56,7 +52,14 @@ plugins {
   id 'org.springframework.boot' version '2.0.2.RELEASE' apply false
 
   id 'org.asciidoctor.convert' version '1.5.7' apply false
+  id 'com.github.breadmoirai.github-release' version '2.0.1' apply false
   id 'org.ajoberstar.git-publish' version '0.3.0' /* +0.2.2 | -0.4.1 */ apply false
+}
+
+allprojects {
+  group = "$project.applicationGroup"
+  version = "$project.applicationVersion"
+  defaultTasks 'clean', 'build'
 }
 
 wrapper {
@@ -64,6 +67,6 @@ wrapper {
   distributionType = 'BIN'
 }
 
-apply from: "$rootDir/gradle/allprojects.gradle"
-apply from: "$rootDir/gradle/idea.gradle"
-apply from: "$rootDir/gradle/deploy-github.gradle"
+apply from: "$rootDir/gradle/ide.gradle"
+apply from: "$rootDir/gradle/clean.gradle"
+apply from: "$rootDir/gradle/github-release.gradle"
