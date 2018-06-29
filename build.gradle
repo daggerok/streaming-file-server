@@ -69,4 +69,7 @@ wrapper {
 
 apply from: "$rootDir/gradle/ide.gradle"
 apply from: "$rootDir/gradle/clean.gradle"
-//apply from: "$rootDir/gradle/github-release.gradle"
+
+if (project.hasProperty('release')) {
+  apply from: "$rootDir/gradle/github-release.gradle"
+}
