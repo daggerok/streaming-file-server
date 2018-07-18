@@ -27,7 +27,7 @@
     important:
 
       <scm>
-        <connection/>
+        <connection>scm:git:https://github.com/username/repo</connection>
       </scm>
 
       value must be `scm:git:https://github.com...` but not `scm:git:git://github.com...`
@@ -60,8 +60,8 @@
 
   <scm>
     <url>https://github.com/daggerok/streaming-file-server.git</url>
-    <!--<connection>scm:git:git://github.com/daggerok/streaming-file-server.git</connection>-->
     <connection>scm:git:https://github.com/daggerok/streaming-file-server.git</connection>
+    <!--<connection>scm:git:git://github.com/daggerok/streaming-file-server.git</connection>-->
     <developerConnection>scm:git:git@github.com:daggerok/streaming-file-server.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -194,19 +194,10 @@
                 </goals>
                 <configuration>
                   <backend>pdf</backend>
-                  <!--
-                    Since 1.5.0-alpha.9 PDF back-end can use 'rouge' as well as 'coderay'
-                    for source highlighting
-                  -->
-                  <!--
-                    Due to a known issue on windows, it is recommended to use 'coderay'
-                    until an new version of 'rouge' is released.
-
-                    see discussions: https://github.com/asciidoctor/asciidoctor-maven-examples/pull/58
-                                     https://github.com/asciidoctor/asciidoctorj-pdf/issues/3
-                                     https://github.com/jneen/rouge/issues/661
-                  -->
                   <sourceHighlighter>coderay</sourceHighlighter>
+                  <attributes>
+                    <highlighter>coderay</highlighter>
+                  </attributes>
                 </configuration>
               </execution>
               <execution>
@@ -217,6 +208,10 @@
                 </goals>
                 <configuration>
                   <backend>html</backend>
+                  <sourceHighlighter>highlightjs</sourceHighlighter>
+                  <attributes>
+                    <highlighter>highlightjs</highlighter>
+                  </attributes>
                 </configuration>
               </execution>
               <execution>
@@ -238,6 +233,7 @@
               <imagesDir>images</imagesDir>
               <sourceHighlighter>highlightjs</sourceHighlighter>
               <attributes>
+                <highlighter>highlightjs</highlighter>
                 <toc>left</toc>
                 <linkcss>false</linkcss>
                 <doctype>book</doctype>

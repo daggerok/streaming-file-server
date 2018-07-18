@@ -15,7 +15,12 @@ spring:
     database: postgresql
     generate-ddl: true
     show-sql: true
+    #database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
 #    hibernate:
 #      ddl-auto: update
 #      temp:
@@ -23,8 +28,3 @@ spring:
 #        use_jdbc_metadata: false
 #      use_jdbc_metadata_defaults: false
 #      use_jdbc_metadata: false
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-#    database-platform: org.hibernate.dialect.PostgreSQL9Dialect

@@ -20,7 +20,9 @@ spring:
       enabled: always
 
 logging:
-  file: ./logs/streaming-file-server.log
+  path: ./logs
+  file:
+    max-size: 1MB
 
 server:
   port: 8002

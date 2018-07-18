@@ -2,31 +2,17 @@
 //tag::content[]
 
 .postgres in docker
-[source,dos]
+[source,cmd]
 ----
-@rem start
-application.cmd start path\to\file-storage
-
-@rem stop
-application.cmd stop
-
-@rem cleanup
-application.cmd clean path\to\file-storage
+include::./windows-pg.cmd[]
 ----
 
 download: link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd[application.cmd]
 
 .h2 in-memory database
-[source,dos]
+[source,cmd]
 ----
-@rem start
-application-h2.cmd start path\to\file-storage
-
-@rem stop
-application-h2.cmd stop
-
-@rem cleanup
-application-h2.cmd clean path\to\file-storage
+include::./windows-h2.cmd[]
 ----
 
 download: link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application-h2.cmd[application-h2.cmd]

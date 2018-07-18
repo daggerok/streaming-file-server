@@ -14,9 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-    webEnvironment = NONE,
-    classes = PropsAutoConfiguration.class)
+@SpringBootTest(webEnvironment = NONE, classes = PropsAutoConfiguration.class)
 public class BasicContextTest {
 
   @Autowired

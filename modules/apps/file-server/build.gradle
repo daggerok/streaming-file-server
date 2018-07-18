@@ -7,7 +7,6 @@ dependencies {
   ].each {
 
     implementation(project(it))
-    annotationProcessor(project(it))
     compileOnly(project(it))
   }
 

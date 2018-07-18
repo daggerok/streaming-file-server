@@ -21,7 +21,9 @@ server:
   port: 8001
 
 logging:
-  file: ./logs/file-items-rest-service.log
+  path: ./logs
+  file:
+    max-size: 1MB
 ---
 spring:
   profiles:

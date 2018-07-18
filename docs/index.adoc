@@ -4,7 +4,7 @@ Maksim Kostromin <daggerok@gmail.com>
 :doctype: book
 :toc: left
 :toclevels: 4
-:source-highlighter: highlightjs
+:source-highlighter: {highlighter}
 :numbered:
 :icons: font
 :hide-uri-scheme:

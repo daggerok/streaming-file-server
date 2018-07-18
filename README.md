@@ -187,7 +187,7 @@ docker system prune -af --volumes
 ### stack
 
 - spring
-  - spring-boot 2.0.2.RELEASE ~~1.x~~
+  - spring-boot 2.0.3.RELEASE ~~1.x~~
   - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
   - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
   - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java

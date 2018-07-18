@@ -5,9 +5,8 @@ dependencies {
 
   ].each {
 
-    annotationProcessor(project(it))
-    compileOnly(project(it))
     implementation(project(it))
+    compileOnly(project(it))
   }
 
   implementation 'org.springframework.boot:spring-boot-starter-webflux'
