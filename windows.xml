@@ -11,7 +11,7 @@
 <formalpara>
 <title>postgres in docker</title>
 <para>
-<programlisting language="dos" linenumbering="unnumbered">@rem start
+<programlisting language="cmd" linenumbering="unnumbered">@rem start
 application.cmd start path\to\file-storage
 
 @rem stop
@@ -25,7 +25,7 @@ application.cmd clean path\to\file-storage</programlisting>
 <formalpara>
 <title>h2 in-memory database</title>
 <para>
-<programlisting language="dos" linenumbering="unnumbered">@rem start
+<programlisting language="cmd" linenumbering="unnumbered">@rem start
 application-h2.cmd start path\to\file-storage
 
 @rem stop
