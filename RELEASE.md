@@ -6,8 +6,11 @@ _version: 4.3.3_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- Update gradle up to 4.8.1
-- Add pom.xml + wrapper with jutzig/github-release-plugin configuration
+- Update spring-boot up to 2.0.3.RELEASE
+- Update gradle up to 4.9
+- Add Gradle Lombok plugin
+- Add pom.xml + wrapper with jutzig/github-release-plugin configuration. Just run: `./mvnw`
+- Add maven asciidoctor plugin documentation automation. Run command: `./mvnw -Pdocs`
 
 ## Installation
 
@@ -103,7 +106,7 @@ bash application-h2.bash clean ./path/to/file-storage
 #### h2 automation for windows
 
 ```cmd
-@ cmd script
+@rem cmd script
 wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.cmd
 
 @rem start

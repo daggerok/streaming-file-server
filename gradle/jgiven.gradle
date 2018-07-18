@@ -1,25 +1,22 @@
 /*
-apply plugin: "com.tngtech.jgiven.gradle-plugin"
+apply plugin: 'com.tngtech.jgiven.gradle-plugin'
 
 dependencies {
-  testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
-  testRuntime("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
+  testCompile "com.tngtech.jgiven:jgiven-junit:$jgivenVersion"
+  testRuntime "com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion"
 }
 */
 
 dependencies {
-  testCompile("com.tngtech.jgiven:jgiven-junit:$jgivenVersion")
-  testCompile("com.tngtech.jgiven:jgiven-junit5:$jgivenVersion")
-  testRuntimeOnly("com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion")
-  //testRuntimeOnly("org.slf4j:slf4j-api:$slf4jVersion")
-  //testRuntimeOnly("org.slf4j:jul-to-slf4j:$slf4jVersion")
-  //testRuntimeOnly("org.slf4j:log4j-over-slf4j:$slf4jVersion")
-  testCompile("ch.qos.logback:logback-classic:$logbackVersion")
+  testCompile "ch.qos.logback:logback-classic:$logbackVersion"
+  testCompile "com.tngtech.jgiven:jgiven-junit:$jgivenVersion"
+  testCompile "com.tngtech.jgiven:jgiven-junit5:$jgivenVersion"
+  testRuntimeOnly "com.tngtech.jgiven:jgiven-html5-report:$jgivenVersion"
 }
 
-task jgivenTestReport(type: JavaExec, dependsOn: "test") {
-  main = "com.tngtech.jgiven.report.ReportGenerator"
-  args "--targetDir=./build/jgiven-report", "--format=html"
+task jgivenTestReport(type: JavaExec, dependsOn: 'test') {
+  main = 'com.tngtech.jgiven.report.ReportGenerator'
+  args '--targetDir=./build/jgiven-report', '--format=html'
   classpath = configurations.testCompile
   shouldRunAfter clean, assemble
 }

@@ -29,7 +29,7 @@ script:
 
 # jgiven tests and docs
 #- bash gradlew -S -Pdebug clean test jgiven build documentation >/dev/null || true
-- bash gradlew -S -Pdebug clean check build documentation >/dev/null || true
+- bash gradlew -S -Pdebug clean check build >/dev/null || true
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
@@ -108,7 +108,8 @@ script:
 - http --auth user:password :8002/
 - yes | bash ./scripts/application-h2.bash clean build
 
-before_deploy: "./gradlew documentation"
+before_deploy:
+- ./mvnw -Pdocs
 
 env:
   global:
@@ -122,5 +123,5 @@ deploy:
   keep-history: true
   on:
     branch: master
-  local-dir: public
+  local-dir: target/generated-docs
   target_branch: gh-pages

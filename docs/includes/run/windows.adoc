@@ -2,7 +2,7 @@
 //tag::content[]
 
 .postgres in docker
-[source,cmd]
+[source,dos]
 ----
 @rem start
 application.cmd start path\to\file-storage
@@ -17,7 +17,7 @@ application.cmd clean path\to\file-storage
 download: link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/application.cmd[application.cmd]
 
 .h2 in-memory database
-[source,bash]
+[source,dos]
 ----
 @rem start
 application-h2.cmd start path\to\file-storage

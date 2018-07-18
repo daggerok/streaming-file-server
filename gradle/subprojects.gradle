@@ -1,38 +1,30 @@
-apply plugin: "java"
+subprojects {
+  apply plugin: 'java'
 
-targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
 
-repositories {
-  mavenLocal()
-  mavenCentral()
-}
-
-apply plugin: "io.spring.dependency-management"
-
-dependencyManagement {
-  imports {
-    mavenBom("org.springframework.boot:spring-boot-starter-parent:$springBootVersion")
+  repositories {
+    mavenLocal()
+    mavenCentral()
   }
+
+  apply plugin: 'io.franzbecker.gradle-lombok'
+  lombok.version = project.lombokVersion
+
+  apply plugin: 'io.spring.dependency-management'
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+    }
+  }
+
+  dependencies {
+    implementation "io.vavr:vavr:$vavrVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powermockitoVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockitoVersion"
+    testImplementation "com.codeborne:selenide:$selenideVersion"
+  }
+
+  apply from: "$project.rootDir/gradle/jgiven.gradle"
 }
-
-apply plugin: "org.springframework.boot"
-
-compileJava.dependsOn(processResources)
-
-dependencies {
-  implementation("io.vavr:vavr:$vavrVersion")
-
-  compileOnly("org.projectlombok:lombok")
-  testCompileOnly("org.projectlombok:lombok")
-  annotationProcessor("org.projectlombok:lombok")
-  testAnnotationProcessor("org.projectlombok:lombok")
-
-  implementation("org.springframework.boot:spring-boot-starter")
-
-  testImplementation("org.springframework.boot:spring-boot-starter-test")
-  testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
-  testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
-  testImplementation("com.codeborne:selenide:$selenideVersion")
-}
-
-apply from: "$rootDir/gradle/jgiven.gradle"

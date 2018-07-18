@@ -43,15 +43,13 @@ plugins {
   id 'cn.bestwu.propdeps-idea' version '0.0.10' apply false
   id 'cn.bestwu.propdeps-maven' version '0.0.10' apply false
   id 'cn.bestwu.propdeps-eclipse' version '0.0.10' apply false
-
-  id 'com.avast.gradle.docker-compose' version '0.6.13' apply false
-
+  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+  id 'org.springframework.boot' version '2.0.3.RELEASE' apply false
   id 'com.ewerk.gradle.plugins.querydsl' version '1.0.9' apply false
-
   id 'io.spring.dependency-management' version '1.0.5.RELEASE' apply false
-  id 'org.springframework.boot' version '2.0.2.RELEASE' apply false
 
   id 'org.asciidoctor.convert' version '1.5.7' apply false
+  id 'com.avast.gradle.docker-compose' version '0.6.13' apply false
   id 'com.github.breadmoirai.github-release' version '2.0.1' apply false
   id 'org.ajoberstar.git-publish' version '0.3.0' /* +0.2.2 | -0.4.1 */ apply false
 }
@@ -63,13 +61,14 @@ allprojects {
 }
 
 wrapper {
-  gradleVersion = '4.8.1'
+  gradleVersion = '4.9'
   distributionType = 'BIN'
 }
 
-apply from: "$rootDir/gradle/ide.gradle"
-apply from: "$rootDir/gradle/clean.gradle"
+apply from: "$project.rootDir/gradle/ide.gradle"
+apply from: "$project.rootDir/gradle/clean.gradle"
+apply from: "$project.rootDir/gradle/subprojects.gradle"
 
 if (project.hasProperty('release')) {
-  apply from: "$rootDir/gradle/github-release.gradle"
+  apply from: "$project.rootDir/gradle/github-release.gradle"
 }

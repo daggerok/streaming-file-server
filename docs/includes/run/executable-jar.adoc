@@ -2,6 +2,7 @@
 //tag::content[]
 
 .if you are using bash -- run even simply
+[source,bash]
 [subs="verbatim,attributes"]
 ----
 wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar

@@ -1,11 +1,11 @@
 subprojects { sp ->
-  apply plugin: "docker-compose"
+  apply plugin: 'docker-compose'
 
   // fucking windows paths... replace all: '\\' -> '/'
-  def root = rootDir.absolutePath.replaceAll("\\\\", "/")
+  def root = rootDir.absolutePath.replaceAll('\\\\', '/')
 
   // gradle -Pdebug
-  def isDebugEnabled = sp.hasProperty("debug")
+  def isDebugEnabled = sp.hasProperty('debug')
 
   dockerCompose {
     useComposeFiles = ["$root/modules/docker/${sp.name}/docker-compose.yml"]
@@ -17,7 +17,7 @@ subprojects { sp ->
     //captureContainersOutputToFile = '/path/to/logFile'
     stopContainers = true
     removeContainers = true
-    removeImages = "Local"
+    removeImages = 'Local'
     removeVolumes = true
     removeOrphans = true
     forceRecreate = true
@@ -26,7 +26,7 @@ subprojects { sp ->
   }
 
   tasks.create("${sp.name}Up") {
-    if (it.name.contains("app")) dependsOn ":assemble"
+    if (it.name.contains('app')) dependsOn ':assemble'
     dependsOn composeUp
   }
 
