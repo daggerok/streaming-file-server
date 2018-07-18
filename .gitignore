@@ -20,3 +20,4 @@ modules/docker/all/modules/apps/
 *file-storage/
 !*.gitkeep
 /public/
+/target/
