@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>streaming-file-server docs <inlinemediaobject>
+<imageobject>
+<imagedata fileref="https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master"/>
+</imageobject>
+<textobject><phrase>Build Status</phrase></textobject>
+</inlinemediaobject></title>
+<date>2018-07-18</date>
+</info>
+<preface>
+<title></title>
+<formalpara>
+<title>build and deploy documentation</title>
+<para>
+<screen>./gradlew clean asciidoctor docs</screen>
+</para>
+</formalpara>
+</preface>
+</book>
