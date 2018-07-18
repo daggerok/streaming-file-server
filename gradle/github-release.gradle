@@ -33,7 +33,7 @@ githubRelease {
       .collect { it.jar.archivePath }
       .collect { project.file it }
 
-  def sctiptsFiles = fileTree("$rootDir/scripts") {
+  def scriptsFiles = fileTree("$project.rootDir/scripts") {
     include '*.bash'
     include '*.cmd'
   }.files
@@ -42,7 +42,7 @@ githubRelease {
       project.file("$rootDir/modules/docker/postgres/docker-compose.yml")
   ]
 
-  def assets = (jarFiles + sctiptsFiles + dockerFiles).collect { it.absolutePath }
+  def assets = (jarFiles + scriptsFiles + dockerFiles).collect { it.absolutePath }
   println(assets)
 
   releaseAssets = assets

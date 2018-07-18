@@ -108,7 +108,8 @@ script:
 - http --auth user:password :8002/
 - yes | bash ./scripts/application-h2.bash clean build
 
-before_deploy: "./gradlew documentation"
+before_deploy:
+- ./mvnw -Pdocs
 
 env:
   global:
@@ -122,5 +123,5 @@ deploy:
   keep-history: true
   on:
     branch: master
-  local-dir: public
+  local-dir: target/generated-docs
   target_branch: gh-pages

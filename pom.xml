@@ -49,11 +49,10 @@
   -->
 
   <version>4.3.3</version>
-
+  <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <modelVersion>4.0.0</modelVersion>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,6 +151,7 @@
         <gradle.executable>gradlew.bat</gradle.executable>
       </properties>
     </profile>
+
     <profile>
       <id>unix</id>
       <activation>
@@ -162,6 +162,101 @@
       <properties>
         <gradle.executable>./gradlew</gradle.executable>
       </properties>
+    </profile>
+
+    <profile>
+      <id>docs</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-maven-plugin</artifactId>
+            <version>1.5.6</version>
+            <dependencies>
+              <dependency>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctorj-pdf</artifactId>
+                <version>1.5.0-alpha.16</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>output-pdf-doc</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>process-asciidoc</goal>
+                </goals>
+                <configuration>
+                  <backend>pdf</backend>
+                  <!--
+                    Since 1.5.0-alpha.9 PDF back-end can use 'rouge' as well as 'coderay'
+                    for source highlighting
+                  -->
+                  <!--
+                    Due to a known issue on windows, it is recommended to use 'coderay'
+                    until an new version of 'rouge' is released.
+
+                    see discussions: https://github.com/asciidoctor/asciidoctor-maven-examples/pull/58
+                                     https://github.com/asciidoctor/asciidoctorj-pdf/issues/3
+                                     https://github.com/jneen/rouge/issues/661
+                  -->
+                  <sourceHighlighter>coderay</sourceHighlighter>
+                </configuration>
+              </execution>
+              <execution>
+                <id>output-html</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>process-asciidoc</goal>
+                </goals>
+                <configuration>
+                  <backend>html</backend>
+                </configuration>
+              </execution>
+              <execution>
+                <id>output-docbook</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>process-asciidoc</goal>
+                </goals>
+                <configuration>
+                  <backend>docbook</backend>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <outputDirectory>target/generated-docs</outputDirectory>
+              <sourceDirectory>docs</sourceDirectory>
+              <relativeBaseDir>true</relativeBaseDir>
+              <headerFooter>true</headerFooter>
+              <imagesDir>images</imagesDir>
+              <sourceHighlighter>highlightjs</sourceHighlighter>
+              <attributes>
+                <toc>left</toc>
+                <linkcss>false</linkcss>
+                <doctype>book</doctype>
+                <ruby>erubis</ruby>
+                <encoding>${project.build.sourceEncoding}</encoding>
+                <linkattrs>true</linkattrs>
+                <numbered>true</numbered>
+                <sectanchors>true</sectanchors>
+                <sectlink>true</sectlink>
+                <idprefix/>
+                <docinfo1/>
+                <icons>font</icons>
+                <idseparator>-</idseparator>
+                <setanchors>true</setanchors>
+                <toc-title>Table of Contents</toc-title>
+                <project-name>${project.artifactId}</project-name>
+                <root-project-name>${project.artifactId}</root-project-name>
+                <project-version>${project.version}</project-version>
+                <github-url>https://github.com/daggerok/${project.artifactId}</github-url>
+              </attributes>
+            </configuration>
+          </plugin>
+        </plugins>
+        <defaultGoal>clean process-resources</defaultGoal>
+      </build>
     </profile>
   </profiles>
 </project>

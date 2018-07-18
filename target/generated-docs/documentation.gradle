@@ -1,0 +1,69 @@
+buildscript {
+  ext {
+    asciidocBuildDir = "$buildDir/asciidoc"
+  }
+}
+
+/*
+plugins {
+  id "org.asciidoctor.convert" version "1.5.7"
+  id "org.ajoberstar.git-publish" version "0.3.0"
+}
+
+asciidoctorj {
+  version = "1.5.6"
+}
+*/
+
+apply plugin: "org.asciidoctor.convert"     // version "1.5.7"
+apply plugin: "org.ajoberstar.git-publish"  // version "0.3.0" // version "0.4.1" - is not working: Algorithm negotiation fail
+
+asciidoctor {
+  sourceDir = project.file("src")
+  sources {
+    include "index.adoc"
+  }
+  outputDir = project.file("$asciidocBuildDir")
+  attributes toc: 'left',
+      doctype: 'book',
+      ruby: 'erubis',
+      encoding: 'utf-8',
+      linkattrs: true,
+      numbered: true,
+      sectanchors: true,
+      sectlink: true,
+      idprefix: '',
+      docinfo1: '',
+      icons: 'font',
+      idseparator: '-',
+      setanchors: 'true',
+      imagesdir: './static/images',
+      'source-highlighter': 'coderay',
+      'toc-title': 'Table of Contents',
+      'root-project-name': rootProject.name,
+      'build-gradle': project.file('build.gradle'),
+      "github-url": "https://daggerok.github.io/$rootProject.name"
+
+  logDocuments = true
+  //backends 'pdf', 'html5'
+  backends = ['html5', 'pdf']
+}
+
+asciidoctor.doLast {
+  def html5 = "$asciidocBuildDir/html5"
+  project.file("$html5/404.html").text = project.file("$html5/index.html").text
+  project.file("$html5/.nojekyll").text = ''
+}
+
+task documentation(type: Copy, dependsOn: asciidoctor) {
+  shouldRunAfter clean, asciidoctor
+  from "$asciidoctor.outputDir/html5"
+  from "$asciidoctor.outputDir/pdf"
+  from "$asciidoctor.sourceDir/static", {
+    into '.'
+  }
+  into "$rootDir/public"
+}
+
+task docs(dependsOn: documentation)
+docs.shouldRunAfter clean, documentation

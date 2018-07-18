@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc maxdepth="4"?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>streaming-file-server (4.3.3)</title>
+<date>2018-07-18 05:25:24 EEST</date>
+<author>
+<personname>
+<firstname>Maksim</firstname>
+<surname>Kostromin</surname>
+</personname>
+<email>daggerok@gmail.com</email>
+</author>
+<authorinitials>MK</authorinitials>
+<revhistory>
+<revision>
+<revnumber>4.3.3</revnumber>
+<date>2018-07-18 05:25:24 EEST</date>
+<authorinitials>MK</authorinitials>
+</revision>
+</revhistory>
+</info>
+<preface>
+<title></title>
+<simpara>Travis CI status:</simpara>
+<simpara>PDF:</simpara>
+</preface>
+<chapter xml:id="introduction">
+<title>Introduction</title>
+<simpara><link xl:href="{github_url}">Streaming file server</link>&#8201;&#8212;&#8201;java based project on top of spring-boot.
+This is a simple file-server which is allowed upload and download files with no memory limitation.
+It uses file multipart protocol</simpara>
+</chapter>
+<chapter xml:id="installation">
+<title>Installation</title>
+<section xml:id="download-files">
+<title>download files</title>
+<formalpara>
+<title>if you have docker installed and wanna use postgres, then <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml">download docker-compose.yml file</link></title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar">file items service</link></title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar">file server</link></title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar</programlisting>
+</para>
+</formalpara>
+</section>
+</chapter>
+<chapter xml:id="run">
+<title>Run</title>
+<section xml:id="postgres-database">
+<title>postgres database</title>
+<formalpara>
+<title>install using postgres in docker</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered"># docker compose file for postgres database
+docker-compose up -d
+
+# file-items data service
+java -jar file-items-service-4.3.3.jar --spring.profiles.active=db-pg
+
+# file server
+java -jar file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
+
+# cleanup
+docker-compose down -v</programlisting>
+</para>
+</formalpara>
+</section>
+<section xml:id="in-memory-h2-database">
+<title>in-memory h2 database</title>
+<formalpara>
+<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar">file items service</link>:</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.3.jar
+# or
+java file-items-service.jar --spring.profiles.active=db-h2</programlisting>
+</para>
+</formalpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar">file server</link>:</simpara>
+</listitem>
+</orderedlist>
+<screen>java file-items-service-{project-version}.jar --spring.profiles.active=db-h2</screen>
+</section>
+<section xml:id="take-advantages-of-spring-boot-executable-jar">
+<title>take advantages of spring-boot executable jar</title>
+<formalpara>
+<title>if you are using bash&#8201;&#8212;&#8201;run even simply</title>
+<para>
+<screen>wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
+bash file-items-service-4.3.3.jar
+
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
+bash file-server-4.3.3.jar --app.upload.path=./path/to/file-storage</screen>
+</para>
+</formalpara>
+</section>
+</chapter>
+<chapter xml:id="usage-scripts">
+<title>Usage scripts</title>
+<section xml:id="simplicity-bootstrap-with-automation-shell-script">
+<title>simplicity bootstrap with automation shell-script</title>
+<section xml:id="unix-bash">
+<title>unix (bash)</title>
+<formalpara>
+<title>postgres in docker</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered"># get
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash
+
+# start
+bash application.bash start ./path/to/file-storage
+
+# stop
+bash application.bash stop
+
+# cleanup
+bash application.bash clean ./path/to/file-storage</programlisting>
+</para>
+</formalpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash">application.bash</link></simpara>
+<formalpara>
+<title>h2 in-memory database</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered"># fetch
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash
+
+# start
+bash application-h2.bash start ./path/to/file-storage
+
+# stop
+bash application-h2.bash stop
+
+# cleanup
+bash application-h2.bash clean ./path/to/file-storage</programlisting>
+</para>
+</formalpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash">application-h2.bash</link></simpara>
+<simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
+</section>
+<section xml:id="windows-batch-cmd">
+<title>windows (batch cmd)</title>
+<formalpara>
+<title>postgres in docker</title>
+<para>
+<programlisting language="cmd" linenumbering="unnumbered">@rem start
+application.cmd start path\to\file-storage
+
+@rem stop
+application.cmd stop
+
+@rem cleanup
+application.cmd clean path\to\file-storage</programlisting>
+</para>
+</formalpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.cmd">application.cmd</link></simpara>
+<formalpara>
+<title>h2 in-memory database</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">@rem start
+application-h2.cmd start path\to\file-storage
+
+@rem stop
+application-h2.cmd stop
+
+@rem cleanup
+application-h2.cmd clean path\to\file-storage</programlisting>
+</para>
+</formalpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.cmd">application-h2.cmd</link></simpara>
+<simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
+</section>
+</section>
+</chapter>
+<chapter xml:id="create-new-release">
+<title>Create new release</title>
+<simpara>to create new release do next</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>bump version in (better use IDE find and replace functionality):</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>build.gradle</simpara>
+</listitem>
+<listitem>
+<simpara>README.md</simpara>
+</listitem>
+<listitem>
+<simpara>scripts/application.cmd</simpara>
+</listitem>
+<listitem>
+<simpara>scripts/application.bash</simpara>
+</listitem>
+<listitem>
+<simpara>scripts/application-h2.cmd</simpara>
+</listitem>
+<listitem>
+<simpara>scripts/application-h2.bash</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>exec <literal>bash mvnw</literal> command to create new release</simpara>
+</listitem>
+<listitem>
+<simpara>commit amend and push</simpara>
+</listitem>
+<listitem>
+<simpara>check CI if builds was successfully passed</simpara>
+</listitem>
+<listitem>
+<simpara>update created release page on github according last changes</simpara>
+</listitem>
+</orderedlist>
+<simpara>download all files <link xl:href="https://github.com/daggerok/streaming-file-server/releases/">here</link></simpara>
+<simpara><?asciidoc-hr?></simpara>
+<simpara>links:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><link xl:href="https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception">fix issue: SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html">spring-mvc</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://spring.io/">spring</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://mustache.github.io/">mustache template engine</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://commons.apache.org/proper/commons-fileupload/">apache fileUpload</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://projectlombok.org/">lombok</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://www.vavr.io/">vavr</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://getbootstrap.com/">bootstrap</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://plugins.krajee.com/file-input">bootstrap fileinput</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://jgiven.org/">jgiven</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://github.com/jayway/powermock/wiki">powermock</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://mockito.org/">mockito</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://www.h2database.com/html/cheatSheet.html">h2</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.postgresql.org/">postgres</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.docker.com/">docker</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://gradle.org/">gradle</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://travis-ci.org/">travis CI</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://github.com/jutzig/github-release-plugin">GitHub release maven plugin</link></simpara>
+</listitem>
+</itemizedlist>
+<simpara><?asciidoc-hr?></simpara>
+<simpara>Enjoy :)</simpara>
+</chapter>
+</book>

@@ -1,7 +1,7 @@
 dependencies {
 
   [
-      ":modules:libraries:props",
+      ':modules:libraries:props',
 
   ].each {
 
@@ -10,24 +10,24 @@ dependencies {
     implementation(project(it))
   }
 
-  implementation("org.springframework.boot:spring-boot-starter-webflux")
-  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-  implementation("org.hibernate:hibernate-java8")
+  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.hibernate:hibernate-java8'
 
-  runtime("org.postgresql:postgresql")
-  runtime("com.h2database:h2")
-  //runtime("org.springframework.boot:spring-boot-devtools")
+  runtime 'org.postgresql:postgresql'
+  runtime 'com.h2database:h2'
+  //runtime 'org.springframework.boot:spring-boot-devtools'
 
-  testImplementation("io.projectreactor:reactor-test")
+  testImplementation 'io.projectreactor:reactor-test'
 }
 
 /* // disabling using postgres by default
-def postgersUp = tasks.findByPath(":modules:docker:postgres:composeUp")
+def postgersUp = tasks.findByPath(':modules:docker:postgres:composeUp')
 
 [test, build, bootRun].each { task ->
   task.dependsOn assemble, postgersUp
   task.shouldRunAfter assemble, postgersUp
-  ["all", "postgres"].each { id ->
+  ['all', 'postgres'].each { id ->
     task.finalizedBy ":modules:docker:$id:${id}Down"
   }
 }
