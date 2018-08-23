@@ -1,4 +1,9 @@
+ifdef::backend-html5[]
+= {root-project-name} ({project-version}) image:https://travis-ci.org/daggerok/{root-project-name}.svg?branch=master["Build Status", link={github-url}]
+endif::backend-html5[]
+ifndef::backend-html5[]
 = {root-project-name} ({project-version})
+endif::backend-html5[]
 Maksim Kostromin <daggerok@gmail.com>
 {docdatetime}
 :doctype: book
@@ -11,46 +16,37 @@ Maksim Kostromin <daggerok@gmail.com>
 :revnumber: {project-version}
 :example-caption!:
 
-Travis CI status:
-ifdef::backend-html5[image:https://travis-ci.org/daggerok/{root-project-name}.svg?branch=master["Build Status", link={github-url}]]
-
-PDF:
-ifdef::backend-html5[link:./index.pdf["Documentation in PFD format"]]
-
-//= streaming-file-server {project-name} ({project-version})
-//Maksim Kostromin <daggerok@gmail.com>
-//{docdatetime}
-//:toc:
-//:revnumber: {project-version}
-//:example-caption!:
-//:icons: font
-//:toc: left
-//:numbered:
-//:github_url: https://github.com/daggerok/streaming-file-server
-//:github_project_path: {github_url}/tree/master
-//[discrete]
+Documentation in PFD format is located:
+ifdef::backend-html5[link:./index.pdf[here]]
 
 == Introduction
-link:{github_url}[Streaming file server] -- java based project on top of spring-boot.
+link:{github-url}[Streaming file server] -- java based project on top of spring-boot.
 This is a simple file-server which is allowed upload and download files with no memory limitation.
 It uses file multipart protocol
 
 == Installation
+
 === download files
 include::./includes/install/download.adoc[tags=content]
 
 == Run
+
 === postgres database
 include::./includes/install/postgres-in-docker.adoc[tags=content]
+
 === in-memory h2 database
 include::./includes/install/in-mempry-h2.adoc[tags=content]
+
 === take advantages of spring-boot executable jar
 include::./includes/run/executable-jar.adoc[tags=content]
 
 == Usage scripts
+
 === simplicity bootstrap with automation shell-script
+
 ==== unix (bash)
 include::./includes/run/unix.adoc[tags=content]
+
 ==== windows (batch cmd)
 include::./includes/run/windows.adoc[tags=content]
 
