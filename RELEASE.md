@@ -6,9 +6,10 @@ _version: 4.3.3_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- Update spring-boot up to 2.0.3.RELEASE
+- Update spring-boot up to 2.0.4.RELEASE
 - Update gradle up to 4.9
 - Add Gradle Lombok plugin
+- Upgrade lombok version u to 1.18.2
 - Add pom.xml + wrapper with jutzig/github-release-plugin configuration. Just run: `./mvnw`
 - Add maven asciidoctor plugin documentation automation. Run command: `./mvnw -Pdocs`
 

@@ -108,13 +108,30 @@ script:
 - http --auth user:password :8002/
 - yes | bash ./scripts/application-h2.bash clean build
 
-before_deploy:
-- ./mvnw -Pdocs
-
 env:
   global:
   - TERM=dumb
   - secure: Eh+HT5YScrFz1JoZLHtbxPqFT6E/7+qHFDoN2fqYXX2lpahCJmTX6dW/8lyk32sMUvTpljJPpKQb/Xavxk8lHE0tDcdr/1l5N4WHnZPGJqKLB36VQpuFkMwmsbQH7dfJskDpFjJZSKa0oXTa8AEU8U2nstdFdyKZt2wChWOMMNCmEiL7YVu0bqjn08Qlfkye3pg9q6tMRGMLIL3Y0pvqWrhb2zfbjojcq+pQLrZGmuh0XUqshPQqc9M959KDSq3aq1INjSFYI3siIHN8b/He1qBSECWURvsgA9uKBNo2LuvLfvzFzHmzpHBNRbRcjrCzF8gzxuVxkfxjW5zOtJbe/7KOxM5NHKtWfCeTunrzJoEl9v9h/AYRlS0UBBFyie3XWraxed9aFuT7QbR0mTmx7s33vNGRMkujG+nPhkPzuM0ABpU/t5quvvo9zMmnd1LOe3XV+kAo3HOqkAD/FC5JZI5aaMJXrSS+O9XzPXS+E2CjGPAgBY0VIX0LwVVc80t00xkppfINtj/0HYyKE3xXE6cnM34204u+9Mksxb/TZQY+GMpAOCIUn+RrO0vxM7hvv8anm59rMOAZ/FgvLs+i3d1CuJJDCn9fuFxa0Etnn/krusLdwzjvI+9AgMknVCo1mnxbNuIAo2BnkOdzz35PxX8iDxc7fThYt9u5mx8M79E=
+  - secure: D04FeSPymLevdF11Ej1dUAxxHV9rKHHj/0sld/KPNh/mr876dm1l9AMo6VcBC5Kr1a6AwDJiOG9d8XgUEFRNvhBb3nMjIJa/99psykPL1N4WWZojULkeUtfhbVC+4d5qoLjNM2svT8IFJ9hO1kfgBGKk1Cd5KA+PtjceEIAJ29gaBvnbYo3MspXZsd3RA87kgY/poxQX2j7JeyKqQQKTLN8FTLqu7vgmdZWRYrUrSXiZvoJc9yJ+7PW6u4N4nVlReYb6+GGOM6BAtyB0dDxxG50sL8VcrYnzRlWyEXMaqNlqu2FBI+sBEuzkVkGulZMIsHDfKQhMPH/g2bN79FiPJVEiS7aOBiSMjS2f7vAq9JS3xOnNmMPjHOkAfzpktXbYHydeQIW6vcUue58qUkaj+zn7kyocg83hDlR/j3ATfXJvOGF4vqhkRwPtz7WeZ+Lra7nMrlhaLkFpALco7+ZOB9BwDa3lV1oic6Xv4pRNHgdIx+KcBOI6n4BND22ckzwa0p2+kfDHakIyojX2nNiWg7jzl1oDokI/3nnx/L2piUjKHspjvq7wiJjZefbYRgfLqML+TJ/osZ4P4rin8RLb6my/J3ApMlDH9PyiLNkafnhYKGsTP43XCYMBwVGxv++f/+6JeXsS35Hs4YXbCc1ANt7sTck6FzKgrELgTTOViGk=
+
+before_deploy:
+- mkdir -p ${HOME}/.m2
+- echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"                      ' >  ${HOME}/.m2/settings.xml
+- echo '          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               ' >> ${HOME}/.m2/settings.xml
+- echo '          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0          ' >> ${HOME}/.m2/settings.xml
+- echo '                              http://maven.apache.org/xsd/settings-1.0.0.xsd">' >> ${HOME}/.m2/settings.xml
+- echo '  <servers>                                                                   ' >> ${HOME}/.m2/settings.xml
+- echo '    <server>                                                                  ' >> ${HOME}/.m2/settings.xml
+- echo '      <id>github</id>                                                         ' >> ${HOME}/.m2/settings.xml
+- echo '      <username>daggerok</username>                                           ' >> ${HOME}/.m2/settings.xml
+- echo "      <password>${GITHUB_PASSWORD}</password>                                 " >> ${HOME}/.m2/settings.xml
+- echo '    </server>                                                                 ' >> ${HOME}/.m2/settings.xml
+- echo '  </servers>                                                                  ' >> ${HOME}/.m2/settings.xml
+- echo '</settings>                                                                   ' >> ${HOME}/.m2/settings.xml
+- ./mvnw
+#
+- ./mvnw -Pdocs >/dev/null
+- mkdir -p target/generated-docs
 
 deploy:
   provider: pages
