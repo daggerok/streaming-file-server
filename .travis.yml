@@ -141,6 +141,7 @@ before_deploy:
 #
 - ./mvnw -Pdocs >/dev/null
 - mkdir -p target/generated-docs
+- cp -Rf target/generated-docs/index.html target/generated-docs/404.html
 
 deploy:
   provider: pages

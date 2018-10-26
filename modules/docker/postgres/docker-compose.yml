@@ -10,7 +10,7 @@ services:
     networks: [backing-services]
     ports: ["5432:5432"]
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: ["CMD", "pg_isready", "-U", "$$POSTGRES_USER"]
       timeout: 2s
       retries: 22
       #interval: 10s

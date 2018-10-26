@@ -1,7 +1,7 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-_latests VERSION: 4.3.3_
+_latests VERSION: 4.3.4_
 
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
@@ -19,16 +19,16 @@ Read [reference documentation](http://daggerok.github.io/streaming-file-server)
 
 ```bash
 # database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/docker-compose.yml
 docker-compose -f docker-compose.yml up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
-bash file-items-service-4.3.3.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-items-service-4.3.4.jar
+bash file-items-service-4.3.4.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
-bash file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-server-4.3.4.jar
+bash file-server-4.3.4.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose -f docker-compose.yml down -v
@@ -37,7 +37,7 @@ docker-compose -f docker-compose.yml down -v
 **or simply using shell-script**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -53,7 +53,7 @@ bash application.bash clean ./path/to/file-storage
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application.cmd**
 
 ```cmd
 @rem start
@@ -73,18 +73,18 @@ installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and o
 **with h2 in-memory database**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-items-service-4.3.3.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/file-server-4.3.3.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-items-service-4.3.4.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/file-server-4.3.4.jar
 
-# bash file-items-service-4.3.3.jar --spring.profiles.active=db-h2 # or just:
-bash file-items-service-4.3.3.jar
-bash file-server-4.3.3.jar --app.upload.path=./path/to/file-storage
+# bash file-items-service-4.3.4.jar --spring.profiles.active=db-h2 # or just:
+bash file-items-service-4.3.4.jar
+bash file-server-4.3.4.jar --app.upload.path=./path/to/file-storage
 ```
 
 **or simply shell script for h2**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -96,7 +96,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ```
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.3/application-h2.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.4/application-h2.cmd**
 
 ```cmd
 @rem start
@@ -118,13 +118,13 @@ installed binaries: `which`, `del`, `wget`, `taskkill`, `mkdir` and of course `j
 **gradle**
 
 ```sh
-bash gradlew clean assemble postgresUp
-bash gradlew :m:a:f-i-s:bootRun
-bash gradlew :m:a:f-s:bootRun
+./gradlew clean assemble postgresUp
+./gradlew :m:a:f-i-s:bootRun
+./gradlew :m:a:f-s:bootRun
 
 # cleanup
-bash gradlew composeDown
-bash gradlew --stop
+./gradlew composeDown
+./gradlew --stop
 ```
 
 **testing**
@@ -132,14 +132,14 @@ bash gradlew --stop
 awesome JGiven reports!
 
 ```sh
-bash gradlew clean test jgiven
+./gradlew clean test jgiven
 open modules/apps/streaming-file-server/jgiven-reports/html/index.html
 ```
 
 **quick boot all with docker**
 
 ```sh
-bash gradlew clean assemble allUp -Pdebug
+./gradlew clean assemble allUp -Pdebug
 http -a user:password :8002
 ```
 
@@ -150,44 +150,56 @@ http -a user:password :8002
 docker-compose -f ./modules/docker/all/docker-compose.yml up --build --force-recreate
 ```
 
-**cleanup**
+**cleanup and remove everything**
 
 NOTE: if you feel that changes take no effect, clean docker
 
 ```bash
 # remove containers
-docker rm -v -f $(docker ps -a|grep -v CONTAINER|awk '{print $1}')
+for container in $(docker ps -qaf health=healthy) ; do docker rm -v -f $container ; done
 
 # remove volumes
-docker volume rm -f $(docker volume ls|grep -v DRIVER|awk '{print $2}')
+for volume in $(docker volume ls -q) ; do docker volume rm -f $volume ; done
 
 # remove images
-docker rmi -f $(docker images -a | grep -v 'IMAGE ID'| awk '{print $3}')
+for image in $(docker images -qa) ; do docker rmi -f $image ; done
 
-# remove everything
+# or
 docker system prune -af --volumes
 ```
+
+### publish release
+
+```bash
+./mvnw
+```
+
+<!--
 
 ### known issues (deprecations)
 
 - ~~SQLFeatureNotSupportedException: Method org.postgresql.jdbc.PgConnection.createClob() is not yet implemented.~~ [fixed](https://vkuzel.com/spring-boot-jpa-hibernate-atomikos-postgresql-exception)
 - static methods mocking using PowerMock (logs: BasicStaticClassTest.java uses or overrides a deprecated API.)
 
+-->
+
 ### todo
 
-- migrate ~~file-items-service and~~ file-server from mvc to reactive webflux
-- migrate from postgres to reactive postgres or some reactive NoSQL (mongodb, etc...)
-- add more (advanced) security...
+- migrate from Mustache template engine to [Thymeleaf](https://www.thymeleaf.org/)
+- migrate from Bootstrap to [Materialize.css](https://materializecss.com/)
+- migrate ~~file-items-service and~~ file-server from mvc to [reactive webflux](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
+- migrate from postgres to reactive postgres or [R2DBC](https://r2dbc.io/), or to some reactive NoSQL (mongodb, etc...)
+- add more advanced security, secure by MVC method...
 - improve files-db sync (replace FileSystem with GridFS or ...?)
-- backup, restore, migration
+- backup, restore, migration...
 - support removing files (rly..? as minimum from db)
-- p2p: bi-directional files synchronization with spring scheduling or batch
+- p2p, bi-directional files synchronization with spring scheduling or batch
 - gradle github release plugin (at the moment, for publishing releases to github is using maven. see `pom.xml`)
 
 ### stack
 
 - spring
-  - spring-boot 2.0.3.RELEASE ~~1.x~~
+  - spring-boot 2.0.4.RELEASE ~~1.x~~
   - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
   - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
   - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java

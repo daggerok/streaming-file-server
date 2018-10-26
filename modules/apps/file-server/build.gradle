@@ -18,8 +18,8 @@ dependencies {
   implementation "org.webjars:jquery:$jqueryVersion"
   implementation "org.webjars.bower:bootstrap:$bootstrapVersion"
   implementation "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion"
-  implementation "org.webjars.bower:font-awesome:$fontAwesomeVersion"
+  implementation "org.webjars:font-awesome:$fontAwesomeVersion"
   implementation "org.webjars.npm:popper.js:$popperVersion"
 
-  //runtime 'org.springframework.boot:spring-boot-devtools'
+  runtime 'org.springframework.boot:spring-boot-devtools'
 }
