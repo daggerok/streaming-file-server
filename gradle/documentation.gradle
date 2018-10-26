@@ -70,7 +70,7 @@ gitPublish {
   ////   -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
   ////   -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
   //repoUri = 'https://github.com/daggerok/streaming-file-server.git'
-  repoUri = "git@github.com:daggerok/${rootProject.name}.git"
+  repoUri = "git@github.com:daggerok/${rootProject.name}.git" as String
   branch = 'gh-pages'
 
   contents {
@@ -79,7 +79,7 @@ gitPublish {
     }
   }
 
-  commitMessage = "Update $rootProject.name documentation for ${project.group}:${project.name}:$project.version"
+  commitMessage = "Update $rootProject.name documentation for ${project.group}:${project.name}:$project.version" as String
 }
 
 gitPublishPush.dependsOn documentation

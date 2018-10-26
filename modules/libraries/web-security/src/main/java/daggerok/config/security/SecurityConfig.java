@@ -1,6 +1,5 @@
 package daggerok.config.security;
 
-import lombok.val;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -56,18 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public UserDetailsService userDetailsService(final PasswordEncoder encoder) {
-
-    val inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-
-    inMemoryUserDetailsManager.createUser(User.withUsername("user")
-                                              .password(encoder.encode("password"))
-                                              .roles("USER")
-                                              .build());
-
-    inMemoryUserDetailsManager.createUser(User.withUsername("admin")
-                                              .password(encoder.encode("admin"))
-                                              .roles("USER", "ADMIN")
-                                              .build());
-    return inMemoryUserDetailsManager;
+    return new InMemoryUserDetailsManager(
+        User.withUsername("user")
+            .password(encoder.encode("password"))
+            .roles("USER")
+            .build(),
+        User.withUsername("admin")
+            .password(encoder.encode("admin"))
+            .roles("USER", "ADMIN")
+            .build()
+    );
   }
 }
