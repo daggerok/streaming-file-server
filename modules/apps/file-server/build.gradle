@@ -14,7 +14,6 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-mustache'
   implementation "org.apache.commons:commons-io:$commonsIoVersion"
 
-  implementation "org.webjars:webjars-locator:$webjarsLocatorVersion"
   implementation "org.webjars:jquery:$jqueryVersion"
   implementation "org.webjars.bower:bootstrap:$bootstrapVersion"
   implementation "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion"
