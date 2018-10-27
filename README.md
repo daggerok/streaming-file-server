@@ -200,7 +200,7 @@ docker system prune -af --volumes
 
 - spring
   - spring-boot 2.0.4.RELEASE ~~1.x~~
-  - spring-data, ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data, jpa
+  - ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data-jpa
   - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
   - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
   - ~~spring-social (facebook login required for upload ability)~~ replaced with basic spring-security for now
