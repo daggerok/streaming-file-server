@@ -22,7 +22,7 @@ buildscript {
     jqueryVersion = '3.3.1-1'
     fontAwesomeVersion = '5.4.1'
 
-    bootstrapVersion = '4.1.3' // '4.1.3'
+    bootstrapVersion = '4.1.3'
     bootstrapFileInputVersion = '4.4.8'
   }
 
