@@ -22,7 +22,7 @@ subprojects { sp ->
     removeOrphans = true
     forceRecreate = true
     waitForTcpPorts = false
-    projectName = "$sp.parent.name"
+    projectName = sp.parent.name
   }
 
   tasks.create("${sp.name}Up") {

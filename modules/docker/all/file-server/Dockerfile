@@ -1,24 +1,23 @@
-FROM openjdk:8u151-jre-alpine3.7
-MAINTAINER Maksim Kostromin https://github.com/daggerok
+FROM openjdk:8u181-jre-alpine3.8
+#FROM openjdk:8u151-jre-alpine3.7
+LABEL MAINTAINER='Maksim Kostromin https://github.com/daggerok'
 
 ARG APP_UPLOAD_PATH_ARG="/var/file-storage"
 ENV APP_UPLOAD_PATH="${APP_UPLOAD_PATH_ARG}"
 
-RUN apk --no-cache --update add busybox-suid bash curl unzip sudo openssh-client shadow wget \
- && adduser -h /home/appuser -s /bin/bash -D -u 1025 appuser wheel \
- && echo "appuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
- && sed -i "s/.*requiretty$/Defaults !requiretty/" /etc/sudoers \
- && wget --no-cookies \
-         --no-check-certificate \
-         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-                  "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" \
-         -O /tmp/jce_policy-8.zip \
- && unzip -o /tmp/jce_policy-8.zip -d /tmp \
- && mv -f ${JAVA_HOME}/lib/security ${JAVA_HOME}/lib/backup-security || true \
- && mv -f /tmp/UnlimitedJCEPolicyJDK8 ${JAVA_HOME}/lib/security \
- && apk del busybox-suid unzip openssh-client shadow wget \
- && rm -rf /var/cache/apk/* /tmp/* \
- && mkdir -p ${APP_UPLOAD_PATH} \
+RUN apk --no-cache --update add busybox-suid bash unzip sudo openssh-client shadow wget      \
+ && adduser -h /home/appuser -s /bin/bash -D -u 1025 appuser wheel                           \
+ && echo "appuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers                                   \
+ && sed -i "s/.*requiretty$/Defaults !requiretty/" /etc/sudoers                              \
+ && wget --no-cookies --no-check-certificate -O /tmp/jce_policy-8.zip                        \
+         --header "Cookie: oraclelicense=accept-securebackup-cookie"                         \
+                  "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"           \
+ && unzip -o /tmp/jce_policy-8.zip -d /tmp                                                   \
+ && mv -f ${JAVA_HOME}/lib/security ${JAVA_HOME}/lib/backup-security || echo 'cannot backup' \
+ && mv -f /tmp/UnlimitedJCEPolicyJDK8 ${JAVA_HOME}/lib/security                              \
+ && apk del busybox-suid unzip openssh-client shadow wget                                    \
+ && rm -rf /var/cache/apk/* /tmp/*                                                           \
+ && mkdir -p ${APP_UPLOAD_PATH}                                                              \
  && chown -R appuser:wheel ${APP_UPLOAD_PATH}
 
 USER appuser
@@ -38,6 +37,6 @@ CMD /bin/bash
 EXPOSE 8002
 HEALTHCHECK --timeout=2s \
             --retries=22 \
-            CMD curl -f http://127.0.0.1:8002/actuator/health || exit 1
+            CMD wget --quiet --tries=1 --spider http://127.0.0.1:8002/actuator/health || exit 1
 
 COPY --chown=appuser ./modules/apps/file-server/build/libs/*.jar ./app.jar

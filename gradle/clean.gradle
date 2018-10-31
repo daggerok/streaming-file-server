@@ -8,10 +8,18 @@ allprojects {
         project.file('bin'),
         project.file('logs'),
         project.file('build'),
-        project.file('public'),
-        project.file('target'),
         project.file('jgiven-reports'),
         project.file('jgiven-reports'),
     ].each { delete it }
   }
+}
+
+task clear {
+  [
+      rootProject.file('target/generated-docs'),
+      rootProject.file('modules/apps/file-server/file-storage'),
+      rootProject.file('modules/docker/all/file-storage'),
+      rootProject.file('modules/docker/all/modules'),
+      rootProject.file('file-storage'),
+  ].each { it.deleteOnExit() }
 }

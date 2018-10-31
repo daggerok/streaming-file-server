@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 import static daggerok.web.IndexPage.INDEX;
 import static daggerok.web.IndexPage.REDIRECT_INDEX;
@@ -32,8 +31,8 @@ public class DownloadController {
   }
 
   @SneakyThrows
-  @GetMapping({ "", "/", "/{id}" })
-  public String download(@PathVariable(value = "id", required = false) final Optional<Long> id) {
+  @GetMapping({ "", "/" })
+  public String download() {
     return REDIRECT_INDEX;
   }
 }

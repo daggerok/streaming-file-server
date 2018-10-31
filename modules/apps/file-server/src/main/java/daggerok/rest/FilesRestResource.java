@@ -1,4 +1,4 @@
-package daggerok.fileitems.rest;
+package daggerok.rest;
 
 import daggerok.client.model.FileItem;
 import daggerok.service.FileService;

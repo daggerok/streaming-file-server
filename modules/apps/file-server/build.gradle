@@ -1,11 +1,9 @@
 dependencies {
-
   [
       ':modules:libraries:props',
       ':modules:libraries:web-security',
-
   ].each {
-
+    annotationProcessor(project(it))
     implementation(project(it))
     compileOnly(project(it))
   }

@@ -1,4 +1,4 @@
-package daggerok.fileitems.rest;
+package daggerok.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.val;

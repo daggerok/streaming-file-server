@@ -2,14 +2,11 @@ service:
 - docker
 
 language: java
-jdk:
-- oraclejdk8
-#- oraclejdk10
+jdk: oraclejdk8
 node_js: lts/*
 
 addons:
   apt:
-    update: true
     packages:
     - sudo
     - lsof
@@ -33,19 +30,19 @@ before_install:
 #
 - sudo pip install docker-compose httpie >/dev/null 2>&1
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 5432 5672 27017 8082 8082 8081 8081 8080 8080 80 80
+- stop_any 80 5432 8002 8001
 
 script:
 # jgiven tests and docs
-#- bash gradlew -S -Pdebug clean test jgiven build documentation >/dev/null || true
-- bash gradlew -S -Pdebug clean check build >/dev/null
+- ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
+- ./gradlew -S -Pdebug clean check build >/dev/null
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"
 - mkdir -p ${APP_UPLOAD_PATH}
 - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
 
 # postgres
-- bash gradlew clean assemble postgresUp >/dev/null
+- ./gradlew clean assemble postgresUp >/dev/null
 - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg >/dev/null &
 - wait_for 8001
 - bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
@@ -55,11 +52,11 @@ script:
 - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- stop_any 8002 8002 8001 8001 80 80
-- bash gradlew postgresDown >/dev/null
+- stop_any 80 8002 8001 5432
+- ./gradlew postgresDown >/dev/null
 
 # h2
-- bash gradlew clean assemble >/dev/null
+- ./gradlew clean assemble >/dev/null
 #- bash ./modules/apps/file-items-service/build/libs/*jar --spring.profiles.active=db-h2 >/dev/null &
 - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
 - wait_for 8001
@@ -70,10 +67,10 @@ script:
 - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
 - http --auth user:password :8002/api/v1/files
 - http --auth user:password :8002/
-- stop_any 8002 8002 8001 8001 80 80
+- stop_any 80 8002 8001 5432
 
 # install as linux service
-- bash gradlew clean assemble postgresUp >/dev/null
+- ./gradlew clean assemble postgresUp >/dev/null
 - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
 - mv -f ./modules/apps/file-items-service/build/libs/*.jar /tmp/file-items-service.jar
 - #export SPRING_PROFILES_ACTIVE=db-pg
@@ -92,30 +89,18 @@ script:
 - http --auth user:password :8002/
 - sudo service file-server                                        stop
 - sudo service file-items-service                                 stop
-- bash gradlew postgresDown >/dev/null 2>&1
+- ./gradlew postgresDown >/dev/null 2>&1
 - unset SPRING_PROFILES_ACTIVE
+- stop_any 80 8002 8001 5432
 
-# scripts/application.bash
-- bash ./scripts/application.bash start build
-- bash ./scripts/application.bash stop build
-- bash ./scripts/application.bash start build
-- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
-- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-- http --auth user:password :8001/api/v1/file-items
-- http --auth user:password :8002/api/v1/files
-- yes | bash ./scripts/application.bash clean build
-
-# scripts/application-h2.bash
-- bash ./scripts/application-h2.bash start build
-- bash ./scripts/application-h2.bash stop build
-- bash ./scripts/application-h2.bash start build
-- http --auth user:password :8001/actuator/health
-- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
-- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
-- http --auth user:password :8002/api/v1/files
-- http --auth user:password :8002/
-- yes | bash ./scripts/application-h2.bash clean build
+# services behind reverse-proxy
+- ./gradlew clean
+- ./gradlew
+- ./gradlew allUp
+- wait_for 80
+- http -a user:password :80
+- ./gradlew allDown
+- stop_any 80 8002 8001 5432
 
 env:
   global:
@@ -124,6 +109,7 @@ env:
   - secure: D04FeSPymLevdF11Ej1dUAxxHV9rKHHj/0sld/KPNh/mr876dm1l9AMo6VcBC5Kr1a6AwDJiOG9d8XgUEFRNvhBb3nMjIJa/99psykPL1N4WWZojULkeUtfhbVC+4d5qoLjNM2svT8IFJ9hO1kfgBGKk1Cd5KA+PtjceEIAJ29gaBvnbYo3MspXZsd3RA87kgY/poxQX2j7JeyKqQQKTLN8FTLqu7vgmdZWRYrUrSXiZvoJc9yJ+7PW6u4N4nVlReYb6+GGOM6BAtyB0dDxxG50sL8VcrYnzRlWyEXMaqNlqu2FBI+sBEuzkVkGulZMIsHDfKQhMPH/g2bN79FiPJVEiS7aOBiSMjS2f7vAq9JS3xOnNmMPjHOkAfzpktXbYHydeQIW6vcUue58qUkaj+zn7kyocg83hDlR/j3ATfXJvOGF4vqhkRwPtz7WeZ+Lra7nMrlhaLkFpALco7+ZOB9BwDa3lV1oic6Xv4pRNHgdIx+KcBOI6n4BND22ckzwa0p2+kfDHakIyojX2nNiWg7jzl1oDokI/3nnx/L2piUjKHspjvq7wiJjZefbYRgfLqML+TJ/osZ4P4rin8RLb6my/J3ApMlDH9PyiLNkafnhYKGsTP43XCYMBwVGxv++f/+6JeXsS35Hs4YXbCc1ANt7sTck6FzKgrELgTTOViGk=
 
 before_deploy:
+# publish tag release
 - mkdir -p ${HOME}/.m2
 - echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"                      ' >  ${HOME}/.m2/settings.xml
 - echo '          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               ' >> ${HOME}/.m2/settings.xml
@@ -138,7 +124,30 @@ before_deploy:
 - echo '  </servers>                                                                  ' >> ${HOME}/.m2/settings.xml
 - echo '</settings>                                                                   ' >> ${HOME}/.m2/settings.xml
 - ./mvnw
-#
+
+# test published release by using scripts/application.bash
+- bash ./scripts/application.bash start build
+- bash ./scripts/application.bash stop build
+- bash ./scripts/application.bash start build
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+- http --auth user:password :8001/api/v1/file-items
+- http --auth user:password :8002/api/v1/files
+- yes | bash ./scripts/application.bash clean build
+
+# test published release by using scripts/application-h2.bash
+- bash ./scripts/application-h2.bash start build
+- bash ./scripts/application-h2.bash stop build
+- bash ./scripts/application-h2.bash start build
+- http --auth user:password :8001/actuator/health
+- http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle
+- http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle
+- http --auth user:password :8002/api/v1/files
+- http --auth user:password :8002/
+- yes | bash ./scripts/application-h2.bash clean build
+
+# documentation
 - ./mvnw -Pdocs >/dev/null
 - mkdir -p target/generated-docs
 - cp -Rf target/generated-docs/index.html target/generated-docs/404.html

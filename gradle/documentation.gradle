@@ -1,25 +1,15 @@
 buildscript {
   ext {
     asciidocBuildDir = "$buildDir/asciidoc"
+    targetDeneratedDocsDir = "$rootDir/target/generated-docs"
   }
 }
 
-/*
-plugins {
-  id 'org.asciidoctor.convert' version '1.5.7'
-  id 'org.ajoberstar.git-publish' version '0.3.0'
-}
-
-asciidoctorj {
-  version = '1.5.6'
-}
-*/
-
-apply plugin: 'org.asciidoctor.convert'     // version '1.5.7'
+apply plugin: 'org.asciidoctor.convert'
 apply plugin: 'org.ajoberstar.git-publish'  // version '0.3.0' // version '0.4.1' - is not working: Algorithm negotiation fail
 
 asciidoctor {
-  sourceDir = project.file('src')
+  sourceDir = project.file('docs')
   sources {
     include 'index.adoc'
   }
@@ -41,6 +31,7 @@ asciidoctor {
       'source-highlighter': 'coderay',
       'toc-title': 'Table of Contents',
       'root-project-name': rootProject.name,
+      'project-version': rootProject.version,
       'build-gradle': project.file('build.gradle'),
       'github-url': "https://github.com/daggerok/$rootProject.name"
 
@@ -62,7 +53,7 @@ task documentation(type: Copy, dependsOn: [asciidoctor]) {
   from "$asciidoctor.sourceDir/static", {
     into '.'
   }
-  into "$rootDir/public"
+  into targetDeneratedDocsDir
 }
 
 gitPublish {
@@ -74,7 +65,7 @@ gitPublish {
   branch = 'gh-pages'
 
   contents {
-    from("$rootDir/public") {
+    from(targetDeneratedDocsDir) {
       into '.'
     }
   }
