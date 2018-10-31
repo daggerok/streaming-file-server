@@ -48,7 +48,7 @@
 
   -->
 
-  <version>4.3.4</version>
+  <version>4.3.5</version>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
@@ -61,7 +61,6 @@
   <scm>
     <url>https://github.com/daggerok/streaming-file-server.git</url>
     <connection>scm:git:https://github.com/daggerok/streaming-file-server.git</connection>
-    <!--<connection>scm:git:git://github.com/daggerok/streaming-file-server.git</connection>-->
     <developerConnection>scm:git:git@github.com:daggerok/streaming-file-server.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
