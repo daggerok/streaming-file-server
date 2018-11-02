@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Untitled</title>
+<date>2018-11-02</date>
+</info>
+<preface>
+<title></title>
+<formalpara>
+<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.5/file-items-service-4.3.5.jar">file items service</link>:</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.5.jar
+# or
+java file-items-service.jar --spring.profiles.active=db-h2</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.5/file-server-4.3.5.jar">file server</link>:</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.5.jar --spring.profiles.active=db-h2</programlisting>
+</para>
+</formalpara>
+</preface>
+</book>
