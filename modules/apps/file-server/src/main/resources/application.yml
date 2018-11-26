@@ -51,7 +51,7 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
-      file-size-threshold: 10Mb
+      file-size-threshold: 10MB
       resolve-lazily: true
 
 #  # old legacy (spring-boot 1.x):
