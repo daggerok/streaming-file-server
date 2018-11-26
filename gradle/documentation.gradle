@@ -15,12 +15,12 @@ asciidoctor {
   }
   outputDir = project.file("$asciidocBuildDir")
   attributes toc: 'left',
-      doctype: 'book',
       ruby: 'erubis',
-      encoding: 'utf-8',
+      doctype: 'book',
+      numbered: false,
       linkattrs: true,
-      numbered: true,
       sectanchors: true,
+      encoding: 'utf-8',
       sectlink: true,
       idprefix: '',
       docinfo1: '',
