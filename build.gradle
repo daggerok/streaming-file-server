@@ -1,6 +1,6 @@
 buildscript {
   ext {
-    applicationVersion = '4.3.6'
+    applicationVersion = '4.3.7'
     applicationGroup = 'com.github.daggerok'
     applicationName = 'streaming-file-server'
 
@@ -64,7 +64,7 @@ allprojects {
 }
 
 wrapper {
-  gradleVersion = '5.0-rc-5' // For more details see https://docs.gradle.org/5.0-rc-1/release-notes.html
+  gradleVersion = '5.0' // For more details see https://docs.gradle.org/5.0-rc-1/release-notes.html
   distributionType = 'BIN'
 }
 

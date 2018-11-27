@@ -1,23 +1,12 @@
 # streaming-file-server
 
-_version: 4.3.6_
+_version: 4.3.7_
 
 ## Java file server 
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-1. Spring Boot and Gradle versions update
-
-  | dependency                 | version       |
-  |---------------------------:|:--------------|
-  | spring-boot                | 2.1.0.RELEASE |
-  | font-awesome               | 5.5.0         |
-  | popper                     | 1.14.5        |
-  | powermock                  | 2.0.0-RC.4    |
-  | jgiven                     | 0.17.0        |
-  | gradle                     | 5.0-rc-5      |
-  | org.ajoberstar.git-publish | 2.0.0         |
-  | jruby                      | 9.2.4.0       |
+1. Gradle 5.0 version update
 
 ## Installation
 
@@ -27,16 +16,16 @@ _version: 4.3.6_
 
 ```bash
 # docker compose file for postgres database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/docker-compose.yml
 docker-compose up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/file-items-service-4.3.6.jar
-java -jar file-items-service-4.3.6.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-items-service-4.3.7.jar
+java -jar file-items-service-4.3.7.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/file-server-4.3.6.jar
-java -jar file-server-4.3.6.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-server-4.3.7.jar
+java -jar file-server-4.3.7.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v
@@ -46,7 +35,7 @@ docker-compose down -v
 
 ```bash
 # bash script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -66,7 +55,7 @@ binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
 ```cmd
 @rem batch shell-script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/application.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application.cmd
 
 @rem start
 application.cmd start path\to\file-storage
@@ -87,18 +76,18 @@ binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of course j
 #### manual setup
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/file-items-service-4.3.6.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/file-server-4.3.6.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-items-service-4.3.7.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-server-4.3.7.jar
 
-bash file-items-service-4.3.6.jar --spring.profiles.active=db-h2
-bash file-server-4.3.6.jar --app.upload.path=./path/to/file-storage
+bash file-items-service-4.3.7.jar --spring.profiles.active=db-h2
+bash file-server-4.3.7.jar --app.upload.path=./path/to/file-storage
 ```
 
 #### or for simplicity use special h2 automation shell-script
 
 ```bash
 # bash shell script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -114,7 +103,7 @@ bash application-h2.bash clean ./path/to/file-storage
 
 ```cmd
 @rem cmd script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.6/application-h2.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application-h2.cmd
 
 @rem start
 application-h2.cmd start path\to\file-storage
