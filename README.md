@@ -1,7 +1,7 @@
 streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
 =====================
 
-_latest VERSION: 4.3.7_
+_latest VERSION: 4.3.8_
 
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
@@ -19,16 +19,16 @@ Read [reference documentation](http://daggerok.github.io/streaming-file-server)
 
 ```bash
 # database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/docker-compose.yml
 docker-compose -f docker-compose.yml up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-items-service-4.3.7.jar
-bash file-items-service-4.3.7.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/file-items-service-4.3.8.jar
+bash file-items-service-4.3.8.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-server-4.3.7.jar
-bash file-server-4.3.7.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/file-server-4.3.8.jar
+bash file-server-4.3.8.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose -f docker-compose.yml down -v
@@ -37,7 +37,7 @@ docker-compose -f docker-compose.yml down -v
 **or simply using shell-script**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -53,7 +53,7 @@ bash application.bash clean ./path/to/file-storage
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/application.cmd**
 
 ```cmd
 @rem start
@@ -73,18 +73,18 @@ installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and o
 **with h2 in-memory database**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-items-service-4.3.7.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/file-server-4.3.7.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/file-items-service-4.3.8.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/file-server-4.3.8.jar
 
-# bash file-items-service-4.3.7.jar --spring.profiles.active=db-h2 # or just:
-bash file-items-service-4.3.7.jar
-bash file-server-4.3.7.jar --app.upload.path=./path/to/file-storage
+# bash file-items-service-4.3.8.jar --spring.profiles.active=db-h2 # or just:
+bash file-items-service-4.3.8.jar
+bash file-server-4.3.8.jar --app.upload.path=./path/to/file-storage
 ```
 
 **or simply shell script for h2**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -96,7 +96,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ```
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.7/application-h2.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.8/application-h2.cmd**
 
 ```cmd
 @rem start
@@ -199,7 +199,7 @@ docker system prune -af --volumes
 ### stack
 
 - spring
-  - spring-boot 2.0.6.RELEASE ~~1.x~~
+  - spring-boot 2.1.1.RELEASE ~~1.x~~
   - ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data-jpa
   - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
   - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
