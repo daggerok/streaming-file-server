@@ -18,7 +18,7 @@ java file-items-service-{project-version}.jar --spring.profiles.active=db-h2
 ----
 
 ////
-with special chars, will show {project-version}, but not substitution, like 4.3.7
+with special chars, will show {project-version}, but not substitution, like 4.3.8
 
 .and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file server]:
 [source,bash]

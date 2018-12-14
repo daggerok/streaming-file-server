@@ -5,7 +5,7 @@
 #LOG_LEVEL=debug
 
 # app info
-VERSION=4.3.7
+VERSION=4.3.8
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
 RELEASE_BASE_PATH="https://github.com/daggerok/streaming-file-server/releases/download/${VERSION}"
