@@ -1,6 +1,5 @@
 buildscript {
   ext {
-    applicationVersion = '4.3.8'
     applicationGroup = 'com.github.daggerok'
     applicationName = 'streaming-file-server'
 
@@ -58,8 +57,8 @@ plugins {
 }
 
 allprojects {
+  version = project.findProperty('ogr.gradle.project.version') ?: 'undefined'
   group = project.applicationGroup
-  version = project.applicationVersion
   defaultTasks 'clean', 'build'
 }
 
