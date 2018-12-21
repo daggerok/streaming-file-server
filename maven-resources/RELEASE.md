@@ -6,17 +6,13 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- add `maven-version-plugin` for easier version management 
-  and `maven-resources-plugin` for version substitution
 - versions upgrade:
 
-  |  dependency | version       |
-  |------------:|:--------------|
-  | spring-boot | 2.1.1.RELEASE |
-  |   popper.js | 1.14.6        |
-  |    selenide | 5.1.0         |
-  |      gradle | 5.1-rc-1      |
-  |       jruby | 9.2.4.1       |
+  |   dependency | version  |
+  |-------------:|:---------|
+  |        maven | 3.6.0    |
+  |       gradle | 5.1-rc-2 |
+  | font-awesome | 5.6.1    |
 
 ## Installation
 

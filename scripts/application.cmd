@@ -19,7 +19,7 @@ SET InfoLogLevel=0
 
 SET ApplicationPath="app"
 
-SET Version=4.3.8
+SET Version=3.4.9
 SET DockerComposeFile=docker-compose.yml
 SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %ApplicationPath%\%DockerComposeFile%
