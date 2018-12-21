@@ -170,13 +170,7 @@ docker system prune -af --volumes
 
 ### version
 
-#### increment version
-
-```bash
-./mvnw -Pversions
-```
-
-#### set exact version
+#### set version
 
 ```bash
 ./mvnw versions:set -DnewVersion=${project.version}
