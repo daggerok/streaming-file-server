@@ -11,7 +11,7 @@ _version: ${project.version}_
   |   dependency | version  |
   |-------------:|:---------|
   |        maven | 3.6.0    |
-  |       gradle | 5.1-rc-2 |
+  |       gradle | 5.1-rc-3 |
   | font-awesome | 5.6.1    |
 
 ## Installation
