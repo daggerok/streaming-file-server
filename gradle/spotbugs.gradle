@@ -1,0 +1,69 @@
+/*
+buildscript {
+  ext {
+    spotbugsVersion = '1.6.8'
+    toolVersion = '3.1.10'
+  }
+}
+
+plugins {
+  id 'com.github.spotbugs' version '1.6.8' apply false
+  //// one more bug: 
+  //// SpotBugs HTML reports not working (generates XML instead)
+  //// when gradle lombok plugin also applied
+  //id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+}
+
+apply from: "$rootProject.projectDir/gradle/java.gradle"
+apply from: "$rootProject.projectDir/gradle/spotbugs.gradle"
+
+defaultTasks 'clean', 'check'
+*/
+
+buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+  }
+  dependencies {
+    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion"
+  }
+}
+
+allprojects {
+  apply plugin: 'com.github.spotbugs'
+  
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+  }
+  
+  dependencies {
+    compileOnly 'net.jcip:jcip-annotations:1.0'
+    compileOnly "com.github.spotbugs:spotbugs-annotations:$toolVersion"
+  }
+
+  def suffix = project.path.replaceAll(':', '-').replaceFirst('-', '')
+  def prefix = rootProject.buildDir.absolutePath
+  def path = "$prefix/spotbugs/$suffix" // customize reports location
+
+  spotbugs {
+    toolVersion = project.toolVersion
+    effort = 'max'
+    reportsDir = file("$path")
+    ignoreFailures = true // project.findProperty('ignoreBugs') != null // gradle -PignoreBugs ..
+  }
+
+  tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+      html {
+        enabled = true
+        impliesSubProjects = true
+        //// disabled on 1.6.8
+        //destination = "$path/index.html"
+      }
+      xml {
+        enabled = false
+      }
+    }
+    //pluginClasspath = project.configurations.spotbugsPlugins
+  }
+}
