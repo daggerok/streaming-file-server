@@ -1,18 +1,20 @@
 # streaming-file-server
-
 _version: ${project.version}_
 
 ## Java file server 
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
+- fix docker-compose postgres network name
+- add jacoco and spotbugs gradle multi-project build configs
 - versions upgrade:
 
-  |   dependency | version  |
-  |-------------:|:---------|
-  |        maven | 3.6.0    |
-  |       gradle | 5.1-rc-3 |
-  | font-awesome | 5.6.1    |
+  |             dependency | version |
+  |-----------------------:|:--------|
+  |             power mock | 2.0.0   |
+  |                  jruby | 9.2.5.0 |
+  |                 gradle | 5.1     |
+  | spotbugs-gradle-plugin | 1.6.9   |
 
 ## Installation
 

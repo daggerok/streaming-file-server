@@ -10,4 +10,8 @@ subprojects {
   bootJar {
     launchScript()
   }
+
+  apply from: "$rootProject.projectDir/gradle/spotbugs.gradle"
 }
+
+apply from: "$rootProject.projectDir/gradle/jacoco.gradle"

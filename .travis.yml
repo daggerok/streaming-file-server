@@ -35,6 +35,7 @@ before_install:
 script:
 # jgiven tests and docs
 - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
+- ./gradlew check jacocoTestReport jacocoTestCoverageVerification
 - ./gradlew -S -Pdebug clean check build >/dev/null
 
 - export APP_UPLOAD_PATH="/tmp/file-storage"

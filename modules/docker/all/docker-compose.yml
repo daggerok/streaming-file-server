@@ -1,7 +1,5 @@
 version: '2.1'
-
 services:
-
   postgres:
     extends:
       file: ../postgres/docker-compose.yml
@@ -10,8 +8,8 @@ services:
     networks:
       backing-services:
         aliases:
-        - file-items-service
-
+          - postgres
+          - db
   file-items-service:
     #image: 127.0.0.1:5000/daggerok/file-items-service
     build:
@@ -26,8 +24,10 @@ services:
     networks:
       backing-services:
         aliases:
-        - file-items-service
-
+          - file-items-service
+          - backend
+          - rest-api
+          - crud
   file-server:
     #image: 127.0.0.1:5000/daggerok/file-server
     build:
@@ -42,12 +42,14 @@ services:
       FILE_ITEMS_REST_SERVICE_PORT: 8001
     ports: ['8002:8002']
     volumes:
-    - ./build:/var/file-storage:rw
+      - ./build:/var/file-storage:rw
     networks:
       backing-services:
         aliases:
-        - file-server
-
+          - file-server
+          - file-storage
+          - frontend
+          - mvc
   nginx:
     #image: 127.0.0.1:5000/daggerok/nginx
     depends_on:
@@ -58,15 +60,15 @@ services:
     networks:
       backing-services:
         aliases:
-        - nginx
-        - proxy
-        - nginx-proxy
-        - nginx-reverse-proxy
+          - nginx
+          - proxy
+          - nginx-proxy
+          - reverse-proxy
+          - nginx-reverse-proxy
       public:
         aliases: []
     healthcheck:
       disable: true
-
 networks:
   backing-services:
     driver: bridge

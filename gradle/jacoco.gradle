@@ -1,0 +1,48 @@
+// read more: https://docs.gradle.org/current/userguide/jacoco_plugin.html
+// Also got some thoughts from here: https://gist.github.com/aalmiray/e6f54aa4b3803be0bcac
+
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '0.8.2'
+  }
+
+  jacocoTestReport {
+    def jacocoPath = "$rootProject.buildDir.absolutePath/jacoco"
+    def projectPath = project.path.replaceAll(':', '-').replaceFirst('-', '')
+    reports {
+      xml.enabled = false
+      csv.enabled = false
+      html.enabled = true
+      html.destination file("$jacocoPath/$projectPath")
+    }
+  }
+  build.dependsOn(jacocoTestReport)
+  jacocoTestReport.mustRunAfter(test)
+
+  jacocoTestCoverageVerification {
+    violationRules {
+      rule {
+        limit {
+          minimum = 0.2 // very low coverage, only 20%... try achieve at least 0.5
+        }
+      }
+
+      rule {
+        enabled = false
+        element = 'CLASS'
+        includes = ['org.gradle.*']
+
+        limit {
+          counter = 'LINE'
+          value = 'TOTALCOUNT'
+          maximum = 0.3
+        }
+      }
+    }
+  }
+  build.dependsOn(jacocoTestCoverageVerification)
+  jacocoTestCoverageVerification.mustRunAfter(test)
+}

@@ -5,7 +5,7 @@
 #LOG_LEVEL=debug
 
 # app info
-VERSION=3.4.9
+VERSION=4.3.10
 COMPOSE_FILE="docker-compose.yml"
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"

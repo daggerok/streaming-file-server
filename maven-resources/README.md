@@ -1,7 +1,5 @@
-streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
-=====================
-
-_latest VERSION: ${project.version}_
+# streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
+_version: ${project.version}_
 
 full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
@@ -12,6 +10,12 @@ Read [reference documentation](http://daggerok.github.io/streaming-file-server)
 - if you on windows, use scoop to install java and required command line tools.
 
 [**try it locally**](https://github.com/daggerok/streaming-file-server/releases)
+
+available commands:
+
+- start: `<application> start <storage>`
+- stop: `<application> stop`
+- clean: `<application> clean <storage>`
 
 ### Installation
 
@@ -168,6 +172,26 @@ for image in $(docker images -qa) ; do docker rmi -f $image ; done
 docker system prune -af --volumes
 ```
 
+### spotbugs
+
+```bash
+./gradlew check
+# or:
+./gradlew spotbugsMain spotbugsTest
+
+tree ./build/spotbugs
+```
+
+### jacoco
+
+```bash
+#./gradlew build
+# or:
+./gradlew check jacocoTestReport jacocoTestCoverageVerification
+
+open ./build/jacoco/modules-apps-file-server/index.html
+```
+
 ### version
 
 #### set version
@@ -186,6 +210,12 @@ docker system prune -af --volumes
 
 ```bash
 ./mvnw
+```
+
+### all together
+
+```bash
+./mvnw versions:set -DnewVersion=... ; ./mvnw -Pversions ; ./mvnw 
 ```
 
 <!--
