@@ -67,7 +67,7 @@ allprojects {
 }
 
 wrapper {
-  gradleVersion = '5.1-rc-3'
+  gradleVersion = '5.1'
   distributionType = Wrapper.DistributionType.BIN
 }
 
