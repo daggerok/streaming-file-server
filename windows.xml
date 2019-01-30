@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Untitled</title>
-<date>2019-01-09</date>
+<date>2019-01-30</date>
 </info>
 <preface>
 <title></title>
@@ -21,7 +21,7 @@ application.cmd stop
 application.cmd clean path\to\file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.10/application.cmd">application.cmd</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.11/application.cmd">application.cmd</link></simpara>
 <formalpara>
 <title>h2 in-memory database</title>
 <para>
@@ -35,7 +35,7 @@ application-h2.cmd stop
 application-h2.cmd clean path\to\file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.10/application-h2.cmd">application-h2.cmd</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.11/application-h2.cmd">application-h2.cmd</link></simpara>
 <simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
 </preface>
 </book>
