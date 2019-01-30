@@ -1,13 +1,13 @@
 # streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server)
-_version: 4.3.11_
+_version: 4.3.12_
 
 Full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
 
 Requirements:
 
-- minimum java 8 is required
-- with postgres: docker-ce on windows 10 is required
-- if you on windows, you can use `scoop` command line package management for java and other required tools installation
+- java 8 or later is required
+- install [Docker](https://docs.docker.com/install/) if you going to use postgres
+- you can use [`scoop` command line package manager](https://scoop.sh) on windows for java and other tools installation
 
 Read:
 

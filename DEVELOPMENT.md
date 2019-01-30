@@ -33,10 +33,16 @@ http -a user:password :8002
 
 ```bash
 ./gradelw clean assemble
+#docker-compose -f ./modules/docker/all/docker-compose.yml --project-name=docker up --build --force-recreate
+#docker-compose -f ./modules/docker/all/docker-compose.yml -p docker up --build --force-recreate
 docker-compose -f ./modules/docker/all/docker-compose.yml up --build --force-recreate
 ```
 
 **cleanup and remove everything**
+
+```bash
+./gradlew composeDown postgresDown allDown clean clear
+```
 
 NOTE: if you feel that changes take no effect, clean docker
 
@@ -79,7 +85,7 @@ open ./build/jacoco/modules-apps-file-server/index.html
 _set version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.11
+./mvnw versions:set -DnewVersion=4.3.12
 ```
 
 _process versions substitution_

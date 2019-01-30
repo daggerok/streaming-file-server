@@ -1,23 +1,16 @@
-version: "2.1"
+version: '2.1'
 services:
   postgres:
-    image: postgres:9.4-alpine
+    image: healthcheck/postgres:alpine
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    ports: ["5432:5432"]
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "$$POSTGRES_USER"]
-      timeout: 2s
-      retries: 14
-    #interval: 10s
-    restart: unless-stopped
-    #mem_limit: 786432000 # container limit: 700Mb (700 * 1024 * 1024)
+    ports: ['5432:5432']
     networks:
-      backing-services:
+      private.network.org:
         aliases:
-          - postgres
+          - postgres.private.network.org
 networks:
-  backing-services:
+  private.network.org:
     driver: bridge

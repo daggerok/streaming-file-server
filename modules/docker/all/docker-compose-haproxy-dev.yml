@@ -4,6 +4,7 @@ services:
     extends:
       file: ../postgres/docker-compose.yml
       service: postgres
+    ports: ['5432:5432']
     networks:
       private.network.org:
         aliases:
@@ -22,6 +23,7 @@ services:
         condition: service_started
     environment:
       DB_HOST: postgres.private.network.org
+    ports: ['8001:8001']
     networks:
       private.network.org:
         aliases:
@@ -41,14 +43,15 @@ services:
       APP_UPLOAD_PATH: /tmp
       FILE_ITEMS_REST_SERVICE_HOST: file-items-service.private.network.org
       FILE_ITEMS_REST_SERVICE_PORT: 8001
+    ports: ['8002:8002']
     volumes:
       - ./build:/var/file-storage:rw
     networks:
       private.network.org:
         aliases:
           - file-server.private.network.org
-  nginx:
-    build: ./nginx
+  haproxy:
+    build: ./haproxy
     depends_on:
       postgres:
         condition: service_healthy
@@ -62,11 +65,11 @@ services:
     networks:
       private.network.org:
         aliases:
-          - nginx
           - proxy
+          - haproxy
           - reverse-proxy
-          - nginx.private.network.org
           - proxy.private.network.org
+          - haproxy.private.network.org
           - reverse-proxy.private.network.org
       public.network.org:
         aliases: []
