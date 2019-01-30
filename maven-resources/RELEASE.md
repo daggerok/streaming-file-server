@@ -5,16 +5,12 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- versions upgrade:
-
-  |               dependency | version       |
-  |-------------------------:|:--------------|
-  |              spring-boot | 2.1.2.RELEASE |
-  |                   Gradle | 5.1.1         |
-  |     Gradle Lombok plugin | 2.0           |
-  |           SpotBugs tools | 3.1.11        |
-  |                   jGiven | 0.17.1        |
-  |             font-awesome | 5.6.3         |
+- update docker networks (`private.network.org` and `public.network.org`)
+- add haproxy docker configuration (`haproxy:1.9.3-alpine` image).
+  see `modules/docker/all/*haproxy*` for details
+- use newer `openjdk:8u191-jre-alpine3.8` docker image
+- use newer `healthcheck/postgres:alpine` docker image
+- use newer `nginx:1.15.8-alpine` docker image
 
 ## Installation
 
