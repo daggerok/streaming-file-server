@@ -1,0 +1,76 @@
+version: '2.1'
+services:
+  postgres:
+    extends:
+      file: ../postgres/docker-compose.yml
+      service: postgres
+    ports: ['5432:5432']
+    networks:
+      backing-services:
+        aliases:
+          - postgres
+          - db
+  file-items-service:
+    #image: 127.0.0.1:5000/daggerok/file-items-service
+    build:
+      context: ../../..
+      dockerfile: ./modules/docker/all/file-items-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+    ports: ['8001:8001']
+    networks:
+      backing-services:
+        aliases:
+          - file-items-service
+          - backend
+          - rest-api
+          - crud
+  file-server:
+    #image: 127.0.0.1:5000/daggerok/file-server
+    build:
+      context: ../../..
+      dockerfile: ./modules/docker/all/file-server/Dockerfile
+    depends_on:
+      file-items-service:
+        condition: service_healthy
+    environment:
+      APP_UPLOAD_PATH: /tmp
+      FILE_ITEMS_REST_SERVICE_HOST: file-items-service
+      FILE_ITEMS_REST_SERVICE_PORT: 8001
+    ports: ['8002:8002']
+    volumes:
+      - ./build:/var/file-storage:rw
+    networks:
+      backing-services:
+        aliases:
+          - file-server
+          - file-storage
+          - frontend
+          - mvc
+  nginx:
+    #image: 127.0.0.1:5000/daggerok/nginx
+    depends_on:
+      file-server:
+        condition: service_healthy
+    build: ./nginx
+    ports: ['80:80']
+    networks:
+      backing-services:
+        aliases:
+          - nginx
+          - proxy
+          - nginx-proxy
+          - reverse-proxy
+          - nginx-reverse-proxy
+      public:
+        aliases: []
+    healthcheck:
+      disable: true
+networks:
+  backing-services:
+    driver: bridge
+  public:
+    driver: bridge
