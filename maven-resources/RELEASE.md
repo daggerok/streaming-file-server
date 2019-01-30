@@ -5,16 +5,16 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- fix docker-compose postgres network name
-- add jacoco and spotbugs gradle multi-project build configs
 - versions upgrade:
 
-  |             dependency | version |
-  |-----------------------:|:--------|
-  |             power mock | 2.0.0   |
-  |                  jruby | 9.2.5.0 |
-  |                 gradle | 5.1     |
-  | spotbugs-gradle-plugin | 1.6.9   |
+  |               dependency | version       |
+  |-------------------------:|:--------------|
+  |              spring-boot | 2.1.2.RELEASE |
+  |                   Gradle | 5.1.1         |
+  |     Gradle Lombok plugin | 2.0           |
+  |           SpotBugs tools | 3.1.11        |
+  |                   jGiven | 0.17.1        |
+  |             font-awesome | 5.6.3         |
 
 ## Installation
 
