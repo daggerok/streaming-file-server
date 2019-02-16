@@ -85,7 +85,7 @@ open ./build/jacoco/modules-apps-file-server/index.html
 _set version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.12
+./mvnw versions:set -DnewVersion=4.3.13
 ```
 
 _process versions substitution_
