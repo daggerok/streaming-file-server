@@ -59,6 +59,7 @@ plugins {
   id 'org.ajoberstar.git-publish' version '2.0.0' /* '2.0.0-rc.2' *//* +0.3.0 +0.2.2 | -0.4.1 */ apply false
   id 'org.asciidoctor.convert' version '1.5.9.1' apply false // on windows my fail use instead: 1.5.8.1
   id 'com.avast.gradle.docker-compose' version '0.7.1' apply false // fail with 0.8.9 + asciidoctor ruby
+  // gradle -Dorg.gradle.jvmargs="-Xms2g -Xmx2g" -S dependencyUpdates -Drevision=release --parallel
 }
 
 allprojects {
