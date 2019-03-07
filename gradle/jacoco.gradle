@@ -2,16 +2,16 @@
 // Also got some thoughts from here: https://gist.github.com/aalmiray/e6f54aa4b3803be0bcac
 
 allprojects {
-  apply plugin: 'java'
-  apply plugin: 'jacoco'
+  apply plugin: "java"
+  apply plugin: "jacoco"
 
   jacoco {
-    toolVersion = '0.8.2'
+    toolVersion = "0.8.2"
   }
 
   jacocoTestReport {
     def jacocoPath = "$rootProject.buildDir.absolutePath/jacoco"
-    def projectPath = project.path.replaceAll(':', '-').replaceFirst('-', '')
+    def projectPath = project.path.replaceAll(":", "-").replaceFirst("-", "")
     reports {
       xml.enabled = false
       csv.enabled = false
@@ -32,12 +32,12 @@ allprojects {
 
       rule {
         enabled = false
-        element = 'CLASS'
-        includes = ['org.gradle.*']
+        element = "CLASS"
+        includes = ["org.gradle.*"]
 
         limit {
-          counter = 'LINE'
-          value = 'TOTALCOUNT'
+          counter = "LINE"
+          value = "TOTALCOUNT"
           maximum = 0.3
         }
       }

@@ -1,22 +1,22 @@
 dependencies {
   [
-      ':modules:libraries:props',
-      ':modules:libraries:web-security',
+      ":modules:libraries:props",
+      ":modules:libraries:web-security",
   ].each {
     annotationProcessor(project(it))
     implementation(project(it))
     compileOnly(project(it))
   }
 
-  implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-mustache'
-  implementation "org.apache.commons:commons-io:$commonsIoVersion"
+  implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-mustache")
+  implementation("org.apache.commons:commons-io:$commonsIoVersion")
 
-  implementation "org.webjars:jquery:$jqueryVersion"
-  implementation "org.webjars.bower:bootstrap:$bootstrapVersion"
-  implementation "org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion"
-  implementation "org.webjars:font-awesome:$fontAwesomeVersion"
-  implementation "org.webjars.npm:popper.js:$popperVersion"
+  implementation("org.webjars:jquery:$jqueryVersion")
+  implementation("org.webjars.bower:bootstrap:$bootstrapVersion")
+  implementation("org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion")
+  implementation("org.webjars:font-awesome:$fontAwesomeVersion")
+  implementation("org.webjars.npm:popper.js:$popperVersion")
 
-  runtime 'org.springframework.boot:spring-boot-devtools'
+  runtime("org.springframework.boot:spring-boot-devtools")
 }

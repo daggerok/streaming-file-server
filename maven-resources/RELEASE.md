@@ -5,19 +5,17 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
+- start Gradle Kotlin DSL migration
 - versions upgrade:
 
-  |                    dependency | version       |
-  |------------------------------:|:--------------|
-  |                   spring-boot | 2.1.3.RELEASE |
-  |                        gradle | 5.2.1         |
-  |                        lombok | 1.18.6        |
-  |          lombok gradle plugin | 2.1           |
-  | org.hibernate:hibernate-java8 | 5.4.1.Final   |
-  |     org.webjars.npm:popper.js | 1.14.7        |
-  |   org.webjars.bower:bootstrap | 4.3.1         |
-  |            org.webjars:jquery | 3.3.1-2       |
-  |      org.webjars:font-awesome | 5.7.1         |
+  |                                                                dependency | version |
+  |--------------------------------------------------------------------------:|:--------|
+  |                                                    com.codeborne:selenide | 5.2.0   |
+  | com.github.ben-manes.versions:com.github.ben-manes.versions.gradle.plugin | 0.21.0  |
+  |                     com.github.spotbugs:com.github.spotbugs.gradle.plugin | 1.6.10  |
+  |                                  com.github.spotbugs:spotbugs-annotations | 3.1.12  |
+  |                                                  org.webjars:font-awesome | 5.7.2   |
+  |                                     org.webjars.bower:bootstrap-fileinput | 4.5.2   |
 
 ### incompatible (not upgradeable) versions
 

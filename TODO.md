@@ -1,5 +1,15 @@
 # TODO
 
+- Migrate Gradle builds to [Kotlin DSL](https://www.youtube.com/watch?v=mAtrEPeAJSc)
+  - TODO: `./build.gradle` -> `./build.gradle.kts`
+  - TODO: `./modules/docker/build.gradle` -> `./modules/docker/build.gradle.kts`
+  - TODO: `./modules/apps/build.gradle` -> `./modules/apps/build.gradle.kts`
+  - TODO: `./modules/apps/file-server/build.gradle` -> `./modules/apps/file-server/build.gradle.kts`
+  - DONE: `./modules/apps/file-items-service/build.gradle` -> `./modules/apps/file-items-service/build.gradle.kts`
+  - DONE: `./modules/libraries/web-security/build.gradle` -> `./modules/libraries/web-security/build.gradle.kts`
+  - DONE: `./modules/libraries/props/build.gradle` -> `./modules/libraries/props/build.gradle.kts`
+  - DONE: `./modules/libraries/build.gradle` -> `./modules/libraries/build.gradle.kts`
+  - DONE: `./settings.gradle` -> `./settings.gradle.kts`
 - migrate from Mustache template engine to [Thymeleaf](https://www.thymeleaf.org/)
 - migrate from Bootstrap to [Materialize.css](https://materializecss.com/)
 - migrate ~~file-items-service and~~ file-server from mvc to [reactive webflux](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)

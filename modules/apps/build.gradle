@@ -1,17 +1,17 @@
 subprojects {
-  apply plugin: 'org.springframework.boot'
+  apply(plugin: "org.springframework.boot")
 
   dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
   }
 
   bootJar {
     launchScript()
   }
 
-  apply from: "$rootProject.projectDir/gradle/spotbugs.gradle"
+  apply(from: "$rootProject.projectDir/gradle/spotbugs.gradle")
 }
 
-apply from: "$rootProject.projectDir/gradle/jacoco.gradle"
+apply(from: "$rootProject.projectDir/gradle/jacoco.gradle")

@@ -1,5 +1,5 @@
-apply plugin: 'idea'
-allprojects*.apply plugin: 'cn.bestwu.propdeps-idea'
+apply(plugin: "idea")
+allprojects*.apply(plugin: "cn.bestwu.propdeps-idea")
 
 idea {
   module {
@@ -9,8 +9,8 @@ idea {
 }
 
 
-apply plugin: 'eclipse'
-allprojects*.apply plugin: 'cn.bestwu.propdeps-eclipse'
+apply(plugin: "eclipse")
+allprojects*.apply(plugin: "cn.bestwu.propdeps-eclipse")
 
 eclipse {
   classpath {
@@ -19,5 +19,5 @@ eclipse {
   }
 }
 
-allprojects*.apply plugin: 'maven'
-allprojects*.apply plugin: 'cn.bestwu.propdeps-maven'
+allprojects*.apply(plugin: "maven")
+allprojects*.apply(plugin: "cn.bestwu.propdeps-maven")
