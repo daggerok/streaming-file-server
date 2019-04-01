@@ -85,7 +85,7 @@ open ./build/jacoco/modules-apps-file-server/index.html
 _set version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.13
+./mvnw versions:set -DnewVersion=4.3.14
 ```
 
 _process versions substitution_
@@ -98,6 +98,11 @@ _increment current version_
 
 ```bash
 ./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} ; ./mvnw -Pversions
+```
+
+```batch
+mvnw build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}
+mvnw -Pversions
 ```
 
 **publish release**
