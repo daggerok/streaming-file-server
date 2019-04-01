@@ -11,3 +11,4 @@
 - code / architecture splitting into micro-services
 - migrate postgres from blocking to nonblocking (wrapped in Schedules.elastic())
 - migrate REST API from spring mvn to webflux
+- migrate Grade Groovy -> Kotlin DSL API
