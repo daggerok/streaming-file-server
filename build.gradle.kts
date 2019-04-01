@@ -1,32 +1,12 @@
-val applicationName: String by project
-
-val environmentFileDir: String by project
-val propertiesPluginEnvironmentNameProperty: String by project
-
-val asciidoctorjPdfVersion: String by project
-val jrubyCompleteVersion: String by project
-val groovyVersion: String by project
-
-val springBootVersion: String by project
-val lombokVersion: String by project
-val logbackVersion: String by project
-val slf4jVersion: String by project
-val vavrVersion: String by project
-val toolVersion: String by project
-val spotbugsVersion: String by project
-val jgivenVersion: String by project
-val selenideVersion: String by project
-val powermockitoVersion: String by project
-
 buildscript {
   val asciidoctorjPdfVersion: String by project
   val jrubyCompleteVersion: String by project
-  val groovyVersion: String by project
-
   dependencies {
     classpath("org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion")
     classpath("org.jruby:jruby-complete:$jrubyCompleteVersion")
   }
+
+  val groovyVersion: String by project
   configurations.all {
     resolutionStrategy {
       force("org.codehaus.groovy:groovy-all:$groovyVersion")
@@ -56,7 +36,6 @@ plugins {
 
 val applicationGroup: String by project
 val applicationVersion: String by project
-
 allprojects {
   group = applicationGroup
   version = applicationVersion
@@ -64,7 +43,6 @@ allprojects {
 }
 
 val gradleWrapperVersion: String by project
-
 tasks.withType<Wrapper> {
   gradleVersion = gradleWrapperVersion
   distributionType = Wrapper.DistributionType.BIN

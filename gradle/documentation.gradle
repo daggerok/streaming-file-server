@@ -68,8 +68,9 @@ gitPublish {
   //// bash gradlew clean asciidoctor docs \
   ////   -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
   ////   -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
-  //repoUri = 'https://github.com/daggerok/streaming-file-server.git'
-  repoUri = "git@github.com:daggerok/${rootProject.name}.git" as String
+  // gradlew asciidoctor docs -Dorg.ajoberstar.grgit.auth.username=daggerok -Dorg.ajoberstar.grgit.auth.password=pass
+  repoUri = "https://github.com/daggerok/${rootProject.name}.git" as String
+  //repoUri = "git@github.com:daggerok/${rootProject.name}.git" as String
   branch = 'gh-pages'
 
   contents {
