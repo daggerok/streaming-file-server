@@ -1,7 +1,7 @@
 # Stack
 
 - spring
-  - spring-boot 2.1.3.RELEASE ~~1.x~~
+  - migrate to latest spring-boot (2.1.3.RELEASE)
   - ~~QueryDSL~~, ~~spring-data-rest,~~ spring-data-jpa
   - cors: see modules/apps/file-items-service/src/main/java/daggerok/config/AppCfg.java
   - 404 fallback: see modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java
@@ -11,3 +11,4 @@
 - code / architecture splitting into micro-services
 - migrate postgres from blocking to nonblocking (wrapped in Schedules.elastic())
 - migrate REST API from spring mvn to webflux
+- introduce Gradle Kotlin DSL
