@@ -1,6 +1,4 @@
 val applicationName: String by project
-val applicationGroup: String by project
-val applicationVersion: String by project
 
 val environmentFileDir: String by project
 val propertiesPluginEnvironmentNameProperty: String by project
@@ -10,7 +8,6 @@ val jrubyCompleteVersion: String by project
 val groovyVersion: String by project
 
 val springBootVersion: String by project
-val commonsIoVersion: String by project
 val lombokVersion: String by project
 val logbackVersion: String by project
 val slf4jVersion: String by project
@@ -20,13 +17,6 @@ val spotbugsVersion: String by project
 val jgivenVersion: String by project
 val selenideVersion: String by project
 val powermockitoVersion: String by project
-val hibernateJava8Version: String by project
-val popperVersion: String by project
-val jqueryVersion: String by project
-val fontAwesomeVersion: String by project
-val bootstrapVersion: String by project
-val bootstrapFileInputVersion: String by project
-val gradleWrapperVersion: String by project
 
 buildscript {
   val asciidoctorjPdfVersion: String by project
@@ -64,11 +54,16 @@ plugins {
   // gradle -Dorg.gradle.jvmargs="-Xms2g -Xmx2g" -S dependencyUpdates -Drevision=release --parallel
 }
 
+val applicationGroup: String by project
+val applicationVersion: String by project
+
 allprojects {
   group = applicationGroup
   version = applicationVersion
   defaultTasks("clean", "build")
 }
+
+val gradleWrapperVersion: String by project
 
 tasks.withType<Wrapper> {
   gradleVersion = gradleWrapperVersion
