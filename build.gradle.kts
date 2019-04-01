@@ -28,9 +28,9 @@ plugins {
   id("com.ewerk.gradle.plugins.querydsl") version "1.0.10" apply false
   id("io.spring.dependency-management") version "1.0.7.RELEASE" apply false
 
-  id("org.ajoberstar.git-publish") version "2.1.1" /* 2.0.0 OK *//* "2.0.0-rc.2" *//* +0.3.0 +0.2.2 | -0.4.1 */ apply false
-  id("org.asciidoctor.convert") version "1.5.9.1" apply false // 2.0.0: failed, on windows my fail use instead: 1.5.8.1
-  id("com.avast.gradle.docker-compose") version "0.7.1" apply false // fail with 0.8.9 + asciidoctor ruby
+  id("org.ajoberstar.git-publish") version "2.1.1" apply false
+  id("org.asciidoctor.convert") version "1.5.9.1" apply false // on windows my fail, use instead: 1.5.8.1
+  id("com.avast.gradle.docker-compose") version "0.7.1" apply false // any other higher version will fail on asciidoctor task
   // gradle -Dorg.gradle.jvmargs="-Xms2g -Xmx2g" -S dependencyUpdates -Drevision=release --parallel
 }
 
