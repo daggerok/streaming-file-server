@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Untitled</title>
-<date>2019-02-25</date>
+<date>2019-04-01</date>
 </info>
 <preface>
 <title></title>
@@ -12,7 +12,7 @@
 <title>postgres in docker</title>
 <para>
 <programlisting language="bash" linenumbering="unnumbered"># get
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.13/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.14/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -24,12 +24,12 @@ bash application.bash stop
 bash application.bash clean ./path/to/file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.13/application.bash">application.bash</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.14/application.bash">application.bash</link></simpara>
 <formalpara>
 <title>h2 in-memory database</title>
 <para>
 <programlisting language="bash" linenumbering="unnumbered"># fetch
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.13/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.14/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -41,7 +41,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.13/application-h2.bash">application-h2.bash</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.14/application-h2.bash">application-h2.bash</link></simpara>
 <simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
 </preface>
 </book>
