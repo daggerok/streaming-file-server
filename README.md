@@ -12,7 +12,7 @@ Requirements:
 Read:
 
 - [Reference documentation](http://daggerok.github.io/streaming-file-server)
-- [Technology stack](./TODO.md)
 - [Installation guide](./INSTALL.md)
 - [Development guide](./DEVELOPMENT.md)
+- [Features](./FEATURES.md)
 - [TODO](./TODO.md)

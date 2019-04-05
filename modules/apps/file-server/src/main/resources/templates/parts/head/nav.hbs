@@ -1,9 +1,7 @@
 <header>
   <!--<nav class="navbar fixed-top navbar-expand-lg justify-content-between navbar-light bg-light">-->
   <nav class="navbar navbar navbar-light bg-light justify-content-between">
-
     <a class="navbar-brand" href="{{ctx}}/">Streaming File Server</a>
-
     {{#user}}
       &nbsp;
       <div class="navbar-text">
@@ -15,7 +13,6 @@
            href="{{ctx}}/disconnect"><i class="text-muted fa fa-sign-out"></i></a>
       </div>
     {{/user}}
-
     {{#user}}
       &nbsp;
       <form class="form-inline" method="post" action="{{downloadUrl}}">
@@ -24,7 +21,6 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search files</button>
       </form>
     {{/user}}
-
     &nbsp;
     <div class="navbar-text">
       <a class="text-muted" href="{{githubUrl}}">
@@ -33,5 +29,4 @@
     </div>
   </nav>
 </header>
-
 <main class="container-fluid">
