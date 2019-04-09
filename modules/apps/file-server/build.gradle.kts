@@ -24,6 +24,4 @@ dependencies {
   implementation("org.webjars.bower:bootstrap-fileinput:$bootstrapFileInputVersion")
   implementation("org.webjars:font-awesome:$fontAwesomeVersion")
   implementation("org.webjars.npm:popper.js:$popperVersion")
-
-  runtime("org.springframework.boot:spring-boot-devtools")
 }

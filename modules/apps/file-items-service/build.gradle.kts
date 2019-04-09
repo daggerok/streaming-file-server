@@ -11,7 +11,6 @@ dependencies {
 
   runtime("org.postgresql:postgresql")
   runtime("com.h2database:h2")
-  //runtime("org.springframework.boot:spring-boot-devtools")
 
   testImplementation("io.projectreactor:reactor-test")
 }
