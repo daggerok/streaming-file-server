@@ -5,13 +5,11 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- Remove net.saliman.properties Gradle plugin
-- Add Gradle version plugin Kotlin DSL API config
-- Versions upgrade:
-
-  |  dependency | version       |
-  |------------:|:--------------|
-  | spring-boot | 2.1.4.RELEASE |
+- Freeze versions for Asciidoctor PDF and JRuby (Add comments)
+- Split SpotBugs definition in a separate file
+- Disable Gradle warning mode (none)
+- Add Gradle JVM args
+- Remove force groovy version resolution strategy
 
 ### incompatible (not upgradeable) versions
 

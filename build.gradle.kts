@@ -1,18 +1,16 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
 buildscript {
   val asciidoctorjPdfVersion: String by project
   val jrubyCompleteVersion: String by project
-  dependencies {
-    classpath("org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion")
-    classpath("org.jruby:jruby-complete:$jrubyCompleteVersion")
+  val spotbugsVersion: String by project
+
+  repositories {
+    gradlePluginPortal()
   }
 
-  val groovyVersion: String by project
-  configurations.all {
-    resolutionStrategy {
-      force("org.codehaus.groovy:groovy-all:$groovyVersion")
-    }
+  dependencies {
+    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion")
+    classpath("org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion")
+    classpath("org.jruby:jruby-complete:$jrubyCompleteVersion")
   }
 }
 
@@ -20,7 +18,6 @@ plugins {
   idea
   maven
   eclipse
-  id("com.github.spotbugs") version "1.7.1"
   id("com.github.ben-manes.versions") version "0.21.0"
 
   id("org.ajoberstar.git-publish") version "2.1.1" apply false
@@ -57,20 +54,16 @@ apply(from = "${project.rootDir}/gradle/subprojects.gradle")
 apply(from = "${project.rootDir}/gradle/documentation.gradle")
 
 // gradle dependencyUpdates -Drevision=release --parallel
-tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("dependencyUpdates") {
   resolutionStrategy {
     componentSelection {
       all {
-        val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea")
+        val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
             .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
             .any { it.matches(candidate.version) }
         if (rejected) reject("Release candidate")
       }
     }
   }
-  //// optionals:
-  // checkForGradleUpdate = true
-  // outputFormatter = "plain" // "json" // "xml"
-  // outputDir = "build/dependencyUpdates"
-  // reportfileName = "report"
+  outputFormatter = "json"
 }
