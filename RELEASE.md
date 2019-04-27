@@ -1,23 +1,19 @@
 # streaming-file-server
-_version: 4.3.16_
+_version: 4.3.17_
 
 ## Java file server 
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- Freeze versions for Asciidoctor PDF and JRuby (Add comments)
-- Split SpotBugs definition in a separate file
-- Disable Gradle warning mode (none)
-- Add Gradle JVM args
-- Remove force groovy version resolution strategy
+Versions update: Gradle 5.4.1, gradle-lombok plugin 3.0.0, jquery, popper and powermock
 
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.1]
+    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.3]
     io.vavr:vavr [0.9.2 -> 1.0.0-alpha-2]
     org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin [1.5.9.1 -> 2.0.0]
-    org.jruby:jruby-complete [9.2.5.0 -> 9.2.6.0]
+    org.jruby:jruby-complete [9.2.5.0 -> 9.2.7.0]
 
 ## Installation
 
@@ -27,16 +23,16 @@ _version: 4.3.16_
 
 ```bash
 # docker compose file for postgres database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/docker-compose.yml
 docker-compose up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/file-items-service-4.3.16.jar
-java -jar file-items-service-4.3.16.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-items-service-4.3.17.jar
+java -jar file-items-service-4.3.17.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/file-server-4.3.16.jar
-java -jar file-server-4.3.16.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-server-4.3.17.jar
+java -jar file-server-4.3.17.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v
@@ -46,7 +42,7 @@ docker-compose down -v
 
 ```bash
 # bash script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -66,7 +62,7 @@ binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
 ```cmd
 @rem batch shell-script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/application.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/application.cmd
 
 @rem start
 application.cmd start path\to\file-storage
@@ -87,18 +83,18 @@ binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and of course j
 #### manual setup
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/file-items-service-4.3.16.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/file-server-4.3.16.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-items-service-4.3.17.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-server-4.3.17.jar
 
-bash file-items-service-4.3.16.jar --spring.profiles.active=db-h2
-bash file-server-4.3.16.jar --app.upload.path=./path/to/file-storage
+bash file-items-service-4.3.17.jar --spring.profiles.active=db-h2
+bash file-server-4.3.17.jar --app.upload.path=./path/to/file-storage
 ```
 
 #### or for simplicity use special h2 automation shell-script
 
 ```bash
 # bash shell script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -114,7 +110,7 @@ bash application-h2.bash clean ./path/to/file-storage
 
 ```cmd
 @rem cmd script
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.16/application-h2.cmd
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/application-h2.cmd
 
 @rem start
 application-h2.cmd start path\to\file-storage

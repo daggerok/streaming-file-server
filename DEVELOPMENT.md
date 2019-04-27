@@ -80,12 +80,20 @@ tree ./build/spotbugs
 open ./build/jacoco/modules-apps-file-server/index.html
 ```
 
+**maven version management**
+
+```bash
+./mvnw versions:display-property-updates
+./mvnw versions:display-dependency-updates
+./mvnw versions:display-plugin-updates
+```
+
 **version management**
 
 _set version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.16
+./mvnw versions:set -DnewVersion=4.3.17
 ```
 
 _process versions substitution_
