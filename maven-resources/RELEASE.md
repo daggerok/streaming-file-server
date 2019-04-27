@@ -5,19 +5,15 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-- Freeze versions for Asciidoctor PDF and JRuby (Add comments)
-- Split SpotBugs definition in a separate file
-- Disable Gradle warning mode (none)
-- Add Gradle JVM args
-- Remove force groovy version resolution strategy
+Versions update: Gradle 5.4.1, gradle-lombok plugin 3.0.0, jquery, popper and powermock
 
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.1]
+    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.3]
     io.vavr:vavr [0.9.2 -> 1.0.0-alpha-2]
     org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin [1.5.9.1 -> 2.0.0]
-    org.jruby:jruby-complete [9.2.5.0 -> 9.2.6.0]
+    org.jruby:jruby-complete [9.2.5.0 -> 9.2.7.0]
 
 ## Installation
 

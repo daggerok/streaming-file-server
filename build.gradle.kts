@@ -24,7 +24,7 @@ plugins {
   id("org.asciidoctor.convert") version "1.5.9.1" apply false // on windows my fail, use instead: 1.5.8.1
   id("com.avast.gradle.docker-compose") version "0.7.1" apply false // any other higher version will fail on adoc task
 
-  id("io.franzbecker.gradle-lombok") version "2.1" apply false
+  id("io.franzbecker.gradle-lombok") version "3.0.0" apply false
   id("org.springframework.boot") version "2.1.4.RELEASE" apply false
   id("com.ewerk.gradle.plugins.querydsl") version "1.0.10" apply false
   id("io.spring.dependency-management") version "1.0.7.RELEASE" apply false
