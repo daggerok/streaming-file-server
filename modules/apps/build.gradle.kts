@@ -1,6 +1,11 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+plugins {
+  java
+}
+
 subprojects {
+  this.apply(plugin = "java")
   apply(plugin = "org.springframework.boot")
 
   dependencies {

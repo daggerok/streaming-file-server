@@ -15,7 +15,7 @@ SETLOCAL ENABLEEXTENSIONS
 
 SET ApplicationPath="app"
 
-SET Version=4.3.17
+SET Version=4.3.18
 SET FileServerFile=file-server-%Version%.jar
 SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %ApplicationPath%\%FileServerFile%

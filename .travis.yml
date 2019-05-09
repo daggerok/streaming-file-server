@@ -1,8 +1,14 @@
+notifications:
+  email: false
+git:
+  quiet: true
+  depth: 1
 service:
   - docker
 language: java
 jdk: openjdk8
 node_js: lts/*
+python: 3
 addons:
   apt:
     packages:
@@ -25,7 +31,7 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   #
-  - sudo pip install --upgrade pip docker-compose httpie >/dev/null 2>&1
+  - sudo pip install docker-compose httpie >/dev/null 2>&1
   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
   - stop_any 80 8001 8002 8080 5432
 script:
@@ -44,10 +50,10 @@ script:
   - wait_for 8001
   - bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
   - wait_for 8002
-  - http --auth user:password :8001/actuator/health
+  - http --auth user:password :8001/actuator/health | jq '.'
   - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
   - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/api/v1/files | jq '.'
   - http --auth user:password :8002/
   - stop_any 80 8002 8001 8080 5432
   - ./gradlew postgresDown >/dev/null
@@ -58,10 +64,10 @@ script:
   - wait_for 8001
   - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
   - wait_for 8002
-  - http --auth user:password :8001/actuator/health
+  - http --auth user:password :8001/actuator/health | jq '.'
   - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
   - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/api/v1/files | jq '.'
   - http --auth user:password :8002/
   - stop_any 80 8002 8001 8080 5432
   #
@@ -77,10 +83,10 @@ script:
   - wait_for 8001
   - sudo service file-server                                  start
   - wait_for 8002
-  - http --auth user:password :8001/actuator/health
-  - http --auth user:password :8002/actuator/health
+  - http --auth user:password :8001/actuator/health | jq '.'
+  - http --auth user:password :8002/actuator/health | jq '.'
   - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/api/v1/files | jq '.'
   - http --auth user:password :8002/
   - sudo service file-server                                  stop
   - sudo service file-items-service                           stop
@@ -125,8 +131,8 @@ before_deploy:
   - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
   - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
   - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-  - http --auth user:password :8001/api/v1/file-items
-  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8001/api/v1/file-items | jq '.'
+  - http --auth user:password :8002/api/v1/files | jq '.'
   - yes | bash ./scripts/application.bash clean build
   #
   # test published release by using scripts/application-h2.bash
@@ -136,7 +142,7 @@ before_deploy:
   - http --auth user:password :8001/actuator/health
   - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
   - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-  - http --auth user:password :8002/api/v1/files
+  - http --auth user:password :8002/api/v1/files | jq '.'
   - http --auth user:password :8002/
   - yes | bash ./scripts/application-h2.bash clean build
   #

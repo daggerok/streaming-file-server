@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.17</version>
+  <version>4.3.18</version>
 
   <properties>
     <java.version>1.8</java.version>
@@ -35,15 +35,11 @@
     <hibernate.java8.version>5.4.2.Final</hibernate.java8.version>
     <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
     <jruby.complete.version>9.2.5.0</jruby.complete.version><!-- freeze version! 9.1.13.0 is also works, but 9.2.6.0 and 9.2.7.0 are incompatible -->
-    <groovy.version>2.5.3</groovy.version>
     <popper.version>1.15.0</popper.version>
     <bootstrap.version>4.3.1</bootstrap.version>
     <jquery.version>3.4.0</jquery.version>
     <font.awesome.version>5.8.1</font.awesome.version>
     <bootstrap.file.input.version>4.5.2</bootstrap.file.input.version>
-
-    <org.gradle.warning.mode>none</org.gradle.warning.mode>
-    <org.gradle.jvmargs>-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</org.gradle.jvmargs>
   </properties>
 
   <scm>
@@ -56,6 +52,9 @@
   <build>
     <defaultGoal>exec:exec de.jutzig:github-release-plugin:1.1.1:release</defaultGoal>
 
+    <!--
+      ./mvnw versions:display-dependency-updates versions:display-property-updates versions:display-plugin-updates
+    -->
     <plugins>
       <plugin>
       <groupId>org.codehaus.mojo</groupId>
