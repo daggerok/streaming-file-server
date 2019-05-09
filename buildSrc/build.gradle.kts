@@ -14,6 +14,6 @@ idea {
   }
 }
 
-//tasks.withType(Jar::class.java) {
-//  isEnabled = false
-//}
+kotlinDslPluginOptions {
+  experimentalWarning.set(false)
+}

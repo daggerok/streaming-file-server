@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Globals {
   object Project {
-    const val version = "4.3.18"
+    const val version = "4.3.19"
     const val groupId = "com.github.daggerok"
     const val artifactId = "streaming-file-server"
   }
@@ -11,17 +11,17 @@ object Globals {
 
   const val vavrVersion = "0.10.0"
   const val slf4jVersion = "1.7.26"
-  const val jqueryVersion = "3.4.0"
+  const val jqueryVersion = "3.4.1"
   const val popperVersion = "1.15.0"
   const val logbackVersion = "1.2.3"
-  const val lombokVersion = "1.18.6"
+  const val lombokVersion = "1.18.8"
   const val jgivenVersion = "0.17.1"
-  const val selenideVersion = "5.2.2"
+  const val selenideVersion = "5.2.3"
   const val bootstrapVersion = "4.3.1"
   const val commonsIoVersion = "1.3.2"
   const val fontAwesomeVersion = "5.8.1"
   const val powermockitoVersion = "2.0.2"
-  const val bootstrapFileInputVersion = "4.5.2"
+  const val bootstrapFileInputVersion = "5.0.1"
   const val springBootVersion = "2.1.4.RELEASE"
   const val hibernateJava8Version = "5.4.2.Final"
 

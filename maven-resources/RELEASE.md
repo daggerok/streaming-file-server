@@ -5,14 +5,19 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-Use Gradle buildSrc
+Update versions:
+
+* jquery: 3.4.0 -> 3.4.1
+* lombok: 1.18.6 -> 1.18.8
+* selenide: 5.2.2 -> 5.2.3
+* bootstrapFileInput: 4.5.2 -> 5.0.1
 
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.3]
+    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.4]
     io.vavr:vavr [0.9.2 -> 1.0.0-alpha-2]
-    org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin [1.5.9.1 -> 2.0.0]
+    org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin [1.5.9.1 -> 2.2.0]
     org.jruby:jruby-complete [9.2.5.0 -> 9.2.7.0]
 
 ## Installation
