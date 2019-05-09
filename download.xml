@@ -4,26 +4,26 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Untitled</title>
-<date>2019-04-27</date>
+<date>2019-05-09</date>
 </info>
 <preface>
 <title></title>
 <formalpara>
-<title>if you have docker installed and wanna use postgres, then <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/docker-compose.yml">download docker-compose.yml file</link></title>
+<title>if you have docker installed and wanna use postgres, then <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/docker-compose.yml">download docker-compose.yml file</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/docker-compose.yml</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/docker-compose.yml</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-items-service-4.3.17.jar">file items service</link></title>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/file-items-service-4.3.18.jar">file items service</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-items-service-4.3.17.jar</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/file-items-service-4.3.18.jar</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-server-4.3.17.jar">file server</link></title>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/file-server-4.3.18.jar">file server</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.17/file-server-4.3.17.jar</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.18/file-server-4.3.18.jar</programlisting>
 </para>
 </formalpara>
 </preface>
