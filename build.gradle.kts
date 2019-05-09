@@ -1,16 +1,12 @@
 buildscript {
-  val asciidoctorjPdfVersion: String by project
-  val jrubyCompleteVersion: String by project
-  val spotbugsVersion: String by project
-
   repositories {
     gradlePluginPortal()
   }
 
   dependencies {
-    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion")
-    classpath("org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion")
-    classpath("org.jruby:jruby-complete:$jrubyCompleteVersion")
+    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.Gradle.Plugin.spotbugsVersion}")
+    classpath("org.asciidoctor:asciidoctorj-pdf:${Globals.Gradle.Plugin.asciidoctorjPdfVersion}")
+    classpath("org.jruby:jruby-complete:${Globals.Gradle.Plugin.jrubyCompleteVersion}")
   }
 }
 
@@ -18,33 +14,46 @@ plugins {
   idea
   maven
   eclipse
-  id("com.github.ben-manes.versions") version "0.21.0"
-
-  id("org.ajoberstar.git-publish") version "2.1.1" apply false
-  id("org.asciidoctor.convert") version "1.5.9.1" apply false // on windows my fail, use instead: 1.5.8.1
-  id("com.avast.gradle.docker-compose") version "0.7.1" apply false // any other higher version will fail on adoc task
-
-  id("io.franzbecker.gradle-lombok") version "3.0.0" apply false
-  id("org.springframework.boot") version "2.1.4.RELEASE" apply false
-  id("com.ewerk.gradle.plugins.querydsl") version "1.0.10" apply false
-  id("io.spring.dependency-management") version "1.0.7.RELEASE" apply false
-  id("cn.bestwu.propdeps-eclipse") version "0.0.10"
-  id("cn.bestwu.propdeps-maven") version "0.0.10"
-  id("cn.bestwu.propdeps-idea") version "0.0.10"
-  id("cn.bestwu.propdeps") version "0.0.10"
+  id("com.github.ben-manes.versions") version Globals.Gradle.Plugin.versionsVersion
+  id("org.ajoberstar.git-publish") version Globals.Gradle.Plugin.gitPublishVersion apply false
+  id("org.asciidoctor.convert") version Globals.Gradle.Plugin.asciidoctorjConvertVersion apply false
+  id("com.avast.gradle.docker-compose") version Globals.Gradle.Plugin.dockerComposeVersion apply false
+  id("io.franzbecker.gradle-lombok") version Globals.Gradle.Plugin.lombokVersion
+  id("org.springframework.boot") version Globals.springBootVersion apply false
+  id("com.ewerk.gradle.plugins.querydsl") version Globals.Gradle.Plugin.querydslVersion apply false
+  id("io.spring.dependency-management") version Globals.Gradle.Plugin.dependencyManagementVersion
+  id("cn.bestwu.propdeps-eclipse") version Globals.Gradle.Plugin.propdepsVersion
+  id("cn.bestwu.propdeps-maven") version Globals.Gradle.Plugin.propdepsVersion
+  id("cn.bestwu.propdeps-idea") version Globals.Gradle.Plugin.propdepsVersion
+  id("cn.bestwu.propdeps") version Globals.Gradle.Plugin.propdepsVersion
 }
 
-val applicationGroup: String by project
-val applicationVersion: String by project
+extra["javaVersion"] = Globals.javaVersion
+extra["vavrVersion"] = Globals.vavrVersion
+extra["lombokVersion"] = Globals.lombokVersion
+extra["jqueryVersion"] = Globals.jqueryVersion
+extra["popperVersion"] = Globals.popperVersion
+extra["jgivenVersion"] = Globals.jgivenVersion
+extra["logbackVersion"] = Globals.logbackVersion
+extra["selenideVersion"] = Globals.selenideVersion
+extra["bootstrapVersion"] = Globals.bootstrapVersion
+extra["commonsIoVersion"] = Globals.commonsIoVersion
+extra["springBootVersion"] = Globals.springBootVersion
+extra["toolVersion"] = Globals.Gradle.Plugin.toolVersion
+extra["fontAwesomeVersion"] = Globals.fontAwesomeVersion
+extra["powermockitoVersion"] = Globals.powermockitoVersion
+extra["hibernateJava8Version"] = Globals.hibernateJava8Version
+extra["spotbugsVersion"] = Globals.Gradle.Plugin.spotbugsVersion
+extra["bootstrapFileInputVersion"] = Globals.bootstrapFileInputVersion
+
 allprojects {
-  group = applicationGroup
-  version = applicationVersion
+  group = Globals.Project.groupId
+  version = Globals.Project.version
   defaultTasks("clean", "build")
 }
 
-val gradleWrapperVersion: String by project
 tasks.withType<Wrapper> {
-  gradleVersion = gradleWrapperVersion
+  gradleVersion = Globals.Gradle.wrapperVersion
   distributionType = Wrapper.DistributionType.BIN
 }
 

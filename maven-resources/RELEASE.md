@@ -5,7 +5,7 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-Versions update: Gradle 5.4.1, gradle-lombok plugin 3.0.0, jquery, popper and powermock
+Use Gradle buildSrc
 
 ### incompatible (not upgradeable) versions
 
