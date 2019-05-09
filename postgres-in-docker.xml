@@ -15,10 +15,10 @@
 docker-compose up -d
 
 # file-items data service
-java -jar file-items-service-4.3.18.jar --spring.profiles.active=db-pg
+java -jar file-items-service-4.3.19.jar --spring.profiles.active=db-pg
 
 # file server
-java -jar file-server-4.3.18.jar --app.upload.path=./path/to/file-storage
+java -jar file-server-4.3.19.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v</programlisting>
