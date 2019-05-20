@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class FilesRestResource {
 
-  final FileService fileService;
+  private final FileService fileService;
 
   @GetMapping("/api/v1/files")
   public List<FileItem> get() {

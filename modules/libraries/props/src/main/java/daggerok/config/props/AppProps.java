@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class AppProps {
 
-  public Config upload;
-  public Config download;
-  public Config github;
+  private Config upload, download, github;
 
   @Data
   public static class Config {
-    public String path, url;
+    private String path, url;
   }
 }

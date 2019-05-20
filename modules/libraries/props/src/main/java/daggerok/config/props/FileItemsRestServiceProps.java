@@ -8,8 +8,5 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "file-items-rest-service")
 public class FileItemsRestServiceProps {
-
-  private static final long serialVersionUID = 5365578966298764816L;
-
-  String url;
+  private String url;
 }

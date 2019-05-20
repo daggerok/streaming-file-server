@@ -21,47 +21,33 @@ import static lombok.AccessLevel.NONE;
 public class FileItem extends AbstractAuditEntity {
 
   private static final long serialVersionUID = -6455969576919191029L;
+  private static final int Kib = 1024;
+  private static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
 
   @Id
   @Setter(NONE)
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = SEQUENCE, generator = "fileItemSeq")
   @SequenceGenerator(name = "fileItemSeq", sequenceName = "file_item_id_seq", allocationSize = 1)
-  Long id;
+  private Long id;
 
-  @NonNull
-  String path;
-
-  @NonNull
-  String filename;
-
-  String extension;
-
-  @NonNull
-  String prettySize;
-
-  @NonNull
-  Long size;
+  @NonNull private String path;
+  @NonNull private String filename;
+  private String extension;
+  @NonNull private String prettySize;
+  @NonNull private Long size;
 
   @NonNull
   @Enumerated(STRING)
-  FileType fileType;
+  private FileType fileType;
 
-  @Version
-  Long version;
-
-  String owner;
+  @Version private Long version;
+  private String owner;
 
   @Transient
   public boolean isFile() {
     return FILE.equals(this.fileType);
   }
-
-  @Transient
-  private static final int Kib = 1024;
-
-  @Transient
-  private static final long NORMAL_FILE_SIZE = 2 * Kib * Kib;
 
   @Transient
   public boolean isLarge() {

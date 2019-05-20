@@ -1,18 +1,17 @@
 package daggerok.service.util;
 
+import io.vavr.collection.HashMap;
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-import static java.util.Collections.singletonMap;
-import static java.util.Optional.ofNullable;
 import static lombok.AccessLevel.PRIVATE;
 
 @Slf4j
@@ -24,37 +23,26 @@ public class SecurityUtil {
 
   private static final String profileUrlKey = "profileUrl";
   private static final String profileUrlValue = "api/v1/users/profile";
-  private static final Map<String, String> result = new HashMap<>(singletonMap(profileUrlKey, profileUrlValue));
 
   public static Map<String, String> displayName() {
-
-    result.put(displayName, anonymousFriendlyName);
-    ofNullable(SecurityContextHolder.getContext().getAuthentication()).ifPresent(auth -> {
-
-      if (auth instanceof AnonymousAuthenticationToken) {
-
-        result.put(displayName, auth.getName());
-
-      } else {
-
-        val username = Try.of(() -> (UserDetails) SecurityContextHolder.getContext()
-                                                                       .getAuthentication()
-                                                                       .getPrincipal())
-                          .map(UserDetails::getUsername)
-                          .getOrElseGet(throwable -> null);
-
-        ofNullable(username).ifPresent(u -> result.put(displayName, u));
-      }
-    });
-
-    return result;
+    return HashMap.of(profileUrlKey, profileUrlValue,
+                      displayName, Option.of(SecurityContextHolder.getContext())
+                                         .map(SecurityContext::getAuthentication)
+                                         .map(auth -> (auth instanceof UserDetails)
+                                             ? ((UserDetails) auth).getUsername()
+                                             : auth.getName())
+                                         .getOrElse(() -> anonymousFriendlyName))
+                  .toJavaMap();
   }
 
-  public static void disconnect() {
-
+  public static void disconnect(HttpServletResponse resp) {
     Try.run(() -> SecurityContextHolder.getContext()
                                        .getAuthentication()
                                        .setAuthenticated(false))
-       .onFailure(throwable -> log.error("disconnection error: {}", throwable.getLocalizedMessage(), throwable));
+       .onFailure(e -> log.error("disconnection error: {}", e.getLocalizedMessage(), e));
+
+    log.debug("user is authenticated: {}", SecurityContextHolder.getContext()
+                                                                .getAuthentication()
+                                                                .isAuthenticated());
   }
 }

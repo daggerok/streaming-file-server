@@ -59,35 +59,57 @@ script:
   - export APP_UPLOAD_PATH="/tmp/file-storage"
   - mkdir -p ${APP_UPLOAD_PATH}
   #
-  # install as linux service
- #- ./gradlew clean assemble postgresUp >/dev/null
- #- cp -Rf ./modules/apps/file-server/build/libs              "${APP_UPLOAD_PATH}/"
- #- mv -f ./modules/apps/file-items-service/build/libs/*.jar  /tmp/file-items-service.jar
- #- echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-items-service.conf
- #- sudo ln -s /tmp/file-items-service.jar                    /etc/init.d/file-items-service
- #- ls -lah /etc/init.d/ /tmp/ | grep file
- #- sudo service file-items-service                           start
- #- sudo tail -f /var/log/file-items-service.log &
- #- wait_for 8001
- #- sleep 3s
- #- mv -f ./modules/apps/file-server/build/libs/*.jar         /tmp/file-server.jar
- #- echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-server.conf
- #- sudo ln -s /tmp/file-server.jar                           /etc/init.d/file-server
- #- ls -lah /etc/init.d/ /tmp/ | grep file
- #- sudo service file-server                                  start
- #- sudo tail -f /var/log/file-server.log &
- #- wait_for 8002
- #- sleep 3s
- #- http --auth user:password :8001/actuator/health
- #- http --auth user:password :8002/actuator/health
- #- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
- #- http --auth user:password :8002/api/v1/files
- #- http --auth user:password :8002/
- #- sudo service file-server                                  stop
- #- sudo service file-items-service                           stop
- #- ./gradlew postgresDown >/dev/null
- #- unset SPRING_PROFILES_ACTIVE
- #- stop_any 80 8002 8001 8080 5432
+#  # install as linux service: travis is not supports spring-boot installations, so we will be using docker instead
+#  - ./gradlew clean assemble postgresUp >/dev/null
+#  - cp -Rf ./modules/apps/file-server/build/libs              "${APP_UPLOAD_PATH}/"
+#  - mv -f ./modules/apps/file-items-service/build/libs/*.jar  /tmp/file-items-service.jar
+#  - echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-items-service.conf
+#  - sudo ln -s /tmp/file-items-service.jar                    /etc/init.d/file-items-service
+#  - ls -lah /etc/init.d/ /tmp/ | grep file
+#  - sudo service file-items-service                           start
+#  - sudo tail -f /var/log/file-items-service.log &
+#  - wait_for 8001
+#  - sleep 3s
+#  - mv -f ./modules/apps/file-server/build/libs/*.jar         /tmp/file-server.jar
+#  - echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-server.conf
+#  - sudo ln -s /tmp/file-server.jar                           /etc/init.d/file-server
+#  - ls -lah /etc/init.d/ /tmp/ | grep file
+#  - sudo service file-server                                  start
+#  - sudo tail -f /var/log/file-server.log &
+#  - wait_for 8002
+#  - sleep 3s
+#  - http --auth user:password :8001/actuator/health
+#  - http --auth user:password :8002/actuator/health
+#  - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+#  - http --auth user:password :8002/api/v1/files
+#  - http --auth user:password :8002/
+#  - sudo service file-server                                  stop
+#  - sudo service file-items-service                           stop
+#  - ./gradlew postgresDown >/dev/null
+#  - unset SPRING_PROFILES_ACTIVE
+#  - stop_any 80 8002 8001 8080 5432
+  #
+  - ./gradlew -b ./modules/apps/build.gradle.kts clean
+  - ./gradlew -b ./modules/apps/build.gradle.kts assemble
+  #
+  - docker network create --attachable app || echo 'cannot create docker network:\ app'
+  #
+  - docker build --no-cache -t daggerok/file-items-service -f linux-services/file-items-service/Dockerfile .
+  - docker run -d --rm --net app --name file-items-service daggerok/file-items-service
+  - wait_healthy_docker_containers 1
+  #
+  - docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
+  - docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
+  - wait_healthy_docker_containers 2
+  #
+  - http --auth user:password :80/actuator/health
+  - http --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
+  - http --auth user:password :80/api/v1/files
+  - http --auth user:password :80/
+  #
+  - docker rm -f -v file-server file-items-service
+  - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
+  - stop_any 80 8001 8002
   #
   # jGiven tests and docs
   - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null

@@ -18,11 +18,8 @@ import java.util.TimeZone;
 })
 @SpringBootApplication
 public class FileServer {
-
   public static void main(final String[] args) {
-
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-
     SpringApplication.run(FileServer.class, args)
                      .registerShutdownHook();
   }

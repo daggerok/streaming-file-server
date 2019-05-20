@@ -14,7 +14,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -29,23 +30,23 @@ public abstract class AbstractAuditEntity implements Serializable {
 
   private static final long serialVersionUID = 9207056121666919093L;
 
-/*
+  /*
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
-*/
+  */
 
   @CreatedDate
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
   @LastModifiedDate
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  LocalDateTime updatedAt;
+  private LocalDateTime updatedAt;
 }

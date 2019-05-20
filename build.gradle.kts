@@ -14,12 +14,12 @@ plugins {
   idea
   maven
   eclipse
+  id("io.freefair.lombok") version Globals.Gradle.Plugin.lombokVersion
+  id("org.springframework.boot") version Globals.springBootVersion apply false
   id("com.github.ben-manes.versions") version Globals.Gradle.Plugin.versionsVersion
   id("org.ajoberstar.git-publish") version Globals.Gradle.Plugin.gitPublishVersion apply false
   id("org.asciidoctor.convert") version Globals.Gradle.Plugin.asciidoctorjConvertVersion apply false
   id("com.avast.gradle.docker-compose") version Globals.Gradle.Plugin.dockerComposeVersion apply false
-  id("io.franzbecker.gradle-lombok") version Globals.Gradle.Plugin.lombokVersion
-  id("org.springframework.boot") version Globals.springBootVersion apply false
   id("com.ewerk.gradle.plugins.querydsl") version Globals.Gradle.Plugin.querydslVersion apply false
   id("io.spring.dependency-management") version Globals.Gradle.Plugin.dependencyManagementVersion
   id("cn.bestwu.propdeps-eclipse") version Globals.Gradle.Plugin.propdepsVersion
@@ -31,6 +31,7 @@ plugins {
 extra["javaVersion"] = Globals.javaVersion
 extra["vavrVersion"] = Globals.vavrVersion
 extra["lombokVersion"] = Globals.lombokVersion
+extra["lombok.version"] = Globals.lombokVersion
 extra["jqueryVersion"] = Globals.jqueryVersion
 extra["popperVersion"] = Globals.popperVersion
 extra["jgivenVersion"] = Globals.jgivenVersion
@@ -47,8 +48,8 @@ extra["spotbugsVersion"] = Globals.Gradle.Plugin.spotbugsVersion
 extra["bootstrapFileInputVersion"] = Globals.bootstrapFileInputVersion
 
 allprojects {
-  group = Globals.Project.groupId
   version = Globals.Project.version
+  group = Globals.Project.groupId
   defaultTasks("clean", "build")
 }
 
@@ -74,5 +75,5 @@ tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("
       }
     }
   }
-  outputFormatter = "json"
+  outputFormatter = "plain" // "json"
 }

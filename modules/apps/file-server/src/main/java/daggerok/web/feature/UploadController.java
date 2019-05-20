@@ -21,7 +21,6 @@ public class UploadController {
 
   @PostMapping("/upload")
   public String post(@RequestParam("file") final MultipartFile file, final RedirectAttributes redirectAttributes) {
-
     val owner = displayName().getOrDefault(displayName, anonymousFriendlyName);
     uploadService.upload(file, redirectAttributes, owner);
     return REDIRECT_INDEX;

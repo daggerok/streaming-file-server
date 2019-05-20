@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "db")
 public class DbProps {
 
-  public String name;
-  public String user;
-  public String pass;
-  public Server server;
+  private String name;
+  private String user;
+  private String pass;
+  private Server server;
 
   @Data
   public static class Server {

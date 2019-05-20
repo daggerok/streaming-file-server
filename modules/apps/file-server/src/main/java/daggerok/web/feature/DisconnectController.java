@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class DisconnectController {
 
-  final RestTemplate restTemplate;
+  private final RestTemplate restTemplate;
 
   @SneakyThrows
   @GetMapping("/disconnect") // TODO...
@@ -31,8 +31,7 @@ public class DisconnectController {
        .onFailure(throwable -> log.error("disconnect controller error: {}",
                                          throwable.getLocalizedMessage(), throwable));
 */
-    SecurityUtil.disconnect();
-
+    SecurityUtil.disconnect(resp);
     resp.sendRedirect(req.getContextPath().concat("/"));
   }
 }

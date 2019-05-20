@@ -1,7 +1,7 @@
 package daggerok.config;
 
+import lombok.val;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,14 +18,14 @@ public class CorsWebFluxCfg {
   private static final long MAX_AGE = 3600;
 
   @Bean
-  CorsWebFilter corsWebFilter() {
-    CorsConfiguration corsConfig = new CorsConfiguration();
+  public CorsWebFilter corsWebFilter() {
+    val corsConfig = new CorsConfiguration();
     corsConfig.addAllowedOrigin(ALLOWED_ORIGIN);
     corsConfig.addAllowedMethod(ALLOWED_METHODS);
     corsConfig.addAllowedHeader(ALLOWED_HEADERS);
     corsConfig.setMaxAge(MAX_AGE);
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    val source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfig);
 
     return new CorsWebFilter(source);

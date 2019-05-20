@@ -1,7 +1,7 @@
 package daggerok.service;
 
-import daggerok.config.props.AppProps;
 import daggerok.client.model.FileItem;
+import daggerok.config.props.AppProps;
 import daggerok.service.util.FileItemUtil;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ import static org.springframework.util.FileCopyUtils.copy;
  * int EOF = -1;
  * byte[] bytes = new byte[org.springframework.util.StreamUtils.BUFFER_SIZE];
  * for (int read = from.read(bytes); read != EOF; read = from.read(bytes)) {
- * to.write(bytes, 0, read);
+ *   to.write(bytes, 0, read);
  * }
  * to.flush();
  */
@@ -43,15 +43,10 @@ import static org.springframework.util.FileCopyUtils.copy;
 @RequiredArgsConstructor
 public class FileService {
 
-  final AppProps app;
-
-  private static Path normalizeAbsolute(final Path path) {
-    return path.toAbsolutePath().normalize();
-  }
+  private final AppProps app;
 
   @SneakyThrows
   private static FileItem pathToFileItem(final Path path) {
-
     return new FileItem().setFileType(FILE)
                          .setPath(string(path))
                          .setSize(Files.size(path))
@@ -83,21 +78,15 @@ public class FileService {
    */
   @SneakyThrows
   private static void cp(final boolean isLarge, final InputStream from, final OutputStream to) {
-
-    if (isLarge) {
-      copyLarge(from, to);
-    } else {
-      copy(from, to);
-    }
+    if (isLarge) copyLarge(from, to);
+    else copy(from, to);
   }
 
   @SneakyThrows
   public Stream<FileItem> getDownloads() {
+    requireNonNull(app.getDownload().getPath(), "downloadPath is null, please, provide app.send.path variable");
 
-    requireNonNull(app.download.path, "downloadPath is null, please, provide app.send.path variable");
-
-    val base = get(app.download.path);
-
+    val base = get(app.getDownload().getPath());
     if (exists(base) && !base.toFile().isDirectory())
       deleteIfExists(base);
 
@@ -105,8 +94,7 @@ public class FileService {
       if (base.toFile().mkdirs())
         log.error("directory {} cannot be created", base);
 
-    val fileStream = walk(get(app.download.path), FOLLOW_LINKS);
-
+    val fileStream = walk(get(app.getDownload().getPath()), FOLLOW_LINKS);
     return fileStream.filter(Files::isReadable)
                      .filter(Files::isWritable)
                      .filter(Files::isRegularFile)
@@ -116,30 +104,22 @@ public class FileService {
 
   @SneakyThrows
   public void send(final FileItem fileItem, final HttpServletResponse response) {
-
     if (!fileItem.isFile()) return;
-
     val file = get(fileItem.getPath());
     @Cleanup val from = newInputStream(file);
     @Cleanup val to = response.getOutputStream();
-
     response.setHeader("Content-Disposition", format("attachment; filename=%s", file.getFileName()));
     cp(fileItem.isLarge(), from, to);
   }
 
   @SneakyThrows
   public void setupUploads() {
-
-    val base = get(app.upload.path);
-
-    if (notExists(base)) {
-      createDirectory(base);
-    }
+    val base = get(app.getUpload().getPath());
+    if (notExists(base)) createDirectory(base);
   }
 
   @SneakyThrows
   public FileItem receive(final MultipartFile file) {
-
     val path = normalizeAbsolute(resolve(file.getOriginalFilename()));
     @Cleanup val from = file.getInputStream();
     @Cleanup val to = newOutputStream(path);
@@ -152,6 +132,10 @@ public class FileService {
    * resolve path using given filename and upload base path from configuration
    */
   private Path resolve(final String filename) {
-    return get(app.upload.path, filename);
+    return get(app.getUpload().getPath(), filename);
+  }
+
+  private static Path normalizeAbsolute(final Path path) {
+    return path.toAbsolutePath().normalize();
   }
 }

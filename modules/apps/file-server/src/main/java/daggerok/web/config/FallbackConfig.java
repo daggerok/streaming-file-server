@@ -26,7 +26,6 @@ public class FallbackConfig {
     public void registerErrorPages(final ErrorPageRegistry registry) {
       registry.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
     }
-
   }
 
   @Slf4j

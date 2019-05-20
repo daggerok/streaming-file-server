@@ -22,17 +22,17 @@ public abstract class AbstractAuditEntity implements Serializable {
 
   private static final long serialVersionUID = 9207056121666919093L;
 
-  Long id;
+  private Long id;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  LocalDateTime updatedAt;
+  private LocalDateTime updatedAt;
 }

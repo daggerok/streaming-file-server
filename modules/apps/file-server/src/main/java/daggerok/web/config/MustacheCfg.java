@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class MustacheCfg implements WebMvcConfigurer {
 
-  final WebInterceptor webInterceptor;
+  private final WebInterceptor webInterceptor;
 
   @Override
   public void addInterceptors(final InterceptorRegistry registry) {

@@ -9,7 +9,7 @@ subprojects {
     mavenCentral()
   }
 
-  apply(plugin: "io.franzbecker.gradle-lombok")
+  apply(plugin: "io.freefair.lombok")
 
   lombok {
     version = project.lombokVersion

@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -23,47 +24,47 @@ import static org.springframework.web.reactive.function.server.ServerResponse.st
 @RequiredArgsConstructor
 public class FileItemsHandler {
 
-  final FileItemRepository repository;
-  final FileItemReactiveRepository reactiveRepository;
+  private final FileItemRepository repository;
+  private final FileItemReactiveRepository reactiveRepository;
 
-  public Mono<ServerResponse> getAll(final ServerRequest request) {
-    return json().body(Flux.fromIterable(repository.findAll())
-                           .subscribeOn(Schedulers.elastic()), FileItem.class);
+  public Mono<ServerResponse> getAll(@Nonnull final ServerRequest request) {
+    return jsonOk().body(Flux.fromIterable(repository.findAll())
+                             .subscribeOn(Schedulers.elastic()), FileItem.class);
   }
 
   public Mono<ServerResponse> searchAny(final ServerRequest request) {
     final String filename = request.pathVariable("filename");
-    return json().body(reactiveRepository.findAny(filename)
-                                         .subscribeOn(Schedulers.elastic()), FileItem.class);
+    return jsonOk().body(reactiveRepository.findAny(filename)
+                                           .subscribeOn(Schedulers.elastic()), FileItem.class);
   }
 
   public Mono<ServerResponse> getById(final ServerRequest request) {
     final String id = request.pathVariable("id");
-    return json().body(Mono.just(repository.findById(Long.valueOf(id))
-                                           .orElseThrow(() -> new RuntimeException(
-                                               format("file item with id %s wasn't found.", id))))
-                           .subscribeOn(Schedulers.elastic()), FileItem.class);
+    return jsonOk().body(Mono.just(repository.findById(Long.valueOf(id))
+                                             .orElseThrow(() -> new RuntimeException(
+                                                 format("file item with id %s wasn't found.", id))))
+                             .subscribeOn(Schedulers.elastic()), FileItem.class);
   }
 
   public Mono<ServerResponse> save(final ServerRequest request) {
-    return created().body(request.bodyToMono(FileItem.class)
-                                 .flatMap(reactiveRepository::saveOrUpdate)
-                                 .subscribeOn(Schedulers.elastic()), FileItem.class);
+    return jsonCreated().body(request.bodyToMono(FileItem.class)
+                                     .flatMap(reactiveRepository::saveOrUpdate)
+                                     .subscribeOn(Schedulers.elastic()), FileItem.class);
   }
 
   public Mono<ServerResponse> saveAll(final ServerRequest request) {
-    return created().body(request.bodyToFlux(FileItem.class)
-                                 .collectList()
-                                 .map(reactiveRepository::saveOrUpdateAll)
-                                 .subscribeOn(Schedulers.elastic())
-                                 .flatMap(Flux::collectList), List.class);
+    return jsonCreated().body(request.bodyToFlux(FileItem.class)
+                                     .collectList()
+                                     .map(reactiveRepository::saveOrUpdateAll)
+                                     .subscribeOn(Schedulers.elastic())
+                                     .flatMap(Flux::collectList), List.class);
   }
 
-  private static ServerResponse.BodyBuilder json() {
+  private static ServerResponse.BodyBuilder jsonOk() {
     return ok().contentType(APPLICATION_JSON_UTF8);
   }
 
-  private static ServerResponse.BodyBuilder created() {
+  private static ServerResponse.BodyBuilder jsonCreated() {
     return status(CREATED).contentType(APPLICATION_JSON_UTF8);
   }
 }

@@ -1,7 +1,7 @@
 package daggerok.client;
 
-import daggerok.config.props.FileItemsRestServiceProps;
 import daggerok.client.model.FileItem;
+import daggerok.config.props.FileItemsRestServiceProps;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,97 +13,107 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Stream;
-
-import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileItemRestClient {
 
-  final RestTemplate restTemplate;
-  final FileItemsRestServiceProps config;
+  private final RestTemplate restTemplate;
+  private final FileItemsRestServiceProps config;
+
+  @SuppressWarnings("unchecked")
+  private final static Function<ArrayList, List<FileItem>> toFileItems =
+      arrayList -> (List<FileItem>) arrayList;
+  private final static Function<FileItemsRestServiceProps, UriComponentsBuilder> baseUri =
+      config -> UriComponentsBuilder.fromHttpUrl(config.getUrl());
+  private final static BiFunction<FileItemsRestServiceProps, String, UriComponentsBuilder> uriBuilder =
+      (config, path) -> baseUri.apply(config).path(path);
 
   public List<FileItem> findAll() {
+    val url = uriBuilder.apply(config, "/api/v1/file-items")
+                        .build()
+                        .toString();
 
-    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
-                                  .path("/api/v1/file-items")
-                                  .build()
-                                  .toString();
-
-    val list = Try.of(() -> restTemplate.getForEntity(url, ArrayList.class))
-                  .map(HttpEntity::getBody)
-                  .getOrElseGet(throwable -> new ArrayList<FileItem>());
-
-    return Try.of(() -> (List<FileItem>) list)
-              .getOrElseGet(throwable -> new ArrayList<>());
+    log.debug("findAll url: {}", url);
+    return Try.of(() -> restTemplate.getForEntity(url, ArrayList.class))
+              .map(HttpEntity::getBody)
+              .map(toFileItems)
+              .getOrElseGet(e -> {
+                log.error("cannot find all items, error: {}", e.getLocalizedMessage(), e);
+                return new ArrayList<>();
+              });
   }
 
   public Optional<FileItem> findById(final long id) {
+    val url = uriBuilder.apply(config, "/api/v1/file-items")
+                        .pathSegment(String.valueOf(id))
+                        .build()
+                        .toString();
 
-    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
-                                  .path("/api/v1/file-items")
-                                  .pathSegment("" + id)
-                                  .build()
-                                  .toString();
-
-    val item = Try.of(() -> restTemplate.getForEntity(url, FileItem.class))
-                  .map(HttpEntity::getBody)
-                  .getOrElseGet(throwable -> null);
-
-    return ofNullable(item);
+    log.debug("findById url: {}", url);
+    return Try.of(() -> restTemplate.getForEntity(url, FileItem.class))
+              .map(HttpEntity::getBody)
+              .map(Optional::ofNullable)
+              .getOrElseGet(e -> {
+                log.error("cannot find item with id: {}, error: {}", id, e.getLocalizedMessage(), e);
+                return Optional.empty();
+              });
   }
 
   public List<FileItem> findByFilenameContainingIgnoreCase(final String filename) {
+    if (StringUtils.isEmpty(filename)) return findAll();
 
-    if (StringUtils.isEmpty(filename)) {
-      return findAll();
-    }
+    val url = uriBuilder.apply(config, "/api/v1/file-items/like")
+                        .pathSegment(filename)
+                        .build()
+                        .toString();
 
-    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
-                                  .path("/api/v1/file-items/like")
-                                  .pathSegment(filename)
-                                  .build()
-                                  .toString();
+    log.debug("findByFilenameContainingIgnoreCase url: {}", url);
+    return Try.of(() -> restTemplate.getForEntity(url, ArrayList.class))
+              .map(HttpEntity::getBody)
+              .map(toFileItems)
+              .getOrElseGet(e -> {
+                log.error("cannot find items with filename: {}, error: {}", filename, e.getLocalizedMessage(), e);
+                return new ArrayList<>();
+              });
+  }
 
-    val list = Try.of(() -> restTemplate.getForEntity(url, ArrayList.class))
-                  .map(HttpEntity::getBody)
-                  .getOrElseGet(throwable -> new ArrayList<FileItem>());
+  public void save(final List<FileItem> fileItems) {
+    val request = new HttpEntity<>(fileItems);
+    val url = uriBuilder.apply(config, "/api/v1/file-items/all")
+                        .build()
+                        .toString();
 
-    return Try.of(() -> (List<FileItem>) list)
-              .getOrElseGet(throwable -> new ArrayList<>());
+    log.debug("save all url: {}", url);
+    Try.of(() -> restTemplate.postForEntity(url, request, ArrayList.class))
+       .map(HttpEntity::getBody)
+       .map(toFileItems)
+       .map(Collection::stream)
+       .getOrElseGet(e -> {
+         log.error("cannot save file items: {}, error: {}", fileItems, e.getLocalizedMessage(), e);
+         return Stream.empty();
+       });
   }
 
   public FileItem save(final FileItem fileItem) {
-
     val request = new HttpEntity<>(fileItem);
-    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
-                                  .path("/api/v1/file-items")
-                                  .build()
-                                  .toString();
+    val url = uriBuilder.apply(config, "/api/v1/file-items")
+                        .build()
+                        .toString();
 
+    log.debug("save url: {}", url);
     return Try.of(() -> restTemplate.postForEntity(url, request, FileItem.class))
               .map(HttpEntity::getBody)
-              .getOrElseGet(throwable -> new FileItem());
-  }
-
-  public Stream<FileItem> save(final List<FileItem> fileItems) {
-
-    val request = new HttpEntity<>(fileItems);
-    val url = UriComponentsBuilder.fromHttpUrl(config.getUrl())
-                                  .path("/api/v1/file-items/all")
-                                  .build()
-                                  .toString();
-
-    val list = Try.of(() -> restTemplate.postForEntity(url, request, ArrayList.class))
-                  .map(HttpEntity::getBody)
-                  .getOrElseGet(throwable -> new ArrayList<FileItem>());
-
-    return Try.of(() -> (List<FileItem>) list)
-              .getOrElseGet(throwable -> new ArrayList<>())
-              .stream();
+              .getOrElseGet(e -> {
+                log.error("cannot save file item: {}, error: {}", fileItem, e.getLocalizedMessage(), e);
+                return new FileItem();
+              });
   }
 }

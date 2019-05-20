@@ -15,8 +15,8 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class UploadService {
 
-  final FileService fileService;
-  final FileItemRestClient fileItemRestClient;
+  private final FileService fileService;
+  private final FileItemRestClient fileItemRestClient;
 
   @PostConstruct
   public void sync() {
@@ -30,7 +30,7 @@ public class UploadService {
     val fileItem = fileService.receive(file)
                               .setOwner(owner);
 
-    val res = fileItemRestClient.save(fileItem);
+    fileItemRestClient.save(fileItem);
     redirectAttributes.addFlashAttribute("message",
                                          format("done with %s.", file.getOriginalFilename()));
   }

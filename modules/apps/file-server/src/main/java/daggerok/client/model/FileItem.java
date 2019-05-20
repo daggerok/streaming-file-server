@@ -17,28 +17,16 @@ import static daggerok.service.util.FileItemUtil.NORMAL_FILE_SIZE;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FileItem extends AbstractAuditEntity {
-
   private static final long serialVersionUID = -6455969576919191029L;
 
-  @NonNull
-  String path;
-
-  String filename;
-
-  String extension;
-
-  @NonNull
-  String prettySize;
-
-  @NonNull
-  Long size;
-
-  @NonNull
-  FileType fileType;
-
-  Long version;
-
-  String owner;
+  @NonNull private String path;
+  @NonNull private String prettySize;
+  @NonNull private Long size;
+  @NonNull private FileType fileType;
+  private String filename;
+  private String extension;
+  private String owner;
+  private Long version;
 
   public boolean isFile() {
     return FILE.equals(this.fileType);

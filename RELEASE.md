@@ -5,12 +5,14 @@ _version: 4.3.19_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-Update versions:
-
-* jquery: 3.4.0 -> 3.4.1
-* lombok: 1.18.6 -> 1.18.8
-* selenide: 5.2.2 -> 5.2.3
-* bootstrapFileInput: 4.5.2 -> 5.0.1
+* Move spring-boot application installation into docker (Travis CI does't working anymore)
+* Update versions:
+  * spring-boot 2.1.4.RELEASE -> 2.1.5.RELEASE
+  * jquery: 3.4.0 -> 3.4.1
+  * lombok: 1.18.6 -> 1.18.8
+  * selenide: 5.2.2 -> 5.2.3
+  * font-awesome: 5.8.1 -> 5.8.2
+  * bootstrapFileInput: 4.5.2 -> 5.0.1
 
 ### incompatible (not upgradeable) versions
 

@@ -43,7 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
           .csrf()
             .disable()
-        .httpBasic()
+          .httpBasic()
+        .and()
+          .logout()
+            .logoutUrl("/disconnect")
+            .clearAuthentication(true)
+            .invalidateHttpSession(true)
+            .permitAll()
     ;
     // @formatter:on
   }

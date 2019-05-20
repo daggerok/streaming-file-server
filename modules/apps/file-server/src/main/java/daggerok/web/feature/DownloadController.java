@@ -17,7 +17,7 @@ import static daggerok.web.IndexPage.REDIRECT_INDEX;
 @RequestMapping("/download")
 public class DownloadController {
 
-  final DownloadService downloadService;
+  private final DownloadService downloadService;
 
   @PostMapping
   public String search(@RequestParam("filename") final String filename, final Model model) {

@@ -1,7 +1,7 @@
 package daggerok.service;
 
-import daggerok.client.model.FileItem;
 import daggerok.client.FileItemRestClient;
+import daggerok.client.model.FileItem;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
@@ -18,8 +18,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class DownloadService {
 
-  final FileService fileService;
-  final FileItemRestClient fileItemRestClient;
+  private final FileService fileService;
+  private final FileItemRestClient fileItemRestClient;
 
   @Synchronized
   @PostConstruct
@@ -34,7 +34,6 @@ public class DownloadService {
   }
 
   public void download(final Long id, final HttpServletResponse response) {
-
     fileItemRestClient.findById(id)
                       .ifPresent(fileItem -> fileService.send(fileItem, response));
   }
