@@ -1,16 +1,18 @@
+dist: xenial
 notifications:
   email: false
 git:
   quiet: true
   depth: 1
-service:
-  - docker
 language: java
 jdk: openjdk8
 node_js: lts/*
 python: 3
+service:
+  - docker
 addons:
   apt:
+    update: true
     packages:
       - sudo
       - lsof
@@ -21,27 +23,77 @@ addons:
       - libxml2-utils
       - unzip
       - docker-ce
-      - python-pip
-      - libappindicator1
-      - fonts-liberation
-      - google-chrome-stable
+      - python3-dev
+      - python3-pip
+      - python3-six
+      - python3-setuptools
+      #- libappindicator1
+      #- fonts-liberation
+      #- google-chrome-stable
 install: true
 before_install:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  #- export CHROME_BIN=/usr/bin/google-chrome
+  #- export DISPLAY=:99.0
+  #- sh -e /etc/init.d/xvfb start
   #
-  - sudo pip install docker-compose httpie >/dev/null 2>&1
+  - docker-compose -v
+  - for pip in pip pip3 ; do
+      which $pip || echo "which $pip command failed." ;
+      $(which $pip) -V || echo "$(which $pip) -V command failed." ;
+    done
+  - export PATH=$HOME/.local/bin:$PATH
+  - pip3 install --user $(whoami) --upgrade pip # pip3 -> pip
+  - for pip in pip pip3 ; do
+    which $pip || echo "which $pip command failed." ;
+    $(which $pip) -V || echo "$(which $pip) -V command failed." ;
+    done
+  #- pip install --user $(whoami) --upgrade pip
+  - pip install --user $(whoami) --upgrade docker-compose httpie >/dev/null 2>&1
+  - http --version --debug
+  - docker-compose -v
+  #
   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
   - stop_any 80 8001 8002 8080 5432
 script:
+  - export PATH=/tmp:$PATH
+  - export APP_UPLOAD_PATH="/tmp/file-storage"
+  - mkdir -p ${APP_UPLOAD_PATH}
+  #
+  # install as linux service
+ #- ./gradlew clean assemble postgresUp >/dev/null
+ #- cp -Rf ./modules/apps/file-server/build/libs              "${APP_UPLOAD_PATH}/"
+ #- mv -f ./modules/apps/file-items-service/build/libs/*.jar  /tmp/file-items-service.jar
+ #- echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-items-service.conf
+ #- sudo ln -s /tmp/file-items-service.jar                    /etc/init.d/file-items-service
+ #- ls -lah /etc/init.d/ /tmp/ | grep file
+ #- sudo service file-items-service                           start
+ #- sudo tail -f /var/log/file-items-service.log &
+ #- wait_for 8001
+ #- sleep 3s
+ #- mv -f ./modules/apps/file-server/build/libs/*.jar         /tmp/file-server.jar
+ #- echo 'JAVA_OPTS="-Dspring.profiles.active=h2-db"'       > /tmp/file-server.conf
+ #- sudo ln -s /tmp/file-server.jar                           /etc/init.d/file-server
+ #- ls -lah /etc/init.d/ /tmp/ | grep file
+ #- sudo service file-server                                  start
+ #- sudo tail -f /var/log/file-server.log &
+ #- wait_for 8002
+ #- sleep 3s
+ #- http --auth user:password :8001/actuator/health
+ #- http --auth user:password :8002/actuator/health
+ #- http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+ #- http --auth user:password :8002/api/v1/files
+ #- http --auth user:password :8002/
+ #- sudo service file-server                                  stop
+ #- sudo service file-items-service                           stop
+ #- ./gradlew postgresDown >/dev/null
+ #- unset SPRING_PROFILES_ACTIVE
+ #- stop_any 80 8002 8001 8080 5432
+  #
   # jGiven tests and docs
   - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
   - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
   - ./gradlew -S -Pdebug clean check build >/dev/null
   #
-  - export APP_UPLOAD_PATH="/tmp/file-storage"
-  - mkdir -p ${APP_UPLOAD_PATH}
   - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
   #
   # Postgres
@@ -69,29 +121,6 @@ script:
   - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
   - http --auth user:password :8002/api/v1/files | jq '.'
   - http --auth user:password :8002/
-  - stop_any 80 8002 8001 8080 5432
-  #
-  # install as linux service
-  - ./gradlew clean assemble postgresUp >/dev/null
-  - cp -Rf ./modules/apps/file-server/build/libs              "${APP_UPLOAD_PATH}/"
-  - mv -f ./modules/apps/file-items-service/build/libs/*.jar  /tmp/file-items-service.jar
-  - echo 'JAVA_OPTS="-Dspring.profiles.active=pg-db"'       > /tmp/file-items-service.conf
-  - mv -f ./modules/apps/file-server/build/libs/*.jar         /tmp/file-server.jar
-  - sudo ln -s /tmp/file-items-service.jar                    /etc/init.d/file-items-service
-  - sudo ln -s /tmp/file-server.jar                           /etc/init.d/file-server
-  - sudo service file-items-service                           start
-  - wait_for 8001
-  - sudo service file-server                                  start
-  - wait_for 8002
-  - http --auth user:password :8001/actuator/health | jq '.'
-  - http --auth user:password :8002/actuator/health | jq '.'
-  - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-  - http --auth user:password :8002/api/v1/files | jq '.'
-  - http --auth user:password :8002/
-  - sudo service file-server                                  stop
-  - sudo service file-items-service                           stop
-  - ./gradlew postgresDown >/dev/null
-  - unset SPRING_PROFILES_ACTIVE
   - stop_any 80 8002 8001 8080 5432
   #
   # services behind reverse-proxy
