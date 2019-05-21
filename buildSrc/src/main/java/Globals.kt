@@ -29,7 +29,7 @@ object Globals {
     const val wrapperVersion = "5.4.1"
 
     object Plugin {
-      const val lombokVersion = "3.6.1"
+      const val lombokVersion = "3.6.4"
       const val querydslVersion = "1.0.10"
       const val propdepsVersion = "0.0.10"
       const val versionsVersion = "0.21.0"

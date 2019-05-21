@@ -5,6 +5,7 @@ _version: 4.3.19_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
+* Replace lombok gradle plugin with `io.freefair.lombok`
 * Move spring-boot application installation into docker (Travis CI does't working anymore)
 * Update versions:
   * spring-boot 2.1.4.RELEASE -> 2.1.5.RELEASE

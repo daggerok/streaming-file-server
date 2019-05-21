@@ -37,17 +37,8 @@ before_install:
   #- sh -e /etc/init.d/xvfb start
   #
   - docker-compose -v
-  - for pip in pip pip3 ; do
-      which $pip || echo "which $pip command failed." ;
-      $(which $pip) -V || echo "$(which $pip) -V command failed." ;
-    done
   - export PATH=$HOME/.local/bin:$PATH
-  - pip3 install --user $(whoami) --upgrade pip # pip3 -> pip
-  - for pip in pip pip3 ; do
-    which $pip || echo "which $pip command failed." ;
-    $(which $pip) -V || echo "$(which $pip) -V command failed." ;
-    done
-  #- pip install --user $(whoami) --upgrade pip
+  - pip3 install --user $(whoami) --upgrade pip >/dev/null # pip3 -> pip
   - pip install --user $(whoami) --upgrade docker-compose httpie >/dev/null 2>&1
   - http --version --debug
   - docker-compose -v
@@ -89,8 +80,8 @@ script:
 #  - unset SPRING_PROFILES_ACTIVE
 #  - stop_any 80 8002 8001 8080 5432
   #
-  - ./gradlew -b ./modules/apps/build.gradle.kts clean
-  - ./gradlew -b ./modules/apps/build.gradle.kts assemble
+  - ./gradlew -b ./modules/apps/build.gradle.kts clean >/dev/null
+  - ./gradlew -b ./modules/apps/build.gradle.kts assemble >/dev/null
   #
   - docker network create --attachable app || echo 'cannot create docker network:\ app'
   #
@@ -108,6 +99,7 @@ script:
   - http --auth user:password :80/
   #
   - docker rm -f -v file-server file-items-service
+  - docker network rm app
   - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
   - stop_any 80 8001 8002
   #
@@ -146,13 +138,19 @@ script:
   - stop_any 80 8002 8001 8080 5432
   #
   # services behind reverse-proxy
-  - ./gradlew clean
+  - ./gradlew clean >/dev/null
   - ./gradlew assemble >/dev/null
   - ./gradlew allUp
   - http -a user:password :80
   - stop_any 80 8002 8001 8080 5432
   - ./gradlew allDown
-  #
+cache:
+  pip: true
+  packages: true
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle
+    - $HOME/.docker
 env:
   global:
     - TERM=dumb
@@ -161,19 +159,23 @@ env:
 before_deploy:
   # publish tag release
   - mkdir -p ${HOME}/.m2
-  - echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"                      ' >  ${HOME}/.m2/settings.xml
-  - echo '          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               ' >> ${HOME}/.m2/settings.xml
-  - echo '          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0          ' >> ${HOME}/.m2/settings.xml
-  - echo '                              http://maven.apache.org/xsd/settings-1.0.0.xsd">' >> ${HOME}/.m2/settings.xml
-  - echo '  <servers>                                                                   ' >> ${HOME}/.m2/settings.xml
-  - echo '    <server>                                                                  ' >> ${HOME}/.m2/settings.xml
-  - echo '      <id>github</id>                                                         ' >> ${HOME}/.m2/settings.xml
-  - echo '      <username>daggerok</username>                                           ' >> ${HOME}/.m2/settings.xml
-  - echo "      <password>${GITHUB_PASSWORD}</password>                                 " >> ${HOME}/.m2/settings.xml
-  - echo '    </server>                                                                 ' >> ${HOME}/.m2/settings.xml
-  - echo '  </servers>                                                                  ' >> ${HOME}/.m2/settings.xml
-  - echo '</settings>                                                                   ' >> ${HOME}/.m2/settings.xml
-  - ./mvnw
+  - set -e
+  - |
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+    <settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\"
+              xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+              xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0
+                                  http://maven.apache.org/xsd/settings-1.0.0.xsd\">
+      <servers>
+        <server>
+          <id>github</id>
+          <username>daggerok</username>
+          <password>${GITHUB_PASSWORD}</password>
+        </server>
+      </servers>
+    </settings>
+    " > ${HOME}/.m2/settings.xml
+  - ./mvnw >/dev/null
   #
   # test published release by using scripts/application.bash
   - bash ./scripts/application.bash start build
