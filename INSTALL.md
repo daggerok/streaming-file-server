@@ -26,16 +26,16 @@ application.cmd clean path\to\storage
 
 ```bash
 # database
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/docker-compose.yml
 docker-compose -f docker-compose.yml up -d
 
 # file-items data service
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/file-items-service-4.3.19.jar
-bash file-items-service-4.3.19.jar --spring.profiles.active=db-pg
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/file-items-service-4.3.20.jar
+bash file-items-service-4.3.20.jar --spring.profiles.active=db-pg
 
 # file server
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/file-server-4.3.19.jar
-bash file-server-4.3.19.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/file-server-4.3.20.jar
+bash file-server-4.3.20.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose -f docker-compose.yml down -v
@@ -44,7 +44,7 @@ docker-compose -f docker-compose.yml down -v
 **or simply using shell-script**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -60,7 +60,7 @@ bash application.bash clean ./path/to/file-storage
 
 installed binaries: `wget`, `docker-compose`, `bash` and of course `java` are required
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/application.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/application.cmd**
 
 ```cmd
 @rem start
@@ -80,18 +80,18 @@ installed binaries: `which`, `wget`, `docker-compose`, `taskkill`, `mkdir` and o
 **with h2 in-memory database**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/file-items-service-4.3.19.jar
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/file-server-4.3.19.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/file-items-service-4.3.20.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/file-server-4.3.20.jar
 
-# bash file-items-service-4.3.19.jar --spring.profiles.active=db-h2 # or just:
-bash file-items-service-4.3.19.jar
-bash file-server-4.3.19.jar --app.upload.path=./path/to/file-storage
+# bash file-items-service-4.3.20.jar --spring.profiles.active=db-h2 # or just:
+bash file-items-service-4.3.20.jar
+bash file-server-4.3.20.jar --app.upload.path=./path/to/file-storage
 ```
 
 **or simply shell script for h2**
 
 ```bash
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -103,7 +103,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ```
 
-**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.19/application-h2.cmd**
+**for windows use https://github.com/daggerok/streaming-file-server/releases/download/4.3.20/application-h2.cmd**
 
 ```cmd
 @rem start

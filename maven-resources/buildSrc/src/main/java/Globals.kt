@@ -29,18 +29,18 @@ object Globals {
     const val wrapperVersion = "${gradle.version}"
 
     object Plugin {
+      const val toolVersion = "${tool.version}"
       const val lombokVersion = "${lombok.plugin.version}"
+      const val spotbugsVersion = "${spotbugs.version}"
       const val querydslVersion = "1.0.10"
       const val propdepsVersion = "0.0.10"
       const val versionsVersion = "0.21.0"
       const val gitPublishVersion = "2.1.1"
       const val dockerComposeVersion = "0.7.1"  // any other higher version will fail on adoc task
-      const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
-      const val dependencyManagementVersion = "1.0.7.RELEASE"
-      const val toolVersion = "${tool.version}"
-      const val spotbugsVersion = "${spotbugs.version}"
       const val jrubyCompleteVersion = "${jruby.complete.version}"
+      const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
       const val asciidoctorjPdfVersion = "${asciidoctorj.pdf.version}"
+      const val dependencyManagementVersion = "1.0.7.RELEASE"
     }
   }
 }
