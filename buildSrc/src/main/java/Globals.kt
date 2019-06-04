@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Globals {
   object Project {
-    const val version = "4.3.19"
+    const val version = "4.3.20"
     const val groupId = "com.github.daggerok"
     const val artifactId = "streaming-file-server"
   }
@@ -23,24 +23,24 @@ object Globals {
   const val powermockitoVersion = "2.0.2"
   const val bootstrapFileInputVersion = "5.0.1"
   const val springBootVersion = "2.1.5.RELEASE"
-  const val hibernateJava8Version = "5.4.2.Final"
+  const val hibernateJava8Version = "5.4.3.Final"
 
   object Gradle {
-    const val wrapperVersion = "5.4.1"
+    const val wrapperVersion = "5.5-rc-1"
 
     object Plugin {
+      const val toolVersion = "3.1.12"
       const val lombokVersion = "3.6.4"
+      const val spotbugsVersion = "2.0.0"
       const val querydslVersion = "1.0.10"
       const val propdepsVersion = "0.0.10"
       const val versionsVersion = "0.21.0"
       const val gitPublishVersion = "2.1.1"
       const val dockerComposeVersion = "0.7.1"  // any other higher version will fail on adoc task
-      const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
-      const val dependencyManagementVersion = "1.0.7.RELEASE"
-      const val toolVersion = "3.1.12"
-      const val spotbugsVersion = "2.0.0"
       const val jrubyCompleteVersion = "9.2.5.0"
+      const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
       const val asciidoctorjPdfVersion = "1.5.0-alpha.16"
+      const val dependencyManagementVersion = "1.0.7.RELEASE"
     }
   }
 }

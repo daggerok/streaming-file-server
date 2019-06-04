@@ -5,15 +5,8 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-* Replace lombok gradle plugin with `io.freefair.lombok`
-* Move spring-boot application installation into docker (Travis CI does't working anymore)
-* Update versions:
-  * spring-boot 2.1.4.RELEASE -> 2.1.5.RELEASE
-  * jquery: 3.4.0 -> 3.4.1
-  * lombok: 1.18.6 -> 1.18.8
-  * selenide: 5.2.2 -> 5.2.3
-  * font-awesome: 5.8.1 -> 5.8.2
-  * bootstrapFileInput: 4.5.2 -> 5.0.1
+* Update gradle -> 5.5-rc-1
+* Update hibernate-java8 -> 5.4.3.Final
 
 ### incompatible (not upgradeable) versions
 
