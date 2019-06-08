@@ -30,7 +30,7 @@ object Globals {
 
     object Plugin {
       const val toolVersion = "3.1.12"
-      const val lombokVersion = "3.6.4"
+      const val lombokVersion = "3.6.6"
       const val spotbugsVersion = "2.0.0"
       const val querydslVersion = "1.0.10"
       const val propdepsVersion = "0.0.10"
