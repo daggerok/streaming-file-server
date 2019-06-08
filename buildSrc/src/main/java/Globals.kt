@@ -26,7 +26,7 @@ object Globals {
   const val hibernateJava8Version = "5.4.3.Final"
 
   object Gradle {
-    const val wrapperVersion = "5.5-rc-1"
+    const val wrapperVersion = "5.5-rc-2"
 
     object Plugin {
       const val toolVersion = "3.1.12"

@@ -28,7 +28,7 @@
     <jgiven.version>0.17.1</jgiven.version>
     <lombok.version>1.18.8</lombok.version>
     <logback.version>1.2.3</logback.version><!-- 1.3.0-alpha4 is incompatible -->
-    <gradle.version>5.5-rc-1</gradle.version>
+    <gradle.version>5.5-rc-2</gradle.version>
     <spotbugs.version>2.0.0</spotbugs.version>
     <selenide.version>5.2.3</selenide.version>
     <bootstrap.version>4.3.1</bootstrap.version>
