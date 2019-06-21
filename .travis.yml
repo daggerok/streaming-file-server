@@ -1,3 +1,8 @@
+env:
+  global:
+    - TERM=dumb
+    - secure: Eh+HT5YScrFz1JoZLHtbxPqFT6E/7+qHFDoN2fqYXX2lpahCJmTX6dW/8lyk32sMUvTpljJPpKQb/Xavxk8lHE0tDcdr/1l5N4WHnZPGJqKLB36VQpuFkMwmsbQH7dfJskDpFjJZSKa0oXTa8AEU8U2nstdFdyKZt2wChWOMMNCmEiL7YVu0bqjn08Qlfkye3pg9q6tMRGMLIL3Y0pvqWrhb2zfbjojcq+pQLrZGmuh0XUqshPQqc9M959KDSq3aq1INjSFYI3siIHN8b/He1qBSECWURvsgA9uKBNo2LuvLfvzFzHmzpHBNRbRcjrCzF8gzxuVxkfxjW5zOtJbe/7KOxM5NHKtWfCeTunrzJoEl9v9h/AYRlS0UBBFyie3XWraxed9aFuT7QbR0mTmx7s33vNGRMkujG+nPhkPzuM0ABpU/t5quvvo9zMmnd1LOe3XV+kAo3HOqkAD/FC5JZI5aaMJXrSS+O9XzPXS+E2CjGPAgBY0VIX0LwVVc80t00xkppfINtj/0HYyKE3xXE6cnM34204u+9Mksxb/TZQY+GMpAOCIUn+RrO0vxM7hvv8anm59rMOAZ/FgvLs+i3d1CuJJDCn9fuFxa0Etnn/krusLdwzjvI+9AgMknVCo1mnxbNuIAo2BnkOdzz35PxX8iDxc7fThYt9u5mx8M79E=
+    - secure: D04FeSPymLevdF11Ej1dUAxxHV9rKHHj/0sld/KPNh/mr876dm1l9AMo6VcBC5Kr1a6AwDJiOG9d8XgUEFRNvhBb3nMjIJa/99psykPL1N4WWZojULkeUtfhbVC+4d5qoLjNM2svT8IFJ9hO1kfgBGKk1Cd5KA+PtjceEIAJ29gaBvnbYo3MspXZsd3RA87kgY/poxQX2j7JeyKqQQKTLN8FTLqu7vgmdZWRYrUrSXiZvoJc9yJ+7PW6u4N4nVlReYb6+GGOM6BAtyB0dDxxG50sL8VcrYnzRlWyEXMaqNlqu2FBI+sBEuzkVkGulZMIsHDfKQhMPH/g2bN79FiPJVEiS7aOBiSMjS2f7vAq9JS3xOnNmMPjHOkAfzpktXbYHydeQIW6vcUue58qUkaj+zn7kyocg83hDlR/j3ATfXJvOGF4vqhkRwPtz7WeZ+Lra7nMrlhaLkFpALco7+ZOB9BwDa3lV1oic6Xv4pRNHgdIx+KcBOI6n4BND22ckzwa0p2+kfDHakIyojX2nNiWg7jzl1oDokI/3nnx/L2piUjKHspjvq7wiJjZefbYRgfLqML+TJ/osZ4P4rin8RLb6my/J3ApMlDH9PyiLNkafnhYKGsTP43XCYMBwVGxv++f/+6JeXsS35Hs4YXbCc1ANt7sTck6FzKgrELgTTOViGk=
 dist: xenial
 notifications:
   email: false
@@ -49,13 +54,15 @@ before_script:
   - export PATH=/tmp:$PATH
   - export APP_UPLOAD_PATH="/tmp/file-storage"
   - mkdir -p ${APP_UPLOAD_PATH}
+stages:
+  - test
+  - deploy
 jobs:
   include:
-    - stage: openjdk8
-      jdk: openjdk8
-      name: disabled
-      script:
-        - echo disabled...
+#    - stage: test
+#      jdk: openjdk8
+#      name: disabled
+#      script:
 #        # install as linux service: travis is not supports spring-boot installations, so we will be using docker instead
 #        - ./gradlew clean assemble postgresUp >/dev/null
 #        - cp -Rf ./modules/apps/file-server/build/libs              "${APP_UPLOAD_PATH}/"
@@ -85,7 +92,7 @@ jobs:
 #        - ./gradlew postgresDown >/dev/null
 #        - unset SPRING_PROFILES_ACTIVE
 #        - stop_any 80 8002 8001 8080 5432
-    - stage: openjdk8
+    - stage: test
       jdk: openjdk8
       name: run in docker
       script:
@@ -111,7 +118,7 @@ jobs:
         - docker network rm app
         - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
         - stop_any 80 8001 8002
-    - stage: openjdk8
+    - stage: test
       jdk: openjdk8
       name: jGiven tests and docs
       script:
@@ -120,7 +127,7 @@ jobs:
         - ./gradlew -S -Pdebug clean check build >/dev/null
         #
         - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
-    - stage: openjdk8
+    - stage: test
       jdk: openjdk8
       name: Postgres
       script:
@@ -136,7 +143,7 @@ jobs:
         - http --auth user:password :8002/
         - stop_any 80 8002 8001 8080 5432
         - ./gradlew postgresDown >/dev/null
-    - stage: openjdk8
+    - stage: test
       jdk: openjdk8
       name: H2
       script:
@@ -151,7 +158,7 @@ jobs:
         - http --auth user:password :8002/api/v1/files | jq '.'
         - http --auth user:password :8002/
         - stop_any 80 8002 8001 8080 5432
-    - stage: openjdk8
+    - stage: test
       jdk: openjdk8
       name: services behind reverse-proxy
       script:
@@ -161,6 +168,76 @@ jobs:
         - http -a user:password :80
         - stop_any 80 8002 8001 8080 5432
         - ./gradlew allDown
+    - stage: test
+      jdk: openjdk8
+      name: dependencyUpdates
+      script: cd $TRAVIS_BUILD_DIR && ./gradlew dependencyUpdates
+    - stage: deploy
+      jdk: openjdk8
+      name: GitHub release and GitHub pages deployment
+      script: skip
+      if: branch = "master" AND type NOT IN (pull_request)
+      before_deploy:
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ] || [ ".$TRAVIS_BRANCH" != ".master" ] ; then exit 0 ; fi
+        - env
+        # publish tag release
+        - mkdir -p ${HOME}/.m2
+        - set -e
+        - |
+          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+          <settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\"
+                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+                    xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0
+                                        http://maven.apache.org/xsd/settings-1.0.0.xsd\">
+            <servers>
+              <server>
+                <id>github</id>
+                <username>daggerok</username>
+                <password>${GITHUB_PASSWORD}</password>
+              </server>
+            </servers>
+          </settings>
+          " > ${HOME}/.m2/settings.xml
+        - ./mvnw >/dev/null
+        # test published release by using scripts/application.bash
+        - bash ./scripts/application.bash start build
+        - bash ./scripts/application.bash stop build
+        - bash ./scripts/application.bash start build
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
+        - http --auth user:password :8001/api/v1/file-items | jq '.'
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - yes | bash ./scripts/application.bash clean build
+        # test published release by using scripts/application-h2.bash
+        - bash ./scripts/application-h2.bash start build
+        - bash ./scripts/application-h2.bash stop build
+        - bash ./scripts/application-h2.bash start build
+        - http --auth user:password :8001/actuator/health
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - yes | bash ./scripts/application-h2.bash clean build
+        #
+        - ./gradlew dependencyUpdates -Drevision=release --parallel
+        - ./mvnw versions:display-property-updates
+        - ./mvnw versions:display-dependency-updates
+        - ./mvnw versions:display-plugin-updates
+        # documentation
+        - ./mvnw -Pdocs >/dev/null
+        - mkdir -p target/generated-docs
+        - cp -Rf target/generated-docs/index.html target/generated-docs/404.html
+      deploy: &pages
+        provider: pages
+        skip-cleanup: true
+        github-token: "$GITHUB_TOKEN"
+        keep-history: true
+        local-dir: target/generated-docs
+        target_branch: gh-pages
+        on:
+          branch: master
+          condition: "$TRAVIS_PULL_REQUEST = false"
 cache:
   pip: true
   packages: true
@@ -168,69 +245,3 @@ cache:
     - $HOME/.m2
     - $HOME/.gradle
     - $HOME/.docker
-env:
-  global:
-    - TERM=dumb
-    - secure: Eh+HT5YScrFz1JoZLHtbxPqFT6E/7+qHFDoN2fqYXX2lpahCJmTX6dW/8lyk32sMUvTpljJPpKQb/Xavxk8lHE0tDcdr/1l5N4WHnZPGJqKLB36VQpuFkMwmsbQH7dfJskDpFjJZSKa0oXTa8AEU8U2nstdFdyKZt2wChWOMMNCmEiL7YVu0bqjn08Qlfkye3pg9q6tMRGMLIL3Y0pvqWrhb2zfbjojcq+pQLrZGmuh0XUqshPQqc9M959KDSq3aq1INjSFYI3siIHN8b/He1qBSECWURvsgA9uKBNo2LuvLfvzFzHmzpHBNRbRcjrCzF8gzxuVxkfxjW5zOtJbe/7KOxM5NHKtWfCeTunrzJoEl9v9h/AYRlS0UBBFyie3XWraxed9aFuT7QbR0mTmx7s33vNGRMkujG+nPhkPzuM0ABpU/t5quvvo9zMmnd1LOe3XV+kAo3HOqkAD/FC5JZI5aaMJXrSS+O9XzPXS+E2CjGPAgBY0VIX0LwVVc80t00xkppfINtj/0HYyKE3xXE6cnM34204u+9Mksxb/TZQY+GMpAOCIUn+RrO0vxM7hvv8anm59rMOAZ/FgvLs+i3d1CuJJDCn9fuFxa0Etnn/krusLdwzjvI+9AgMknVCo1mnxbNuIAo2BnkOdzz35PxX8iDxc7fThYt9u5mx8M79E=
-    - secure: D04FeSPymLevdF11Ej1dUAxxHV9rKHHj/0sld/KPNh/mr876dm1l9AMo6VcBC5Kr1a6AwDJiOG9d8XgUEFRNvhBb3nMjIJa/99psykPL1N4WWZojULkeUtfhbVC+4d5qoLjNM2svT8IFJ9hO1kfgBGKk1Cd5KA+PtjceEIAJ29gaBvnbYo3MspXZsd3RA87kgY/poxQX2j7JeyKqQQKTLN8FTLqu7vgmdZWRYrUrSXiZvoJc9yJ+7PW6u4N4nVlReYb6+GGOM6BAtyB0dDxxG50sL8VcrYnzRlWyEXMaqNlqu2FBI+sBEuzkVkGulZMIsHDfKQhMPH/g2bN79FiPJVEiS7aOBiSMjS2f7vAq9JS3xOnNmMPjHOkAfzpktXbYHydeQIW6vcUue58qUkaj+zn7kyocg83hDlR/j3ATfXJvOGF4vqhkRwPtz7WeZ+Lra7nMrlhaLkFpALco7+ZOB9BwDa3lV1oic6Xv4pRNHgdIx+KcBOI6n4BND22ckzwa0p2+kfDHakIyojX2nNiWg7jzl1oDokI/3nnx/L2piUjKHspjvq7wiJjZefbYRgfLqML+TJ/osZ4P4rin8RLb6my/J3ApMlDH9PyiLNkafnhYKGsTP43XCYMBwVGxv++f/+6JeXsS35Hs4YXbCc1ANt7sTck6FzKgrELgTTOViGk=
-before_deploy:
-  # publish tag release
-  - mkdir -p ${HOME}/.m2
-  - set -e
-  - |
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-    <settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\"
-              xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-              xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0
-                                  http://maven.apache.org/xsd/settings-1.0.0.xsd\">
-      <servers>
-        <server>
-          <id>github</id>
-          <username>daggerok</username>
-          <password>${GITHUB_PASSWORD}</password>
-        </server>
-      </servers>
-    </settings>
-    " > ${HOME}/.m2/settings.xml
-  - ./mvnw >/dev/null
-  #
-  # test published release by using scripts/application.bash
-  - bash ./scripts/application.bash start build
-  - bash ./scripts/application.bash stop build
-  - bash ./scripts/application.bash start build
-  - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
-  - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-  - http --auth user:password -f post :8002/upload filename="$(date)-README.md" file@README.md
-  - http --auth user:password :8001/api/v1/file-items | jq '.'
-  - http --auth user:password :8002/api/v1/files | jq '.'
-  - yes | bash ./scripts/application.bash clean build
-  #
-  # test published release by using scripts/application-h2.bash
-  - bash ./scripts/application-h2.bash start build
-  - bash ./scripts/application-h2.bash stop build
-  - bash ./scripts/application-h2.bash start build
-  - http --auth user:password :8001/actuator/health
-  - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
-  - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-  - http --auth user:password :8002/api/v1/files | jq '.'
-  - http --auth user:password :8002/
-  - yes | bash ./scripts/application-h2.bash clean build
-  #
-  - ./gradlew dependencyUpdates -Drevision=release --parallel
-  - ./mvnw versions:display-property-updates
-  - ./mvnw versions:display-dependency-updates
-  - ./mvnw versions:display-plugin-updates
-  #
-  # documentation
-  - ./mvnw -Pdocs >/dev/null
-  - mkdir -p target/generated-docs
-  - cp -Rf target/generated-docs/index.html target/generated-docs/404.html
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: "$GITHUB_TOKEN"
-  keep-history: true
-  on:
-    branch: master
-  local-dir: target/generated-docs
-  target_branch: gh-pages
