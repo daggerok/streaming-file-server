@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Globals {
   object Project {
-    const val version = "4.3.20"
+    const val version = "4.3.21"
     const val groupId = "com.github.daggerok"
     const val artifactId = "streaming-file-server"
   }
@@ -19,18 +19,18 @@ object Globals {
   const val selenideVersion = "5.2.3"
   const val bootstrapVersion = "4.3.1"
   const val commonsIoVersion = "1.3.2"
-  const val fontAwesomeVersion = "5.8.2"
+  const val fontAwesomeVersion = "5.9.0"
   const val powermockitoVersion = "2.0.2"
   const val bootstrapFileInputVersion = "5.0.1"
-  const val springBootVersion = "2.1.5.RELEASE"
+  const val springBootVersion = "2.1.6.RELEASE"
   const val hibernateJava8Version = "5.4.3.Final"
 
   object Gradle {
-    const val wrapperVersion = "5.5-rc-2"
+    const val wrapperVersion = "5.5-rc-3"
 
     object Plugin {
       const val toolVersion = "3.1.12"
-      const val lombokVersion = "3.6.6"
+      const val lombokVersion = "3.7.5"
       const val spotbugsVersion = "2.0.0"
       const val querydslVersion = "1.0.10"
       const val propdepsVersion = "0.0.10"
@@ -40,7 +40,7 @@ object Globals {
       const val jrubyCompleteVersion = "9.2.5.0"
       const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
       const val asciidoctorjPdfVersion = "1.5.0-alpha.16"
-      const val dependencyManagementVersion = "1.0.7.RELEASE"
+      const val dependencyManagementVersion = "1.0.8.RELEASE"
     }
   }
 }

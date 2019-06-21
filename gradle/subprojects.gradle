@@ -5,8 +5,9 @@ subprojects {
   targetCompatibility = project.javaVersion
 
   repositories {
-    mavenLocal()
     mavenCentral()
+    maven { url = "https://repo.spring.io/milestone/" }
+    //maven { url = "https://repo.spring.io/snapshots/" }
   }
 
   apply(plugin: "io.freefair.lombok")
