@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Globals {
   object Project {
-    const val version = "4.3.22"
+    const val version = "4.3.23"
     const val groupId = "com.github.daggerok"
     const val artifactId = "streaming-file-server"
   }
@@ -22,7 +22,7 @@ object Globals {
   const val fontAwesomeVersion = "5.9.0"
   const val powermockitoVersion = "2.0.2"
   const val bootstrapFileInputVersion = "5.0.1"
-  const val springBootVersion = "2.1.6.RELEASE"
+  const val springBootVersion = "2.2.0.M4"
   const val hibernateJava8Version = "5.4.3.Final"
 
   object Gradle {

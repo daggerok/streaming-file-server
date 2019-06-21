@@ -3,7 +3,7 @@ package daggerok.fileitems.domain;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+// import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -15,8 +15,9 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+// TODO: FIXME: JPA Transactional manager doesn't worked anymore...
+// @Transactional(readOnly = true)//("transactionManager") // for some reasons its looking for reactiveTransactionManager
 public class FileItemReactiveRepository {
 
   private final FileItemRepository fileItemRepository;
@@ -26,6 +27,8 @@ public class FileItemReactiveRepository {
     return Flux.fromIterable(stream.collect(toList()));
   }
 
+  // @Transactional
+  // TODO: FIXME: JPA Transactional manager doesn't worked anymore...
   public Mono<FileItem> saveOrUpdate(final FileItem fileItem) {
     final FileItem curr =
         fileItemRepository.findByPathNotNullAndPathAndFilenameNotNullAndFilenameAndExtensionAndFileTypeNotNullAndFileTypeAndSizeNotNullAndSizeAndPrettySizeNotNullAndPrettySizeAndOwner(
@@ -50,6 +53,8 @@ public class FileItemReactiveRepository {
         ;
   }
 
+  // @Transactional
+  // TODO: FIXME: JPA Transactional manager doesn't worked anymore...
   public Flux<FileItem> saveOrUpdateAll(final List<FileItem> fileItems) {
     return Flux.fromIterable(fileItems)
                .map(this::saveOrUpdate)

@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.22</version>
+  <version>4.3.23</version>
 
   <properties>
     <java.version>1.8</java.version>
@@ -37,7 +37,7 @@
     <font.awesome.version>5.9.0</font.awesome.version>
     <lombok.plugin.version>3.7.5</lombok.plugin.version>
     <jruby.complete.version>9.2.5.0</jruby.complete.version><!-- freeze version! 9.1.13.0 is also works, but 9.2.6.0 and 9.2.7.0 are incompatible -->
-    <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
+    <spring.boot.version>2.2.0.M4</spring.boot.version>
     <hibernate.java8.version>5.4.3.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.0.1</bootstrap.file.input.version>
     <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
