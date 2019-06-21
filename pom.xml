@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.21</version>
+  <version>4.3.22</version>
 
   <properties>
     <java.version>1.8</java.version>

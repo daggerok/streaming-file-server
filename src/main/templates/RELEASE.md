@@ -5,7 +5,8 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-Update gradle -> 5.5-rc-3 and update CI build script
+* Fix deploy CI build script
+* Add Gradle dependencies update job
 
 ### incompatible (not upgradeable) versions
 
