@@ -26,7 +26,7 @@ allprojects {
     violationRules {
       rule {
         limit {
-          minimum = 0.2 // very low coverage, only 20%... try achieve at least 0.5
+          // minimum = 0.2 // very low coverage, only 20%... try achieve at least 0.5
         }
       }
 

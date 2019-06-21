@@ -17,6 +17,9 @@ spring:
     ansi:
       enabled: always
 
+  main:
+    lazy-initialization: true
+
 server:
   port: 8001
 

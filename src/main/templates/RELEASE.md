@@ -5,8 +5,8 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-* Fix deploy CI build script
-* Add Gradle dependencies update job
+* Update spring-boot -> 2.2.0.M4 (Fix Config Props)
+* Disable @Transactional annotation. Add TODO FIXME according to that...
 
 ### incompatible (not upgradeable) versions
 

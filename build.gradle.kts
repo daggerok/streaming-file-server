@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 buildscript {
   repositories {
     gradlePluginPortal()
@@ -64,16 +66,27 @@ apply(from = "${project.rootDir}/gradle/subprojects.gradle")
 apply(from = "${project.rootDir}/gradle/documentation.gradle")
 
 // gradle dependencyUpdates -Drevision=release --parallel
-tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("dependencyUpdates") {
-  resolutionStrategy {
-    componentSelection {
-      all {
-        val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
-            .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
-            .any { it.matches(candidate.version) }
-        if (rejected) reject("Release candidate")
+tasks {
+  named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+      componentSelection {
+        all {
+          val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
+              .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
+              .any { it.matches(candidate.version) }
+          if (rejected) reject("Release candidate")
+        }
       }
     }
+    outputFormatter = "plain" // "json"
   }
-  outputFormatter = "plain" // "json"
+
+  withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+      showExceptions = true
+      showStandardStreams = true
+      events(PASSED, SKIPPED, FAILED)
+    }
+  }
 }

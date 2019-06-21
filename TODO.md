@@ -1,9 +1,10 @@
 # TODO
 
+- fix Transactional after 2.2.0.M4 migration (now spring expects reactive transactional manager instead of JPA)
+- migrate from postgres to reactive postgres or [R2DBC](https://r2dbc.io/), or to some reactive NoSQL (mongodb, etc...)
 - migrate from Mustache template engine to [Thymeleaf](https://www.thymeleaf.org/)
 - migrate from Bootstrap to [Materialize.css](https://materializecss.com/)
 - migrate ~~file-items-service and~~ file-server from mvc to [reactive webflux](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
-- migrate from postgres to reactive postgres or [R2DBC](https://r2dbc.io/), or to some reactive NoSQL (mongodb, etc...)
 - add more advanced security, secure by MVC method...
 - improve files-db sync (replace FileSystem with GridFS or ...?)
 - backup, restore, migration...
