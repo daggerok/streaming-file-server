@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.23</version>
+  <version>4.3.24</version>
 
   <properties>
     <java.version>1.8</java.version>
@@ -28,11 +28,13 @@
     <jgiven.version>0.17.1</jgiven.version>
     <lombok.version>1.18.8</lombok.version>
     <logback.version>1.2.3</logback.version><!-- 1.3.0-alpha4 is incompatible -->
-    <gradle.version>5.5-rc-3</gradle.version>
+    <gradle.version>5.5-rc-4</gradle.version>
     <spotbugs.version>2.0.0</spotbugs.version>
     <selenide.version>5.2.4</selenide.version>
+    <postgres.version>42.2.6</postgres.version>
     <bootstrap.version>4.3.1</bootstrap.version>
     <commons.io.version>1.3.2</commons.io.version>
+    <jacoco.tool.version>0.8.4</jacoco.tool.version>
     <powermockito.version>2.0.2</powermockito.version>
     <font.awesome.version>5.9.0</font.awesome.version>
     <lombok.plugin.version>3.7.5</lombok.plugin.version>

@@ -19,6 +19,7 @@ object Globals {
   const val selenideVersion = "${selenide.version}"
   const val bootstrapVersion = "${bootstrap.version}"
   const val commonsIoVersion = "${commons.io.version}"
+  const val jacocoToolVersion = "${jacoco.tool.version}"
   const val fontAwesomeVersion = "${font.awesome.version}"
   const val powermockitoVersion = "${powermockito.version}"
   const val bootstrapFileInputVersion = "${bootstrap.file.input.version}"

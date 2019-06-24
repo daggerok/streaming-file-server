@@ -15,6 +15,7 @@ node_js: lts/*
 python: 3
 service:
   - docker
+  - xvfb
 addons:
   apt:
     update: true
@@ -32,15 +33,20 @@ addons:
       - python3-pip
       - python3-six
       - python3-setuptools
-      #- libappindicator1
-      #- fonts-liberation
-      #- google-chrome-stable
+      - libappindicator1
+      - fonts-liberation
+      - google-chrome-stable
 install: true
 before_install:
+  ## use instead:
+  ##
+  ## services:
+  ##   - xvfb
+  ##
   #- export CHROME_BIN=/usr/bin/google-chrome
   #- export DISPLAY=:99.0
   #- sh -e /etc/init.d/xvfb start
-  #
+  ##
   - docker-compose -v
   - export PATH=$HOME/.local/bin:$PATH
   - pip3 install --user $(whoami) --upgrade pip >/dev/null # pip3 -> pip
@@ -94,7 +100,7 @@ jobs:
 #        - stop_any 80 8002 8001 8080 5432
     - stage: test
       jdk: openjdk8
-      name: run in docker
+      name: Run in docker (openjdk8)
       script:
         - ./gradlew -b ./modules/apps/build.gradle.kts clean >/dev/null
         - ./gradlew -b ./modules/apps/build.gradle.kts assemble >/dev/null
@@ -120,20 +126,45 @@ jobs:
         - stop_any 80 8001 8002
     - stage: test
       jdk: openjdk8
-      name: jGiven tests and docs
+      name: JGiven tests and asciidoctor documentation (openjdk8)
       script:
         - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
         - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
         - ./gradlew -S -Pdebug clean check build >/dev/null
-        #
-        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+    - stage: test
+      jdk: openjdk11
+      name: JGiven tests and asciidoctor documentation (openjdk11)
+      script:
+        - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
+        - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
+        - ./gradlew -S -Pdebug clean check build >/dev/null
     - stage: test
       jdk: openjdk8
-      name: Postgres
+      name: Postgres (openjdk8)
       script:
+        - ./gradlew clean assemble >/dev/null
         - ./gradlew clean assemble postgresUp >/dev/null
         - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg >/dev/null &
         - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+        - bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
+        - wait_for 8002
+        - http --auth user:password :8001/actuator/health | jq '.'
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - stop_any 80 8002 8001 8080 5432
+        - ./gradlew postgresDown >/dev/null
+    - stage: test
+      jdk: openjdk11
+      name: Postgres (openjdk11)
+      script:
+        - ./gradlew clean assemble >/dev/null
+        - ./gradlew clean assemble postgresUp >/dev/null
+        - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg >/dev/null &
+        - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
         - bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
         - wait_for 8002
         - http --auth user:password :8001/actuator/health | jq '.'
@@ -145,11 +176,28 @@ jobs:
         - ./gradlew postgresDown >/dev/null
     - stage: test
       jdk: openjdk8
-      name: H2
+      name: H2 (openjdk8)
       script:
-        - ./gradlew clean assemble >/dev/null
+        - ./gradlew clean assemble>/dev/null
         - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
         - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+        - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
+        - wait_for 8002
+        - http --auth user:password :8001/actuator/health | jq '.'
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - stop_any 80 8002 8001 8080 5432
+    - stage: test
+      jdk: openjdk11
+      name: H2 (openjdk11)
+      script:
+        - ./gradlew clean assemble>/dev/null
+        - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
+        - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
         - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
         - wait_for 8002
         - http --auth user:password :8001/actuator/health | jq '.'
@@ -160,7 +208,7 @@ jobs:
         - stop_any 80 8002 8001 8080 5432
     - stage: test
       jdk: openjdk8
-      name: services behind reverse-proxy
+      name: Test all services behind a reverse-proxy using Docker (openjdk8)
       script:
         - ./gradlew clean >/dev/null
         - ./gradlew assemble >/dev/null
@@ -170,11 +218,23 @@ jobs:
         - ./gradlew allDown
     - stage: test
       jdk: openjdk8
-      name: dependencyUpdates
+      name: Run gradle clean build (openjdk8)
+      script: cd $TRAVIS_BUILD_DIR && ./gradlew clean build
+    - stage: test
+      jdk: openjdk11
+      name: Run gradle clean build (openjdk11)
+      script: cd $TRAVIS_BUILD_DIR && ./gradlew clean build
+    - stage: test
+      jdk: openjdk8
+      name: Run gradle dependencyUpdates (openjdk8)
+      script: cd $TRAVIS_BUILD_DIR && ./gradlew dependencyUpdates
+    - stage: test
+      jdk: openjdk11
+      name: Run gradle dependencyUpdates (openjdk11)
       script: cd $TRAVIS_BUILD_DIR && ./gradlew dependencyUpdates
     - stage: deploy
-      jdk: openjdk8
-      name: GitHub release and GitHub pages deployment
+      jdk: openjdk11
+      name: GitHub release and GitHub pages deployment (openjdk11)
       script: skip
       if: branch = "master" AND type NOT IN (pull_request)
       before_deploy:

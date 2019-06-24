@@ -5,7 +5,7 @@ plugins {
 }
 
 subprojects {
-  this.apply(plugin = "java")
+  apply(plugin = "java")
   apply(plugin = "org.springframework.boot")
 
   dependencies {

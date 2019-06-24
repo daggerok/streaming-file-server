@@ -22,34 +22,34 @@ defaultTasks 'clean', 'check'
 
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
   }
   dependencies {
-    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion"
+    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.spotbugsVersion}")
   }
 }
 
 allprojects {
-  apply plugin: 'com.github.spotbugs'
+  apply(plugin: "com.github.spotbugs")
   
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
   }
   
   dependencies {
-    compileOnly 'net.jcip:jcip-annotations:1.0'
-    compileOnly "com.github.spotbugs:spotbugs-annotations:$toolVersion"
+    compileOnly("net.jcip:jcip-annotations:1.0")
+    compileOnly("com.github.spotbugs:spotbugs-annotations:${Globals.toolVersion}")
   }
 
-  def suffix = project.path.replaceAll(':', '-').replaceFirst('-', '')
+  def suffix = project.path.replaceAll(":", "-").replaceFirst("-", "")
   def prefix = rootProject.buildDir.absolutePath
   def path = "$prefix/spotbugs/$suffix" // customize reports location
 
   spotbugs {
-    toolVersion = project.toolVersion
-    effort = 'max'
+    toolVersion = Globals.toolVersion
+    effort = "max"
     reportsDir = file("$path")
-    ignoreFailures = true // project.findProperty('ignoreBugs') != null // gradle -PignoreBugs ..
+    ignoreFailures = true // project.findProperty("ignoreBugs") != null // gradle -PignoreBugs ..
   }
 
   tasks.withType(com.github.spotbugs.SpotBugsTask) {

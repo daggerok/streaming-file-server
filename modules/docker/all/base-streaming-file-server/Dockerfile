@@ -1,7 +1,8 @@
-FROM openjdk:8u201-jre-alpine3.9
-#FROM openjdk:8u191-jre-alpine3.8
-##FROM openjdk:8u181-jre-alpine3.8
-###FROM openjdk:8u151-jre-alpine3.7
+FROM openjdk:13-ea-19-jdk-alpine3.9
+#FROM openjdk:8u201-jre-alpine3.9
+##FROM openjdk:8u191-jre-alpine3.8
+###FROM openjdk:8u181-jre-alpine3.8
+####FROM openjdk:8u151-jre-alpine3.7
 LABEL MAINTAINER='Maksim Kostromin https://github.com/daggerok'
 
 RUN apk add --no-cache --update bash sudo wget busybox-suid openssh-client  && \

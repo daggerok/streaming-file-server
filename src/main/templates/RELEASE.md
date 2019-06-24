@@ -5,8 +5,8 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-* Update spring-boot -> 2.2.0.M4 (Fix Config Props)
-* Disable @Transactional annotation. Add TODO FIXME according to that...
+* Update Gradle -> 5.5-rc-4 (see [how and what](https://docs.gradle.org/current/userguide/java_library_plugin.html))
+* Migrate deprecated Gradle configuration `compile` -> `api`
 
 ### incompatible (not upgradeable) versions
 
