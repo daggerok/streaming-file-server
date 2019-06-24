@@ -6,9 +6,9 @@ buildscript {
   }
 
   dependencies {
-    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.Gradle.Plugin.spotbugsVersion}")
-    classpath("org.asciidoctor:asciidoctorj-pdf:${Globals.Gradle.Plugin.asciidoctorjPdfVersion}")
-    classpath("org.jruby:jruby-complete:${Globals.Gradle.Plugin.jrubyCompleteVersion}")
+    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.spotbugsVersion}")
+    classpath("org.asciidoctor:asciidoctorj-pdf:${Globals.asciidoctorjPdfVersion}")
+    classpath("org.jruby:jruby-complete:${Globals.jrubyCompleteVersion}")
   }
 }
 
@@ -16,47 +16,32 @@ plugins {
   idea
   maven
   eclipse
-  id("io.freefair.lombok") version Globals.Gradle.Plugin.lombokVersion
+  `java-library`
+  id("io.freefair.lombok") version Globals.lombokPluginVersion
   id("org.springframework.boot") version Globals.springBootVersion apply false
-  id("com.github.ben-manes.versions") version Globals.Gradle.Plugin.versionsVersion
-  id("org.ajoberstar.git-publish") version Globals.Gradle.Plugin.gitPublishVersion apply false
-  id("org.asciidoctor.convert") version Globals.Gradle.Plugin.asciidoctorjConvertVersion apply false
-  id("com.avast.gradle.docker-compose") version Globals.Gradle.Plugin.dockerComposeVersion apply false
-  id("com.ewerk.gradle.plugins.querydsl") version Globals.Gradle.Plugin.querydslVersion apply false
-  id("io.spring.dependency-management") version Globals.Gradle.Plugin.dependencyManagementVersion
-  id("cn.bestwu.propdeps-eclipse") version Globals.Gradle.Plugin.propdepsVersion
-  id("cn.bestwu.propdeps-maven") version Globals.Gradle.Plugin.propdepsVersion
-  id("cn.bestwu.propdeps-idea") version Globals.Gradle.Plugin.propdepsVersion
-  id("cn.bestwu.propdeps") version Globals.Gradle.Plugin.propdepsVersion
+  id("com.github.ben-manes.versions") version Globals.versionsVersion
+  id("org.ajoberstar.git-publish") version Globals.gitPublishVersion apply false
+  id("org.asciidoctor.convert") version Globals.asciidoctorjConvertVersion apply false
+  id("com.avast.gradle.docker-compose") version Globals.dockerComposeVersion apply false
+  id("com.ewerk.gradle.plugins.querydsl") version Globals.querydslVersion apply false
+  id("io.spring.dependency-management") version Globals.dependencyManagementVersion
+  id("cn.bestwu.propdeps-eclipse") version Globals.propdepsVersion
+  id("cn.bestwu.propdeps-maven") version Globals.propdepsVersion
+  id("cn.bestwu.propdeps-idea") version Globals.propdepsVersion
+  id("cn.bestwu.propdeps") version Globals.propdepsVersion
 }
 
-extra["javaVersion"] = Globals.javaVersion
-extra["vavrVersion"] = Globals.vavrVersion
-extra["lombokVersion"] = Globals.lombokVersion
 extra["lombok.version"] = Globals.lombokVersion
-extra["jqueryVersion"] = Globals.jqueryVersion
-extra["popperVersion"] = Globals.popperVersion
-extra["jgivenVersion"] = Globals.jgivenVersion
-extra["logbackVersion"] = Globals.logbackVersion
-extra["selenideVersion"] = Globals.selenideVersion
-extra["bootstrapVersion"] = Globals.bootstrapVersion
-extra["commonsIoVersion"] = Globals.commonsIoVersion
-extra["springBootVersion"] = Globals.springBootVersion
-extra["toolVersion"] = Globals.Gradle.Plugin.toolVersion
-extra["fontAwesomeVersion"] = Globals.fontAwesomeVersion
-extra["powermockitoVersion"] = Globals.powermockitoVersion
-extra["hibernateJava8Version"] = Globals.hibernateJava8Version
-extra["spotbugsVersion"] = Globals.Gradle.Plugin.spotbugsVersion
-extra["bootstrapFileInputVersion"] = Globals.bootstrapFileInputVersion
+extra["postgresql.version"] = Globals.postgresVersion
 
 allprojects {
-  version = Globals.Project.version
-  group = Globals.Project.groupId
+  version = Globals.version
+  group = Globals.groupId
   defaultTasks("clean", "build")
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = Globals.Gradle.wrapperVersion
+  gradleVersion = Globals.wrapperVersion
   distributionType = Wrapper.DistributionType.BIN
 }
 

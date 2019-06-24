@@ -1,8 +1,10 @@
-dependencies {
-  compile 'org.springframework.boot:spring-boot-actuator-autoconfigure'
-  compile 'org.springframework.security:spring-security-config'
-  compile 'org.springframework.boot:spring-boot-starter-security'
-  compile 'javax.servlet:javax.servlet-api'
+apply(plugin: "java-library")
 
-  testCompile 'org.springframework.security:spring-security-test'
+dependencies {
+  api 'org.springframework.boot:spring-boot-actuator-autoconfigure'
+  api 'org.springframework.security:spring-security-config'
+  api 'org.springframework.boot:spring-boot-starter-security'
+  api 'javax.servlet:javax.servlet-api'
+
+  testImplementation 'org.springframework.security:spring-security-test'
 }

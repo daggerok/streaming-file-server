@@ -16,7 +16,7 @@ pluginManagement {
   }
 }
 
-rootProject.name = Globals.Project.artifactId
+rootProject.name = Globals.artifactId
 
 include(
     ":modules:libraries:props",
