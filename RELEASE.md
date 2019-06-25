@@ -7,6 +7,8 @@ _version: 4.3.24_
 
 * Update Gradle -> 5.5-rc-4 (see [how and what](https://docs.gradle.org/current/userguide/java_library_plugin.html))
 * Migrate deprecated Gradle configuration `compile` -> `api`
+* Update Travis CI builds (add openjdk11 jobs)
+* Update fresher images in base java app Dockerfile
 
 ### incompatible (not upgradeable) versions
 
