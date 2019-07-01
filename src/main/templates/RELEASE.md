@@ -5,8 +5,7 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-* Update Gradle -> 5.5-rc-4 (see [how and what](https://docs.gradle.org/current/userguide/java_library_plugin.html))
-* Migrate deprecated Gradle configuration `compile` -> `api`
+Update Gradle -> 5.5
 
 ### incompatible (not upgradeable) versions
 
