@@ -4,22 +4,22 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Untitled</title>
-<date>2019-06-25</date>
+<date>2019-07-01</date>
 </info>
 <preface>
 <title></title>
 <formalpara>
-<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.24/file-items-service-4.3.24.jar">file items service</link>:</title>
+<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.25/file-items-service-4.3.25.jar">file items service</link>:</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.24.jar
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.25.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.24/file-server-4.3.24.jar">file server</link>:</title>
+<title>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.25/file-server-4.3.25.jar">file server</link>:</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.24.jar --spring.profiles.active=db-h2</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.25.jar --spring.profiles.active=db-h2</programlisting>
 </para>
 </formalpara>
 </preface>
