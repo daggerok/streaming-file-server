@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Globals {
-  const val version = "4.3.24"
+  const val version = "4.3.25"
   const val groupId = "com.github.daggerok"
   const val artifactId = "streaming-file-server"
 
@@ -26,7 +26,7 @@ object Globals {
   const val springBootVersion = "2.2.0.M4"
   const val hibernateJava8Version = "5.4.3.Final"
 
-  const val wrapperVersion = "5.5-rc-4"
+  const val wrapperVersion = "5.5"
 
   const val toolVersion = "3.1.12"
   const val spotbugsVersion = "2.0.0"
