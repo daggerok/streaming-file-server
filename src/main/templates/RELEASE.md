@@ -5,7 +5,8 @@ _version: ${project.version}_
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
-Update Gradle -> 5.5
+- Multiple jquery dependencies conflict
+- Project versions upgrade
 
 ### incompatible (not upgradeable) versions
 
