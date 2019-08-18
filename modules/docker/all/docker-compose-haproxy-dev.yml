@@ -8,7 +8,7 @@ services:
     networks:
       private.network.org:
         aliases:
-          - postgres.private.network.org
+        - postgres.private.network.org
   base-streaming-file-server:
     build: ./base-streaming-file-server
     networks: [private.network.org]
@@ -27,7 +27,7 @@ services:
     networks:
       private.network.org:
         aliases:
-          - file-items-service.private.network.org
+        - file-items-service.private.network.org
   file-server:
     build:
       context: ../../..
@@ -45,7 +45,7 @@ services:
       FILE_ITEMS_REST_SERVICE_PORT: 8001
     ports: ['8002:8002']
     volumes:
-      - ./build:/var/file-storage:rw
+    - ./build:/var/file-storage:rw
     networks:
       private.network.org:
         aliases:
@@ -65,12 +65,12 @@ services:
     networks:
       private.network.org:
         aliases:
-          - proxy
-          - haproxy
-          - reverse-proxy
-          - proxy.private.network.org
-          - haproxy.private.network.org
-          - reverse-proxy.private.network.org
+        - proxy
+        - haproxy
+        - reverse-proxy
+        - proxy.private.network.org
+        - haproxy.private.network.org
+        - reverse-proxy.private.network.org
       public.network.org:
         aliases: []
 networks:

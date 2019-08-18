@@ -1,12 +1,14 @@
 version: '2.1'
 services:
   postgres:
-    image: healthcheck/postgres:alpine
+    image: postgres:11.5-alpine
+    ports: ['5432:5432']
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    ports: ['5432:5432']
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-h', '127.0.0.1', '-p', '5432', '-d', '$$POSTGRES_DB', '-U', '$$POSTGRES_USER']
     networks:
       private.network.org:
         aliases:

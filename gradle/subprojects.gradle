@@ -10,7 +10,7 @@ subprojects {
     //maven { url = "https://repo.spring.io/snapshots/" }
   }
 
-  apply(plugin: "io.freefair.lombok")
+  apply(plugin: "io.franzbecker.gradle-lombok")
 
   lombok {
     version = Globals.lombokVersion

@@ -23,9 +23,9 @@ spring:
     lazy-initialization: true
 
 logging:
-  path: ./logs
   file:
     max-size: 1MB
+    path: ./logs
 
 server:
   port: 8002

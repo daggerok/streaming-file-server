@@ -7,7 +7,6 @@ object Globals {
 
   val javaVersion = JavaVersion.VERSION_1_8
 
-
   const val vavrVersion = "${vavr.version}"
   const val slf4jVersion = "${slf4j.version}"
   const val jqueryVersion = "${jquery.version}"
@@ -22,8 +21,8 @@ object Globals {
   const val jacocoToolVersion = "${jacoco.tool.version}"
   const val fontAwesomeVersion = "${font.awesome.version}"
   const val powermockitoVersion = "${powermockito.version}"
-  const val bootstrapFileInputVersion = "${bootstrap.file.input.version}"
   const val springBootVersion = "${spring.boot.version}"
+  const val bootstrapFileInputVersion = "${bootstrap.file.input.version}"
   const val hibernateJava8Version = "${hibernate.java8.version}"
 
   const val wrapperVersion = "${gradle.version}"
@@ -32,7 +31,7 @@ object Globals {
   const val spotbugsVersion = "${spotbugs.version}"
   const val querydslVersion = "1.0.10"
   const val propdepsVersion = "0.0.10"
-  const val versionsVersion = "0.21.0"
+  const val versionsVersion = "${versions.gradle.plugin}"
   const val gitPublishVersion = "2.1.1"
   const val lombokPluginVersion = "${lombok.plugin.version}"
   const val dockerComposeVersion = "0.7.1"  // any other higher version will fail on adoc task

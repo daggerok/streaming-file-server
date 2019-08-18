@@ -17,9 +17,9 @@ plugins {
   maven
   eclipse
   `java-library`
-  id("io.freefair.lombok") version Globals.lombokPluginVersion
-  id("org.springframework.boot") version Globals.springBootVersion apply false
   id("com.github.ben-manes.versions") version Globals.versionsVersion
+  id("io.franzbecker.gradle-lombok") version Globals.lombokPluginVersion
+  id("org.springframework.boot") version Globals.springBootVersion apply false
   id("org.ajoberstar.git-publish") version Globals.gitPublishVersion apply false
   id("org.asciidoctor.convert") version Globals.asciidoctorjConvertVersion apply false
   id("com.avast.gradle.docker-compose") version Globals.dockerComposeVersion apply false

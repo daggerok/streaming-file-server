@@ -12,7 +12,8 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-mustache")
   implementation("org.apache.commons:commons-io:${Globals.commonsIoVersion}")
 
-  implementation("org.webjars:jquery:${Globals.jqueryVersion}")
+  // probably should be as a transitive dependency whenever it's needed...
+  // implementation("org.webjars:jquery:${Globals.jqueryVersion}")
   implementation("org.webjars.bower:bootstrap:${Globals.bootstrapVersion}")
   implementation("org.webjars.bower:bootstrap-fileinput:${Globals.bootstrapFileInputVersion}")
   implementation("org.webjars:font-awesome:${Globals.fontAwesomeVersion}")
