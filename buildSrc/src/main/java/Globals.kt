@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Globals {
-  const val version = "4.3.27"
+  const val version = "4.3.28"
   const val groupId = "com.github.daggerok"
   const val artifactId = "streaming-file-server"
 
