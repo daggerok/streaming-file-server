@@ -34,7 +34,7 @@ object Globals {
   const val versionsVersion = "${versions.gradle.plugin}"
   const val gitPublishVersion = "2.1.1"
   const val lombokPluginVersion = "${lombok.plugin.version}"
-  const val dockerComposeVersion = "0.7.1"  // any other higher version will fail on adoc task
+  const val dockerComposeVersion = "${docker.compose.gradle.plugin}"  // any other higher version will fail on adoc task
   const val jrubyCompleteVersion = "${jruby.complete.version}"
   const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
   const val asciidoctorjPdfVersion = "${asciidoctorj.pdf.version}"
