@@ -56,13 +56,13 @@ open modules/apps/streaming-file-server/jgiven-reports/html/index.html
 
 ```sh
 ./gradlew clean assemble allUp -Pdebug
-http -a user:password :8002
+http -a user:password :80
 ```
 
 **run all in docker manually**
 
 ```bash
-./gradelw clean assemble
+./gradlew clean assemble
 #docker-compose -f ./modules/docker/all/docker-compose.yml --project-name=docker up --build --force-recreate
 #docker-compose -f ./modules/docker/all/docker-compose.yml -p docker up --build --force-recreate
 docker-compose -f ./modules/docker/all/docker-compose.yml up --build --force-recreate
