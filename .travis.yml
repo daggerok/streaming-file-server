@@ -3,59 +3,56 @@ env:
     - TERM=dumb
     - secure: Eh+HT5YScrFz1JoZLHtbxPqFT6E/7+qHFDoN2fqYXX2lpahCJmTX6dW/8lyk32sMUvTpljJPpKQb/Xavxk8lHE0tDcdr/1l5N4WHnZPGJqKLB36VQpuFkMwmsbQH7dfJskDpFjJZSKa0oXTa8AEU8U2nstdFdyKZt2wChWOMMNCmEiL7YVu0bqjn08Qlfkye3pg9q6tMRGMLIL3Y0pvqWrhb2zfbjojcq+pQLrZGmuh0XUqshPQqc9M959KDSq3aq1INjSFYI3siIHN8b/He1qBSECWURvsgA9uKBNo2LuvLfvzFzHmzpHBNRbRcjrCzF8gzxuVxkfxjW5zOtJbe/7KOxM5NHKtWfCeTunrzJoEl9v9h/AYRlS0UBBFyie3XWraxed9aFuT7QbR0mTmx7s33vNGRMkujG+nPhkPzuM0ABpU/t5quvvo9zMmnd1LOe3XV+kAo3HOqkAD/FC5JZI5aaMJXrSS+O9XzPXS+E2CjGPAgBY0VIX0LwVVc80t00xkppfINtj/0HYyKE3xXE6cnM34204u+9Mksxb/TZQY+GMpAOCIUn+RrO0vxM7hvv8anm59rMOAZ/FgvLs+i3d1CuJJDCn9fuFxa0Etnn/krusLdwzjvI+9AgMknVCo1mnxbNuIAo2BnkOdzz35PxX8iDxc7fThYt9u5mx8M79E=
     - secure: D04FeSPymLevdF11Ej1dUAxxHV9rKHHj/0sld/KPNh/mr876dm1l9AMo6VcBC5Kr1a6AwDJiOG9d8XgUEFRNvhBb3nMjIJa/99psykPL1N4WWZojULkeUtfhbVC+4d5qoLjNM2svT8IFJ9hO1kfgBGKk1Cd5KA+PtjceEIAJ29gaBvnbYo3MspXZsd3RA87kgY/poxQX2j7JeyKqQQKTLN8FTLqu7vgmdZWRYrUrSXiZvoJc9yJ+7PW6u4N4nVlReYb6+GGOM6BAtyB0dDxxG50sL8VcrYnzRlWyEXMaqNlqu2FBI+sBEuzkVkGulZMIsHDfKQhMPH/g2bN79FiPJVEiS7aOBiSMjS2f7vAq9JS3xOnNmMPjHOkAfzpktXbYHydeQIW6vcUue58qUkaj+zn7kyocg83hDlR/j3ATfXJvOGF4vqhkRwPtz7WeZ+Lra7nMrlhaLkFpALco7+ZOB9BwDa3lV1oic6Xv4pRNHgdIx+KcBOI6n4BND22ckzwa0p2+kfDHakIyojX2nNiWg7jzl1oDokI/3nnx/L2piUjKHspjvq7wiJjZefbYRgfLqML+TJ/osZ4P4rin8RLb6my/J3ApMlDH9PyiLNkafnhYKGsTP43XCYMBwVGxv++f/+6JeXsS35Hs4YXbCc1ANt7sTck6FzKgrELgTTOViGk=
-dist: xenial
 notifications:
   email: false
 git:
   quiet: true
-  depth: 1
+  depth: false
 language: java
 jdk: openjdk8
 node_js: lts/*
-python: 3
-service:
-  - docker
-  - xvfb
+python: 3.7
+matrix:
+  include:
+  - python: 3.7
+service: docker
 addons:
   apt:
     update: true
     packages:
-      - sudo
-      - lsof
-      - wget
-      - bash
-      - curl
       - jq
-      - libxml2-utils
+      - wget
       - unzip
+      #- curl
+      #- sudo
+      #- lsof
+      #- bash
       - docker-ce
-      - python3-dev
       - python3-pip
-      - python3-six
-      - python3-setuptools
-      - libappindicator1
-      - fonts-liberation
-      - google-chrome-stable
+      - libxml2-utils
+      #- libappindicator1
+      #- fonts-liberation
+      #- google-chrome-stable
 install: true
 before_install:
-  ## use instead:
-  ##
-  ## services:
-  ##   - xvfb
-  ##
   #- export CHROME_BIN=/usr/bin/google-chrome
-  #- export DISPLAY=:99.0
-  #- sh -e /etc/init.d/xvfb start
-  ##
-  - docker-compose -v
-  - export PATH=$HOME/.local/bin:$PATH
-  - pip3 install --user $(whoami) --upgrade pip >/dev/null # pip3 -> pip
-  - pip install --user $(whoami) --upgrade docker-compose httpie >/dev/null 2>&1
-  - http --version --debug
-  - docker-compose -v
+  - export DISPLAY=:99.0
   #
-  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+  - |
+    if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
+      mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
+      curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+  fi
+  source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
   - stop_any 80 8001 8002 8080 5432
+  #
+  - export PATH=$HOME/.local/bin:$PATH
+  - docker-compose version
+  - pip install --user --upgrade pip
+  - pip install --user --upgrade docker-compose httpie
+  - pip -V
+  - http --version --debug
+  - docker-compose version
 before_script:
   - export PATH=/tmp:$PATH
   - export APP_UPLOAD_PATH="/tmp/file-storage"
@@ -65,6 +62,10 @@ stages:
   - deploy
 jobs:
   include:
+    - stage: test
+      jdk: openjdk11
+      name: maven versions
+      script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -P updates
 #    - stage: test
 #      jdk: openjdk8
 #      name: disabled
@@ -115,9 +116,9 @@ jobs:
         - docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
         - wait_healthy_docker_containers 2
         #
-        - http --auth user:password :80/actuator/health
+        - http --auth user:password :80/actuator/health | jq '.'
         - http --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
-        - http --auth user:password :80/api/v1/files
+        - http --auth user:password :80/api/v1/files | jq '.'
         - http --auth user:password :80/
         #
         - docker rm -f -v file-server file-items-service
@@ -238,11 +239,11 @@ jobs:
       script: skip
       if: branch = "master" AND type NOT IN (pull_request)
       before_deploy:
+        - set -e
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ] || [ ".$TRAVIS_BRANCH" != ".master" ] ; then exit 0 ; fi
         - env
         # publish tag release
-        - mkdir -p ${HOME}/.m2
-        - set -e
+        - mkdir -p ~/.m2
         - |
           echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
           <settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\"
@@ -291,17 +292,18 @@ jobs:
       deploy: &pages
         provider: pages
         skip-cleanup: true
-        github-token: "$GITHUB_TOKEN"
         keep-history: true
-        local-dir: target/generated-docs
         target_branch: gh-pages
+        github-token: "$GITHUB_TOKEN"
+        local-dir: target/generated-docs
         on:
           branch: master
           condition: "$TRAVIS_PULL_REQUEST = false"
 cache:
-  pip: true
-  packages: true
   directories:
-    - $HOME/.m2
-    - $HOME/.gradle
-    - $HOME/.docker
+  - ~/.m2
+  - ~/.gradle
+  - ~/.docker
+  - ~/.local/daggerok
+  packages: true
+  pip: true

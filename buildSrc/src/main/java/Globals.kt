@@ -34,9 +34,9 @@ object Globals {
   const val versionsVersion = "0.27.0"
   const val gitPublishVersion = "2.1.1"
   const val lombokPluginVersion = "3.2.0"
-  const val dockerComposeVersion = "0.7.1"  // any other higher version will fail on adoc task
-  const val jrubyCompleteVersion = "9.2.5.0"
-  const val asciidoctorjConvertVersion = "1.5.9.1" // on windows my fail, use instead: 1.5.8.1
-  const val asciidoctorjPdfVersion = "1.5.0-alpha.16"
   const val dependencyManagementVersion = "1.0.8.RELEASE"
+  const val dockerComposeVersion = "0.7.1" // TODO: FIXME: any other higher version will fail on adoc task
+  const val asciidoctorjPdfVersion = "1.5.0-beta.6"
+  const val asciidoctorjDiagramVersion = "1.5.18"
+  const val asciidoctorjConvertVersion = "2.3.0"
 }
