@@ -1,6 +1,9 @@
 # streaming-file-server
 _version: ${project.version}_
 
+* Spring Boot 2.2.0.RELEASE
+* Gradle 5.6.3
+
 ## Java file server 
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
