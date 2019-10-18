@@ -1,6 +1,36 @@
 # development
 
-**gradle**
+**versions maven plugin**
+
+_increment current version_
+
+```bash
+./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} ; ./mvnw -Pversions
+```
+
+```batch
+mvnw build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}
+mvnw -Pversions
+```
+
+_process versions substitution_
+
+```bash
+./mvnw -Pversions
+```
+_set specific version_
+
+```bash
+./mvnw versions:set -DnewVersion=4.3.29
+```
+
+**maven version management**
+
+```bash
+./mvnw versions:display-property-updates
+```
+
+**run with gradle**
 
 ```sh
 ./gradlew assemble
@@ -13,7 +43,7 @@
 ./gradlew --stop
 ```
 
-**testing**
+**gradle testing**
 
 awesome JGiven reports!
 
@@ -80,40 +110,7 @@ tree ./build/spotbugs
 open ./build/jacoco/modules-apps-file-server/index.html
 ```
 
-**maven version management**
-
-```bash
-./mvnw versions:display-property-updates
-./mvnw versions:display-dependency-updates
-./mvnw versions:display-plugin-updates
-```
-
-**version management**
-
-_set version_
-
-```bash
-./mvnw versions:set -DnewVersion=4.3.28
-```
-
-_process versions substitution_
-
-```bash
-./mvnw -Pversions
-```
-
-_increment current version_
-
-```bash
-./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} ; ./mvnw -Pversions
-```
-
-```batch
-mvnw build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}
-mvnw -Pversions
-```
-
-**publish release**
+**publish release with maven**
 
 ```bash
 ./mvnw
