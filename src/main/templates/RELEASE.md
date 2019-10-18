@@ -12,9 +12,7 @@ _version: ${project.version}_
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
     com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.4]
-    io.vavr:vavr [0.9.2 -> 1.0.0-alpha-2]
-    org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin [1.5.9.1 -> 2.2.0]
-    org.jruby:jruby-complete [9.2.5.0 -> 9.2.7.0]
+    io.vavr:vavr [0.10.2 -> 1.0.0-alpha-2]
 
 ## Installation
 

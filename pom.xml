@@ -20,15 +20,17 @@
 
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
-    <asciidoctorj-pdf.version>1.5.0-beta.5</asciidoctorj-pdf.version>
+    <asciidoctorj-pdf.version>${asciidoctorj.pdf.version}</asciidoctorj-pdf.version>
     <github-release-plugin.version>1.4.0</github-release-plugin.version>
     <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
     <asciidoctor-maven-plugin.version>2.0.0-RC.1</asciidoctor-maven-plugin.version>
 
     <!-- 1.3.0-alpha4 is incompatible -->
     <logback.version>1.2.3</logback.version>
-    <!-- freeze version! 9.1.13.0 is also works, but 9.2.6.0 and 9.2.7.0 are incompatible -->
-    <jruby.complete.version>9.2.5.0</jruby.complete.version>
+
+    <asciidoctorj.pdf.version>1.5.0-beta.6</asciidoctorj.pdf.version>
+    <asciidoctorj.convert.version>2.3.0</asciidoctorj.convert.version>
+    <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
 
     <vavr.version>0.10.2</vavr.version>
     <tool.version>3.1.12</tool.version>
@@ -52,7 +54,6 @@
     <hibernate.java8.version>5.4.6.Final</hibernate.java8.version>
     <docker.compose.gradle.plugin>0.7.1</docker.compose.gradle.plugin>
     <bootstrap.file.input.version>5.0.1</bootstrap.file.input.version>
-    <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
     <io.spring.dependency-management>1.0.8.RELEASE</io.spring.dependency-management>
   </properties>
 

@@ -7,8 +7,6 @@ buildscript {
 
   dependencies {
     classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.spotbugsVersion}")
-    classpath("org.asciidoctor:asciidoctorj-pdf:${Globals.asciidoctorjPdfVersion}")
-    classpath("org.jruby:jruby-complete:${Globals.jrubyCompleteVersion}")
   }
 }
 

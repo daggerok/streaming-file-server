@@ -7,6 +7,12 @@ buildscript {
 
 apply plugin: 'org.asciidoctor.convert'
 
+dependencies {
+  asciidoctor("org.asciidoctor:asciidoctorj-diagram:${Globals.asciidoctorjDiagramVersion}")
+  asciidoctor("org.asciidoctor:asciidoctorj-pdf:${Globals.asciidoctorjPdfVersion}")
+//  asciidoctor("org.asciidoctor:asciidoctorj-diagram:1.5.18")
+}
+
 asciidoctor {
   sourceDir = project.file('docs')
   sources {
@@ -37,6 +43,7 @@ asciidoctor {
   logDocuments = true
   //backends 'pdf', 'html5'
   backends = ['html5', 'pdf']
+  requires = ['asciidoctor-diagram']
 }
 
 asciidoctor.doLast {
