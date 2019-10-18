@@ -42,8 +42,8 @@ before_install:
     if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
       mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
       curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
-  fi
-  source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+    fi
+    source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
   - stop_any 80 8001 8002 8080 5432
   #
   - export PATH=$HOME/.local/bin:$PATH
@@ -301,9 +301,9 @@ jobs:
           condition: "$TRAVIS_PULL_REQUEST = false"
 cache:
   directories:
-  - ~/.m2
-  - ~/.gradle
-  - ~/.docker
-  - ~/.local/daggerok
+    - ~/.m2
+    - ~/.gradle
+    - ~/.docker
+    - ~/.local/daggerok
   packages: true
   pip: true

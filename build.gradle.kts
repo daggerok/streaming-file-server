@@ -54,7 +54,8 @@ tasks {
     resolutionStrategy {
       componentSelection {
         all {
-          val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
+          // val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
+          val rejected = listOf("alpha") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
               .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
               .any { it.matches(candidate.version) }
           if (rejected) reject("Release candidate")
@@ -65,7 +66,7 @@ tasks {
   }
 
   withType<Test> {
-    useJUnitPlatform()
+    // useJUnitPlatform()
     testLogging {
       showExceptions = true
       showStandardStreams = true

@@ -27,7 +27,7 @@ object Globals {
 
   const val wrapperVersion = "5.6.3"
 
-  const val toolVersion = "3.1.12"
+  const val toolVersion = "4.0.0-beta4"
   const val spotbugsVersion = "2.0.0"
   const val querydslVersion = "1.0.10"
   const val propdepsVersion = "0.0.10"
@@ -35,7 +35,7 @@ object Globals {
   const val gitPublishVersion = "2.1.1"
   const val lombokPluginVersion = "3.2.0"
   const val dependencyManagementVersion = "1.0.8.RELEASE"
-  const val dockerComposeVersion = "0.7.1" // TODO: FIXME: any other higher version will fail on adoc task
+  const val dockerComposeVersion = "0.9.5" // TODO: FIXME: any other higher version will fail on adoc task
   const val asciidoctorjPdfVersion = "1.5.0-beta.6"
   const val asciidoctorjDiagramVersion = "1.5.18"
   const val asciidoctorjConvertVersion = "2.3.0"

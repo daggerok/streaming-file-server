@@ -3,6 +3,7 @@ _version: ${project.version}_
 
 * Spring Boot 2.2.0.RELEASE
 * Gradle 5.6.3
+* Fix many long running issues with incompatible old dependencies and jar hell
 
 ## Java file server 
 
@@ -11,8 +12,6 @@ _version: ${project.version}_
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.avast.gradle.docker-compose:com.avast.gradle.docker-compose.gradle.plugin [0.7.1 -> 0.9.4]
-    io.vavr:vavr [0.10.2 -> 1.0.0-alpha-2]
 
 ## Installation
 
