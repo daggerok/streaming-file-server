@@ -66,7 +66,7 @@ tasks {
   }
 
   withType<Test> {
-    // useJUnitPlatform()
+    useJUnitPlatform()
     testLogging {
       showExceptions = true
       showStandardStreams = true
