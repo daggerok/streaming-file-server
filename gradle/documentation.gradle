@@ -1,4 +1,7 @@
 buildscript {
+  repositories {
+    gradlePluginPortal()
+  }
   ext {
     asciidocBuildDir = "$buildDir/asciidoc"
     targetDeneratedDocsDir = "$rootDir/target/generated-docs"

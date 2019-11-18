@@ -31,8 +31,10 @@
 FROM docker_base-streaming-file-server:latest
 ENTRYPOINT java ${JAVA_OPTS} -jar ./app.jar --spring.profiles.active=db-pg
 EXPOSE 8002
-HEALTHCHECK --timeout=2s \
-            --retries=22 \
+HEALTHCHECK --retries=33 \
+            --timeout=1s \
+            --interval=3s \
+            --start-period=1s \
             CMD wget --quiet --tries=1 --spider http://127.0.0.1:8002/actuator/health || exit 1
 ARG APP_UPLOAD_PATH_ARG='/var/file-storage'
 ENV APP_UPLOAD_PATH="${APP_UPLOAD_PATH_ARG}"

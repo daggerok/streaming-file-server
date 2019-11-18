@@ -1,9 +1,10 @@
 # streaming-file-server
 _version: ${project.version}_
 
-* Spring Boot 2.2.0.RELEASE
-* Gradle 5.6.3
-* Fix many long running issues with incompatible old dependencies and jar hell
+* Spring Boot 2.2.1.RELEASE
+* Gradle 5.6.4
+* Update other artifacts
+* Improve docker / docker-compose health checks
 
 ## Java file server 
 

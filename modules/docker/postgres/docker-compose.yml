@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.2'
 services:
   postgres:
     image: postgres:12.0-alpine
@@ -8,7 +8,10 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     healthcheck:
-      test: ['CMD', 'pg_isready', '-h', '127.0.0.1', '-p', '5432', '-d', '$$POSTGRES_DB', '-U', '$$POSTGRES_USER']
+      retries: 33
+      timeout: 3s
+      interval: 3s
+      test: pg_isready -h 127.0.0.1 -p 5432 -d $$POSTGRES_DB -U $$POSTGRES_USER
     networks:
       private.network.org:
         aliases:
