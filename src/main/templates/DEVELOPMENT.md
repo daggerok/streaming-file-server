@@ -2,11 +2,13 @@
 
 **versions maven plugin**
 
-_increment current version_
+_UNIX: increment current version_
 
 ```bash
 ./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} ; ./mvnw -Pversions
 ```
+
+_Windows: increment current version_
 
 ```batch
 mvnw build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}

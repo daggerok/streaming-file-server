@@ -14,7 +14,9 @@ JAVA_OPTS="-Dspring.profiles.active=h2-db -Ddebug=false" \
  && tail -f /var/log/app.log
 CMD /bin/bash
 EXPOSE 8001
-HEALTHCHECK --timeout=2s \
-            --retries=22 \
+HEALTHCHECK --retries=33 \
+            --timeout=1s \
+            --interval=3s \
+            --start-period=1s \
             CMD curl -f http://127.0.0.1:8001/actuator/health || exit 1
 COPY modules/apps/file-items-service/build/libs/*.jar /tmp/app.jar

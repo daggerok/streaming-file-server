@@ -35,7 +35,7 @@ object Globals {
   const val gitPublishVersion = "2.1.1"
   const val lombokPluginVersion = "${lombok.plugin.version}"
   const val dependencyManagementVersion = "${io.spring.dependency-management}"
-  const val dockerComposeVersion = "${docker.compose.gradle.plugin}" // TODO: FIXME: any other higher version will fail on adoc task
+  const val dockerComposeVersion = "${docker.compose.gradle.plugin}"
   const val asciidoctorjPdfVersion = "${asciidoctorj.pdf.version}"
   const val asciidoctorjDiagramVersion = "${asciidoctorj.diagram.version}"
   const val asciidoctorjConvertVersion = "${asciidoctorj.convert.version}"

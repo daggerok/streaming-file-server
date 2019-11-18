@@ -9,12 +9,9 @@ git:
   quiet: true
   depth: false
 language: java
-jdk: openjdk8
+jdk: openjdk11
 node_js: lts/*
 python: 3.7
-matrix:
-  include:
-  - python: 3.7
 service: docker
 addons:
   apt:
@@ -64,7 +61,11 @@ jobs:
   include:
     - stage: test
       jdk: openjdk11
-      name: maven versions
+      name: maven versions (openjdk11)
+      script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -P updates
+    - stage: test
+      jdk: openjdk8
+      name: maven versions (openjdk8)
       script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -P updates
 #    - stage: test
 #      jdk: openjdk8
@@ -100,6 +101,32 @@ jobs:
 #        - unset SPRING_PROFILES_ACTIVE
 #        - stop_any 80 8002 8001 8080 5432
     - stage: test
+      jdk: openjdk11
+      name: Run in docker (openjdk11)
+      script:
+        - ./gradlew -b ./modules/apps/build.gradle.kts clean >/dev/null
+        - ./gradlew -b ./modules/apps/build.gradle.kts assemble >/dev/null
+        #
+        - docker network create --attachable app || echo 'cannot create docker network:\ app'
+        #
+        - docker build --no-cache -t daggerok/file-items-service -f linux-services/file-items-service/Dockerfile .
+        - docker run -d --rm --net app --name file-items-service daggerok/file-items-service
+        - wait_healthy_docker_containers 1
+        #
+        - docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
+        - docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
+        - wait_healthy_docker_containers 2
+        #
+        - http --auth user:password :80/actuator/health | jq '.'
+        - http --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
+        - http --auth user:password :80/api/v1/files | jq '.'
+        - http --auth user:password :80/
+        #
+        - docker rm -f -v file-server file-items-service
+        - docker network rm app
+        - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
+        - stop_any 80 8001 8002
+    - stage: test
       jdk: openjdk8
       name: Run in docker (openjdk8)
       script:
@@ -126,6 +153,13 @@ jobs:
         - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
         - stop_any 80 8001 8002
     - stage: test
+      jdk: openjdk11
+      name: JGiven tests and asciidoctor documentation (openjdk11)
+      script:
+        - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
+        - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
+        - ./gradlew -S -Pdebug clean check build >/dev/null
+    - stage: test
       jdk: openjdk8
       name: JGiven tests and asciidoctor documentation (openjdk8)
       script:
@@ -134,11 +168,22 @@ jobs:
         - ./gradlew -S -Pdebug clean check build >/dev/null
     - stage: test
       jdk: openjdk11
-      name: JGiven tests and asciidoctor documentation (openjdk11)
+      name: Postgres (openjdk11)
       script:
-        - ./gradlew -S -Pdebug clean test jgiven build documentation >/dev/null
-        - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
-        - ./gradlew -S -Pdebug clean check build >/dev/null
+        - ./gradlew clean assemble >/dev/null
+        - ./gradlew clean assemble postgresUp >/dev/null
+        - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg >/dev/null &
+        - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+        - bash ./modules/apps/file-server/build/libs/*.jar >/dev/null &
+        - wait_for 8002
+        - http --auth user:password :8001/actuator/health | jq '.'
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - stop_any 80 8002 8001 8080 5432
+        - ./gradlew postgresDown >/dev/null
     - stage: test
       jdk: openjdk8
       name: Postgres (openjdk8)
@@ -176,6 +221,38 @@ jobs:
         - stop_any 80 8002 8001 8080 5432
         - ./gradlew postgresDown >/dev/null
     - stage: test
+      jdk: openjdk11
+      name: H2 (openjdk11)
+      script:
+        - ./gradlew clean assemble>/dev/null
+        - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
+        - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+        - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
+        - wait_for 8002
+        - http --auth user:password :8001/actuator/health | jq '.'
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - stop_any 80 8002 8001 8080 5432
+    - stage: test
+      jdk: openjdk8
+      name: H2 (openjdk8)
+      script:
+        - ./gradlew clean assemble>/dev/null
+        - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
+        - wait_for 8001
+        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
+        - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
+        - wait_for 8002
+        - http --auth user:password :8001/actuator/health | jq '.'
+        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
+        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
+        - http --auth user:password :8002/api/v1/files | jq '.'
+        - http --auth user:password :8002/
+        - stop_any 80 8002 8001 8080 5432
+    - stage: test
       jdk: openjdk8
       name: H2 (openjdk8)
       script:
@@ -193,20 +270,14 @@ jobs:
         - stop_any 80 8002 8001 8080 5432
     - stage: test
       jdk: openjdk11
-      name: H2 (openjdk11)
+      name: Test all services behind a reverse-proxy using Docker (openjdk11)
       script:
-        - ./gradlew clean assemble>/dev/null
-        - bash ./modules/apps/file-items-service/build/libs/*jar >/dev/null &
-        - wait_for 8001
-        - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
-        - bash ./modules/apps/file-server/build/libs/*jar --app.upload.path=${APP_UPLOAD_PATH} >/dev/null &
-        - wait_for 8002
-        - http --auth user:password :8001/actuator/health | jq '.'
-        - http --auth user:password -f post :8002/upload filename="$(date)-build.gradle" file@build.gradle.kts
-        - http --auth user:password -f post :8002/upload filename="$(date)-settings.gradle" file@settings.gradle.kts
-        - http --auth user:password :8002/api/v1/files | jq '.'
-        - http --auth user:password :8002/
+        - ./gradlew clean >/dev/null
+        - ./gradlew assemble >/dev/null
+        - ./gradlew allUp
+        - http -a user:password :80
         - stop_any 80 8002 8001 8080 5432
+        - ./gradlew allDown
     - stage: test
       jdk: openjdk8
       name: Test all services behind a reverse-proxy using Docker (openjdk8)

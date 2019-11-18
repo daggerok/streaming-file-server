@@ -14,7 +14,9 @@ JAVA_OPTS="-Dfile-items-rest-service.host=file-items-service -Dfile-items-rest-s
  && tail -f /var/log/app.log
 CMD /bin/bash
 EXPOSE 8002
-HEALTHCHECK --timeout=2s \
-            --retries=22 \
+HEALTHCHECK --retries=33 \
+            --timeout=1s \
+            --interval=3s \
+            --start-period=1s \
             CMD curl -f http://127.0.0.1:8002/actuator/health || exit 1
 COPY modules/apps/file-server/build/libs/*.jar /tmp/app.jar

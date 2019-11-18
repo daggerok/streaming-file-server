@@ -26,7 +26,9 @@
 FROM docker_base-streaming-file-server:latest
 ENTRYPOINT java ${JAVA_OPTS} -jar ./app.jar --spring.profiles.active=db-pg
 EXPOSE 8001
-HEALTHCHECK --timeout=2s \
-            --retries=22 \
+HEALTHCHECK --retries=33 \
+            --timeout=1s \
+            --interval=3s \
+            --start-period=1s \
             CMD wget --quiet --tries=1 --spider http://127.0.0.1:8001/actuator/health || exit 1
 COPY --chown=appuser ./modules/apps/file-items-service/build/libs/*.jar ./app.jar
