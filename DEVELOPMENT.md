@@ -23,7 +23,7 @@ _process versions substitution_
 _set specific version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.30
+./mvnw versions:set -DnewVersion=4.3.31
 ```
 
 **maven version management**
@@ -51,7 +51,7 @@ awesome JGiven reports!
 
 ```sh
 ./gradlew clean test jgiven
-open modules/apps/streaming-file-server/jgiven-reports/html/index.html
+open `pwd`/modules/apps/file-server/build/jgiven-report/index.html
 ```
 
 **quick boot all with docker**
@@ -59,6 +59,7 @@ open modules/apps/streaming-file-server/jgiven-reports/html/index.html
 ```sh
 ./gradlew clean assemble allUp -Pdebug
 http -a user:password :80
+./gradlew allDown
 ```
 
 **run all in docker manually**

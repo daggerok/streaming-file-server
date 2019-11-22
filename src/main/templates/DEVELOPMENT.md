@@ -51,7 +51,7 @@ awesome JGiven reports!
 
 ```sh
 ./gradlew clean test jgiven
-open modules/apps/streaming-file-server/jgiven-reports/html/index.html
+open `pwd`/modules/apps/file-server/build/jgiven-report/index.html
 ```
 
 **quick boot all with docker**

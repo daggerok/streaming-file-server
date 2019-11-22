@@ -17,7 +17,6 @@ addons:
   apt:
     update: true
     packages:
-      #- jq
       - wget
       - unzip
       - curl
@@ -322,6 +321,9 @@ jobs:
         on:
           branch: master
           condition: "$TRAVIS_PULL_REQUEST = false"
+before_cache:
+  - find ~/.gradle -name "fileHashes.bin" -print0 | xargs -0 rm -rfv '{}'
+  - for item in $(find ~/.gradle -name "*.lock") ; do rm -rfv $item ; done
 cache:
   directories:
     - ~/.m2

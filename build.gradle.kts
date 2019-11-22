@@ -23,10 +23,6 @@ plugins {
   id("com.avast.gradle.docker-compose") version Globals.dockerComposeVersion apply false
   id("com.ewerk.gradle.plugins.querydsl") version Globals.querydslVersion apply false
   id("io.spring.dependency-management") version Globals.dependencyManagementVersion
-  id("cn.bestwu.propdeps-eclipse") version Globals.propdepsVersion
-  id("cn.bestwu.propdeps-maven") version Globals.propdepsVersion
-  id("cn.bestwu.propdeps-idea") version Globals.propdepsVersion
-  id("cn.bestwu.propdeps") version Globals.propdepsVersion
 }
 
 extra["lombok.version"] = Globals.lombokVersion

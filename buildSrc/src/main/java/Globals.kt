@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Globals {
-  const val version = "4.3.30"
+  const val version = "4.3.31"
   const val groupId = "com.github.daggerok"
   const val artifactId = "streaming-file-server"
 
@@ -25,17 +25,16 @@ object Globals {
   const val bootstrapFileInputVersion = "5.0.1"
   const val hibernateJava8Version = "5.4.9.Final"
 
-  const val wrapperVersion = "5.6.4"
+  const val wrapperVersion = "6.0.1"
 
   const val toolVersion = "4.0.0-beta4"
   const val spotbugsVersion = "2.0.0"
   const val querydslVersion = "1.0.10"
-  const val propdepsVersion = "0.0.10"
   const val versionsVersion = "0.27.0"
-  const val gitPublishVersion = "2.1.1"
+  const val gitPublishVersion = "2.1.2"
   const val lombokPluginVersion = "3.2.0"
   const val dependencyManagementVersion = "1.0.8.RELEASE"
-  const val dockerComposeVersion = "0.10.0" // TODO: FIXME: any other higher version will fail on adoc task
+  const val dockerComposeVersion = "0.10.4"
   const val asciidoctorjPdfVersion = "1.5.0-beta.7"
   const val asciidoctorjDiagramVersion = "1.5.18"
   const val asciidoctorjConvertVersion = "2.3.0"

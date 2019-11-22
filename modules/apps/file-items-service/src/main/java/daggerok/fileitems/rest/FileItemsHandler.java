@@ -16,7 +16,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 import static org.springframework.web.reactive.function.server.ServerResponse.status;
 
@@ -61,10 +61,10 @@ public class FileItemsHandler {
   }
 
   private static ServerResponse.BodyBuilder jsonOk() {
-    return ok().contentType(APPLICATION_JSON_UTF8);
+    return ok().contentType(APPLICATION_JSON);
   }
 
   private static ServerResponse.BodyBuilder jsonCreated() {
-    return status(CREATED).contentType(APPLICATION_JSON_UTF8);
+    return status(CREATED).contentType(APPLICATION_JSON);
   }
 }
