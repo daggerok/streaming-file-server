@@ -1,6 +1,7 @@
 plugins {
   idea
   `kotlin-dsl`
+  `embedded-kotlin`
 }
 
 repositories {
