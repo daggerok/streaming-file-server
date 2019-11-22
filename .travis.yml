@@ -157,8 +157,8 @@ jobs:
       jdk: openjdk11
       name: Postgres (openjdk11)
       script:
-        - ./gradlew clean assemble >/dev/null
-        - ./gradlew clean assemble postgresUp >/dev/null
+        - ./gradlew clean assemble
+        - ./gradlew clean assemble postgresUp
         - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg &
         - wait_for 8001
         - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"
@@ -175,8 +175,8 @@ jobs:
       jdk: openjdk8
       name: Postgres (openjdk8)
       script:
-        - ./gradlew clean assemble >/dev/null
-        - ./gradlew clean assemble postgresUp >/dev/null
+        - ./gradlew clean assemble
+        - ./gradlew clean assemble postgresUp
         - bash ./modules/apps/file-items-service/build/libs/*.jar --spring.profiles.active=db-pg &
         - wait_for 8001
         - cp -Rf ./modules/apps/file-server/build/libs "${APP_UPLOAD_PATH}/"

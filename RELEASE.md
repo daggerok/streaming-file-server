@@ -1,8 +1,11 @@
 # streaming-file-server
-_version: 4.3.31_
+_4.3.31 release notes_
 
-* Gradle 6.0.1
+* Migrate tp Gradle 6.0.1
+* Migrate `kotlin-dsl` -> `embedded-kotlin`
 * Remove useless gradle propdeps plugins
+* More Gradle Kotlin DSL migrations
+* Update docker images
 
 ## Java file server 
 

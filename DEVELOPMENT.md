@@ -59,7 +59,6 @@ open `pwd`/modules/apps/file-server/build/jgiven-report/index.html
 ```sh
 ./gradlew clean assemble allUp -Pdebug
 http -a user:password :80
-./gradlew allDown
 ```
 
 **run all in docker manually**
