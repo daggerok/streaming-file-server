@@ -16,7 +16,8 @@ pluginManagement {
   }
 }
 
-rootProject.name = Globals.artifactId
+// rootProject.name = Globals.artifactId
+rootProject.name = "streaming-file-server"
 
 include(
     ":modules:libraries:props",
