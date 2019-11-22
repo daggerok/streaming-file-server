@@ -3,6 +3,7 @@ _version: ${project.version}_
 
 * Gradle 6.0.1
 * Remove useless gradle propdeps plugins
+* More Gradle Kotlin DSL migrations
 
 ## Java file server 
 
