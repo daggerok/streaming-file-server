@@ -1,4 +1,5 @@
-FROM openjdk:13-ea-19-jdk-alpine3.9
+FROM openjdk:14-jdk-alpine3.10
+#FROM openjdk:13-ea-19-jdk-alpine3.9
 #FROM openjdk:8u201-jre-alpine3.9
 ##FROM openjdk:8u191-jre-alpine3.8
 ###FROM openjdk:8u181-jre-alpine3.8
