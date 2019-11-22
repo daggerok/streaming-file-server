@@ -13,6 +13,7 @@ jdk: openjdk11
 node_js: lts/*
 python: 3.7
 service: docker
+os: linux
 addons:
   apt:
     update: true
@@ -42,7 +43,7 @@ before_install:
   - stop_any 80 8001 8002 8080 5432
   #
   - export PATH=$HOME/.local/bin:$PATH
-  - pip install --user --upgrade pip
+  - pip3 install --user --upgrade pip setuptools
   - pip install --user --upgrade docker-compose httpie
 before_script:
   - export PATH=/tmp:$PATH
@@ -101,7 +102,6 @@ jobs:
         #
         - docker build --no-cache -t daggerok/file-items-service -f linux-services/file-items-service/Dockerfile .
         - docker run -d --rm --net app --name file-items-service daggerok/file-items-service
-        - wait_healthy_docker_containers 1
         #
         - docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
         - docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
@@ -113,7 +113,7 @@ jobs:
         - http --auth user:password :80/
         #
         - docker rm -f -v file-server file-items-service
-        - docker network rm app
+        - docker network rm app || echo oops
         - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
         - stop_any 80 8001 8002
     - stage: test
@@ -126,16 +126,14 @@ jobs:
         #
         - docker build --no-cache -t daggerok/file-items-service -f linux-services/file-items-service/Dockerfile .
         - docker run -d --rm --net app --name file-items-service daggerok/file-items-service
-        - wait_healthy_docker_containers 1
-        #
         - docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
         - docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
         - wait_healthy_docker_containers 2
         #
-        - http --auth user:password :80/actuator/health
-        - http --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
-        - http --auth user:password :80/api/v1/files
-        - http --auth user:password :80/
+        - http --auth user:password         :/actuator/health
+        - http --auth user:password -f post :/upload filename="$(date)-README.md" file@README.md
+        - http --auth user:password         :/api/v1/files
+        - http --auth user:password         :/
         #
         - docker rm -f -v file-server file-items-service
         - docker network rm app
@@ -146,14 +144,14 @@ jobs:
       name: JGiven tests and asciidoctor documentation (openjdk11)
       script:
         - ./gradlew -S -Pdebug clean test jgiven build documentation
-        - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
+        - ./gradlew                  check jacocoTestReport jacocoTestCoverageVerification
         - ./gradlew -S -Pdebug clean check build
     - stage: test
       jdk: openjdk8
       name: JGiven tests and asciidoctor documentation (openjdk8)
       script:
         - ./gradlew -S -Pdebug clean test jgiven build documentation
-        - ./gradlew check jacocoTestReport jacocoTestCoverageVerification
+        - ./gradlew                  check jacocoTestReport jacocoTestCoverageVerification
         - ./gradlew -S -Pdebug clean check build
     - stage: test
       jdk: openjdk11
@@ -325,10 +323,10 @@ before_cache:
   - find ~/.gradle -name "fileHashes.bin" -print0 | xargs -0 rm -rfv '{}'
   - for item in $(find ~/.gradle -name "*.lock") ; do rm -rfv $item ; done
 cache:
+  pip: true
+  packages: true
   directories:
     - ~/.m2
     - ~/.gradle
     - ~/.docker
     - ~/.local/daggerok
-  packages: true
-  pip: true

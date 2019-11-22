@@ -1,5 +1,6 @@
 plugins {
   idea
+  eclipse
   `kotlin-dsl`
 }
 
@@ -10,7 +11,14 @@ repositories {
 idea {
   module {
     isDownloadJavadoc = false
-    isDownloadSources = false
+    isDownloadSources = true
+  }
+}
+
+eclipse {
+  classpath {
+    isDownloadJavadoc = false
+    isDownloadSources = true
   }
 }
 

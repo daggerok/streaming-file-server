@@ -3,7 +3,8 @@
 # docker run  -d --rm --net app -p 8002:8002 --name file-items-service file-items-service-app
 # docker rm -f -v file-items-service
 # docker network rm app
-FROM openjdk:11.0.3-jre-stretch
+FROM openjdk:11.0.5-jre-stretch
+#FROM openjdk:11.0.3-jre-stretch
 ENTRYPOINT mkdir -p /etc/init.d /var/log/ \
  && touch /tmp/app.jar /var/log/app.log \
  && ln -s /tmp/app.jar /etc/init.d/app \
