@@ -1,11 +1,9 @@
 subprojects {
     apply<com.avast.gradle.dockercompose.DockerComposePlugin>()
 
-    // fucking windows paths... replace all: '\\' -> '/'
     val root = rootDir.absolutePath.replace("\\\\", "/")
-
-    // gradle -Pdebug
-    val isDebugEnabled = this.hasProperty("debug")
+    val debugEnabledProperty = project.findProperty("debug") ?: "false"
+    val isDebugEnabled = debugEnabledProperty != "false"
 
     configure<com.avast.gradle.dockercompose.ComposeExtension> {
         useComposeFiles = listOf("${root}/modules/docker/${name}/docker-compose.yml")
@@ -18,10 +16,15 @@ subprojects {
         removeVolumes = true
         removeOrphans = true
         forceRecreate = true
-        //executable = '/path/to/docker-compose'
-        //dockerExecutable = '/path/to/docker'
-        //captureContainersOutput = true
-        //captureContainersOutput = false
-        //captureContainersOutputToFile = '/path/to/logFile'
+    }
+
+    tasks {
+        create("${name}Up") {
+            if (name.contains("app")) dependsOn(assemble.get())
+            dependsOn(named("composeUp").get().path)
+        }
+        create("${name}Down") {
+            finalizedBy(named("composeDown").get().path)
+        }
     }
 }

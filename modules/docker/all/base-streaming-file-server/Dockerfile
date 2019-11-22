@@ -1,4 +1,6 @@
-FROM openjdk:14-jdk-alpine3.10
+#FROM openjdk:14...-jdk-alpine3.10 # <- this one is doesn't work!
+FROM openjdk:13-jdk-alpine3.10
+#FROM openjdk:13-ea-jdk-alpine3.10
 #FROM openjdk:13-ea-19-jdk-alpine3.9
 #FROM openjdk:8u201-jre-alpine3.9
 ##FROM openjdk:8u191-jre-alpine3.8
@@ -19,7 +21,6 @@ VOLUME /home/appuser
 
 ARG JAVA_OPTS_ARGS='\
 -Djava.net.preferIPv4Stack=true \
--XX:+UnlockExperimentalVMOptions \
 -XX:+UnlockExperimentalVMOptions \
 -XshowSettings:vm '
 ENV JAVA_OPTS="${JAVA_OPTS} ${JAVA_OPTS_ARGS}"

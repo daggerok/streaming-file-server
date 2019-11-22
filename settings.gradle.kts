@@ -16,8 +16,12 @@ pluginManagement {
   }
 }
 
-// rootProject.name = Globals.artifactId
 rootProject.name = "streaming-file-server"
+// https://docs.gradle.org/current/userguide/upgrading_version_5.html#classes_from_buildsrc_are_no_longer_visible_to_settings_scripts
+// object GlobalSettings {
+//   const val artifactId = "streaming-file-server"
+// }
+// rootProject.name = GlobalSettings.artifactId
 
 include(
     ":modules:libraries:props",

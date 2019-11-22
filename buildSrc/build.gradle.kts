@@ -1,7 +1,7 @@
 plugins {
   idea
   eclipse
-  `kotlin-dsl`
+  `embedded-kotlin`
 }
 
 repositories {
@@ -20,8 +20,4 @@ eclipse {
     isDownloadJavadoc = false
     isDownloadSources = true
   }
-}
-
-kotlinDslPluginOptions {
-  experimentalWarning.set(false)
 }
