@@ -16,7 +16,7 @@ pluginManagement {
   }
 }
 
-rootProject.name = "streaming-file-server"
+rootProject.name = "streaming-file-server" // see: https://github.com/gradle/gradle/issues/11452
 // https://docs.gradle.org/current/userguide/upgrading_version_5.html#classes_from_buildsrc_are_no_longer_visible_to_settings_scripts
 // object GlobalSettings {
 //   const val artifactId = "streaming-file-server"
