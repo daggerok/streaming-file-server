@@ -1,11 +1,16 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Migrate tp Gradle 6.0.1
-* Migrate `kotlin-dsl` -> `embedded-kotlin`
-* Remove useless gradle propdeps plugins
-* More Gradle Kotlin DSL migrations
-* Update docker images
+* Automate HTML version replacement
+* Update versions:
+  * spring boot
+  * bootstrap
+  * bootstrap file input
+  * hibernate-java8
+  * selenide
+  * git-publish gradle plugin
+  * asciidoctor convert gradle plugin
+  * asciidoctorj-pdf 
 
 ## Java file server 
 
@@ -14,6 +19,9 @@ _${project.version} release notes_
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
+    com.tngtech.jgiven:jgiven-html5-report [0.18.2 -> 1.0.0-RC2]
+    com.tngtech.jgiven:jgiven-junit [0.18.2 -> 1.0.0-RC2]
+    com.tngtech.jgiven:jgiven-junit5 [0.18.2 -> 1.0.0-RC2]
 
 ## Installation
 

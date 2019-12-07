@@ -8,7 +8,6 @@ object Globals {
   val javaVersion = JavaVersion.VERSION_1_8
 
   const val vavrVersion = "${vavr.version}"
-  const val slf4jVersion = "${slf4j.version}"
   const val jqueryVersion = "${jquery.version}"
   const val popperVersion = "${popper.version}"
   const val logbackVersion = "${logback.version}"
