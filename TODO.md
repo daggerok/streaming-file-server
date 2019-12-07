@@ -13,3 +13,4 @@
 - gradle github release plugin (at the moment, for publishing releases to github is using maven. see `pom.xml`)
 - migrate to Gradle 6.0+ version
 - migrate to `org.asciidoctor.jvm.convert` Gradle plugin
+- migrate [JGiven Gradle plugin](http://jgiven.org/userguide/) to 1.x version
