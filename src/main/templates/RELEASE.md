@@ -4,13 +4,10 @@ _${project.version} release notes_
 * Automate HTML version replacement
 * Update versions:
   * spring boot
-  * bootstrap
-  * bootstrap file input
-  * hibernate-java8
   * selenide
-  * git-publish gradle plugin
   * asciidoctor convert gradle plugin
   * asciidoctorj-pdf 
+  * gradle
 
 ## Java file server 
 

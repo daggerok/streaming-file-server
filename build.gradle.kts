@@ -1,10 +1,7 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
-
 buildscript {
   repositories {
     gradlePluginPortal()
   }
-
   dependencies {
     classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.spotbugsVersion}")
   }
@@ -18,7 +15,6 @@ plugins {
   id("com.github.ben-manes.versions") version Globals.versionsVersion
   id("io.franzbecker.gradle-lombok") version Globals.lombokPluginVersion
   id("org.springframework.boot") version Globals.springBootVersion apply false
-  id("org.ajoberstar.git-publish") version Globals.gitPublishVersion apply false
   id("org.asciidoctor.convert") version Globals.asciidoctorjConvertVersion apply false
   id("com.avast.gradle.docker-compose") version Globals.dockerComposeVersion apply false
   id("com.ewerk.gradle.plugins.querydsl") version Globals.querydslVersion apply false
@@ -39,10 +35,10 @@ tasks.withType<Wrapper> {
   distributionType = Wrapper.DistributionType.BIN
 }
 
-apply(from = "${project.rootDir}/gradle/ide.gradle")
-apply(from = "${project.rootDir}/gradle/clean.gradle")
-apply(from = "${project.rootDir}/gradle/subprojects.gradle")
-apply(from = "${project.rootDir}/gradle/documentation.gradle")
+apply(from = "$rootDir/gradle/ide.gradle")
+apply(from = "$rootDir/gradle/clean.gradle")
+apply(from = "$rootDir/gradle/subprojects.gradle")
+apply(from = "$rootDir/gradle/documentation.gradle")
 
 // gradle dependencyUpdates -Drevision=release --parallel
 tasks {
@@ -67,7 +63,11 @@ tasks {
     testLogging {
       showExceptions = true
       showStandardStreams = true
-      events(PASSED, SKIPPED, FAILED)
+      events(
+          org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+          org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
+          org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+      )
     }
   }
 }
