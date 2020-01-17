@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Globals {
-  const val version = "4.3.32"
+  const val version = "4.3.33"
   const val groupId = "com.github.daggerok"
   const val artifactId = "streaming-file-server"
 
@@ -13,28 +13,27 @@ object Globals {
   const val logbackVersion = "1.2.3"
   const val lombokVersion = "1.18.10"
   const val jgivenVersion = "0.18.2"
-  const val selenideVersion = "5.5.1"
-  const val postgresVersion = "42.2.8"
+  const val selenideVersion = "5.6.1"
+  const val postgresVersion = "42.2.9"
   const val bootstrapVersion = "4.4.1"
   const val commonsIoVersion = "1.3.2"
   const val jacocoToolVersion = "0.8.4"
-  const val fontAwesomeVersion = "5.11.2"
+  const val fontAwesomeVersion = "5.12.0"
   const val powermockitoVersion = "2.0.4"
-  const val springBootVersion = "2.2.2.RELEASE"
+  const val springBootVersion = "2.2.3.RELEASE"
   const val bootstrapFileInputVersion = "5.0.7"
   const val hibernateJava8Version = "5.4.10.Final"
 
-  const val wrapperVersion = "6.0.1"
+  const val wrapperVersion = "6.1"
 
-  const val toolVersion = "4.0.0-beta4"
+  const val toolVersion = "4.0.0-beta5"
   const val spotbugsVersion = "2.0.0"
   const val querydslVersion = "1.0.10"
   const val versionsVersion = "0.27.0"
-  const val gitPublishVersion = "2.1.3-rc.1"
   const val lombokPluginVersion = "3.2.0"
   const val dependencyManagementVersion = "1.0.8.RELEASE"
-  const val dockerComposeVersion = "0.10.4"
-  const val asciidoctorjPdfVersion = "1.5.0-beta.8"
-  const val asciidoctorjDiagramVersion = "1.5.18"
+  const val dockerComposeVersion = "0.10.7"
+  const val asciidoctorjPdfVersion = "1.5.0-rc.2"
+  const val asciidoctorjDiagramVersion = "2.0.0"
   const val asciidoctorjConvertVersion = "2.4.0"
 }

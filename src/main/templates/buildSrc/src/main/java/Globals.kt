@@ -30,7 +30,6 @@ object Globals {
   const val spotbugsVersion = "${spotbugs.version}"
   const val querydslVersion = "1.0.10"
   const val versionsVersion = "${versions.gradle.plugin}"
-  const val gitPublishVersion = "${git.publish.plugin}"
   const val lombokPluginVersion = "${lombok.plugin.version}"
   const val dependencyManagementVersion = "${io.spring.dependency-management}"
   const val dockerComposeVersion = "${docker.compose.gradle.plugin}"

@@ -11,7 +11,6 @@ git:
 language: java
 jdk: openjdk11
 node_js: lts/*
-python: 3.7
 service: docker
 os: linux
 arch: amd64
@@ -26,11 +25,13 @@ addons:
       - lsof
       #- bash
       - docker-ce
-      - python3-pip
       - libxml2-utils
       #- libappindicator1
       #- fonts-liberation
       #- google-chrome-stable
+      - python3-pip
+      - openssl
+      - httpie
 install: true
 before_install:
   #- export CHROME_BIN=/usr/bin/google-chrome
@@ -44,8 +45,7 @@ before_install:
   - stop_any 80 8001 8002 8080 5432
   #
   - export PATH=$HOME/.local/bin:$PATH
-  - pip3 install --user --upgrade pip setuptools
-  - pip install --user --upgrade docker-compose httpie
+  - pip install --user --upgrade pip setuptools docker-compose pyopenssl
 before_script:
   - export PATH=/tmp:$PATH
   - export APP_UPLOAD_PATH="/tmp/file-storage"
