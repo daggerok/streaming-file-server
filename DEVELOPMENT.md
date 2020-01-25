@@ -23,7 +23,7 @@ _process versions substitution_
 _set specific version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.33
+./mvnw versions:set -DnewVersion=4.3.34
 ```
 
 **maven version management**

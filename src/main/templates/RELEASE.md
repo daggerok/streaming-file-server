@@ -1,12 +1,10 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Automate HTML version replacement
 * Update versions:
   * spring boot
-  * selenide
-  * asciidoctor convert gradle plugin
-  * asciidoctorj-pdf 
+  * powermock
+  * spotbugs
   * gradle
 
 ## Java file server 
