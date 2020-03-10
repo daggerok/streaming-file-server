@@ -11,11 +11,11 @@
 <formalpara>
 <title>if you are using bash&#8201;&#8212;&#8201;run even simply</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.35/file-items-service-4.3.35.jar
-bash file-items-service-4.3.35.jar
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.36/file-items-service-4.3.36.jar
+bash file-items-service-4.3.36.jar
 
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.35/file-server-4.3.35.jar
-bash file-server-4.3.35.jar --app.upload.path=./path/to/file-storage</programlisting>
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.36/file-server-4.3.36.jar
+bash file-server-4.3.36.jar --app.upload.path=./path/to/file-storage</programlisting>
 </para>
 </formalpara>
 </preface>
