@@ -6,30 +6,30 @@ subprojects {
   apply(plugin = "java")
 
   configure<JavaPluginExtension> {
-    sourceCompatibility = Globals.javaVersion
-    targetCompatibility = Globals.javaVersion
+    sourceCompatibility = "$javaVersion"
+    targetCompatibility = "$javaVersion"
   }
 
   repositories {
     mavenCentral()
+    jcenter()
     maven(url = "https://repo.spring.io/milestone/")
     maven(url = "https://repo.spring.io/snapshot/")
-    jcenter()
   }
 
   apply(plugin = "io.spring.dependency-management")
   dependencyManagement {
     imports {
-      mavenBom("org.springframework.boot:spring-boot-dependencies:${Globals.springBootVersion}")
+      mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
     }
   }
 
   this.dependencies {
-    implementation("io.vavr:vavr:${Globals.vavrVersion}")
-    testImplementation("org.powermock:powermock-module-junit4:${Globals.powermockitoVersion}")
-    testImplementation("org.powermock:powermock-api-mockito2:${Globals.powermockitoVersion}")
-    testImplementation("com.codeborne:selenide:${Globals.selenideVersion}")
+    implementation("io.vavr:vavr:$vavrVersion")
+    testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
+    testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
+    testImplementation("com.codeborne:selenide:$selenideVersion")
   }
 
-  apply(from = "${project.rootDir}/gradle/jgiven.gradle")
+  apply(from = "$rootDir/gradle/jgiven.gradle")
 }

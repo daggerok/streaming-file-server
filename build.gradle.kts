@@ -2,9 +2,6 @@ buildscript {
   repositories {
     gradlePluginPortal()
   }
-  dependencies {
-    classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:${Globals.spotbugsVersion}")
-  }
 }
 
 plugins {
@@ -12,26 +9,32 @@ plugins {
   maven
   eclipse
   `java-library`
-  id("com.github.ben-manes.versions") version Globals.versionsVersion
-  id("io.franzbecker.gradle-lombok") version Globals.lombokPluginVersion
-  id("org.springframework.boot") version Globals.springBootVersion apply false
-  id("org.asciidoctor.convert") version Globals.asciidoctorjConvertVersion apply false
-  id("com.avast.gradle.docker-compose") version Globals.dockerComposeVersion apply false
-  id("com.ewerk.gradle.plugins.querydsl") version Globals.querydslVersion apply false
-  id("io.spring.dependency-management") version Globals.dependencyManagementVersion
+  id("io.franzbecker.gradle-lombok")
+  id("com.github.ben-manes.versions")
+  id("io.spring.dependency-management")
+  id("com.ewerk.gradle.plugins.querydsl") apply false
+  id("com.avast.gradle.docker-compose") apply false
+  id("org.springframework.boot") apply false
+  id("org.asciidoctor.convert") apply false
 }
 
-extra["lombok.version"] = Globals.lombokVersion
-extra["postgresql.version"] = Globals.postgresVersion
+val groupId: String by project
+val lombokVersion: String by project
+val projectVersion: String by project
+val wrapperVersion: String by project
+val postgresVersion: String by project
+
+extra["lombok.version"] = lombokVersion
+extra["postgresql.version"] = postgresVersion
 
 allprojects {
-  version = Globals.version
-  group = Globals.groupId
+  group = groupId
+  version = projectVersion
   defaultTasks("clean", "build")
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = Globals.wrapperVersion
+  gradleVersion = wrapperVersion
   distributionType = Wrapper.DistributionType.BIN
 }
 

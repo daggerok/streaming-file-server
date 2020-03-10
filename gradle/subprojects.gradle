@@ -1,8 +1,8 @@
 subprojects {
   apply(plugin: "java")
 
-  sourceCompatibility = Globals.javaVersion
-  targetCompatibility = Globals.javaVersion
+  sourceCompatibility = "$javaVersion"
+  targetCompatibility = "$javaVersion"
 
   repositories {
     mavenCentral()
@@ -13,23 +13,23 @@ subprojects {
   apply(plugin: "io.franzbecker.gradle-lombok")
 
   lombok {
-    version = Globals.lombokVersion
+    version = "$lombokVersion"
   }
 
   apply(plugin: "io.spring.dependency-management")
 
   dependencyManagement {
     imports {
-      mavenBom("org.springframework.boot:spring-boot-dependencies:${Globals.springBootVersion}")
+      mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
     }
   }
 
   dependencies {
-    implementation("io.vavr:vavr:${Globals.vavrVersion}")
-    testImplementation("org.powermock:powermock-module-junit4:${Globals.powermockitoVersion}")
-    testImplementation("org.powermock:powermock-api-mockito2:${Globals.powermockitoVersion}")
-    testImplementation("com.codeborne:selenide:${Globals.selenideVersion}")
+    implementation("io.vavr:vavr:$vavrVersion")
+    testImplementation("com.codeborne:selenide:$selenideVersion")
+    testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
+    testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
   }
 
-  apply(from: "$project.rootDir/gradle/jgiven.gradle")
+  apply(from: "$rootDir/gradle/jgiven.gradle")
 }

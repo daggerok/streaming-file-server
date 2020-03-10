@@ -1,12 +1,6 @@
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
-plugins {
-  java
-}
-
 subprojects {
-  apply(plugin = "java")
-  apply(plugin = "org.springframework.boot")
+  apply<JavaPlugin>()
+  apply<org.springframework.boot.gradle.plugin.SpringBootPlugin>()
 
   dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
@@ -15,11 +9,12 @@ subprojects {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
   }
 
-  tasks.withType<BootJar> {
+  tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
     launchScript()
   }
 
   apply(from = "${rootProject.projectDir}/gradle/spotbugs.gradle")
 }
 
+apply<JavaPlugin>()
 apply(from = "${rootProject.projectDir}/gradle/jacoco.gradle")

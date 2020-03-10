@@ -8,18 +8,19 @@ buildscript {
   }
 }
 
-apply plugin: 'org.asciidoctor.convert'
+
+apply plugin: "org.asciidoctor.convert"
 
 dependencies {
-  asciidoctor("org.asciidoctor:asciidoctorj-diagram:${Globals.asciidoctorjDiagramVersion}")
-  asciidoctor("org.asciidoctor:asciidoctorj-pdf:${Globals.asciidoctorjPdfVersion}")
+  asciidoctor("org.asciidoctor:asciidoctorj-diagram:$asciidoctorjDiagramVersion")
+  asciidoctor("org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion")
 //  asciidoctor("org.asciidoctor:asciidoctorj-diagram:1.5.18")
 }
 
 asciidoctor {
-  sourceDir = project.file('docs')
+  sourceDir = project.file("docs")
   sources {
-    include 'index.adoc'
+    include "index.adoc"
   }
   outputDir = project.file("$asciidocBuildDir")
   attributes toc: 'left',
@@ -40,8 +41,8 @@ asciidoctor {
       'toc-title': 'Table of Contents',
       'root-project-name': rootProject.name,
       'project-version': rootProject.version,
-      'build-gradle': project.file('build.gradle'),
-      'github-url': "https://github.com/daggerok/$rootProject.name"
+      'build-gradle': project.file("build.gradle"),
+      'github-url': "https://github.com/daggerok/${rootProject.name}"
 
   logDocuments = true
   //backends 'pdf', 'html5'
@@ -64,31 +65,3 @@ task documentation(type: Copy, dependsOn: [asciidoctor]) {
   }
   into targetDeneratedDocsDir
 }
-
-/*
-apply plugin: 'org.ajoberstar.git-publish'  // version '0.3.0' // version '0.4.1' - is not working: Algorithm negotiation fail
-
-gitPublishPush.dependsOn documentation
-gitPublishPush.shouldRunAfter clean, documentation
-
-task docs(dependsOn: gitPublishPush)
-docs.shouldRunAfter clean, gitPublishPush
-
-gitPublish {
-  //// bash gradlew clean asciidoctor docs \
-  ////   -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
-  ////   -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
-  // gradlew asciidoctor docs -Dorg.ajoberstar.grgit.auth.username=daggerok -Dorg.ajoberstar.grgit.auth.password=pass
-  repoUri = "https://github.com/daggerok/${rootProject.name}.git" as String
-  //repoUri = "git@github.com:daggerok/${rootProject.name}.git" as String
-  branch = 'gh-pages'
-
-  contents {
-    from(targetDeneratedDocsDir) {
-      into '.'
-    }
-  }
-
-  commitMessage = "Update $rootProject.name documentation for ${project.group}:${project.name}:$project.version" as String
-}
-*/
