@@ -15,14 +15,12 @@ addons:
       - curl
       - sudo
       - lsof
-      - docker-ce
       - wget
       - unzip
-      #- bash
+      - httpie
+      - docker-ce
       - libxml2-utils
-      #- libappindicator1
-      #- fonts-liberation
-      #- google-chrome-stable
+      - docker-compose
 env:
   global:
     - TERM=dumb
@@ -39,8 +37,6 @@ before_install:
     source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
   - stop_any 80 8001 8002 8080 5432
   #
-  - python -m pip install --upgrade pip setuptools docker-compose pyopenssl httpie
-  #- export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
 before_script:
   - export PATH=/tmp:$PATH
@@ -48,14 +44,6 @@ before_script:
   - mkdir -p ${APP_UPLOAD_PATH}
 jobs:
   include:
-    - stage: test
-      jdk: openjdk11
-      name: maven versions (openjdk11)
-      script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -P updates
-    - stage: test
-      jdk: openjdk8
-      name: maven versions (openjdk8)
-      script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -P updates
 #    - stage: test
 #      jdk: openjdk8
 #      name: disabled
@@ -89,6 +77,13 @@ jobs:
 #        - ./gradlew postgresDown >/dev/null
 #        - unset SPRING_PROFILES_ACTIVE
 #        - stop_any 80 8002 8001 8080 5432
+    - stage: test
+      jdk: openjdk11
+      name: docker tests
+      script:
+        - ./gradlew assemble allUp
+        - http -a user:password :80
+        - ./gradlew allDown
     - stage: test
       jdk: openjdk11
       name: Run in docker (openjdk11)
@@ -136,20 +131,6 @@ jobs:
         - docker network rm app
         - for i in $(docker ps -aq) ; do docker rm -fv $i ; done
         - stop_any 80 8001 8002
-    - stage: test
-      jdk: openjdk11
-      name: JGiven tests and asciidoctor documentation (openjdk11)
-      script:
-        - ./gradlew -S -Pdebug clean test jgiven build documentation
-        - ./gradlew                  check jacocoTestReport jacocoTestCoverageVerification
-        - ./gradlew -S -Pdebug clean check build
-    - stage: test
-      jdk: openjdk8
-      name: JGiven tests and asciidoctor documentation (openjdk8)
-      script:
-        - ./gradlew -S -Pdebug clean test jgiven build documentation
-        - ./gradlew                  check jacocoTestReport jacocoTestCoverageVerification
-        - ./gradlew -S -Pdebug clean check build
     - stage: test
       jdk: openjdk11
       name: Postgres (openjdk11)
@@ -218,38 +199,6 @@ jobs:
         - http --auth user:password :8002/api/v1/files
         - http --auth user:password :8002/
         - stop_any 80 8002 8001 8080 5432
-    - stage: test
-      jdk: openjdk11
-      name: Test all services behind a reverse-proxy using Docker (openjdk11)
-      script:
-        - ./gradlew assemble allUp
-        - http -a user:password :80
-        - stop_any 80 8002 8001 8080 5432
-        - ./gradlew allDown
-    - stage: test
-      jdk: openjdk8
-      name: Test all services behind a reverse-proxy using Docker (openjdk8)
-      script:
-        - ./gradlew assemble allUp
-        - http -a user:password :80
-        - stop_any 80 8002 8001 8080 5432
-        - ./gradlew allDown
-    - stage: test
-      jdk: openjdk8
-      name: Run gradle clean build (openjdk8)
-      script: cd $TRAVIS_BUILD_DIR && ./gradlew clean build
-    - stage: test
-      jdk: openjdk11
-      name: Run gradle clean build (openjdk11)
-      script: cd $TRAVIS_BUILD_DIR && ./gradlew clean build
-    - stage: test
-      jdk: openjdk8
-      name: Run gradle dependencyUpdates (openjdk8)
-      script: cd $TRAVIS_BUILD_DIR && ./gradlew dependencyUpdates
-    - stage: test
-      jdk: openjdk11
-      name: Run gradle dependencyUpdates (openjdk11)
-      script: cd $TRAVIS_BUILD_DIR && ./gradlew dependencyUpdates
     - stage: deploy
       jdk: openjdk11
       name: GitHub release and GitHub pages deployment (openjdk11)
