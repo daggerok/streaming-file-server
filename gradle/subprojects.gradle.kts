@@ -14,7 +14,7 @@ subprojects {
     mavenCentral()
     jcenter()
     maven(url = "https://repo.spring.io/milestone/")
-    maven(url = "https://repo.spring.io/snapshot/")
+    // maven(url = "https://repo.spring.io/snapshot/")
   }
 
   apply(plugin = "io.spring.dependency-management")
@@ -24,7 +24,7 @@ subprojects {
     }
   }
 
-  this.dependencies {
+  dependencies {
     implementation("io.vavr:vavr:$vavrVersion")
     testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
     testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")

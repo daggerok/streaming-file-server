@@ -1,8 +1,8 @@
 ifdef::backend-html5[]
-= {root-project-name} ({project-version}) image:https://travis-ci.org/daggerok/{root-project-name}.svg?branch=master["Build Status", link={github-url}]
+= {gradle-project-name} ({revnumber}) image:https://travis-ci.org/daggerok/{gradle-project-name}.svg?branch=master["Build Status", link={github-url}]
 endif::backend-html5[]
 ifndef::backend-html5[]
-= {root-project-name} ({project-version})
+= {gradle-project-name} ({revnumber})
 endif::backend-html5[]
 Maksim Kostromin <daggerok@gmail.com>
 {docdatetime}
@@ -13,7 +13,7 @@ Maksim Kostromin <daggerok@gmail.com>
 :numbered:
 :icons: font
 :hide-uri-scheme:
-:revnumber: {project-version}
+:revnumber: {revnumber}
 :example-caption!:
 
 Documentation in PFD format is located:

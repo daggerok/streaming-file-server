@@ -5,11 +5,11 @@
 [source,bash]
 [subs="verbatim,attributes"]
 ----
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar
-bash file-items-service-{project-version}.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-items-service-{project-version}.jar
+bash file-items-service-{revnumber}.jar
 
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar
-bash file-server-{project-version}.jar --app.upload.path=./path/to/file-storage
+wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-server-{project-version}.jar
+bash file-server-{revnumber}.jar --app.upload.path=./path/to/file-storage
 ----
 
 //end::content[]

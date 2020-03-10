@@ -1,25 +1,25 @@
 
 //tag::content[]
 
-.if you have docker installed and wanna use postgres, then link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/docker-compose.yml[download docker-compose.yml file]
+.if you have docker installed and wanna use postgres, then link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/docker-compose.yml[download docker-compose.yml file]
 [source,bash]
 [subs="verbatim,attributes"]
 ----
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/docker-compose.yml
+wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/docker-compose.yml
 ----
 
-.link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file items service]
+.link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-items-service-{project-version}.jar[file items service]
 [source,bash]
 [subs="specialcharacters,callouts,attributes"]
 ----
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-items-service-{project-version}.jar
 ----
 
-.link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file server]
+.link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-server-{project-version}.jar[file server]
 [source,bash]
 [subs="specialcharacters,callouts,attributes"]
 ----
-wget https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar
+wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-server-{project-version}.jar
 ----
 
 //end::content[]

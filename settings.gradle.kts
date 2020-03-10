@@ -18,9 +18,9 @@ pluginManagement {
   val querydslVersion: String by extra
   val versionsVersion: String by extra
   val springBootVersion: String by extra
+  val asciidoctorVersion: String by extra
   val lombokPluginVersion: String by extra
   val dockerComposeVersion: String by extra
-  val asciidoctorjConvertVersion: String by extra
   val dependencyManagementVersion: String by extra
   // dependencies {
   //   classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion")
@@ -31,9 +31,11 @@ pluginManagement {
     id("com.github.ben-manes.versions") version versionsVersion apply false
     id("io.franzbecker.gradle-lombok") version lombokPluginVersion apply false
     id("com.ewerk.gradle.plugins.querydsl") version querydslVersion apply false
-    id("org.asciidoctor.convert") version asciidoctorjConvertVersion apply false
     id("com.avast.gradle.docker-compose") version dockerComposeVersion apply false
     id("io.spring.dependency-management") version dependencyManagementVersion apply false
+    id("org.asciidoctor.jvm.convert") version asciidoctorVersion apply false
+    id("org.asciidoctor.jvm.gems") version asciidoctorVersion apply false
+    id("org.asciidoctor.jvm.pdf") version asciidoctorVersion apply false
   }
 }
 
