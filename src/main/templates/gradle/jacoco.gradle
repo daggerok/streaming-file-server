@@ -6,11 +6,11 @@ allprojects {
   apply(plugin: "jacoco")
 
   jacoco {
-    toolVersion = "${Globals.jacocoToolVersion}"
+    toolVersion = "$jacocoToolVersion"
   }
 
   jacocoTestReport {
-    def jacocoPath = "$rootProject.buildDir.absolutePath/jacoco"
+    def jacocoPath = "${rootProject.buildDir.absolutePath}/jacoco"
     def projectPath = project.path.replaceAll(":", "-").replaceFirst("-", "")
     reports {
       xml.enabled = false

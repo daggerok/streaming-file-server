@@ -1,11 +1,14 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Update versions:
-  * spring boot
-  * powermock
-  * spotbugs
-  * gradle
+Update versions:
+
+| artifact                                      |    | version
+|-----------------------------------------------|----|--------------
+| com.avast.gradle.docker-compose.gradle.plugin | -> | 0.10.9
+| spring boot                                   | -> | 2.2.5.RELEASE
+| selenide                                      | -> | 5.8.0
+| gradle                                        | -> | 6.2.2
 
 ## Java file server 
 

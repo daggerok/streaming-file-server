@@ -1,0 +1,84 @@
+name: integration-tests
+on: [push]
+jobs:
+  ui:
+    strategy:
+      matrix:
+        java: [11]
+        os: [ubuntu-latest]
+        nodejs-version: [12]
+        python-version: [3.8]
+    name: k-services java ${{ matrix.java }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # git clone
+      - name: Git clone
+        uses: actions/checkout@v1
+
+      # java
+      - name: Setup java ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+
+      # python: pip install httpie
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache python ${{ matrix.python-version }} deps
+        uses: actions/cache@v1
+        with:
+          path: ~/.pip
+          key: ${{ runner.os }}-${{ matrix.os }}-pip-
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.os }}-pip-
+      - name: Install / upgrade pip
+        run: python -m pip install --upgrade pip setuptools
+      - name: Install HTTPie
+        run: pip install --upgrade httpie
+
+      # node: npm install wait-port
+      - name: Setup NodeJS ${{ matrix.nodejs-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.nodejs-version }}
+      - name: Cache npm ${{ matrix.nodejs-version }} deps
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ matrix.os }}-npm-
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.os }}-npm-
+      - name: Install npm apps (wait-port)
+        run: npm install -g wait-port
+
+      - name: Cache gradle deps
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle # npm cache files are stored in `~/.gradle` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Build gradle apps
+        run: |
+          cd $GITHUB_WORKSPACE && ./gradlew -S clean build
+
+      - name: Run gradle apps
+        run: |
+          java -jar $GITHUB_WORKSPACE/modules/apps/file-items-service/build/libs/*.jar &
+          java -jar $GITHUB_WORKSPACE/modules/apps/file-server/build/libs/*.jar &
+
+      - name: Test apps
+        run: |
+          echo "wait-port 8001 8002"
+          #wait-port 8001 8002
+          wait-port 8001
+          wait-port 8002
+          echo "http -a user:password :8001"
+          http -a user:password :8001
+          echo "http -a admin:admin :8002"
+          http -a admin:admin :8002/

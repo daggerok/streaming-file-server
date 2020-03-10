@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.34</version>
+  <version>4.3.35</version>
 
   <developers>
     <developer>
@@ -62,27 +62,27 @@
     <asciidoctorj.diagram.version>2.0.0</asciidoctorj.diagram.version>
 
     <vavr.version>0.10.2</vavr.version>
-    <gradle.version>6.1.1</gradle.version>
+    <gradle.version>6.2.2</gradle.version>
     <jquery.version>3.4.1</jquery.version>
-    <tool.version>4.0.0-RC1</tool.version>
-    <popper.version>1.16.0</popper.version>
+    <popper.version>1.16.1</popper.version>
     <jgiven.version>0.18.2</jgiven.version><!-- jgiven.version 1.0.0-RC2 currently is incompatibleQ -->
-    <lombok.version>1.18.10</lombok.version>
+    <lombok.version>1.18.12</lombok.version>
     <spotbugs.version>2.0.0</spotbugs.version>
-    <selenide.version>5.6.1</selenide.version>
-    <postgres.version>42.2.9</postgres.version>
+    <selenide.version>5.8.0</selenide.version>
+    <postgres.version>42.2.10</postgres.version>
     <bootstrap.version>4.4.1</bootstrap.version>
     <commons.io.version>1.3.2</commons.io.version>
     <jacoco.tool.version>0.8.4</jacoco.tool.version>
     <powermockito.version>2.0.5</powermockito.version>
     <font.awesome.version>5.12.0</font.awesome.version>
-    <lombok.plugin.version>3.2.0</lombok.plugin.version>
-    <versions.gradle.plugin>0.27.0</versions.gradle.plugin>
-    <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
-    <hibernate.java8.version>5.4.10.Final</hibernate.java8.version>
+    <spotbugs.tool.version>4.0.0</spotbugs.tool.version>
+    <lombok.plugin.version>3.3.0</lombok.plugin.version>
+    <versions.gradle.plugin>0.28.0</versions.gradle.plugin>
+    <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+    <hibernate.java8.version>5.4.12.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.0.7</bootstrap.file.input.version>
-    <docker.compose.gradle.plugin>0.10.7</docker.compose.gradle.plugin>
-    <io.spring.dependency-management>1.0.8.RELEASE</io.spring.dependency-management>
+    <docker.compose.gradle.plugin>0.10.9</docker.compose.gradle.plugin>
+    <io.spring.dependency-management>1.0.9.RELEASE</io.spring.dependency-management>
   </properties>
 
   <build>
