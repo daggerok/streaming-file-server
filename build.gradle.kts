@@ -1,9 +1,3 @@
-buildscript {
-  repositories {
-    gradlePluginPortal()
-  }
-}
-
 plugins {
   idea
   maven
@@ -12,10 +6,12 @@ plugins {
   id("io.franzbecker.gradle-lombok")
   id("com.github.ben-manes.versions")
   id("io.spring.dependency-management")
-  id("com.ewerk.gradle.plugins.querydsl") apply false
-  id("com.avast.gradle.docker-compose") apply false
+  id("org.asciidoctor.jvm.pdf") apply false
   id("org.springframework.boot") apply false
-  id("org.asciidoctor.convert") apply false
+  id("org.asciidoctor.jvm.gems") apply false
+  id("org.asciidoctor.jvm.convert") apply false
+  id("com.avast.gradle.docker-compose") apply false
+  id("com.ewerk.gradle.plugins.querydsl") apply false
 }
 
 val groupId: String by project
@@ -33,11 +29,6 @@ allprojects {
   defaultTasks("clean", "build")
 }
 
-tasks.withType<Wrapper> {
-  gradleVersion = wrapperVersion
-  distributionType = Wrapper.DistributionType.BIN
-}
-
 apply(from = "$rootDir/gradle/ide.gradle")
 apply(from = "$rootDir/gradle/clean.gradle")
 apply(from = "$rootDir/gradle/subprojects.gradle")
@@ -50,7 +41,7 @@ tasks {
       componentSelection {
         all {
           // val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
-          val rejected = listOf("alpha") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
+          val rejected = listOf("alpha", "M") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
                   // com.tngtech.jgiven:jgiven-*:1.0.0-RC1 com.tngtech.jgiven:jgiven-*:1.0.0-RC2
               .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
               .any { it.matches(candidate.version) }
@@ -60,7 +51,6 @@ tasks {
     }
     outputFormatter = "plain" // "json"
   }
-
   withType<Test> {
     useJUnitPlatform()
     testLogging {
@@ -72,5 +62,9 @@ tasks {
           org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
       )
     }
+  }
+  withType<Wrapper> {
+    gradleVersion = wrapperVersion
+    distributionType = Wrapper.DistributionType.BIN
   }
 }

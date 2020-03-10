@@ -1,30 +1,30 @@
 
 //tag::content[]
 
-.if you do not have docker -- feel free to use h2 in memory database for link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-items-service-{project-version}.jar[file items service]:
+.if you do not have docker -- feel free to use h2 in memory database for link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-items-service-{project-version}.jar[file items service]:
 [source,bash]
 [subs="verbatim,attributes"]
 ----
-java file-items-service-{project-version}.jar
+java file-items-service-{revnumber}.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2
 ----
 
-.and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file server]:
+.and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-server-{project-version}.jar[file server]:
 [source,bash]
 [subs="verbatim,attributes"]
 ----
-java file-items-service-{project-version}.jar --spring.profiles.active=db-h2
+java file-items-service-{revnumber}.jar --spring.profiles.active=db-h2
 ----
 
 ////
-with special chars, will show {project-version}, but not substitution, like 4.3.8
+with special chars, will show {revnumber}, but not substitution, like 4.3.8
 
-.and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{project-version}/file-server-{project-version}.jar[file server]:
+.and then run link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/file-server-{project-version}.jar[file server]:
 [source,bash]
 [subs="specialcharacters,callouts,attributes"]
 ----
-java file-items-service-{project-version}.jar --spring.profiles.active=db-h2
+java file-items-service-{revnumber}.jar --spring.profiles.active=db-h2
 ----
 ////
 

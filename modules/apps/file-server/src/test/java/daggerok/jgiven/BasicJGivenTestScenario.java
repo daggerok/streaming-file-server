@@ -1,7 +1,7 @@
 package daggerok.jgiven;
 
-import com.tngtech.jgiven.junit.ScenarioTest;
-import org.junit.Test;
+import com.tngtech.jgiven.junit5.ScenarioTest;
+import org.junit.jupiter.api.Test;
 
 public class BasicJGivenTestScenario extends ScenarioTest<BasicStateGiven, BasicActionWhen, BasicOutcomeThen> {
 
