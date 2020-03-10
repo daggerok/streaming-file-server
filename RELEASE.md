@@ -1,7 +1,8 @@
 # streaming-file-server
 _4.3.36 release notes_
 
-Update gradle asciidoctor...
+* Update gradle asciidoctor for documentation...
+* Fix deprecations `testCompile` -> `testCompileOnly` in `jgiven.gradle` file. 
 
 ## Java file server 
 
