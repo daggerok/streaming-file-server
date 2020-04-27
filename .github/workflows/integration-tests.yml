@@ -1,6 +1,7 @@
 name: integration-tests
 on: [push]
 jobs:
+
   build:
     strategy:
       matrix:
@@ -50,6 +51,7 @@ jobs:
       # maven updates
       - name: Maven updates
         run: cd $GITHUB_WORKSPACE && ./mvnw versions:display-property-updates -P updates
+
   e2e-tests:
     strategy:
       matrix:
@@ -122,3 +124,50 @@ jobs:
           http -a user:password :8001
           echo "http -a admin:admin :8002"
           http -a admin:admin get :8002/
+
+  run-in-docker:
+    strategy:
+      matrix:
+        java: [8,11]
+        os: [ubuntu-latest]
+        nodejs-version: [12]
+        python-version: [3.8]
+    name: e2e tests java ${{ matrix.java }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - run: sudo apt install -y httpie
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.nodejs-version }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ matrix.os }}-npm-
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.os }}-npm-
+      - run: sudo npm install -g wait-port
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle # npm cache files are stored in `~/.gradle` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ hashFiles('**/gradlew') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - run: cd $GITHUB_WORKSPACE && ./gradlew -b ./modules/apps/build.gradle.kts assemble
+      - run: docker network create --attachable app || echo 'cannot create docker network app'
+      - run: cd $GITHUB_WORKSPACE && docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
+      - run: docker run -d --rm --net app --name file-items-service daggerok/file-items-service
+      - run: cd $GITHUB_WORKSPACE && docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
+      - run: docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
+      - run: while [[ $(docker ps -n 2 -q -f health=healthy | wc -l) -lt 2 ]] ; do sleep 1s ; echo -n '.' ; done
+      - run: http --ignore-stdin --auth user:password get :80/actuator/health
+      - run: http --ignore-stdin --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
+      - run: http --ignore-stdin --auth user:password get :80/api/v1/files
+      - run: http --ignore-stdin --auth user:password get :/
+      - run: docker rm -f -v file-server file-items-service
+      - run: docker network rm app || echo oops
+      - run: for i in $(docker ps -aq) ; do docker rm -fv $i ; done
