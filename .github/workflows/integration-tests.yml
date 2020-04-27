@@ -11,7 +11,7 @@ jobs:
         python-version: [3.8]
         docker-version: [19.09]
         docker-channel: [stable]
-    name: build java ${{ matrix.java }} on ${{ matrix.os }}
+    name: build with java-${{ matrix.java }} and ${{ matrix.os }} os
     runs-on: ${{ matrix.os }}
     steps:
       # git
@@ -59,7 +59,7 @@ jobs:
         os: [ubuntu-latest]
         nodejs-version: [12]
         python-version: [3.8]
-    name: e2e tests java ${{ matrix.java }} on ${{ matrix.os }}
+    name: e2e tests with java-${{ matrix.java }} and ${{ matrix.os }} os
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone
@@ -132,7 +132,7 @@ jobs:
         os: [ubuntu-latest]
         nodejs-version: [12]
         python-version: [3.8]
-    name: e2e tests java ${{ matrix.java }} on ${{ matrix.os }}
+    name: run in docker with java-${{ matrix.java }} and ${{ matrix.os }} os
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
