@@ -13,7 +13,7 @@ _4.3.37 release notes_
     com.tngtech.jgiven:jgiven-html5-report [0.18.2 -> 1.0.0-RC4]
     com.tngtech.jgiven:jgiven-junit [0.18.2 -> 1.0.0-RC4]
     com.tngtech.jgiven:jgiven-junit5 [0.18.2 -> 1.0.0-RC4]
-    spotbugs tool latest worked version is 4.0.0 (do not upgrade up to 4.0.2) 
+    gradle version 6.4-rc-2 is incompatible (failed spotbugs tasks). use 6.3 instead.
 
 ## Installation
 
