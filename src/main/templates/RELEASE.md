@@ -1,8 +1,7 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Update gradle asciidoctor for documentation...
-* Fix deprecations `testCompile` -> `testCompileOnly` in `jgiven.gradle` file. 
+* Update versions... 
 
 ## Java file server 
 
@@ -11,9 +10,10 @@ _${project.version} release notes_
 ### incompatible (not upgradeable) versions
 
     ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.tngtech.jgiven:jgiven-html5-report [0.18.2 -> 1.0.0-RC2]
-    com.tngtech.jgiven:jgiven-junit [0.18.2 -> 1.0.0-RC2]
-    com.tngtech.jgiven:jgiven-junit5 [0.18.2 -> 1.0.0-RC2]
+    com.tngtech.jgiven:jgiven-html5-report [0.18.2 -> 1.0.0-RC4]
+    com.tngtech.jgiven:jgiven-junit [0.18.2 -> 1.0.0-RC4]
+    com.tngtech.jgiven:jgiven-junit5 [0.18.2 -> 1.0.0-RC4]
+    spotbugs tool latest worked version is 4.0.0 (do not upgrade up to 4.0.2) 
 
 ## Installation
 
