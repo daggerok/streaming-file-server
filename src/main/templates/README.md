@@ -1,7 +1,7 @@
 # streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server) [![integration-tests](https://github.com/daggerok/streaming-file-server/workflows/integration-tests/badge.svg)](https://github.com/daggerok/streaming-file-server/actions)
 _version: ${project.version}_
 
-Full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files
+Full-stack java file server based on spring-boot / spring-* with no limitation for upload and download files size
 
 ## requirements
 
