@@ -7,7 +7,7 @@
   <groupId>com.github.daggerok</groupId>
   <artifactId>streaming-file-server</artifactId>
   <packaging>pom</packaging>
-  <version>4.3.37</version>
+  <version>4.3.38</version>
 
   <developers>
     <developer>
@@ -80,7 +80,7 @@
     <spotbugs.tool.version>4.0.2</spotbugs.tool.version>
     <lombok.plugin.version>3.3.0</lombok.plugin.version>
     <versions.gradle.plugin>0.28.0</versions.gradle.plugin>
-    <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+    <spring.boot.version>2.2.7.RELEASE</spring.boot.version>
     <hibernate.java8.version>5.4.14.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.0.7</bootstrap.file.input.version>
     <docker.compose.gradle.plugin>0.10.10</docker.compose.gradle.plugin>
