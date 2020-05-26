@@ -11,6 +11,6 @@
 - support removing files (rly..? as minimum from db)
 - p2p, bi-directional files synchronization with spring scheduling or batch
 - gradle github release plugin (at the moment, for publishing releases to github is using maven. see `pom.xml`)
-- migrate to Gradle 6.0+ version
+- ~~migrate to Gradle 6.0+ version~~
 - migrate to `org.asciidoctor.jvm.convert` Gradle plugin
 - migrate [JGiven Gradle plugin](http://jgiven.org/userguide/) to 1.x version
