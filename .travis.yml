@@ -81,7 +81,8 @@ jobs:
       jdk: openjdk11
       name: docker tests
       script:
-        - ./gradlew assemble allUp
+        - ./gradlew assemble
+        - ./gradlew allUp
         - http -a user:password :80
         - ./gradlew allDown
     - stage: test
