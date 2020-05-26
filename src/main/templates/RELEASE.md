@@ -1,7 +1,7 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Update versions... 
+* Update spring-boot up to 2.2.7.RELEASE version. 
 
 ## Java file server 
 
