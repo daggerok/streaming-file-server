@@ -3,8 +3,8 @@
 <?asciidoc-numbered?>
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
-<title>streaming-file-server (4.3.37)</title>
-<date>2020-04-27 20:39:56 UTC</date>
+<title>streaming-file-server (4.3.38)</title>
+<date>2020-05-26 12:46:26 UTC</date>
 <author>
 <personname>
 <firstname>Maksim</firstname>
@@ -15,8 +15,8 @@
 <authorinitials>MK</authorinitials>
 <revhistory>
 <revision>
-<revnumber>4.3.37</revnumber>
-<date>2020-04-27 20:39:56 UTC</date>
+<revnumber>4.3.38</revnumber>
+<date>2020-05-26 12:46:26 UTC</date>
 <authorinitials>MK</authorinitials>
 </revision>
 </revhistory>
@@ -36,21 +36,21 @@ It uses file multipart protocol</simpara>
 <section xml:id="download-files">
 <title>download files</title>
 <formalpara>
-<title>if you have docker installed and wanna use postgres, then <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/docker-compose.yml">download docker-compose.yml file</link></title>
+<title>if you have docker installed and wanna use postgres, then <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/docker-compose.yml">download docker-compose.yml file</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/docker-compose.yml</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/docker-compose.yml</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-items-service-4.3.37.jar">file items service</link></title>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-items-service-4.3.38.jar">file items service</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-items-service-4.3.37.jar</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-items-service-4.3.38.jar</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-server-4.3.37.jar">file server</link></title>
+<title><link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-server-4.3.38.jar">file server</link></title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-server-4.3.37.jar</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-server-4.3.38.jar</programlisting>
 </para>
 </formalpara>
 </section>
@@ -66,10 +66,10 @@ It uses file multipart protocol</simpara>
 docker-compose up -d
 
 # file-items data service
-java -jar file-items-service-4.3.37.jar --spring.profiles.active=db-pg
+java -jar file-items-service-4.3.38.jar --spring.profiles.active=db-pg
 
 # file server
-java -jar file-server-4.3.37.jar --app.upload.path=./path/to/file-storage
+java -jar file-server-4.3.38.jar --app.upload.path=./path/to/file-storage
 
 # cleanup
 docker-compose down -v</programlisting>
@@ -79,17 +79,17 @@ docker-compose down -v</programlisting>
 <section xml:id="in-memory-h2-database">
 <title>in-memory h2 database</title>
 <formalpara>
-<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-items-service-4.3.37.jar">file items service</link>:</title>
+<title>if you do not have docker&#8201;&#8212;&#8201;feel free to use h2 in memory database for <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-items-service-4.3.38.jar">file items service</link>:</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.37.jar
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.38.jar
 # or
 java file-items-service.jar --spring.profiles.active=db-h2</programlisting>
 </para>
 </formalpara>
 <formalpara>
-<title>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-server-4.3.37.jar">file server</link>:</title>
+<title>and then run <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-server-4.3.38.jar">file server</link>:</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.37.jar --spring.profiles.active=db-h2</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">java file-items-service-4.3.38.jar --spring.profiles.active=db-h2</programlisting>
 </para>
 </formalpara>
 </section>
@@ -98,11 +98,11 @@ java file-items-service.jar --spring.profiles.active=db-h2</programlisting>
 <formalpara>
 <title>if you are using bash&#8201;&#8212;&#8201;run even simply</title>
 <para>
-<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-items-service-4.3.37.jar
-bash file-items-service-4.3.37.jar
+<programlisting language="bash" linenumbering="unnumbered">wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-items-service-4.3.38.jar
+bash file-items-service-4.3.38.jar
 
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/file-server-4.3.37.jar
-bash file-server-4.3.37.jar --app.upload.path=./path/to/file-storage</programlisting>
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/file-server-4.3.38.jar
+bash file-server-4.3.38.jar --app.upload.path=./path/to/file-storage</programlisting>
 </para>
 </formalpara>
 </section>
@@ -117,7 +117,7 @@ bash file-server-4.3.37.jar --app.upload.path=./path/to/file-storage</programlis
 <title>postgres in docker</title>
 <para>
 <programlisting language="bash" linenumbering="unnumbered"># get
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -129,12 +129,12 @@ bash application.bash stop
 bash application.bash clean ./path/to/file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application.bash">application.bash</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application.bash">application.bash</link></simpara>
 <formalpara>
 <title>h2 in-memory database</title>
 <para>
 <programlisting language="bash" linenumbering="unnumbered"># fetch
-wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application-h2.bash
+wget https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -146,7 +146,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application-h2.bash">application-h2.bash</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application-h2.bash">application-h2.bash</link></simpara>
 <simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
 </section>
 <section xml:id="windows-batch-cmd">
@@ -164,7 +164,7 @@ application.cmd stop
 application.cmd clean path\to\file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application.cmd">application.cmd</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application.cmd">application.cmd</link></simpara>
 <formalpara>
 <title>h2 in-memory database</title>
 <para>
@@ -178,7 +178,7 @@ application-h2.cmd stop
 application-h2.cmd clean path\to\file-storage</programlisting>
 </para>
 </formalpara>
-<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.37/application-h2.cmd">application-h2.cmd</link></simpara>
+<simpara>download: <link xl:href="https://github.com/daggerok/streaming-file-server/releases/download/4.3.38/application-h2.cmd">application-h2.cmd</link></simpara>
 <simpara><emphasis>note: binaries <literal>wget</literal>, <literal>docker-compose</literal> and of course jre (binaries: <literal>java</literal> and <literal>jps</literal>) are required</emphasis></simpara>
 </section>
 </section>
