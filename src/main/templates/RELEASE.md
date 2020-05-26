@@ -1,19 +1,18 @@
 # streaming-file-server
 _${project.version} release notes_
 
-* Update spring-boot up to 2.3.0.RELEASE version. 
+* Update spring-boot up to 2.3.0.RELEASE version 
+* Update other latest versions
 
-## Java file server 
+## Java file server
 
 **Java file server** based on *spring-boot* with no memory, upload or download files size limitations
 
 ### incompatible (not upgradeable) versions
 
-    ch.qos.logback:logback-classic [1.2.3 -> 1.3.0-alpha4]
-    com.tngtech.jgiven:jgiven-html5-report [0.18.2 -> 1.0.0-RC4]
-    com.tngtech.jgiven:jgiven-junit [0.18.2 -> 1.0.0-RC4]
-    com.tngtech.jgiven:jgiven-junit5 [0.18.2 -> 1.0.0-RC4]
-    gradle version 6.4-rc-2 is incompatible (failed spotbugs tasks). use 6.3 instead.
+    logback version -> 1.3.0-alpha4 is incompatible, use 1.2.3 instead
+    jgiven version -> 1.0.0-RC4 is incompatible, use 0.18.2 instead
+    gradle version -> 6.4.1 is incompatible, use 6.3 instead. (failed spotbugs tasks)
 
 ## Installation
 

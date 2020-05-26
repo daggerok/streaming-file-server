@@ -1,6 +1,6 @@
 # Features
 
-- migrate to latest spring-boot `2.3.0.RELEASE`
+- ~~migrate to latest spring-boot `2.3.0.RELEASE`~~
 - reactive cors filter: see `modules/apps/file-items-service/src/main/java/daggerok/config/CorsWebFluxConfigurer.java`
 - global 404 fallback: see `modules/apps/file-server/src/main/java/daggerok/web/config/FallbackConfig.java`
 - split architecture into micro-services
