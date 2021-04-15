@@ -27,7 +27,7 @@
   </licenses>
   <scm>
     <developerConnection>scm:git:git@github.com:daggerok/streaming-file-server.git</developerConnection>
-    <connection>scm:git:https://github.com/daggerok/streaming-file-server.git</connection>
+    <connection>scm:git:git@github.com:daggerok/streaming-file-server.git</connection>
     <url>https://github.com/daggerok/streaming-file-server.git</url>
     <tag>HEAD</tag>
   </scm>
@@ -124,6 +124,9 @@
           </execution>
         </executions>
         <configuration>
+          <!--<failOnExistingRelease>false</failOnExistingRelease>-->
+          <!--<repositoryId>${github.username}/${github.repository}</repositoryId>-->
+          <repositoryId>daggerok/streaming-file-server</repositoryId>
           <overwriteArtifact>true</overwriteArtifact>
           <description>${project.artifactId} release</description>
           <releaseName>v${project.version}</releaseName>
