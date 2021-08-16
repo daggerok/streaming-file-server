@@ -2,7 +2,7 @@ notifications:
   email: false
 git:
   quiet: true
-  depth: false
+  depth: 3
 jdk: openjdk11
 node_js: lts/*
 language: python
