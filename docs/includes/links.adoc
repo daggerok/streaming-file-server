@@ -13,7 +13,6 @@ links:
 - link:http://getbootstrap.com/[bootstrap]
 - link:http://plugins.krajee.com/file-input[bootstrap fileinput]
 - link:http://jgiven.org/[jgiven]
-- link:https://github.com/jayway/powermock/wiki[powermock]
 - link:http://mockito.org/[mockito]
 - link:http://www.h2database.com/html/cheatSheet.html[h2]
 - link:https://www.postgresql.org/[postgres]

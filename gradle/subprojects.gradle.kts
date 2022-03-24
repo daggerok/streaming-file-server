@@ -26,8 +26,6 @@ subprojects {
 
   dependencies {
     implementation("io.vavr:vavr:$vavrVersion")
-    testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
-    testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
     testImplementation("com.codeborne:selenide:$selenideVersion")
   }
 
