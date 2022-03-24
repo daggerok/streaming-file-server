@@ -44,7 +44,7 @@ jobs:
             ~/.gradle
           key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
       - run: |
-          cd $GITHUB_WORKSPACE && ./gradlew -S -Pdebug clean test jgiven build documentation
+          cd $GITHUB_WORKSPACE && ./gradlew -S -Pdebug clean test build documentation
           cd $GITHUB_WORKSPACE && ./gradlew -S check jacocoTestReport jacocoTestCoverageVerification
           cd $GITHUB_WORKSPACE && ./gradlew -S -Pdebug clean check build
       - run: cd $GITHUB_WORKSPACE && ./gradlew dependencyUpdates -Drevision=release

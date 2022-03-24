@@ -47,11 +47,8 @@ _set specific version_
 
 **gradle testing**
 
-awesome JGiven reports!
-
 ```sh
-./gradlew clean test jgiven
-open `pwd`/modules/apps/file-server/build/jgiven-report/index.html
+./gradlew clean test
 ```
 
 **quick boot all with docker**

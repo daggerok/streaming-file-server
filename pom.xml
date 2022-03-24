@@ -67,7 +67,6 @@
     <gradle.version>6.3</gradle.version>
     <jquery.version>3.6.0</jquery.version>
     <popper.version>1.16.1</popper.version>
-    <jgiven.version>0.18.2</jgiven.version><!-- jgiven 1.0.0-RC4 is incompatible, use 0.18.2 -->
     <lombok.version>1.18.22</lombok.version>
     <selenide.version>5.12.1</selenide.version>
     <postgres.version>42.2.12</postgres.version>

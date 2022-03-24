@@ -28,6 +28,4 @@ subprojects {
     implementation("io.vavr:vavr:$vavrVersion")
     testImplementation("com.codeborne:selenide:$selenideVersion")
   }
-
-  apply(from = "$rootDir/gradle/jgiven.gradle")
 }

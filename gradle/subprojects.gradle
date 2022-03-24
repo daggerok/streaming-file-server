@@ -29,6 +29,4 @@ subprojects {
     testImplementation("com.codeborne:selenide:$selenideVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
   }
-
-  apply(from: "$rootDir/gradle/jgiven.gradle")
 }

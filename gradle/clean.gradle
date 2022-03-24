@@ -8,8 +8,6 @@ allprojects {
         project.file("bin"),
         project.file("logs"),
         project.file("build"),
-        project.file("jgiven-reports"),
-        project.file("jgiven-reports"),
     ].each { delete it }
   }
 }
