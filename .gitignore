@@ -9,7 +9,6 @@
 *.DS_Store
 *build/
 .gradle/
-*jgiven-reports/
 src/main/gen/
 modules/apps/*/src/main/gen/
 modules/docker/all/modules/apps/

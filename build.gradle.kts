@@ -1,6 +1,5 @@
 plugins {
   idea
-  maven
   eclipse
   `java-library`
   id("io.franzbecker.gradle-lombok")
@@ -42,7 +41,7 @@ tasks {
         all {
           // val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
           val rejected = listOf("alpha", "M") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
-                  // com.tngtech.jgiven:jgiven-*:1.0.0-RC1 com.tngtech.jgiven:jgiven-*:1.0.0-RC2
+              // com.tngtech.jgiven:jgiven-*:1.0.0-RC1 com.tngtech.jgiven:jgiven-*:1.0.0-RC2
               .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
               .any { it.matches(candidate.version) }
           if (rejected) reject("Release candidate")

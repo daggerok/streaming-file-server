@@ -27,10 +27,6 @@ subprojects {
   dependencies {
     implementation("io.vavr:vavr:$vavrVersion")
     testImplementation("com.codeborne:selenide:$selenideVersion")
-    testImplementation("org.powermock:powermock-api-mockito2:$powermockitoVersion")
-    testImplementation("org.powermock:powermock-module-junit4:$powermockitoVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
   }
-
-  apply(from: "$rootDir/gradle/jgiven.gradle")
 }

@@ -24,8 +24,9 @@ repositories {
 }
 
 dependencies {
-  asciidoctorGems 'rubygems:asciidoctor-pdf:1.5.3'
-  asciidoctorGems 'rubygems:coderay:1.1.2'
+  asciidoctorGems "rubygems:asciidoctor-diagram:$rubygemsAsciidoctorDiagramVersion"
+  asciidoctorGems "rubygems:asciidoctor-pdf:$rubygemsAsciidoctorPdfVersion"
+  asciidoctorGems "rubygems:coderay:$rubygemsCoderayVersion"
   asciidoctorGems "rubygems:rouge:$rubygemsRougeVersion"
 }
 
@@ -82,6 +83,27 @@ asciidoctorPdf {
 }
 
 asciidoctor {
+// TODO: FIXME: Doesn't worked for Java 17
+//  if (JavaVersion.current() != JavaVersion.VERSION_1_8 || JavaVersion.current() != JavaVersion.VERSION_11) {
+//    inProcess = JAVA_EXEC
+//    forkOptions {
+//      jvmArgs(
+//              "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.security=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.security.cert=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.util=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.util.zip=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.util.regex=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.io=ALL-UNNAMED",
+//              "--add-opens", "java.base/java.net=ALL-UNNAMED",
+//              "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED",
+//              "--add-opens", "java.base/sun.nio.ch=org.jruby.dist",
+//              "--add-opens", "java.base/java.io=org.jruby.dist",
+//      )
+//    }
+//  }
+
   dependsOn asciidoctorGemsPrepare, asciidoctorPdf
   shouldRunAfter clean, asciidoctorPdf
 

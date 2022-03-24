@@ -11,8 +11,6 @@ _${project.version} release notes_
 ### incompatible (not upgradeable) versions
 
     logback version -> 1.3.0-alpha4 is incompatible, use 1.2.3 instead
-    jgiven version -> 1.0.0-RC4 is incompatible, use 0.18.2 instead
-    gradle version -> 6.4.1 is incompatible, use 6.3 instead. (failed spotbugs tasks)
 
 ## Installation
 

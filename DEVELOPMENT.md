@@ -23,7 +23,7 @@ _process versions substitution_
 _set specific version_
 
 ```bash
-./mvnw versions:set -DnewVersion=4.3.39
+./mvnw versions:set -DnewVersion=4.3.40
 ```
 
 **maven version management**
@@ -47,11 +47,8 @@ _set specific version_
 
 **gradle testing**
 
-awesome JGiven reports!
-
 ```sh
-./gradlew clean test jgiven
-open `pwd`/modules/apps/file-server/build/jgiven-report/index.html
+./gradlew clean test
 ```
 
 **quick boot all with docker**
@@ -90,16 +87,6 @@ for image in $(docker images -qa) ; do docker rmi -f $image ; done
 
 # or cleanup everything in docker
 docker system prune -af --volumes
-```
-
-**spotbugs vulnerabilities analysis**
-
-```bash
-./gradlew check
-# or:
-./gradlew spotbugsMain spotbugsTest
-
-tree ./build/spotbugs
 ```
 
 **jacoco code coverage**

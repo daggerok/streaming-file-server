@@ -1,11 +1,7 @@
 pluginManagement {
-  val spotbugsVersion: String by extra
   buildscript {
     repositories {
       gradlePluginPortal()
-    }
-    dependencies {
-      classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion")
     }
   }
   repositories {
@@ -22,11 +18,7 @@ pluginManagement {
   val lombokPluginVersion: String by extra
   val dockerComposeVersion: String by extra
   val dependencyManagementVersion: String by extra
-  // dependencies {
-  //   classpath("gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion")
-  // }
   plugins {
-    id("com.github.spotbugs") version spotbugsVersion apply false
     id("org.springframework.boot") version springBootVersion apply false
     id("com.github.ben-manes.versions") version versionsVersion apply false
     id("io.franzbecker.gradle-lombok") version lombokPluginVersion apply false

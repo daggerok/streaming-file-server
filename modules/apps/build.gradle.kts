@@ -12,8 +12,6 @@ subprojects {
   tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
     launchScript()
   }
-
-  apply(from = "${rootProject.projectDir}/gradle/spotbugs.gradle")
 }
 
 apply<JavaPlugin>()
