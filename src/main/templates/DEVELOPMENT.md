@@ -92,16 +92,6 @@ for image in $(docker images -qa) ; do docker rmi -f $image ; done
 docker system prune -af --volumes
 ```
 
-**spotbugs vulnerabilities analysis**
-
-```bash
-./gradlew check
-# or:
-./gradlew spotbugsMain spotbugsTest
-
-tree ./build/spotbugs
-```
-
 **jacoco code coverage**
 
 ```bash

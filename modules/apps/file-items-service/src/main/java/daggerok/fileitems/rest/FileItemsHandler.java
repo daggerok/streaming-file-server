@@ -11,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -27,7 +26,7 @@ public class FileItemsHandler {
   private final FileItemRepository repository;
   private final FileItemReactiveRepository reactiveRepository;
 
-  public Mono<ServerResponse> getAll(@Nonnull final ServerRequest request) {
+  public Mono<ServerResponse> getAll(final ServerRequest request) {
     return jsonOk().body(Flux.fromIterable(repository.findAll())
                              .subscribeOn(Schedulers.elastic()), FileItem.class);
   }
