@@ -10,12 +10,12 @@ Full-stack java file server based on spring-boot / spring-* with no files size l
 - you can use [`scoop` command line package manager](https://scoop.sh) on windows for java and other tools installation
 
 ## reference
-
+<!--
 - [Reference documentation](http://daggerok.github.io/streaming-file-server)
 - [Installation guide](./INSTALL.md)
+-->
 - [Development guide](./DEVELOPMENT.md)
+<!--
 - [Features](./FEATURES.md)
 - [TODO](./TODO.md)
-
-## vendors
-- [bootstrap file-input](https://plugins.krajee.com/file-input)
+-->

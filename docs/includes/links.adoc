@@ -20,5 +20,6 @@ links:
 - link:http://gradle.org/[gradle]
 - link:https://travis-ci.org/[travis CI]
 - link:https://github.com/jutzig/github-release-plugin[GitHub release maven plugin]
+- link:https://plugins.krajee.com/file-input[bootstrap file-input]
 
 //end::content[]

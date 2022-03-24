@@ -1,6 +1,5 @@
 plugins {
   idea
-  maven
   eclipse
   `java-library`
   id("io.franzbecker.gradle-lombok")
