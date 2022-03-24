@@ -1,11 +1,11 @@
-# streaming-file-server [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server) [![integration-tests](https://github.com/daggerok/streaming-file-server/workflows/integration-tests/badge.svg)](https://github.com/daggerok/streaming-file-server/actions)
+# streaming-file-server <!-- [![build](https://travis-ci.org/daggerok/streaming-file-server.svg?branch=master)](https://travis-ci.org/daggerok/streaming-file-server) --> [![integration-tests](https://github.com/daggerok/streaming-file-server/workflows/integration-tests/badge.svg)](https://github.com/daggerok/streaming-file-server/actions)
 _version: ${project.version}_
 
 Full-stack java file server based on spring-boot / spring-* with no files size limitations for upload / download
 
 ## requirements
 
-- java 8 or later is required
+- java 8 or ~~later~~ 11 is required
 - install [Docker](https://docs.docker.com/install/) if you going to use postgres
 - you can use [`scoop` command line package manager](https://scoop.sh) on windows for java and other tools installation
 
@@ -16,3 +16,6 @@ Full-stack java file server based on spring-boot / spring-* with no files size l
 - [Development guide](./DEVELOPMENT.md)
 - [Features](./FEATURES.md)
 - [TODO](./TODO.md)
+
+## vendors
+- [bootstrap file-input](https://plugins.krajee.com/file-input)

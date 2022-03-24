@@ -14,3 +14,4 @@
 - ~~migrate to Gradle 6.0+ version~~
 - migrate to `org.asciidoctor.jvm.convert` Gradle plugin
 - migrate [JGiven Gradle plugin](http://jgiven.org/userguide/) to 1.x version
+- migrate to java 17
