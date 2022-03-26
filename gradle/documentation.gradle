@@ -4,7 +4,8 @@ buildscript {
   }
   ext {
     asciidocBuildDir = "$buildDir/asciidoc"
-    targetDeneratedDocsDir = "$rootDir/target/generated-docs"
+    targetDocsDir = "$rootDir/target/generated-docs"
+    targetAppDir = "$targetDocsDir/app"
   }
 }
 
@@ -105,7 +106,7 @@ asciidoctor {
 //  }
 
   dependsOn asciidoctorGemsPrepare, asciidoctorPdf
-  shouldRunAfter clean, asciidoctorPdf
+  shouldRunAfter clean
 
   sourceDir = project.file("docs")
 
@@ -149,12 +150,32 @@ asciidoctor.doLast {
   project.file("$html5/.nojekyll").text = ''
 }
 
-task documentation(type: Copy, dependsOn: [asciidoctor, asciidoctorPdf]) {
+task copyApp(type: Copy) {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  dependsOn ':modules:apps:file-items-service:assemble', ':modules:apps:file-server:assemble'
+  shouldRunAfter ':modules:apps:file-items-service:assemble', ':modules:apps:file-server:assemble'
+  // copy ./docker-compose.yml
+  from "$rootDir/modules/docker/postgres/docker-compose.yml"
+  // copy ./scrips
+  from fileTree("$rootDir/scripts") {
+    into(targetAppDir)
+  }
+  // copy ./modules/apps/file-*/build/libs/*.jar
+  def jarFiles = [':modules:apps:file-items-service', ':modules:apps:file-server']
+          .collect { project(it) }
+          .collect { it.jar }
+          .collect { it.outputs }
+          .collect { it.files }
+          .collect { it.getAsPath() }
+  from jarFiles
+  into targetAppDir
+}
+
+task documentation(type: Copy, dependsOn: [copyApp, asciidoctor]) {
   // // duplicatesStrategy = DuplicatesStrategy.INCLUDE
   // duplicatesStrategy = DuplicatesStrategy.WARN
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-  shouldRunAfter clean, asciidoctor, asciidoctorPdf
-  // from "$asciidocBuildDir" { into '.' }
+  shouldRunAfter copyApp, asciidoctor
   from "$asciidoctor.outputDir"
-  into targetDeneratedDocsDir
+  into targetDocsDir
 }

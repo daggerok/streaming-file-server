@@ -9,7 +9,7 @@ VERSION=${project.version}
 COMPOSE_FILE="docker-compose.yml"
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
-RELEASE_BASE_PATH="https://github.com/daggerok/streaming-file-server/releases/download/${VERSION}"
+RELEASE_BASE_PATH="https://daggerok.github.io/streaming-file-server/app"
 APPLICATION_PATH="app"
 
 if [ "'$LOG_LEVEL'" == "'debug'" ]; then

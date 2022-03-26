@@ -6,12 +6,12 @@ on:
         description: Type m to triggre manual jobs
         required: false
         default: ''
-  pull_request:
-    branches: [ master, main ]
-    #paths:
-    #- '*.md'
-    #- '*.adoc'
-    #- '*.js*'
+  #pull_request:
+  #  branches: [ master, main ]
+  #  paths:
+  #  - '*.md'
+  #  - '*.adoc'
+  #  - '*.js*'
   push:
 env:
   NODE_VERSION: 17.7.2
@@ -20,7 +20,7 @@ jobs:
     #See reference: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#functions
     #manual job definition:
     if: startsWith(github.event.inputs.trigger, 'm')
-         || startsWith(github.event.inputs.trigger, 'M')
+      || startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
         java: [1.8,11]

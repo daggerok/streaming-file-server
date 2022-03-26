@@ -1,5 +1,6 @@
 # TODO
 
+- https://github.com/actions/upload-release-asset
 - fix Transactional after 2.2.0.M4 migration (now spring expects reactive transactional manager instead of JPA)
 - migrate from postgres to reactive postgres or [R2DBC](https://r2dbc.io/), or to some reactive NoSQL (mongodb, etc...)
 - migrate from Mustache template engine to [Thymeleaf](https://www.thymeleaf.org/)

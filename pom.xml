@@ -331,10 +331,7 @@
             <artifactId>versions-maven-plugin</artifactId>
             <version>${versions-maven-plugin.version}</version>
             <configuration>
-              <!--
-                Preferences | Build, Execution, Deployment | Build Tools | Maven | Runner | VM Options:
-                -Dmaven.multiModuleProjectDirectory=$M2_HOME
-              -->
+              <!--suppress UnresolvedMavenProperty -->
               <rulesUri>file:///${maven.multiModuleProjectDirectory}/.mvn/versions-maven-plugin-rules.xml</rulesUri>
             </configuration>
             <executions>

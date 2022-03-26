@@ -6,7 +6,7 @@
 [subs="+attributes"]
 ----
 # get
-wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application.bash
+wget https://daggerok.github.io/streaming-file-server/app/application.bash
 
 # start
 bash application.bash start ./path/to/file-storage
@@ -18,14 +18,14 @@ bash application.bash stop
 bash application.bash clean ./path/to/file-storage
 ----
 
-download: link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application.bash[application.bash]
+download: link:https://daggerok.github.io/streaming-file-server/app/application.bash[application.bash]
 
 .h2 in-memory database
 [source,bash]
 [subs="+attributes"]
 ----
 # fetch
-wget https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application-h2.bash
+wget https://daggerok.github.io/streaming-file-server/app/application-h2.bash
 
 # start
 bash application-h2.bash start ./path/to/file-storage
@@ -37,7 +37,7 @@ bash application-h2.bash stop
 bash application-h2.bash clean ./path/to/file-storage
 ----
 
-download: link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application-h2.bash[application-h2.bash]
+download: link:https://daggerok.github.io/streaming-file-server/app/application-h2.bash[application-h2.bash]
 
 _note: binaries `wget`, `docker-compose` and of course jre (binaries: `java` and `jps`) are required_
 
