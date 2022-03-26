@@ -27,5 +27,6 @@ subprojects {
   dependencies {
     implementation("io.vavr:vavr:$vavrVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("junit:junit") // needs to be added, because that dependency was dropped from newer spring-boot
   }
 }

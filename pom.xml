@@ -63,7 +63,7 @@
     <asciidoctorj.pdf.version>1.6.2</asciidoctorj.pdf.version>
     <asciidoctor.diagram.version>2.2.1</asciidoctor.diagram.version>
 
-    <vavr.version>0.10.3</vavr.version>
+    <vavr.version>0.10.4</vavr.version>
     <gradle.version>7.4.1</gradle.version>
     <jquery.version>3.6.0</jquery.version>
     <popper.version>1.16.1</popper.version>
@@ -72,9 +72,9 @@
     <bootstrap.version>5.1.3</bootstrap.version>
     <commons.io.version>1.3.2</commons.io.version>
     <jacoco.tool.version>0.8.4</jacoco.tool.version>
+    <spring.boot.version>2.6.5</spring.boot.version>
     <font.awesome.version>5.13.0</font.awesome.version>
     <lombok.plugin.version>5.0.0</lombok.plugin.version>
-    <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
     <hibernate.java8.version>5.4.16.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.2.5</bootstrap.file.input.version>
     <versions.gradle.plugin.version>0.42.0</versions.gradle.plugin.version>
