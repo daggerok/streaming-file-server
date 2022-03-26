@@ -1,4 +1,5 @@
 **
+*-plain.jar
 !modules/apps/file-items-service/build/libs/*.jar
 !modules/apps/file-server/build/libs/*.jar
 !modules/docker/all/nginx/default.conf

@@ -1,0 +1,47 @@
+name: github-pages
+on:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: Type m to triggre manual jobs
+        required: false
+        default: ''
+  #pull_request:
+  #  branches: [ master, main ]
+  #  paths:
+  #  - '*.md'
+  #  - '*.adoc'
+  #  - '*.js*'
+  push:
+env:
+  JAVA_VERSION: '11'
+jobs:
+  github-pages:
+    #if: startsWith(github.event.inputs.trigger, 'm')
+    #  || startsWith(github.event.inputs.trigger, 'M')
+    name: build documentation and deploy apps java-${{ matrix.java }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2
+            ~/.npm
+            ~/.docker
+            ~/.gradle
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon documentation
+      ## TODO: Publish docker images
+      #- run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
+      #- run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
+      ## TODO: Publish github release with assets and update back github pages documentation to use jars from github release
+      - name: Deploy 🚀 GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: target/generated-docs # The folder the action should deploy.

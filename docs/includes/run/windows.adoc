@@ -7,7 +7,7 @@
 include::./windows-pg.cmd[]
 ----
 
-download: link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application.cmd[application.cmd]
+download: link:https://daggerok.github.io/streaming-file-server/app/application.cmd[application.cmd]
 
 .h2 in-memory database
 [source,cmd]
@@ -15,7 +15,7 @@ download: link:https://github.com/daggerok/streaming-file-server/releases/downlo
 include::./windows-h2.cmd[]
 ----
 
-download: link:https://github.com/daggerok/streaming-file-server/releases/download/{revnumber}/application-h2.cmd[application-h2.cmd]
+download: link:https://daggerok.github.io/streaming-file-server/app/application-h2.cmd[application-h2.cmd]
 
 _note: binaries `wget`, `docker-compose` and of course jre (binaries: `java` and `jps`) are required_
 

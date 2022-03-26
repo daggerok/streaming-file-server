@@ -21,10 +21,3 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
-#    hibernate:
-#      ddl-auto: update
-#      temp:
-#        use_jdbc_metadata_defaults: false
-#        use_jdbc_metadata: false
-#      use_jdbc_metadata_defaults: false
-#      use_jdbc_metadata: false

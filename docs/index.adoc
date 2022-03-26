@@ -1,5 +1,5 @@
 ifdef::backend-html5[]
-= {gradle-project-name} ({revnumber}) image:https://travis-ci.org/daggerok/{gradle-project-name}.svg?branch=master["Build Status", link={github-url}]
+= {gradle-project-name} ({revnumber}) image:https://github.com/daggerok/{gradle-project-name}/actions/workflows/github-pages.yml/badge.svg["Build Status", link={github-url}]
 endif::backend-html5[]
 ifndef::backend-html5[]
 = {gradle-project-name} ({revnumber})

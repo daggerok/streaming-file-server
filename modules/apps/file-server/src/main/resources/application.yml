@@ -71,14 +71,6 @@ spring:
 
   mustache:
     suffix: .hbs
-
-  mvc:
-    favicon:
-      enabled: false
-
-#  resources:
-#    chain:
-#      enabled: true
 ---
 spring:
   profiles:
