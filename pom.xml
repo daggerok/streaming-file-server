@@ -75,7 +75,7 @@
     <font.awesome.version>5.13.0</font.awesome.version>
     <lombok.plugin.version>4.0.0</lombok.plugin.version>
     <versions.gradle.plugin>0.28.0</versions.gradle.plugin>
-    <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
+    <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
     <hibernate.java8.version>5.4.16.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.2.5</bootstrap.file.input.version>
     <docker.compose.gradle.plugin>0.12.1</docker.compose.gradle.plugin>
