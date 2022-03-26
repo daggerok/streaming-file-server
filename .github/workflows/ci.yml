@@ -277,6 +277,7 @@ jobs:
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -b ./modules/apps/build.gradle.kts assemble
       - run: cd $GITHUB_WORKSPACE ; docker network create --attachable app || echo 'cannot create docker network app'
+      - run: ls -lah $GITHUB_WORKSPACE/linux-services/file-items-service/Dockerfile .
       - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
       - run: cd $GITHUB_WORKSPACE ; docker run -d --rm --net app --name file-items-service daggerok/file-items-service
       - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .

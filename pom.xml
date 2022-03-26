@@ -67,6 +67,7 @@
     <gradle.version>7.4.1</gradle.version>
     <jquery.version>3.6.0</jquery.version>
     <popper.version>1.16.1</popper.version>
+    <lombok.version>1.18.22</lombok.version>
     <postgres.version>42.3.3</postgres.version>
     <bootstrap.version>5.1.3</bootstrap.version>
     <commons.io.version>1.3.2</commons.io.version>

@@ -16,3 +16,11 @@ subprojects {
 
 apply<JavaPlugin>()
 apply(from = "${rootProject.projectDir}/gradle/jacoco.gradle")
+
+// Do not generate `*-plain.jar` files. See: https://stackoverflow.com/a/68786767/1490636
+subprojects {
+  tasks.jar {
+    enabled = false
+    archiveClassifier.set("")
+  }
+}
