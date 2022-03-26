@@ -5,7 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Data
-// @Component // 2.2.0
 @ConfigurationProperties(prefix = "app")
 public class AppProps {
 
