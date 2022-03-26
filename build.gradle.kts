@@ -14,12 +14,10 @@ plugins {
 }
 
 val groupId: String by project
-val lombokVersion: String by project
 val projectVersion: String by project
 val wrapperVersion: String by project
 val postgresVersion: String by project
 
-extra["lombok.version"] = lombokVersion
 extra["postgresql.version"] = postgresVersion
 
 allprojects {
