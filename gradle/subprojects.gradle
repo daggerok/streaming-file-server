@@ -11,11 +11,6 @@ subprojects {
   }
 
   apply(plugin: "io.franzbecker.gradle-lombok")
-
-  lombok {
-    version = "$lombokVersion"
-  }
-
   apply(plugin: "io.spring.dependency-management")
 
   dependencyManagement {
