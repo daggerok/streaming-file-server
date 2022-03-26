@@ -26,6 +26,5 @@ subprojects {
 
   dependencies {
     implementation("io.vavr:vavr:$vavrVersion")
-    testImplementation("com.codeborne:selenide:$selenideVersion")
   }
 }
