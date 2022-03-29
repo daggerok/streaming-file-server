@@ -17,7 +17,7 @@ Maksim Kostromin <daggerok@gmail.com>
 :example-caption!:
 
 Documentation in PFD format is located:
-ifdef::backend-html5[link:./index.pdf[here]]
+ifdef::backend-html5[link:./app/index.pdf[here]]
 
 == Introduction
 link:{github-url}[Streaming file server] -- java based project on top of spring-boot.

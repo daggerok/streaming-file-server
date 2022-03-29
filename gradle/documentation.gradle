@@ -50,7 +50,7 @@ asciidoctorPdf {
   sources {
     include "index.adoc"
   }
-  outputDir = project.file("$asciidocBuildDir")
+  outputDir = project.file("$targetAppDir")
 
   asciidoctorj {
     requires 'rouge'
