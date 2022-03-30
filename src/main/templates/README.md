@@ -13,9 +13,7 @@ Full-stack java file server based on spring-boot / spring-* with no files size l
 <!--
 - [Reference documentation](http://daggerok.github.io/streaming-file-server)
 - [Installation guide](./INSTALL.md)
--->
-- [Development guide](./DEVELOPMENT.md)
-<!--
 - [Features](./FEATURES.md)
 - [TODO](./TODO.md)
 -->
+[Development guide](./DEVELOPMENT.md)
