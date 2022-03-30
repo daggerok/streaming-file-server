@@ -1,6 +1,8 @@
 
 //tag::content[]
 
+to create new pre-release, simply do commit and push into master or main branch
+
 to create new release do next
 
 . bump version in (better use IDE find and replace functionality):
@@ -16,7 +18,7 @@ to create new release do next
 . check CI if builds was successfully passed after triggering `github-pages` github action job
 . update created release page on github according last changes
 
-download all files from github pages:
-- https://daggerok.github.io/streaming-file-server/app/*
+download all files from github releases page:
+- {github-url}/releases/download/{project-version}/*
 
 //end::content[]

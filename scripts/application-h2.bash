@@ -8,7 +8,7 @@
 VERSION=4.3.40
 FILE_SERVER_FILENAME="file-server-${VERSION}.jar"
 FILE_ITEMS_SERVICE_FILENAME="file-items-service-${VERSION}.jar"
-RELEASE_BASE_PATH="https://daggerok.github.io/streaming-file-server/app"
+RELEASE_BASE_PATH="https://github.com/daggerok/streaming-file-server/releases/download/${VERSION}"
 APPLICATION_PATH="app"
 
 if [ "'$LOG_LEVEL'" == "'debug'" ]; then

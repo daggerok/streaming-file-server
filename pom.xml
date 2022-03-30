@@ -49,6 +49,7 @@
     <maven.version>3.8.5</maven.version>
     <maven.wrapper.version>3.1.0</maven.wrapper.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
     <github-release-plugin.version>1.4.0</github-release-plugin.version>
     <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
     <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -90,9 +91,31 @@
     -->
     <plugins>
       <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>versions-maven-plugin</artifactId>
-      <version>${versions-maven-plugin.version}</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven-clean-plugin.version}</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <!--suppress UnresolvedMavenProperty -->
+              <directory>${maven.multiModuleProjectDirectory}</directory>
+              <useDefaultExcludes>true</useDefaultExcludes>
+              <followSymlinks>false</followSymlinks>
+              <includes>
+                <include>modules/apps/file-server/file-storage/**</include>
+                <include>**/src/main/gen/**</include>
+                <include>**/target/**</include>
+                <include>**/build/**</include>
+                <include>**/out/**</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${versions-maven-plugin.version}</version>
         <configuration>
           <allowSnapshots>true</allowSnapshots>
           <excludeReactor>false</excludeReactor>

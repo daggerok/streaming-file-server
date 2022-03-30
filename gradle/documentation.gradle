@@ -5,7 +5,7 @@ buildscript {
   ext {
     asciidocBuildDir = "$buildDir/asciidoc"
     targetDocsDir = "$rootDir/target/generated-docs"
-    targetAppDir = "$targetDocsDir/app"
+    targetAppDir = "$rootDir/target/release"
   }
 }
 
@@ -16,7 +16,6 @@ apply plugin: "org.asciidoctor.jvm.pdf"
 
 repositories {
   mavenCentral()
-  jcenter()
   maven {
     url 'http://rubygems-proxy.torquebox.org/releases'
     allowInsecureProtocol true
@@ -42,46 +41,7 @@ asciidoctorj {
   }
 }
 
-asciidoctorPdf {
-  dependsOn asciidoctorGemsPrepare
-  shouldRunAfter clean
-
-  sourceDir = project.file("docs")
-  sources {
-    include "index.adoc"
-  }
-  outputDir = project.file("$asciidocBuildDir")
-
-  asciidoctorj {
-    requires 'rouge'
-    attributes toc: 'left',
-        ruby: 'erubis',
-        doctype: 'book',
-        numbered: false,
-        linkattrs: true,
-        sectanchors: true,
-        encoding: 'utf-8',
-        sectlink: true,
-        idprefix: '',
-        docinfo1: '',
-        icons: 'font',
-        idseparator: '-',
-        setanchors: 'true',
-        imagesdir: './static/images',
-        'source-highlighter': 'rouge',
-        'toc-title': 'Table of Contents',
-        'project-name': rootProject.name,
-        'gradle-project-name': rootProject.name,
-        'root-project-name': rootProject.name,
-        'project-version': rootProject.version,
-        'revnumber': rootProject.version,
-        'build-gradle': project.file("build.gradle"),
-        'github-url': "https://github.com/daggerok/${rootProject.name}"
-  }
-
-  logDocuments = true
-  baseDirFollowsSourceFile()
-}
+/* documentation */
 
 asciidoctor {
 // TODO: FIXME: Doesn't worked for Java 17
@@ -150,6 +110,17 @@ asciidoctor.doLast {
   project.file("$html5/.nojekyll").text = ''
 }
 
+task documentation(type: Copy, dependsOn: [asciidoctor]) {
+  // // duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  // duplicatesStrategy = DuplicatesStrategy.WARN
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  shouldRunAfter asciidoctor
+  from "$asciidoctor.outputDir"
+  into targetDocsDir
+}
+
+/* release */
+
 task copyApp(type: Copy) {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   dependsOn ':modules:apps:file-items-service:assemble', ':modules:apps:file-server:assemble'
@@ -171,11 +142,47 @@ task copyApp(type: Copy) {
   into targetAppDir
 }
 
-task documentation(type: Copy, dependsOn: [copyApp, asciidoctor]) {
-  // // duplicatesStrategy = DuplicatesStrategy.INCLUDE
-  // duplicatesStrategy = DuplicatesStrategy.WARN
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-  shouldRunAfter copyApp, asciidoctor
-  from "$asciidoctor.outputDir"
-  into targetDocsDir
+asciidoctorPdf {
+  dependsOn asciidoctorGemsPrepare
+  shouldRunAfter clean
+
+  sourceDir = project.file("docs")
+  sources {
+    include "index.adoc"
+  }
+  outputDir = project.file("$targetDocsDir")
+
+  asciidoctorj {
+    requires 'rouge'
+    attributes toc: 'left',
+            ruby: 'erubis',
+            doctype: 'book',
+            numbered: false,
+            linkattrs: true,
+            sectanchors: true,
+            encoding: 'utf-8',
+            sectlink: true,
+            idprefix: '',
+            docinfo1: '',
+            icons: 'font',
+            idseparator: '-',
+            setanchors: 'true',
+            imagesdir: './static/images',
+            'source-highlighter': 'rouge',
+            'toc-title': 'Table of Contents',
+            'project-name': rootProject.name,
+            'gradle-project-name': rootProject.name,
+            'root-project-name': rootProject.name,
+            'project-version': rootProject.version,
+            'revnumber': rootProject.version,
+            'build-gradle': project.file("build.gradle"),
+            'github-url': "https://github.com/daggerok/${rootProject.name}"
+  }
+
+  logDocuments = true
+  baseDirFollowsSourceFile()
+}
+
+task release {
+  dependsOn copyApp, asciidoctorPdf
 }

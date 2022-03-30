@@ -21,13 +21,13 @@ SET ApplicationPath="app"
 
 SET Version=${project.version}
 SET DockerComposeFile=docker-compose.yml
-SET DockerComposeUrl=https://daggerok.github.io/streaming-file-server/app/%dockerComposeFile%
+SET DockerComposeUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%dockerComposeFile%
 SET DockerComposeCommand=docker-compose -f %ApplicationPath%\%DockerComposeFile%
 SET FileServerFile=file-server-%Version%.jar
-SET FileServerUrl=https://daggerok.github.io/streaming-file-server/app/%FileServerFile%
+SET FileServerUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileServerFile%
 SET FileServerCommand=java -jar %ApplicationPath%\%FileServerFile%
 SET FileItemsServiceFile=file-items-service-%Version%.jar
-SET FileItemsServiceUrl=https://daggerok.github.io/streaming-file-server/app/%FileItemsServiceFile%
+SET FileItemsServiceUrl=https://github.com/daggerok/streaming-file-server/releases/download/%Version%/%FileItemsServiceFile%
 SET FileItemsServiceCommand=java -jar %ApplicationPath%\%FileItemsServiceFile%
 
 SET Script=%0

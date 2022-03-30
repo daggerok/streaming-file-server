@@ -1,0 +1,68 @@
+#name: release
+#on:
+#  push:
+#    tags:
+#      - 'v*'
+##  workflow_dispatch:
+##    inputs:
+##      trigger:
+##        description: Type m to triggre manual jobs
+##        required: false
+##        default: ''
+#env:
+#  JAVA_VERSION: '17'
+#jobs:
+#  release:
+##    if: startsWith(github.event.inputs.trigger, 'm')
+##      || startsWith(github.event.inputs.trigger, 'M')
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: actions/setup-java@v2
+#        with:
+#          distribution: 'temurin'
+#          java-version: ${{ env.JAVA_VERSION }}
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#            ~/.m2
+#            ~/.npm
+#            ~/.docker
+#            ~/.gradle
+#          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
+#      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
+#      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --console=plain clean build
+#      - run: cd $GITHUB_WORKSPACE ; ./mvnw clean verify
+##      # TODO: Publish docker images
+##      - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
+##      - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-server        -f ./linux-services/file-server/Dockerfile        .
+##      # TODO: Publish github release with assets and update back github pages documentation to use jars from github release
+##      - name: Deploy 🚀 GitHub Pages
+##        uses: JamesIves/github-pages-deploy-action@4.1.0
+##        with:
+##          branch: gh-pages # The branch the action should deploy to.
+##          folder: target/generated-docs # The folder the action should deploy.
+#      ## Create 'tagged' pre-release
+#      - run: mkdir -p $GITHUB_WORKSPACE/dist
+#      - run: cp -Rfv $GITHUB_WORKSPACE/build/libs/*.jar $GITHUB_WORKSPACE/build/libs/gradle-app.jar
+#      - run: mv -f $GITHUB_WORKSPACE/build/libs/*.jar $GITHUB_WORKSPACE/dist/
+#      - run: cp -Rfv $GITHUB_WORKSPACE/target/*.jar $GITHUB_WORKSPACE/target/maven-app.jar
+#      - run: cp -Rfv $GITHUB_WORKSPACE/target/*.jar $GITHUB_WORKSPACE/dist/
+#      - name: Set env variables
+#        id: refs_names
+#        run: |
+#          VERSION=`./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout`
+#          echo ::set-output name=VRESION::$VERSION
+#      - name: Get env variables
+#        env:
+#          VRESION: ${{ steps.refs_names.outputs.VRESION }}
+#        run: echo $VERSION
+#      - uses: 'marvinpinto/action-automatic-releases@latest'
+#        with:
+#          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+#          automatic_release_tag: "latest"
+#          prerelease: false
+#          title: "Build ${{ steps.refs_names.outputs.SOURCE_TAG }}"
+#          files: |
+#            LICENSE.txt
+#            dist/*.jar
