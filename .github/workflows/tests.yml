@@ -1,82 +1,30 @@
 name: tests
 on:
-  workflow_dispatch:
-    inputs:
-      trigger:
-        description: Type m to triggre manual jobs
-        required: false
-        default: ''
+  push:
   #pull_request:
   #  branches: [ master, main ]
   #  paths:
   #  - '*.md'
   #  - '*.adoc'
   #  - '*.js*'
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: Type m to triggre manual jobs
+        required: false
+        default: ''
 env:
   NODE_VERSION: 17.7.2
 jobs:
   updates:
+    name: updates java-${{ matrix.java }}
     #See reference: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#functions
     #manual job definition:
     if: startsWith(github.event.inputs.trigger, 'm')
       || startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
-        java: [1.8,11]
-    name: updates java-${{ matrix.java }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.m2
-            ~/.npm
-            ~/.docker
-            ~/.gradle
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon dependencyUpdates -Drevision=release
-      - run: cd $GITHUB_WORKSPACE ; ./mvnw versions:display-property-updates -P updates
-  check:
-    #See reference: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#functions
-    #automatic job definition:
-    if: github.event.inputs.trigger == ''
-      || !startsWith(github.event.inputs.trigger, 'm')
-      || !startsWith(github.event.inputs.trigger, 'M')
-    strategy:
-      matrix:
-        java: [1.8,11]
-    name: check java-${{ matrix.java }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.m2
-            ~/.npm
-            ~/.docker
-            ~/.gradle
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean check test
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S         clean check jacocoTestReport jacocoTestCoverageVerification
-  check-17:
-    if: github.event.inputs.trigger == ''
-      || !startsWith(github.event.inputs.trigger, 'm')
-      || !startsWith(github.event.inputs.trigger, 'M')
-    strategy:
-      matrix:
-        java: [17]
-    name: check-17 java-${{ matrix.java }}
+        java: [11,17]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -94,21 +42,24 @@ jobs:
             ~/.gradle
           key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean check test
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S         clean check jacocoTestReport jacocoTestCoverageVerification
-  build:
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon dependencyUpdates -Drevision=release
+      - run: cd $GITHUB_WORKSPACE ; ./mvnw versions:display-property-updates -P updates
+  check:
+    name: updates java-${{ matrix.java }}
+    #See reference: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#functions
+    #automatic job definition:
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
-        java: [1.8,11]
-    name: build java-${{ matrix.java }}
+        java: [11,17]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
+          distribution: 'temurin'
           java-version: ${{ matrix.java }}
       - uses: actions/cache@v3
         with:
@@ -119,15 +70,16 @@ jobs:
             ~/.gradle
           key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean build
-  build-17:
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean check test
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S         clean check jacocoTestReport jacocoTestCoverageVerification
+  build:
+    name: build java-${{ matrix.java }}
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
-        java: [17]
-    name: build java-${{ matrix.java }}
+        java: [11,17]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -146,77 +98,13 @@ jobs:
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean build
   docs:
-    if: github.event.inputs.trigger == ''
-      || !startsWith(github.event.inputs.trigger, 'm')
-      || !startsWith(github.event.inputs.trigger, 'M')
-    strategy:
-      matrix:
-        java: [1.8,11]
     name: docs java-${{ matrix.java }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.m2
-            ~/.npm
-            ~/.docker
-            ~/.gradle
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean build documentation
-  e2e-tests:
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
-        java: [1.8,11]
-    name: e2e tests java-${{ matrix.java }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.m2
-            ~/.npm
-            ~/.gradle
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
-      - run: sudo apt-get install -yqq httpie
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S clean build
-      - run: |
-          cd $GITHUB_WORKSPACE
-          java -jar $GITHUB_WORKSPACE/modules/apps/file-items-service/build/libs/*.jar &
-          java -jar $GITHUB_WORKSPACE/modules/apps/file-server/build/libs/*.jar &
-      - run: |
-          cd $GITHUB_WORKSPACE
-          echo "npm_config_yes=true npx wait-port 8001 8002"
-          npm_config_yes=true npx wait-port 8001
-          npm_config_yes=true npx wait-port 8002
-          echo "http --ignore-stdin -a user:password :8001"
-          http --ignore-stdin -a user:password :8001
-          echo "http --ignore-stdin -a admin:admin :8002"
-          http --ignore-stdin -a admin:admin get :8002/
-  e2e-tests-17:
-    if: github.event.inputs.trigger == ''
-      || !startsWith(github.event.inputs.trigger, 'm')
-      || !startsWith(github.event.inputs.trigger, 'M')
-    strategy:
-      matrix:
-        java: [17]
-    name: e2e tests java-${{ matrix.java }}
+        java: [11] # java: [11,17] # java 17 doesn't work with asciidoctor / ruby stuff =\
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -230,6 +118,30 @@ jobs:
             ~/.m2
             ~/.npm
             ~/.docker
+            ~/.gradle
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
+      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -S -Pdebug clean build documentation
+  e2e-tests:
+    name: e2e tests java-${{ matrix.java }}
+    if: github.event.inputs.trigger == ''
+      || !startsWith(github.event.inputs.trigger, 'm')
+      || !startsWith(github.event.inputs.trigger, 'M')
+    strategy:
+      matrix:
+        java: [11,17]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2
+            ~/.npm
             ~/.gradle
           key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
       - run: sudo apt-get install -yqq httpie
@@ -252,52 +164,13 @@ jobs:
           echo "http --ignore-stdin -a admin:admin :8002"
           http --ignore-stdin -a admin:admin get :8002/
   run-in-docker:
+    name: run in docker java-${{ matrix.java }}
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     strategy:
       matrix:
-        java: [1.8,11]
-    name: run in docker java-${{ matrix.java }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.m2
-            ~/.npm
-            ~/.docker
-            ~/.gradle
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*gradle*', '**/pom.xml') }}
-      - run: sudo apt install -y httpie
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
-      - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -b ./modules/apps/build.gradle.kts assemble
-      - run: cd $GITHUB_WORKSPACE ; docker network create --attachable app || echo 'cannot create docker network app'
-      - run: ls -lah $GITHUB_WORKSPACE/linux-services/file-items-service/Dockerfile .
-      - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
-      - run: cd $GITHUB_WORKSPACE ; docker run -d --rm --net app --name file-items-service daggerok/file-items-service
-      - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .
-      - run: cd $GITHUB_WORKSPACE ; docker run -d --rm --net app -p 80:8002 --name file-server daggerok/file-server
-      - run: cd $GITHUB_WORKSPACE ; while [[ $(docker ps -n 2 -q -f health=healthy | wc -l) -lt 2 ]] ; do sleep 1s ; echo -n '.' ; done
-      - run: cd $GITHUB_WORKSPACE ; http --ignore-stdin --auth user:password get :80/actuator/health
-      - run: cd $GITHUB_WORKSPACE ; http --ignore-stdin --auth user:password -f post :80/upload filename="$(date)-README.md" file@README.md
-      - run: cd $GITHUB_WORKSPACE ; http --ignore-stdin --auth user:password get :80/api/v1/files
-      - run: cd $GITHUB_WORKSPACE ; http --ignore-stdin --auth user:password get :/
-      - run: cd $GITHUB_WORKSPACE ; docker rm -f -v file-server file-items-service
-      - run: cd $GITHUB_WORKSPACE ; docker network rm app || echo oops
-      - run: cd $GITHUB_WORKSPACE ; for i in $(docker ps -aq) ; do docker rm -fv $i ; done
-  run-in-docker-17:
-    if: github.event.inputs.trigger == ''
-      || !startsWith(github.event.inputs.trigger, 'm')
-      || !startsWith(github.event.inputs.trigger, 'M')
-    strategy:
-      matrix:
-        java: [17]
-    name: run in docker java-${{ matrix.java }}
+        java: [11,17]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -317,6 +190,7 @@ jobs:
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon --stop
       - run: cd $GITHUB_WORKSPACE ; ./gradlew --no-daemon -b ./modules/apps/build.gradle.kts assemble
       - run: cd $GITHUB_WORKSPACE ; docker network create --attachable app || echo 'cannot create docker network app'
+      - run: ls -lah $GITHUB_WORKSPACE/linux-services/file-items-service/Dockerfile .
       - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-items-service -f ./linux-services/file-items-service/Dockerfile .
       - run: cd $GITHUB_WORKSPACE ; docker run -d --rm --net app --name file-items-service daggerok/file-items-service
       - run: cd $GITHUB_WORKSPACE ; docker build --no-cache -t daggerok/file-server -f linux-services/file-server/Dockerfile .

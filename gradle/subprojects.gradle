@@ -10,12 +10,6 @@ subprojects {
     // maven { url = "https://repo.spring.io/snapshots/" }
   }
 
-  apply(plugin: "io.franzbecker.gradle-lombok")
-
-  lombok {
-    version = "$lombokVersion"
-  }
-
   apply(plugin: "io.spring.dependency-management")
 
   dependencyManagement {

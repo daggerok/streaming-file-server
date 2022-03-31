@@ -16,6 +16,7 @@ plugins {
 }
 
 val groupId: String by project
+val lombokVersion: String by project
 val projectVersion: String by project
 val wrapperVersion: String by project
 val postgresVersion: String by project
@@ -26,7 +27,12 @@ allprojects {
   group = groupId
   version = projectVersion // because of reckon!
   defaultTasks("clean", "build")
-  apply<org.ajoberstar.grgit.gradle.GrgitPlugin>()
+
+  apply<io.franzbecker.gradle.lombok.LombokPlugin>()
+
+  lombok {
+    version = lombokVersion
+  }
 }
 
 apply(from = "$rootDir/gradle/ide.gradle")
@@ -41,11 +47,15 @@ tasks {
       componentSelection {
         all {
           // val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea", "M1", "BUILD-SNAPSHOT", "SNAPSHOT")
-          val rejected = listOf("alpha", "M") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
-              // com.tngtech.jgiven:jgiven-*:1.0.0-RC1 com.tngtech.jgiven:jgiven-*:1.0.0-RC2
-              .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
-              .any { it.matches(candidate.version) }
-          if (rejected) reject("Release candidate")
+          val rejectedVersions = listOf("alpha", "M") // ch.qos.logback:logback-classic:1.3.0-alpha*, io.vavr:vavr:1.0.0-alpha-*
+            // com.tngtech.jgiven:jgiven-*:1.0.0-RC1 com.tngtech.jgiven:jgiven-*:1.0.0-RC2
+            .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
+            .any { it.matches(candidate.version) }
+          val rejectedModules = listOf("com.avast.gradle.docker-compose.gradle.plugin")
+            .plus("org.ajoberstar.reckon.gradle.plugin")
+            .plus("org.ajoberstar.grgit.gradle.plugin")
+            .any { candidate.module.contains(it) }
+          if (rejectedVersions or rejectedModules) reject("Release candidate")
         }
       }
     }
