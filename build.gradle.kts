@@ -2,6 +2,8 @@ plugins {
   idea
   eclipse
   `java-library`
+  id("org.ajoberstar.grgit")
+  id("org.ajoberstar.reckon")
   id("io.franzbecker.gradle-lombok")
   id("com.github.ben-manes.versions")
   id("io.spring.dependency-management")
@@ -22,8 +24,9 @@ extra["postgresql.version"] = postgresVersion
 
 allprojects {
   group = groupId
-  version = projectVersion
+  version = projectVersion // because of reckon!
   defaultTasks("clean", "build")
+  apply<org.ajoberstar.grgit.gradle.GrgitPlugin>()
 }
 
 apply(from = "$rootDir/gradle/ide.gradle")
@@ -63,5 +66,19 @@ tasks {
   withType<Wrapper> {
     gradleVersion = wrapperVersion
     distributionType = Wrapper.DistributionType.BIN
+  }
+  register("version") {
+    println(project.version.toString())
+  }
+  register("status") {
+    doLast {
+      val status = grgit.status() ?: return@doLast
+      println("workspace is clean: ${status.isClean}")
+
+      if (status.isClean or status.unstaged.allChanges.isEmpty()) return@doLast
+
+      val result = status.unstaged.allChanges.joinToString(separator = "") { "\n- $it" }
+      println("""all unstaged changes: $result""")
+    }
   }
 }
