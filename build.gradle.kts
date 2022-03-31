@@ -82,10 +82,10 @@ tasks {
   }
   register("status") {
     doLast {
-      val status = grgit.status() ?: return@doLast
-      println("workspace is clean: ${status.isClean}")
+      val status = grgit.status() ?: return@doLast println("no unstaged changes")
 
-      if (status.isClean or status.unstaged.allChanges.isEmpty()) return@doLast
+      println("workspace is clean: ${status.isClean}")
+      if (status.isClean or status.unstaged.allChanges.isEmpty()) return@doLast println("no unstaged changes")
 
       val result = status.unstaged.allChanges.joinToString(separator = "") { "\n- $it" }
       println("""all unstaged changes: $result""")

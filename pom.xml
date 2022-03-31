@@ -76,8 +76,8 @@
     <spring.boot.version>2.6.6</spring.boot.version>
     <font.awesome.version>6.1.0</font.awesome.version>
     <lombok.plugin.version>5.0.0</lombok.plugin.version>
-    <reckon.plugin.version>0.13.1</reckon.plugin.version>
-    <grgit.plugin.version>5.0.0-rc.3</grgit.plugin.version>
+    <reckon.plugin.version>0.16.1</reckon.plugin.version>
+    <grgit.plugin.version>5.0.0-rc.7</grgit.plugin.version>
     <hibernate.java8.version>5.6.7.Final</hibernate.java8.version>
     <bootstrap.file.input.version>5.2.5</bootstrap.file.input.version>
     <versions.gradle.plugin.version>0.42.0</versions.gradle.plugin.version>

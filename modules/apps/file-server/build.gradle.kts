@@ -6,8 +6,7 @@ val fontAwesomeVersion: String by project
 val bootstrapFileInputVersion: String by project
 
 dependencies {
-  arrayOf(":modules:libraries:props",
-          ":modules:libraries:web-security")
+  arrayOf(":modules:libraries:props", ":modules:libraries:web-security")
       .map { project(it) }
       .forEach {
         annotationProcessor(it)
